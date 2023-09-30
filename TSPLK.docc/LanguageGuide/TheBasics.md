@@ -558,7 +558,7 @@ if convertedNumber != nil {
 
 ### 옵셔널 바인딩 \(Optional Binding\)
 
-_옵셔널 바인딩 \(optional binding\)_ 은 옵셔널이 값을 포함하고 있는지 확인하고 값이 있는 경우 해당 값을 임시 상수 또는 변수로 사용할 수 있게 해줍니다. 옵셔널 바인딩은 `if` 와 `while` 구문에서 옵셔널에 값이 있는지 체크하고 단일 동작의 일부로 상수 또는 변수로 추출할 수 있습니다. `if` 와 `while` 구문은 <doc:ControlFlow> 에서 자세히 다룹니다.
+옵셔널 바인딩 \(optional binding\) 은 옵셔널이 값을 포함하고 있는지 확인하고 값이 있는 경우 해당 값을 임시 상수 또는 변수로 사용할 수 있게 해줍니다. 옵셔널 바인딩은 `if`, `guard` 와 `while` 구문에서 옵셔널에 값이 있는지 체크하고 단일 동작의 일부로 상수 또는 변수로 추출할 수 있습니다. `if`, `guard` 와 `while` 구문은 <doc:ControlFlow> 에서 자세히 다룹니다.
 
 `if` 구문에서 옵셔널 바인딩은 아래와 같이 사용합니다:
 
@@ -583,7 +583,9 @@ if let actualNumber = Int(possibleNumber) {
 
 "`Int(possibleNumber)` 에 의해 반환된 옵셔널 `Int` 에 값이 포함되어 있으면 `actualNumber` 라는 새로운 상수에 옵셔널에 포함된 값을 설정합니다."
 
-변환에 성공하면 `actualNumber` 상수는 `if` 구문에 첫번째 중괄호 내에서 사용할 수 있습니다. `actualNumber` 상수는 이미 옵셔널 _안_에 값을 가지고 초기화 되었으며 값에 접근하기 위해 `!` 접미사를 사용할 필요가 없습니다. 이 예제에서 `actualNumber` 는 간단하게 변환 결과를 출력하는데 사용됩니다.
+변환에 성공하면 `actualNumber` 상수는 `if` 구문에 첫번째 중괄호 내에서 사용할 수 있습니다.
+옵셔널에서 포함된 값으로 초기화되었고 적절한 옵셔널이 아닌 타입입니다.
+이런 경우에 `possibleNumber` 의 타입은 `Int?` 이므로 `actualNumber` 의 타입은 `Int` 입니다.
 
 값에 접근한 후에 기존 옵셔널 상수 또는 변수를 참조할 필요가 없다면 같은 이름으로 새로운 상수 또는 변수를 사용할 수 있습니다:
 
@@ -597,7 +599,10 @@ if let myNumber = myNumber {
 // Prints "My number is 123"
 ```
 
-이 코드는 이전 예제에서의 코드와 마찬가지로 `myNumber` 가 값이 있는지 없는지를 먼저 확인합니다. `myNumber` 가 값이 있다면 해당 값이 새로운 `myNumber` 라는 상수에 설정됩니다. `if` 구문 안에서 `myNumber` 는 새로운 옵셔널이 아닌 상수를 참조합니다. `if` 구문 전과 후에는 `myNumber` 는 옵셔널 정수 상수를 참조합니다.
+이 코드는 이전 예제에서의 코드와 마찬가지로 `myNumber` 가 값이 있는지 없는지를 먼저 확인합니다. `myNumber` 가 값이 있다면 해당 값이 새로운 `myNumber` 라는 상수에 설정됩니다. `if` 구문 안에서 `myNumber` 는 새로운 옵셔널이 아닌 상수를 참조합니다. 
+Writing `myNumber` before or after the `if` statement
+refers to the original optional integer constant.
+`if` 구문의 앞에 또는 뒤에 `myNumber` 를 작성하면 원래 옵셔널 정수 상수를 참조합니다.
 
 이러한 코드는 일반적이기 때문에 옵셔널 값을 언래핑 하는데 더 짧게 사용할 수 있습니다: 언래핑할 상수 또는 변수의 이름만 작성합니다. 언래핑된 새로운 상수 또는 변수는 암시적으로 같은 이름의 옵셔널 값을 사용합니다.
 
@@ -628,8 +633,58 @@ if let firstNumber = Int("4") {
 // Prints "4 < 42 < 100"
 ```
 
-> Note  
-> `if` 구문에서 옵셔널 바인딩으로 생성된 상수와 변수는 오직 `if` 구문의 본문 안에서만 사용가능합니다. 반면에 `guard` 구문으로 생성된 상수와 변수는 <doc:ControlFlow#이른-종료-Early-Exit> 에 설명된 것처럼 `guard` 구문 다음 코드 라인부터 사용 가능합니다.
+`if` 구문에서 옵셔널 바인딩으로 생성된 상수와 변수는 `if` 구문의 본문내에서만 사용 가능합니다.
+반대로 `guard` 구문에서 생성된 상수와 변수는 <doc:ControlFlow#이른-종료-early-exit> 에서 설명되어 있듯이 
+`guard` 구문 다음에 코드에서 사용 가능합니다.
+
+### 대체값 제공 (Providing a Fallback Value)
+
+누락된 값을 처리하는 다른 방법은 
+nil-결합 연산자 (`??`) 사용하여 기본값을 제공하는 방법입니다.
+옵셔널에서 `??` 의 왼편이 `nil` 이 아니면,
+값은 언래핑되고 사용됩니다.
+그렇지 않으면 `??` 의 오른편에 값이 사용됩니다.
+예를 들어,
+아래 코드는 이름이 지정되면 지정된 이름에 인사하고
+이름이 `nil` 이면 일반적인 인사를 사용합니다.
+
+```swift
+let name: String? = nil
+let greeting = "Hello, " + (name ?? "friend") + "!"
+print(greeting)
+// Prints "Hello, friend!"
+```
+
+대체값 제공에 대해 `??` 사용에 대한 더 자세한 내용은 <doc:BasicOperators#nil-결합-연산자-nil-coalescing-operator> 를 참고 바랍니다.
+
+### 강제 언래핑 (Force Unwrapping)
+
+프로그래머의 에러 또는 원치않는 상태와 같은 실패를 `nil` 로 표현하려면
+옵셔널의 이름 뒤에 느낌표 (`!`) 를 추가하여 접근할 수 있습니다.
+이것을 옵셔널의 값의 *강제 언래핑 (force unwrapping)* 이라고 합니다.
+`nil` 이 아닌 값에 강제 언래핑을 하면,
+언래핑된 값을 결과로 얻습니다.
+`nil` 값을 강제 언래핑하면 런타임 에러가 발생합니다.
+
+`!` 은 [`fatalError(_:file:line:)`](https://developer.apple.com/documentation/swift/fatalerror(_:file:line:)) 의
+짧은 작성법 입니다.
+예를 들어, 아래 코드는 동일한 접근을 보여줍니다:
+
+```swift
+let possibleNumber = "123"
+let convertedNumber = Int(possibleNumber)
+
+let number = convertedNumber!
+
+guard let number = convertedNumber else {
+    fatalError("The number was invalid")
+}
+```
+
+위 코드의 두 버전은 값을 항상 가지는 `convertedNumber` 에 의존하는 것을 보여줍니다.
+위의 접근방식 중 하나를 사용해서 코드의 일부로 작성하면 런타임 시 요구사항이 참인지 확인할 수 있습니다.
+
+데이터 요구사항 적용과 런타임 시 가정 확인에 대한 자세한 내용은 <doc:TheBasics#역설과-전제조건-assertions-and-preconditions> 을 참고 바랍니다.
 
 ### 암시적으로 언래핑된 옵셔널 \(Implicitly Unwrapped Optionals\)
 
@@ -641,14 +696,17 @@ if let firstNumber = Int("4") {
 
 암시적으로 언래핑 된 옵셔널은 옵셔널이 처음 정의된 직후에 옵셔널의 값이 존재하는 것으로 확인되고 그 이후 모든 시점에 존재한다고 가정할 수 있는 경우에 유용합니다. Swift에서 암시적으로 언래핑 된 옵셔널은 <doc:AutomaticReferenceCounting#미소유-참조와-암묵적-언래핑된-옵셔널-프로퍼티-Unowned-References-and-Implicitly-Unwrapped-Optional-Properties> 에서 설명한 대로 클래스 초기화 중에 주로 사용합니다.
 
+나중에 변수가 `nil` 이 될 가능성이 있다면 암시적으로 언래핑된 옵셔널을 사용하면 안됩니다.
+변수를 사용하는 동안 `nil` 값을 확인해야 한다면 일반적인 옵셔널 타입을 사용해야 합니다.
+
 암시적으로 언래핑 된 옵셔널은 내부적으로 옵셔널이지만 옵셔널에 접근할 때마다 옵셔널 값을 풀 필요없이 옵셔널이 아닌 값처럼 사용할 수도 있습니다. 다음 예제는 명시적 `String` 로서 랩핑된 값에 접근할 때 옵셔널 문자열과 암시적으로 언래핑 된 옵셔널 문자열의 동작 차이를 보여줍니다:
 
 ```swift
 let possibleString: String? = "An optional string."
-let forcedString: String = possibleString! // requires an exclamation point
+let forcedString: String = possibleString! // Requires explicit unwrapping
 
 let assumedString: String! = "An implicitly unwrapped optional string."
-let implicitString: String = assumedString // no need for an exclamation point
+let implicitString: String = assumedString // Unwrapped automatically
 ```
 
 필요한 경우 암시적으로 언래핑 된 옵셔널은 옵셔널을 강제로 언래핑을 허락하는 것으로 생각할 수 있습니다. 암시적으로 언래핑 된 옵셔널을 사용할 때 Swift는 처음에 기존의 옵셔널 값으로 사용하려고 하고 사용이 불가능할 경우 Swift는 값을 강제로 언래핑 합니다. 위의 코드에서 옵셔널 값 `assumedString` 은 `implicitString` 이 명시적으로 옵셔널이 아닌 `String` 타입이기 때문에 `implicitString` 에 값을 할당하기 전에 강제로 언래핑 됩니다. 아래의 코드에서 `optionalString` 은 명시적 타입이 없으므로 기본적으로 옵셔널입니다.
@@ -658,7 +716,8 @@ let optionalString = assumedString
 // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
 ```
 
-암시적으로 언래핑 된 옵셔널이 `nil` 이고 래핑된 값에 접근하려고 하면 런타임 에러가 발생합니다. 이 결과는 값이 없는 옵셔널 뒤에 느낌표를 배치한 것과 같습니다.
+암시적으로 언래핑 된 옵셔널이 `nil` 이고 래핑된 값에 접근하려고 하면 런타임 에러가 발생합니다.
+결과는 값을 포함하지 않는 일반적인 옵셔널을 강제 언래핑을 하기위해 느낌표를 작성한 것과 같습니다.
 
 암시적으로 언래핑 된 옵셔널은 일반 옵셔널과 같은 방법으로 `nil` 체크를 할 수 있습니다:
 
@@ -677,9 +736,6 @@ if let definiteString = assumedString {
 }
 // Prints "An implicitly unwrapped optional string."
 ```
-
-> Note  
-> 나중에 변수가 `nil` 이 될 가능성이 있다면 암시적으로 언래핑 된 옵셔널을 사용하지 말아야 합니다. 변수의 수명에 따라 `nil` 값을 확인해야 한다면 항상 기본 옵셔널을 사용해야 합니다.
 
 ## 에러 처리 \(Error Handling\)
 
@@ -740,8 +796,16 @@ _역설과 전제조건 \(Assertions and preconditions\)_ 은 런타임시 발�
 역설과 전제조건은 가정과 기대치를 표현하므로 코드의 일부로 포함할 수 있습니다. 역설은 개발과정에서 실수와 잘못된 가정을 찾는데 도움이 되고 전제조건은 프로덕션 문제를 감지하는데 도움이 됩니다.
 
 런타임 시 기대치를 확인하는 것 이외에 역설과 전제조건은 또한 코드 내에서 유용한 문서 형식이 됩니다. 위의 <doc:TheBasics#에러-처리-Error-Handling> 와 다르게 역설과 전제조건은 복구 가능하거나 예상되는 에러에 사용되지 않습니다. 실패한 역설 또는 전제조건은 유효하지 않은 프로그램 상태를 나타내기 때문에 실패한 상태를 잡을 방법은 없습니다.
+유효하지 않은 상태에서 복구하는 것은 불가능합니다.
+역설이 실패하면 프로그램의 데이터 중 하나가 유효하지 않다는 의미입니다 ---
+그러나 그것이 왜 유효하지 않은지 추가로 다른 상태도 유효하지 않은지 알 수 없습니다.
 
-역설과 전제조건을 사용하는 것은 유효하지 않는 조건이 발생하지 않게 코드를 디자인하기 위함입니다. 그러나 유효한 데이터 및 상태를 적용하기 위해 이를 사용하면 유효하지 않은 상태가 발생하면 앱이 종료되기 때문에 더 쉽게 문제에 대해 디버깅 할 수 있습니다. 유효하지 않은 상태가 감지되는 즉시 실행을 중지하면 해당 유효하지 않은 상태로 인한 피해를 제한하는데 도움이 됩니다.
+역설과 전제조건을 사용하는 것은 유효하지 않는 조건이 발생하지 않게 코드를 디자인하기 위함입니다. 그러나 유효한 데이터 및 상태를 적용하기 위해 이를 사용하면 유효하지 않은 상태가 발생하면 앱이 종료되기 때문에 더 쉽게 문제에 대해 디버깅 할 수 있습니다.
+가정을 확인하지 않으면,
+다른 코드가 실패하기 시작하고,
+사용자 데이터가 손상된 후에야
+이런 종류의 문제를 알 수 있습니다.
+유효하지 않은 상태가 감지되는 즉시 실행을 중지하면 해당 유효하지 않은 상태로 인한 피해를 제한하는데 도움이 됩니다.
 
 역설과 전제조건의 차이점은 언제 체크되는지에 있습니다: 역설은 오직 디버그 빌드에서 체크되지만 전제조건은 디버그와 프로덕션 빌드에서 체크됩니다. 프로덕션 빌드일 때 역설 내부의 조건은 실행되지 않습니다. 이 의미는 프로덕션에서 성능의 영향이 없이 개발 단계에서 많은 양의 역설을 사용할 수 있다는 뜻입니다.
 
