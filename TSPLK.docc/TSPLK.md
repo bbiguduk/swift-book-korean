@@ -17,6 +17,7 @@
 
 <!-- ### 업데이트
 
+- <doc:RevisionHistory#2023-09-30>
 - <doc:RevisionHistory#2023-06-19>
 - <doc:RevisionHistory#2023-04-04>
 - <doc:RevisionHistory#2022-09-13>
