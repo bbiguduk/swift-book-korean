@@ -15,9 +15,9 @@ Swift 에는 두 종류의 속성 (attributes) 이 있습니다 — 선언에 �
 
 첨부된 매크로와 프로퍼티 래퍼도 속성 구문을 사용합니다.
 매크로 확장에 대한 자세한 내용은
-<doc:Expressions#매크로-확장-표현식-macro-expansion-expression> 을 참고 바랍니다.
+<doc:Expressions#매크로-확장-표현식-Macro-Expansion-Expression> 을 참고 바랍니다.
 프로퍼티 래퍼에 대한 자세한 내용은
-<doc:Attributes#propertywrapper> 를 참고 바랍니다.
+<doc:Attributes#propertyWrapper> 를 참고 바랍니다.
 
 ## 선언 속성 (Declaration Attributes)
 

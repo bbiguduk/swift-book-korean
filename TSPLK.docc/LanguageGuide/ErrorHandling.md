@@ -274,4 +274,4 @@ func processFile(filename: String) throws {
 위의 예제는 `open(_:)` 함수에 `close(_:)` 에 대한 호출이 있는지 확인하기 위해 `defer` 구문을 사용합니다.
 
 에러 처리 코드가 포함되어 있지 않아도 `defer` 구문을 사용할 수 있습니다.
-더 자세한 내용은 <doc:ControlFlow#연기된-동작-deferred-actions> 을 참고 바랍니다.
+더 자세한 내용은 <doc:ControlFlow#연기된-동작-Deferred-Actions> 을 참고 바랍니다.

@@ -634,7 +634,7 @@ if let firstNumber = Int("4") {
 ```
 
 `if` 구문에서 옵셔널 바인딩으로 생성된 상수와 변수는 `if` 구문의 본문내에서만 사용 가능합니다.
-반대로 `guard` 구문에서 생성된 상수와 변수는 <doc:ControlFlow#이른-종료-early-exit> 에서 설명되어 있듯이 
+반대로 `guard` 구문에서 생성된 상수와 변수는 <doc:ControlFlow#이른-종료-Early-Exit> 에서 설명되어 있듯이 
 `guard` 구문 다음에 코드에서 사용 가능합니다.
 
 ### 대체값 제공 (Providing a Fallback Value)
@@ -655,7 +655,7 @@ print(greeting)
 // Prints "Hello, friend!"
 ```
 
-대체값 제공에 대해 `??` 사용에 대한 더 자세한 내용은 <doc:BasicOperators#nil-결합-연산자-nil-coalescing-operator> 를 참고 바랍니다.
+대체값 제공에 대해 `??` 사용에 대한 더 자세한 내용은 <doc:BasicOperators#Nil-결합-연산자-Nil-Coalescing-Operator> 를 참고 바랍니다.
 
 ### 강제 언래핑 (Force Unwrapping)
 
@@ -684,7 +684,7 @@ guard let number = convertedNumber else {
 위 코드의 두 버전은 값을 항상 가지는 `convertedNumber` 에 의존하는 것을 보여줍니다.
 위의 접근방식 중 하나를 사용해서 코드의 일부로 작성하면 런타임 시 요구사항이 참인지 확인할 수 있습니다.
 
-데이터 요구사항 적용과 런타임 시 가정 확인에 대한 자세한 내용은 <doc:TheBasics#역설과-전제조건-assertions-and-preconditions> 을 참고 바랍니다.
+데이터 요구사항 적용과 런타임 시 가정 확인에 대한 자세한 내용은 <doc:TheBasics#역설과-전제조건-Assertions-and-Preconditions> 을 참고 바랍니다.
 
 ### 암시적으로 언래핑된 옵셔널 \(Implicitly Unwrapped Optionals\)
 
