@@ -38,7 +38,7 @@ in-out 표현식은 <doc:Expressions#포인터-타입으로-암시적-변환-Imp
 
 > Grammar of an in-out expression:
 >
-> *in-out-expression* → **`&`** *identifier*
+> *in-out-expression* → **`&`** *primary-expression*
 
 ### Try 연산자 (Try Operator)
 
