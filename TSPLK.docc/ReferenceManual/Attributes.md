@@ -232,7 +232,7 @@ iOS 16 에서 실행하면
 - 선언은 `public` 또는 `@usableFromInline` 이어야 합니다.
 - 클래스 인스턴스 메서드와 클래스 타입 메서드에 대해,
   메서드는 `final` 로 표기하고 `@objc` 로 표기하지 않습니다.
-- 구현은 <doc:Attributes:inlinable> 에서 설명한 인라인 가능한 함수에 대한
+- 구현은 <doc:Attributes#inlinable> 에서 설명한 인라인 가능한 함수에 대한
   요구사항을 충족합니다.
 
 ### discardableResult
