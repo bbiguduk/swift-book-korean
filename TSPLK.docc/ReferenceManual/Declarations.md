@@ -404,7 +404,44 @@ func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
 repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 ```
 
-### In-Out 파라미터 (In-Out Parameters)
+### 파라미터 수식어 (Parameter Modifiers)
+
+*파라미터 수식어 (parameter modifier)* 는 함수에 전달된 인수를 변경합니다.
+
+```swift
+<#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
+```
+
+파라미터 수식어를 사용하려면,
+인수의 타입 전에
+`inout`, `borrowing`, 또는 `consuming` 을 작성합니다.
+
+```swift
+func someFunction(a: inout A, b: consuming B, c: C) { ... }
+```
+
+#### In-Out 파라미터 (In-Out Parameters)
+
+기본적으로, Swift 에서 함수 인수는 값으로 전달됩니다:
+함수에서 수정된 것은 호출자에게 보여지지 않습니다.
+대신 in-out 파라미터를 만드려면,
+`inout` 파라미터 수식어를 적용합니다.
+
+```swift
+func someFunction(a: inout Int) {
+    a += 1
+}
+```
+
+in-out 파라미터를 포함하는 함수를 호출할 때,
+인수의 값이 변경될 수 있는 함수 호출인 것을 나타내기위해
+in-out 인수는 앰퍼샌드 (`&`) 를 앞에 붙여야 합니다.
+
+```swift
+var x = 7
+someFunction(&x)
+print(x)  // Prints "8"
+```
 
 In-out 파라미터는 다음과 같이 전달됩니다:
 
@@ -416,7 +453,30 @@ In-out 파라미터는 다음과 같이 전달됩니다:
 
 최적화로 인수가 메모리의 물리적 주소에 저장된 값인 경우 동일한 메모리 위치가 함수 본문 내부 및 외부에서 사용됩니다. 이런 최적화 동작을 _call by reference_ 라고 합니다; copy-in copy-out 모델의 모든 요구사항을 충족하는 동시에 복사의 오버헤드를 제거합니다. call-by-reference 최적화에 의존하지 않고 copy-in copy-out 에 의해 주어진 모델을 사용하여 작성하면 최적화에 상관없이 올바르게 작동되도록 합니다.
 
-함수 내에서 기존 값이 현재 범위에서 사용가능 하더라도 in-out 인수로 전달된 값은 접근하면 안됩니다. 기존 값에 접근하는 것은 값에 대한 동시 접근이며 Swift 의 메모리 독점 보장을 위반합니다. 같은 이유로 여러개의 in-out 파라미터에 동일한 값을 전달할 수 없습니다.
+함수 내에서 기존 값이 현재 범위에서 사용가능 하더라도 in-out 인수로 전달된 값은 접근하면 안됩니다. 기존 값에 접근하는 것은 값에 대한 동시 접근이며 메모리 독점성을 위반합니다.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int) {
+    a += someValue
+}
+
+// Error: This causes a runtime exclusivity violation
+someFunction(&someValue)
+```
+
+같은 이유로 여러개의 in-out 파라미터에 동일한 값을 전달할 수 없습니다.
+
+```swift
+var someValue: Int
+func someFunction(a: inout Int, b: inout Int) {
+    a += b
+    b += 1
+}
+
+// Error: Cannot pass the same value to multiple in-out parameters
+someFunction(&someValue, &someValue)
+```
 
 메모리 안정성과 메모리 독점성에 대한 자세한 내용은 <doc:MemorySafety> 을 참고 바랍니다.
 
@@ -443,6 +503,133 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
 ```
 
 in-out 파라미터에 대한 자세한 설명과 예제는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 를 참고 바랍니다.
+
+#### 파라미터 차용과 소비 (Borrowing and Consuming Parameters)
+
+기본적으로, Swift 는 일련의 규칙을 사용해,
+함수 호출에서 객체의 생명주기를 자동으로 관리하고,
+필요할 때 값을 복사합니다.
+기본 규칙은 대부분 상황에서 오버헤드를 최소화 하도록 설계되어 있습니다 ---
+특별한 제어를 원하면,
+`borrowing` 또는 `consuming` 파라미터 수식어를 적용할 수 있습니다.
+이 경우에,
+복사 작업을 명시적으로 표시하려면 `copy` 를 사용합니다.
+
+기본 규칙을 사용하는 것과 상관없이,
+Swift 는 객체 생명주기와 소유권이
+모든 상황에서 올바르게 관리되도록 보장합니다.
+이 파라미터 수식어는 정확성이 아닌 특정 사용 패턴에
+상대적 효율성에만 영향을 줍니다.
+
+`borrowing` 수식어는 함수가
+파라미터의 값을 유지하지 않음을 나타냅니다.
+이 경우에, 호출자는 객체의 소유권과
+객체의 생명주기에 대한 책임을 유지합니다.
+`borrowing` 을 사용하여 함수가
+객체를 일시적으로만 사용할 때 오버헤드를 최소화 합니다.
+
+```swift
+// `isLessThan` does not keep either argument
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    ...
+}
+```
+
+예를 들어, 전역 변수에 값을 저장하기 위해
+함수가 파라미터의 값을 유지해야 하는 경우 ---
+값을 명시적으로 복사하기 위해 `copy` 를 사용합니다.
+
+```swift
+// As above, but this `isLessThan` also wants to record the smallest value
+func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
+    if lhs < storedValue {
+        storedValue = copy lhs
+    } else if rhs < storedValue {
+        storedValue = copy rhs
+    }
+    return lhs < rhs
+}
+```
+
+반대로,
+`consuming` 파라미터 수식어는
+함수가 값의 소유권을 가지고 있고,
+함수가 반환하기 전에 값을 저장하거나 파기하는 책임이 있음을
+나타냅니다.
+
+```swift
+// `store` keeps its argument, so mark it `consuming`
+func store(a: consuming A) {
+    someGlobalVariable = a
+}
+```
+
+`consuming` 을 사용하면 호출자가 함수 호출 후에 더이상 객체를 사용할 필요가 없을 때
+오버헤드를 최소화 합니다.
+
+```swift
+// Usually, this is the last thing you do with a value
+store(a: value)
+```
+
+함수 호출 후에 복사가능한 객체 사용을 유지하려면,
+컴파일러는 자동으로 함수 호출 전에 객체의 복사본을 만듭니다.
+
+```swift
+// The compiler inserts an implicit copy here
+store(a: someValue)  // This function consumes someValue
+print(someValue)  // This uses the copy of someValue
+```
+
+`inout` 과 다르게, `borrowing` 과
+`consuming` 파라미터는 함수 호출할 때
+특별한 표기법이 필요하지 않습니다:
+
+```swift
+func someFunction(a: borrowing A, b: consuming B) { ... }
+
+someFunction(a: someA, b: someB)
+```
+
+`borrowing` 또는 `consuming` 를 명시적으로 사용하는 것은
+런타임 소유권 관리의 오버헤드를 더 엄격하게 관리하려는
+의도를 나타냅니다.
+복사는 예기치 않은 런타임 소유권 동작을 야기할 수 있으므로,
+명시적인 `copy` 키워드를 사용하지 않으면
+복사할 수 없습니다:
+
+```swift
+func borrowingFunction1(a: borrowing A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // `a` is only borrowed from the caller.
+    someGlobalVariable = a
+}
+
+func borrowingFunction2(a: borrowing A) {
+    // OK: Explicit copying works
+    someGlobalVariable = copy a
+}
+
+func consumingFunction1(a: consuming A) {
+    // Error: Cannot implicitly copy a
+    // This assignment requires a copy because
+    // of the following `print`
+    someGlobalVariable = a
+    print(a)
+}
+
+func consumingFunction2(a: consuming A) {
+    // OK: Explicit copying works regardless
+    someGlobalVariable = copy a
+    print(a)
+}
+
+func consumingFunction3(a: consuming A) {
+    // OK: No copy needed here because this is the last use
+    someGlobalVariable = a
+}
+```
 
 ### 특별한 종류의 파라미터 (Special Kinds of Parameters)
 
@@ -598,8 +785,11 @@ Swift 는 함수 또는 메서드가 호출자에게 반환하지 않음을 나�
 > _parameter_ → _external-parameter-name?_ _local-parameter-name_ _type-annotation_ _default-argument-clause?_ \
 > _parameter_ → _external-parameter-name?_ _local-parameter-name_ _type-annotation_ \
 > _parameter_ → _external-parameter-name?_ _local-parameter-name_ _type-annotation_ **`...`** \
+> 
 > _external-parameter-name_ → _identifier_ \
 > _local-parameter-name_ → _identifier_ \
+> *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`** \
 > _default-argument-clause_ → **`=`** _expression_
 
 ## 열거형 선언 (Enumeration Declaration)
