@@ -442,7 +442,7 @@ protocol ProvidesMain {
 
 > Deprecated:
 > 이 속성은 더이상 사용되지 않습니다;
-> 대신에 [main](#main) 속성을 사용합니다.
+> 대신에 <doc:Attributes#main> 속성을 사용합니다.
 > Swift 6 에서,
 > 이 속성을 사용하면 에러가 발생합니다.
 
@@ -895,7 +895,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 > Deprecated:
 > 이 속성은 더이상 사용되지 않습니다;
-> 대신에 [main](#main) 속성을 사용합니다.
+> 대신에 <doc:Attributes#main> 속성을 사용합니다.
 > Swift 6 에서,
 > 이 속성을 사용하면 에러가 발생합니다.
 
