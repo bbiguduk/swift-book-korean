@@ -4,6 +4,15 @@
 
 ## Revision History
 
+### 2024-02-25(일)
+
+- Swift 5.10 Beta 기반으로 문서 작업
+- 중첩된 프로토콜에 대한 내용을
+  <doc:Protocols#위임-Delegation> 섹션에 추가.
+- <doc:Attributes#UIApplicationMain> 과
+  <doc:Attributes#NSApplicationMain> 섹션에
+  더이상 사용하지 않는 정보 추가.
+
 ### 2023-12-12(화)
 
 - Swift 5.9.2 기반으로 문서 작업
