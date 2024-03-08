@@ -361,8 +361,8 @@ Swift 동시성은 협동 취소 모델 (cooperative cancellation model) 을 사
 작업을 멈추려면,
 작업이 취소되었는지 확인하고 취소된 경우에 실행을 중지합니다.
 작업이 취소되었는지 확인하는 방법은 두 가지가 있습니다:
-[`Task.checkCancellation()`][] 메서드를 호출하거나,
-[`Task.isCancelled`][] 프로퍼티를 읽어서 확인할 수 있습니다.
+[`Task.checkCancellation()`][] 타입 메서드를 호출하거나,
+[`Task.isCancelled`][`Task.isCancelled` 타입] 타입 프로퍼티를 읽어서 확인할 수 있습니다.
 `checkCancellation()` 을 호출하는 것은 작업이 취소되었으면 에러를 발생시킵니다;
 던지는 작업은 작업 외부로 에러를 전파하여
 모든 작업을 중지시킬 수 있습니다.
@@ -372,16 +372,17 @@ Swift 동시성은 협동 취소 모델 (cooperative cancellation model) 을 사
 `isCancelled` 프로퍼티를 사용합니다.
 
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
-[`Task.isCancelled`]: https://developer.apple.com/documentation/swift/task/3814832-iscancelled
+[`Task.isCancelled` 타입]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
 ```swift
 let photos = await withTaskGroup(of: Optional<Data>.self) { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
-        group.addTaskUnlessCancelled {
-            guard isCancelled == false else { return nil }
+        let added = group.addTaskUnlessCancelled {
+            guard !Task.isCancelled else { return nil }
             return await downloadPhoto(named: name)
         }
+        guard added else { break }
     }
 
     var results: [Data] = []
@@ -398,6 +399,11 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
   각 작업은
   [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][] 메서드를 사용해서 추가됩니다.
 
+- `addTaskUnlessCancelled(priority:operation:)` 을 호출할 때마다,
+  코드는 하위 작업이 새로 추가되었음을 확인합니다.
+  그룹이 취소되면 `added` 의 값은 `false` 이고 ---
+  코드는 추가 사진 다운로드를 중지합니다.
+
 - 각 작업은 사진을 다운로드 하기 전에
   취소 여부를 검사합니다.
   작업이 취소 되었으면, `nil` 을 반환합니다.
@@ -407,6 +413,13 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
   `nil` 을 반환해서 취소를 처리한다는 것은
   작업 그룹은 부분적인 결과를 반환할 수 있다는 의미입니다 ---
   취소했을 때 이미 다운로드된 사진은 사진을 파기하는 대신에 다운로드된 사진을 반환합니다.
+
+> Note:
+> 작업이 외부에서 취소되었는지 확인하려면,
+> 타입 프로퍼티 대신에
+> [`Task.isCancelled`][`Task.isCancelled` 인스턴스] 인스턴스 프로퍼티를 사용합니다.
+
+[`Task.isCancelled` 인스턴스]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.property
 
 [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
 
