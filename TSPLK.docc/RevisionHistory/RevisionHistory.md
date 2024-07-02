@@ -4,6 +4,16 @@
 
 ## Revision History
 
+### 2024-07-02(화)
+
+- Swift 6 Beta 기반으로 문서 업데이트.
+- 엄격한 동시성 검사로 변환을 위한 정보를
+  <doc:Attributes#preconcurrency> 섹션에 추가.
+- 특정 타입의 에러 발생에 대한 내용을
+  <doc:ErrorHandling#에러-타입-지정-Specifying-the-Error-Type> 섹션에 추가.
+- <doc:AccessControl> 챕터에
+  패키지-수준 접근에 대한 내용 추가.
+
 ### 2024-03-08(금)
 
 - Swift 5.10 기반으로 문서 작업
