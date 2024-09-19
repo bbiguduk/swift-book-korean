@@ -1,4 +1,4 @@
-# The Swift Programming Language (6 Beta) (한국어)
+# The Swift Programming Language (6) (한국어)
 
 @Metadata {
   @TechnologyRoot
