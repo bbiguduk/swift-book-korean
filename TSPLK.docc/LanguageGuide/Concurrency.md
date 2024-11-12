@@ -424,10 +424,10 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
 [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
 
 즉시 취소에 대한 알림이 필요한 경우에
-[`Task.withTaskCancellationHandler(operation:onCancel:)`][] 메서드를 사용합니다.
+[`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`][] 메서드를 사용합니다.
 예를 들어:
 
-[`Task.withTaskCancellationHandler(operation:onCancel:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:)
+[`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:isolation:)
 
 ```swift
 let task = await Task.withTaskCancellationHandler {
