@@ -969,7 +969,7 @@ struct <#structure name#>: <#adopted protocols#> {
 이전에 선언된 구조체의 인스턴스를 생성하는 방법은 세가지가 있습니다:
 
 * <doc:Initialization#초기화-구문-Initializers> 에서 설명 한대로 구조체 내에 선언된 초기화 구문 중 하나를 호출해야 합니다.
-* 선언된 초기화 구문이 없는 경우 <doc:Initialization#구조체-타입에-대한-멤버별-초기화-구문-Memberwise-Initializers-for-Structure-Types> 에서 설명 한대로 구조체의 멤버별 초기화 구문을 호출합니다.
+* 선언된 초기화 구문이 없는 경우 <doc:Initialization#구조체의-멤버별-초기화-구문-Memberwise-Initializers-for-Structure-Types> 에서 설명 한대로 구조체의 멤버별 초기화 구문을 호출합니다.
 * 선언된 초기화 구문이 없고 구조체 선언의 모든 프로퍼티에 초기값이 주어진 경우 <doc:Initialization#기본-초기화-구문-Default-Initializers> 에서 설명 한대로 구조체의 기본 초기화 구문을 호출합니다.
 
 구조체에 선언된 프로퍼티 초기화 프로세스는 <doc:Initialization> 에 설명되어 있습니다.
