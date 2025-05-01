@@ -38,7 +38,7 @@
 | Switch                       | 스위치          |
 | Integer                      | 정수           |
 | Case                         | 케이스          |
-| Collection                   | 콜렉션          |
+| Collection                   | 컬렉션          |
 | Function                     | 함수           |
 | Return                       | 반환           |
 | Type                         | 타입           |
@@ -57,7 +57,7 @@
 | Getter                       | Getter       |
 | Setter                       | Setter       |
 | Method                       | 메서드          |
-| Subscript                    | 서브 스크립트      |
+| Subscript                    | 서브스크립트      |
 | Raw value                    | 원시값          |
 | Enumeration                  | 열거형          |
 | Structure                    | 구조체          |
@@ -107,7 +107,7 @@
 | Instance Method              | 인스턴스 메서드     |
 | Type Method                  | 타입 메서드       |
 | List                         | 리스트          |
-| Type Subscript               | 타입 서브 스크립트   |
+| Type Subscript               | 타입 서브스크립트   |
 | Inheritance                  | 상속           |
 | Overriding                   | 재정의          |
 | Delegation                   | 위임           |

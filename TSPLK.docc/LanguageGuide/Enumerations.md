@@ -203,7 +203,7 @@ case .west:
 
 …그리고 나머지 케이스도 마찬가지입니다.
 
-<doc:ControlFlow>에서 설명 했듯이,
+<doc:ControlFlow>에서 설명했듯이,
 `switch` 구문은 열거형 케이스를 고려할 때 완벽해야 합니다.
 `.west`에 대한 `case`가 생략된다면,
 `CompassPoint`의 모든 케이스를 고려하지 않았기 때문에
@@ -273,9 +273,9 @@ print("\(numberOfChoices) beverages available")
 
 위의 예제에서
 `Beverage` 열거형에 모든 케이스를 포함하는
-콜렉션에 접근하기 위해 `Beverage.allCases`를 사용합니다.
-일반 콜렉션처럼 `allCases`를 사용할 수 있습니다 ---
-콜렉션의 요소는 열거형 타입의 인스턴스이기 때문에
+컬렉션에 접근하기 위해 `Beverage.allCases`를 사용합니다.
+일반 컬렉션처럼 `allCases`를 사용할 수 있습니다 ---
+컬렉션의 요소는 열거형 타입의 인스턴스이기 때문에
 이 경우에 각 요소는 `Beverage` 값입니다.
 위의 예제는 얼마나 많은 케이스가 존재하는지 계산하고,
 아래의 예제는 `for`-`in` 루프를 사용하여 모든 케이스를 반복합니다.

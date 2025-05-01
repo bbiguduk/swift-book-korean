@@ -35,7 +35,7 @@ Swift 에서 간단한 구문 (simple statements), 컴파일러 제어 구문 (c
 
 ### For-In 구문 (For-In Statement)
 
-`for`-`in` 구문은 [`Sequence`](https://developer.apple.com/documentation/swift/sequence) 프로토콜을 준수하는 콜렉션 또는 모든 타입에서 각 아이템에 대해 한번 실행되기 위해 코드의 블럭을 허용합니다.
+`for`-`in` 구문은 [`Sequence`](https://developer.apple.com/documentation/swift/sequence) 프로토콜을 준수하는 컬렉션 또는 모든 타입에서 각 아이템에 대해 한번 실행되기 위해 코드의 블럭을 허용합니다.
 
 `for`-`in` 구문은 다음의 형식을 가집니다:
 
@@ -45,7 +45,7 @@ for <#item#> in <#collection#> {
 }
 ```
 
-`makeIterator()` 메서드는 [`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) 프로토콜을 준수하는 타입인 반복기 타입의 값을 포함하기 위해 _콜렉션_ 표현식 (_collection_ expression) 에서 호출됩니다. 프로그램은 반복기에서 `next()` 메서드를 호출하여 루프를 실행합니다. 값이 `nil` 을 반환하지 않으면 _항목 (item)_ 패턴에 할당되고 프로그램은 _구문 (statements)_ 를 실행한 다음에 루프의 시작된 부분에서 계속 실행합니다. 그렇지 않으면 프로그램은 할당 또는 _구문 (statements)_ 실행을 수행하지 않고 `for`-`in` 구문 실행을 종료합니다.
+`makeIterator()` 메서드는 [`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) 프로토콜을 준수하는 타입인 반복기 타입의 값을 포함하기 위해 _컬렉션_ 표현식 (_collection_ expression) 에서 호출됩니다. 프로그램은 반복기에서 `next()` 메서드를 호출하여 루프를 실행합니다. 값이 `nil` 을 반환하지 않으면 _항목 (item)_ 패턴에 할당되고 프로그램은 _구문 (statements)_ 를 실행한 다음에 루프의 시작된 부분에서 계속 실행합니다. 그렇지 않으면 프로그램은 할당 또는 _구문 (statements)_ 실행을 수행하지 않고 `for`-`in` 구문 실행을 종료합니다.
 
 > Grammar of a for-in statement:
 >

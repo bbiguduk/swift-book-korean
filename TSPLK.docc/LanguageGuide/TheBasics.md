@@ -9,7 +9,7 @@ Boolean 값을 나타내는 `Bool`,
 기본적인 데이터 타입을 제공합니다.
 Swift는 <doc:CollectionTypes>에서 설명된 대로
 `Array`, `Set`, `Dictionary`라는
-세 가지 기본 콜렉션 타입을 제공합니다.
+세 가지 기본 컬렉션 타입을 제공합니다.
 
 Swift는 변수를 식별 가능한 이름으로 값을 저장하고 참조합니다.
 Swift는 값을 변경할 수 없는 변수를 광범위하게 사용합니다.

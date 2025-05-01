@@ -395,7 +395,7 @@ game.play(rounds: 3)
 
 ## 확장으로 프로토콜 준수성 추가 \(Adding Protocol Conformance with an Extension\)
 
-기존 타입에 대해 소스 코드에서 접근할 수 없지만 새로운 프로토콜을 채택하고 준수하기 위해 기존 타입을 확장할 수 있습니다. 확장은 기존 타입에 새로운 프로퍼티, 메서드, 그리고 서브 스크립트를 추가할 수 있으므로 프로토콜이 요구할 수 있는 모든 요구사항을 추가할 수 있습니다. 자세한 내용은 <doc:Extensions> 을 참고 바랍니다.
+기존 타입에 대해 소스 코드에서 접근할 수 없지만 새로운 프로토콜을 채택하고 준수하기 위해 기존 타입을 확장할 수 있습니다. 확장은 기존 타입에 새로운 프로퍼티, 메서드, 그리고 서브스크립트를 추가할 수 있으므로 프로토콜이 요구할 수 있는 모든 요구사항을 추가할 수 있습니다. 자세한 내용은 <doc:Extensions> 을 참고 바랍니다.
 
 > Note   
 > 타입의 기존 인스턴스는 확장에 인스턴스의 타입이 추가될 때 자동으로 프로토콜을 채택하고 준수합니다.
@@ -540,9 +540,9 @@ for level in levels.sorted() {
 // Prints "expert(stars: 5)"
 ```
 
-## 프로토콜 타입의 콜렉션 \(Collections of Protocol Types\)
+## 프로토콜 타입의 컬렉션 \(Collections of Protocol Types\)
 
-프로토콜은 <doc:Protocols#타입으로-프로토콜-Protocols-as-Types> 에서 언급했듯이 배열 또는 딕셔너리와 같은 콜렉션에 저장되기 위해 타입으로 사용될 수 있습니다. 이 예제는 `TextRepresentable` 에 대한 배열을 생성합니다:
+프로토콜은 <doc:Protocols#타입으로-프로토콜-Protocols-as-Types> 에서 언급했듯이 배열 또는 딕셔너리와 같은 컬렉션에 저장되기 위해 타입으로 사용될 수 있습니다. 이 예제는 `TextRepresentable` 에 대한 배열을 생성합니다:
 
 ```swift
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
@@ -879,7 +879,7 @@ for _ in 1...5 {
 
 ## 프로토콜 확장 \(Protocol Extensions\)
 
-프로토콜은 준수하는 타입에 제공하기 위해 메서드, 초기화 구문, 서브 스크립트, 그리고 계산된 프로퍼티 구현이 확장될 수 있습니다. 이를 통해 각 타입의 개별 적합성 또는 전역 함수가 아닌 프로토콜 자체에 동작을 정의할 수 있습니다.
+프로토콜은 준수하는 타입에 제공하기 위해 메서드, 초기화 구문, 서브스크립트, 그리고 계산된 프로퍼티 구현이 확장될 수 있습니다. 이를 통해 각 타입의 개별 적합성 또는 전역 함수가 아닌 프로토콜 자체에 동작을 정의할 수 있습니다.
 
 예를 들어 `RandomNumberGenerator` 프로토콜은 임의의 `Bool` 값을 반환하기 위해 필요한 `random()` 메서드의 결과를 사용하는 `randomBool()` 메서드를 제공하기 위해 확장될 수 있습니다:
 
@@ -924,7 +924,7 @@ extension PrettyTextRepresentable  {
 
 프로토콜 확장을 정의할 때 확장의 메서드와 프로퍼티를 사용할 수 있기 전에 준수하는 타입이 충족해야 하는 제약조건을 지정할 수 있습니다. 일반적인 `where` 절을 작성하여 확장하는 프로토콜의 이름 뒤에 제약조건을 작성합니다. 자세한 내용은 <doc:Generics#제너릭-Where-절-Generic-Where-Clauses> 을 참고 바랍니다.
 
-예를 들어 `Equatable` 프로토콜을 준수하는 항목의 모든 콜렉션에 적용하는 `Collection` 프로토콜의 확장을 정의할 수 있습니다. 콜렉션의 요소를 Swift 표준 라이브러리의 일부인 `Equatable` 프로토콜로 제한하면 두 요소간의 같음과 다름에 대한 확인을 위해 `==` 와 `!=` 연산자를 사용할 수 있습니다.
+예를 들어 `Equatable` 프로토콜을 준수하는 항목의 모든 컬렉션에 적용하는 `Collection` 프로토콜의 확장을 정의할 수 있습니다. 컬렉션의 요소를 Swift 표준 라이브러리의 일부인 `Equatable` 프로토콜로 제한하면 두 요소간의 같음과 다름에 대한 확인을 위해 `==` 와 `!=` 연산자를 사용할 수 있습니다.
 
 ```swift
 extension Collection where Element: Equatable {
@@ -939,7 +939,7 @@ extension Collection where Element: Equatable {
 }
 ```
 
-`allEqual()` 메서드는 콜렉션에 모든 요소가 같을 때만 `true` 를 반환합니다.
+`allEqual()` 메서드는 컬렉션에 모든 요소가 같을 때만 `true` 를 반환합니다.
 
 모든 요소가 같고 하나만 다른 정수의 2개의 배열을 생각해 봅시다:
 

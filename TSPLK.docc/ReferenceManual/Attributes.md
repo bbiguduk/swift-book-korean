@@ -328,9 +328,9 @@ repeatLabels(a: "four") // Error
 
 런타임 시 이름별로 멤버를 조회하기 위해 클래스, 구조체, 열거형, 또는 프로토콜에 이 속성을 적용합니다. 타입은 `subscript(dynamicMemberLookup:)` 으로 구현되어야 합니다.
 
-명시적 멤버 표현식에서 명명된 멤버에 대한 해당 선언이 없는 경우 표현식은 타입의 `subscript(dynamicMemberLookup:)` 를 호출하는 것으로 이해되고 멤버에 대한 정보를 인수로 전달합니다. 서브 스크립트는 키 경로 또는 멤버 이름으로 파라미터를 사용할 수 있습니다; 두 서브 스크립트를 모두 구현하면 키 경로 인수를 가지는 서브 스크립트가 사용됩니다.
+명시적 멤버 표현식에서 명명된 멤버에 대한 해당 선언이 없는 경우 표현식은 타입의 `subscript(dynamicMemberLookup:)` 를 호출하는 것으로 이해되고 멤버에 대한 정보를 인수로 전달합니다. 서브스크립트는 키 경로 또는 멤버 이름으로 파라미터를 사용할 수 있습니다; 두 서브스크립트를 모두 구현하면 키 경로 인수를 가지는 서브스크립트가 사용됩니다.
 
-`subscript(dynamicMemberLookup:)` 의 구현은 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath), [`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath), 또는 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 타입의 인수를 사용하여 키 경로를 허용할 수 있습니다. 대부분 `String` 인 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 프로토콜을 준수하는 타입의 인수를 사용하여 멤버 이름을 허용할 수 있습니다. 서브 스크립트의 반환 타입은 모든 타입이 가능합니다.
+`subscript(dynamicMemberLookup:)` 의 구현은 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath), [`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath), 또는 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 타입의 인수를 사용하여 키 경로를 허용할 수 있습니다. 대부분 `String` 인 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 프로토콜을 준수하는 타입의 인수를 사용하여 멤버 이름을 허용할 수 있습니다. 서브스크립트의 반환 타입은 모든 타입이 가능합니다.
 
 멤버 이름 별 동적 멤버 조회는 다른 언어의 데이터를 Swift 로 연결할 때와 같이 컴파일 시에 타입을 확인할 수 없는 데이터에 대한 래퍼 타입을 생성하기 위해 사용될 수 있습니다. 예를 들어:
 
@@ -399,7 +399,7 @@ print(wrapper.x)
 
 ### inlinable
 
-모듈의 public 인터페이스의 부분으로 선언의 구현을 노출하기 위해 함수, 메서드, 계산된 프로퍼티, 서브 스크립트, 편리한 초기화 구문, 또는 초기화 해제 구문 선언에 이 속성을 적용합니다. 컴파일러는 호출 부분에서 기호의 구현을 복사본으로 인라인 가능한 기호로 호출을 대체할 수 있습니다.
+모듈의 public 인터페이스의 부분으로 선언의 구현을 노출하기 위해 함수, 메서드, 계산된 프로퍼티, 서브스크립트, 편리한 초기화 구문, 또는 초기화 해제 구문 선언에 이 속성을 적용합니다. 컴파일러는 호출 부분에서 기호의 구현을 복사본으로 인라인 가능한 기호로 호출을 대체할 수 있습니다.
 
 인라인 가능한 코드는 `public` 기호로 선언된 모든 모듈에서 상호작용 할 수 있고 `usableFromInline` 속성으로 표시된 동일한 모듈에서 선언된 `internal` 기호와 상호작용 할 수 있습니다. 인라인 가능한 코드는 `private` 또는 `fileprivate` 기호와 상호작용 할 수 없습니다.
 
@@ -430,7 +430,7 @@ protocol ProvidesMain {
 
 ### nonobjc
 
-암시적으로 `objc` 속성을 억제하기 위해 메서드, 프로퍼티, 서브 스크립트, 또는 초기화 구문 선언에 이 속성을 적용합니다. `nonobjc` 속성은 Objective-C 에서 표현 가능하더라도 Objective-C 코드로 선언이 불가능 하도록 컴파일러에게 말합니다.
+암시적으로 `objc` 속성을 억제하기 위해 메서드, 프로퍼티, 서브스크립트, 또는 초기화 구문 선언에 이 속성을 적용합니다. `nonobjc` 속성은 Objective-C 에서 표현 가능하더라도 Objective-C 코드로 선언이 불가능 하도록 컴파일러에게 말합니다.
 
 확장에 이 속성을 적용하는 것은 명시적으로 `objc` 속성으로 표시되지 않은 확장의 모든 멤버에 같은 영향을 미칩니다.
 
@@ -469,7 +469,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 ### objc
 
-Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니다. 예를 들어 중첩되지 않은 클래스, 프로토콜, 제너릭이 아닌 열거형 (정수 원시값 타입으로 제한), 클래스의 프로퍼티, 그리고 메서드 (getter 와 setter 포함), 프로토콜과 프로토콜의 옵셔널 멤버, 초기화 구문, 그리고 서브 스크립트 입니다. `objc` 속성은 선언이 Objective-C 코드에서 사용 가능함을 컴파일러에게 말합니다.
+Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니다. 예를 들어 중첩되지 않은 클래스, 프로토콜, 제너릭이 아닌 열거형 (정수 원시값 타입으로 제한), 클래스의 프로퍼티, 그리고 메서드 (getter 와 setter 포함), 프로토콜과 프로토콜의 옵셔널 멤버, 초기화 구문, 그리고 서브스크립트 입니다. `objc` 속성은 선언이 Objective-C 코드에서 사용 가능함을 컴파일러에게 말합니다.
 
 확장에 이 속성을 적용하는 것은 암시적으로 `nonobjc` 속성으로 표시되지 않은 확장의 모든 멤버에 적용됩니다.
 
@@ -518,7 +518,7 @@ class ExampleClass: NSObject {
 - 열거형 (Enumerations)  열거형 케이스 (enumeration cases)
 - 프로토콜 (Protocols)
 - 변수 (Variables) 와 상수 (constants)
-- 서브 스크립트 (Subscripts)
+- 서브스크립트 (Subscripts)
 - 초기화 구문 (Initializers)
 - 함수 (Functions)
 
@@ -945,7 +945,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 결과 빌더 타입을 생성하면 동일한 이름의 사용자 정의 속성을 생성합니다. 다음 위치에 해당 속성을 적용할 수 있습니다:
 
 * 함수 선언에서 결과 빌더는 함수의 본문을 빌드합니다.
-* getter 를 포함하는 변수 또는 서브 스크립트 선언에서 결과 빌더는 getter 의 본문을 빌드합니다.
+* getter 를 포함하는 변수 또는 서브스크립트 선언에서 결과 빌더는 getter 의 본문을 빌드합니다.
 * 함수 선언의 파라미터에서 결과 빌더는 해당 인수로 전달되는 클로저의 본문을 빌드합니다.
 
 결과 빌더 속성을 적용하는 것은 ABI 호환성에 영향을 주지 않습니다. 파라미터에 결과 빌더 속성을 적용하는 것은 해당 속성이 함수의 인터페이스의 부분으로 소스 호환성에 영향을 줄 수 있습니다.
@@ -980,7 +980,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 ### usableFromInline
 
-선언과 동일한 모듈에 정의된 인라인 가능 코드에서 해당 기호를 사용할 수 있도록 하기 위해 함수, 메서드, 계산된 프로퍼티, 서브 스크립트, 초기화 구문, 또는 초기화 해제 구문 선언에 이 속성을 적용합니다. 선언은 `internal` 접근 수준 수식어를 가지고 있어야 합니다. `usableFromInline` 으로 표시된 구조체나 클래스는 프로퍼티에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다. `usableFromInline` 으료 표시된 열거형은 케이스의 원시값과 연관된 값에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다.
+선언과 동일한 모듈에 정의된 인라인 가능 코드에서 해당 기호를 사용할 수 있도록 하기 위해 함수, 메서드, 계산된 프로퍼티, 서브스크립트, 초기화 구문, 또는 초기화 해제 구문 선언에 이 속성을 적용합니다. 선언은 `internal` 접근 수준 수식어를 가지고 있어야 합니다. `usableFromInline` 으로 표시된 구조체나 클래스는 프로퍼티에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다. `usableFromInline` 으료 표시된 열거형은 케이스의 원시값과 연관된 값에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다.
 
 `public` 접근 수준 수식어와 같이 이 속성은 모듈의 공개 인터페이스의 부분으로 선언을 노출합니다. `public` 과 다르게 컴파일러는 선언의 기호를 내보내더라도 모듈 외부의 코드에서 이름으로 참조되기 위해 `usableFromInline` 으로 표시된 선언을 허용하지 않습니다. 그러나 모듈 외부의 코드는 런타임 동작을 사용하여 선언의 기호와 상호작용 할 수 있습니다.
 

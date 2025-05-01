@@ -201,7 +201,7 @@ print(vertical.draw())
 
 위의 예제에서 `VerticalShapes` 는 박스형 `Shape` 요소의 배열인 `[any Shape]` 로 `shapes` 의 타입을 선언합니다. 배열에 각 요소는 다른 타입이 올 수 있고 각 타입은 `Shape` 프로토콜을 준수해야 합니다. 이런 런타임 유연성을 제공하기위해 Swift 는 필요할 때 간접 참조 수준을 추가합니다 - 이런 간접 참조를 _박스 (box)_ 라고 부르며, 성능 비용 (performance cost) 을 가지고 있습니다.
 
-`VerticalShapes` 타입에는 `Shape` 프로토콜에 의해 요구되는 메서드, 프로퍼티, 그리고 서브 스크립트를 사용할 수 있습니다. 예를 들어, `VerticalShapes` 에 `draw()` 메서드는 배열의 각 요소의 `draw()` 메서드를 호출합니다. `Shape` 는 `draw()` 메서드를 요구하므로 이 메서드는 사용 가능합니다. 반대로, `Shape` 에 의해 요구되지 않은 삼각형 (triangle) 에 `size` 프로퍼티, 또는 다른 프로퍼티 또는 메서드를 접근하려고 하면 에러가 발생합니다.
+`VerticalShapes` 타입에는 `Shape` 프로토콜에 의해 요구되는 메서드, 프로퍼티, 그리고 서브스크립트를 사용할 수 있습니다. 예를 들어, `VerticalShapes` 에 `draw()` 메서드는 배열의 각 요소의 `draw()` 메서드를 호출합니다. `Shape` 는 `draw()` 메서드를 요구하므로 이 메서드는 사용 가능합니다. 반대로, `Shape` 에 의해 요구되지 않은 삼각형 (triangle) 에 `size` 프로퍼티, 또는 다른 프로퍼티 또는 메서드를 접근하려고 하면 에러가 발생합니다.
 
 `shapes` 를 사용할 수 있는 세가지 타입이 있습니다:
 
@@ -303,5 +303,5 @@ print(type(of: twelve))
 // Prints "Int"
 ```
 
-`twelve` 의 타입은 `Int` 로 유추되며 이것은 불투명한 타입이 타입 추론이 동작한다는 것을 보여줍니다. `makeOpaqueContainer(item:)` 의 구현에서 불투명한 컨테이너의 기본 타입은 `[T]` 입니다. 이 경우에 `T` 는 `Int` 이므로 반환값은 정수의 배열이고 `Item` 연관된 타입은 `Int` 로 유추됩니다. `Container` 에서 서브 스크립트는 `twelve` 의 타입도 `Int` 로 유추된다는 의미의 `Item` 을 반환합니다.
+`twelve` 의 타입은 `Int` 로 유추되며 이것은 불투명한 타입이 타입 추론이 동작한다는 것을 보여줍니다. `makeOpaqueContainer(item:)` 의 구현에서 불투명한 컨테이너의 기본 타입은 `[T]` 입니다. 이 경우에 `T` 는 `Int` 이므로 반환값은 정수의 배열이고 `Item` 연관된 타입은 `Int` 로 유추됩니다. `Container` 에서 서브스크립트는 `twelve` 의 타입도 `Int` 로 유추된다는 의미의 `Item` 을 반환합니다.
 

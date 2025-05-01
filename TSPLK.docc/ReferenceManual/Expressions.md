@@ -262,7 +262,7 @@ _리터럴 표현식 (literal expression)_ 은 일반 리터럴 (문자열 또�
 > [`function()`](https://developer.apple.com/documentation/swift/function()),
 > 그리고 [`line()`](https://developer.apple.com/documentation/swift/line()).
 
-_배열 리터럴 (array literal)_ 은 순서가 있는 값의 콜렉션입니다. 형식은 아래와 같습니다:
+_배열 리터럴 (array literal)_ 은 순서가 있는 값의 컬렉션입니다. 형식은 아래와 같습니다:
 
 ```swift
 [<#value 1#>, <#value 2#>, <#...#>]
@@ -274,7 +274,7 @@ _배열 리터럴 (array literal)_ 은 순서가 있는 값의 콜렉션입니�
 var emptyArray: [Double] = []
 ```
 
-_딕셔너리 리터럴 (dictionary literal)_ 은 순서가 없는 키-값 쌍의 콜렉션입니다. 형식은 아래와 같습니다:
+_딕셔너리 리터럴 (dictionary literal)_ 은 순서가 없는 키-값 쌍의 컬렉션입니다. 형식은 아래와 같습니다:
 
 ```swift
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
@@ -319,7 +319,7 @@ self(<#initializer arguments#>)
 self.init(<#initializer arguments#>)
 ```
 
-초기화 구문, 서브 스크립트, 또는 인스턴스 메서드에서 `self` 는 해당 타입의 현재 인스턴스를 참조합니다. 타입 메서드에서 `self` 는 현재 타입을 참조합니다.
+초기화 구문, 서브스크립트, 또는 인스턴스 메서드에서 `self` 는 해당 타입의 현재 인스턴스를 참조합니다. 타입 메서드에서 `self` 는 현재 타입을 참조합니다.
 
 `self` 표현식은 멤버에 접근할 때 범위를 지정하는데 사용되고 함수 파라미터와 같이 범위에 같은 이름의 다른 변수가 있을 때 명확성을 제공합니다. 예를 들어:
 
@@ -361,9 +361,9 @@ super[<#subscript index#>]
 super.init(<#initializer arguments#>)
 ```
 
-첫번째 형식은 상위 클래스의 멤버에 접근하기 위해 사용됩니다. 두번째 형식은 상위 클래스의 서브 스크립트 구현에 접근하기 위해 사용됩니다. 세번째 형식은 상위 클래스의 초기화 구문에 접근하기 위해 사용됩니다.
+첫번째 형식은 상위 클래스의 멤버에 접근하기 위해 사용됩니다. 두번째 형식은 상위 클래스의 서브스크립트 구현에 접근하기 위해 사용됩니다. 세번째 형식은 상위 클래스의 초기화 구문에 접근하기 위해 사용됩니다.
 
-하위 클래스는 멤버, 서브 스크립트 그리고 초기화 구문에서 상위 클래스 표현식을 사용하여 상위 클래스의 구현을 사용할 수 있습니다.
+하위 클래스는 멤버, 서브스크립트 그리고 초기화 구문에서 상위 클래스 표현식을 사용하여 상위 클래스의 구현을 사용할 수 있습니다.
 
 > Grammar of a superclass expression:
 >
@@ -445,7 +445,7 @@ _클로저 표현식 (closure expression)_ 은 다른 프로그래밍 언어에�
 }
 ```
 
-_파라미터 (parameters)_ 는 <doc:Declarations#함수-선언-Function-Declaration> 에서 설명 했듯이 함수 선언에서 파라미터 형식과 동일합니다.
+_파라미터 (parameters)_ 는 <doc:Declarations#함수-선언-Function-Declaration> 에서 설명했듯이 함수 선언에서 파라미터 형식과 동일합니다.
 
 클로저 표현식에 명시적으로 `throws` 또는 `async` 작성하는 것은 클로저를 throwing 또는 비동기를 나타냅니다.
 
@@ -747,7 +747,7 @@ Swift 에서 매크로의 개요는 <doc:Macros> 를 참고 바랍니다.
 
 ### 키-경로 표현식 (Key-Path Expression)
 
-_키-경로 표현식 (key-path expression)_ 은 타입의 프로퍼티 또는 서브 스크립트를 참조합니다. 키-값 관찰 (key-value observing) 과 같은 동적 프로그래밍 작업 (dynamic programming tasks) 에서 키-경로 표현식을 사용합니다. 형식은 다음과 같습니다:
+_키-경로 표현식 (key-path expression)_ 은 타입의 프로퍼티 또는 서브스크립트를 참조합니다. 키-값 관찰 (key-value observing) 과 같은 동적 프로그래밍 작업 (dynamic programming tasks) 에서 키-경로 표현식을 사용합니다. 형식은 다음과 같습니다:
 
 ```swift
 \<#type name#>.<#path#>
@@ -755,11 +755,11 @@ _키-경로 표현식 (key-path expression)_ 은 타입의 프로퍼티 또는 �
 
 _타입 이름 (type name)_ 은 `String`, `[Int]`, 또는 `Set<Int>` 와 같은 모든 제너릭 파라미터를 포함한 구체적 타입의 이름입니다.
 
-_경로 (path)_ 는 프로퍼티 이름, 서브 스크립트, 옵셔널 체이닝 표현식, 그리고 강제 언래핑한 표현식으로 구성됩니다. 이러한 각 키-경로 요소는 순서에 상관없이 필요한 만큼 여러번 반복할 수 있습니다.
+_경로 (path)_ 는 프로퍼티 이름, 서브스크립트, 옵셔널 체이닝 표현식, 그리고 강제 언래핑한 표현식으로 구성됩니다. 이러한 각 키-경로 요소는 순서에 상관없이 필요한 만큼 여러번 반복할 수 있습니다.
 
 컴파일 시에 키-경로 표현식은 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath) 클래스의 인스턴스에 의해 대체됩니다.
 
-키 경로를 사용하여 값에 접근하려면 모든 타입에서 사용할 수 있는 `subscript(keyPath:)` 서브 스크립트에 키 경로를 전달해야 합니다. 예를 들어:
+키 경로를 사용하여 값에 접근하려면 모든 타입에서 사용할 수 있는 `subscript(keyPath:)` 서브스크립트에 키 경로를 전달해야 합니다. 예를 들어:
 
 ```swift
 struct SomeStructure {
@@ -814,7 +814,7 @@ let nestedValue = nested[keyPath: nestedKeyPath]
 // nestedValue is 24
 ```
 
-_경로 (path)_ 는 서브 스크립트의 파라미터 타입이 `Hashable` 프로토콜을 준수하는 한 대괄호를 사용하여 서브 스크립트를 포함할 수 있습니다. 이 예제는 배열의 두번째 요소를 접근하기 위해 키 경로로 서브 스크립트를 사용합니다:
+_경로 (path)_ 는 서브스크립트의 파라미터 타입이 `Hashable` 프로토콜을 준수하는 한 대괄호를 사용하여 서브스크립트를 포함할 수 있습니다. 이 예제는 배열의 두번째 요소를 접근하기 위해 키 경로로 서브스크립트를 사용합니다:
 
 ```swift
 let greetings = ["hello", "hola", "bonjour", "안녕"]
@@ -822,7 +822,7 @@ let myGreeting = greetings[keyPath: \[String].[1]]
 // myGreeting is 'hola'
 ```
 
-서브 스크립트에서 사용된 값은 명명된 값 또는 리터럴 일 수 있습니다. 값은 값 의미로 사용하여 키 경로에서 캡처됩니다. 다음 코드는 키-경로 표현식과 클로저 모두에서 변수 `index` 를 사용하여 `greetings` 배열의 세번째 요소를 접근합니다. `index` 가 수정될 때 클로저는 새로운 인덱스를 사용하는 동안 키-경로 표현식은 여전히 세번째 요소를 참조합니다.
+서브스크립트에서 사용된 값은 명명된 값 또는 리터럴 일 수 있습니다. 값은 값 의미로 사용하여 키 경로에서 캡처됩니다. 다음 코드는 키-경로 표현식과 클로저 모두에서 변수 `index` 를 사용하여 `greetings` 배열의 세번째 요소를 접근합니다. `index` 가 수정될 때 클로저는 새로운 인덱스를 사용하는 동안 키-경로 표현식은 여전히 세번째 요소를 참조합니다.
 
 ```swift
 var index = 2
@@ -891,7 +891,7 @@ let descriptions = toDoList.filter(\.completed).map(\.description)
 let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
 ```
 
-키 경로 표현식의 문제는 표현식이 평가되는 시점에만 평가됩니다. 예를 들어 키 경로 표현식에 서브 스크립트 내에 함수 호출하는 경우 함수는 키 경로가 사용될 때마다가 아니라 표현식 평가의 일부로 한번만 호출됩니다.
+키 경로 표현식의 문제는 표현식이 평가되는 시점에만 평가됩니다. 예를 들어 키 경로 표현식에 서브스크립트 내에 함수 호출하는 경우 함수는 키 경로가 사용될 때마다가 아니라 표현식 평가의 일부로 한번만 호출됩니다.
 
 ```swift
 func makeIndex() -> Int {
@@ -1303,17 +1303,17 @@ let numbers = [10, 20, 33, 43, 50]
 >
 > *postfix-self-expression* → *postfix-expression* **`.`** **`self`**
 
-### 서브 스크립트 표현식 (Subscript Expression)
+### 서브스크립트 표현식 (Subscript Expression)
 
-_서브 스크립트 표현식 (subscript expression)_ 은 해당 서브 스크립트 선언의 getter 와 setter 를 사용하여 서브 스크립트에 접근을 제공합니다. 형식은 다음과 같습니다:
+_서브스크립트 표현식 (subscript expression)_ 은 해당 서브스크립트 선언의 getter 와 setter 를 사용하여 서브스크립트에 접근을 제공합니다. 형식은 다음과 같습니다:
 
 ```swift
 <#expression#>[<#index expressions#>]
 ```
 
-서브 스크립트 표현식의 값을 평가하기 위해 _표현식 (expression)_ 의 타입에 대한 서브 스크립트 getter 는 서브 스크립트 파라미터로 _인덱스 표현식 (index expressions)_ 을 전달하여 호출됩니다. 값을 설정하기 위해선 서브 스크립트 setter 는 동일한 방식으로 호출됩니다.
+서브스크립트 표현식의 값을 평가하기 위해 _표현식 (expression)_ 의 타입에 대한 서브스크립트 getter 는 서브스크립트 파라미터로 _인덱스 표현식 (index expressions)_ 을 전달하여 호출됩니다. 값을 설정하기 위해선 서브스크립트 setter 는 동일한 방식으로 호출됩니다.
 
-서브 스크립트 선언에 대한 자세한 내용은 <doc:Declarations#프로토콜-서브-스크립트-선언-Protocol-Subscript-Declaration> 을 참고 바랍니다.
+서브스크립트 선언에 대한 자세한 내용은 <doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration> 을 참고 바랍니다.
 
 > Grammar of a subscript expression:
 >

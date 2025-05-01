@@ -469,9 +469,9 @@ Objective-C의 하위 클래스와 다르게 Swift 하위 클래스는 기본적
 
 사용자 정의 하위 클래스가 상위 클래스와 동일한 초기화 구문 중 하나 이상을 표시하려면 하위 클래스 내에서 해당 초기화 구문의 사용자 정의 구현을 제공할 수 있습니다.
 
-상위 클래스에 _지정된_ 초기화 구문과 일치하는 하위 클래스 초기화 구문을 작성할 때 지정된 초기화 구문의 재정의를 효과적으로 제공합니다. 따라서 하위 클래스의 초기화 구문 정의 전에 `override` 수식어를 작성해야만 합니다. <doc:Initialization#기본-초기화-구문-Default-Initializers> 에서 설명 했듯이 자동으로 제공된 기본 초기화 구문을 재정의하는 경우에도 마찬가지입니다.
+상위 클래스에 _지정된_ 초기화 구문과 일치하는 하위 클래스 초기화 구문을 작성할 때 지정된 초기화 구문의 재정의를 효과적으로 제공합니다. 따라서 하위 클래스의 초기화 구문 정의 전에 `override` 수식어를 작성해야만 합니다. <doc:Initialization#기본-초기화-구문-Default-Initializers> 에서 설명했듯이 자동으로 제공된 기본 초기화 구문을 재정의하는 경우에도 마찬가지입니다.
 
-재정의 된 프로퍼티, 메서드 또는 서브 스크립트와 마찬가지로 `override` 수식어가 있으면 Swift가 상위 클래스에 재정의 할 일치하는 지정된 초기화 구문이 있는지 확인하고 재정의 할 초기화 구문의 파라미터가 의도한대로 지정되었는지 확인하도록 합니다.
+재정의 된 프로퍼티, 메서드 또는 서브스크립트와 마찬가지로 `override` 수식어가 있으면 Swift가 상위 클래스에 재정의 할 일치하는 지정된 초기화 구문이 있는지 확인하고 재정의 할 초기화 구문의 파라미터가 의도한대로 지정되었는지 확인하도록 합니다.
 
 > Note   
 > 초기화 구문의 하위 클래스의 구현이 편의 초기화 구문이라도 상위 클래스에 지정된 초기화 구문을 재정의할 때 항상 `override` 수식어를 작성합니다.
@@ -489,7 +489,7 @@ class Vehicle {
 }
 ```
 
-`Vehicle` 클래스는 저장된 프로퍼티에 대해서만 기본값을 제공하고 모든 사용자 정의 초기화 구문 자체는 제공하지 않습니다. 그 결과 <doc:Initialization#기본-초기화-구문-Default-Initializers> 에서 설명 했듯이 기본 초기화 구문을 자동으로 받습니다. 사용가능한 경우 기본 초기화 구문은 항상 클래스에 대해 지정된 초기화 구문이고 `0` 인 `numberOfWheels` 를 가진 새로운 `Vehicle` 인스턴스를 생성하기 위해 사용됩니다:
+`Vehicle` 클래스는 저장된 프로퍼티에 대해서만 기본값을 제공하고 모든 사용자 정의 초기화 구문 자체는 제공하지 않습니다. 그 결과 <doc:Initialization#기본-초기화-구문-Default-Initializers> 에서 설명했듯이 기본 초기화 구문을 자동으로 받습니다. 사용가능한 경우 기본 초기화 구문은 항상 클래스에 대해 지정된 초기화 구문이고 `0` 인 `numberOfWheels` 를 가진 새로운 `Vehicle` 인스턴스를 생성하기 위해 사용됩니다:
 
 ```swift
 let vehicle = Vehicle()
@@ -628,7 +628,7 @@ class RecipeIngredient: Food {
 
 `RecipeIngredient` 는 이름으로만 `RecipeIngredient` 인스턴스를 생성하기 위해 사용되는 `init(name: String)` 인 편의 초기화 구문도 정의합니다. 이 편의 초기화 구문은 명시적인 양 없이 생성되는 모든 `RecipeIngredient` 인스턴스에 대해 `1` 의 양으로 가정합니다. 이러한 편의 초기화 구문의 정의는 `RecipeIngredient` 인스턴스를 더 빠르고 편리하게 생성하도록 하고 여러개의 단일 양의 `RecipeIngredient` 인스턴스를 생성할 때 코드 중복을 피할 수 있습니다. 이 편의 초기화 구문은 `quantity` 값 `1` 을 전달하여 클래스의 지정된 초기화 구문에 위임합니다.
 
-`RecipeIngredient` 에 제공된 `init(name: String)` 편의 초기화 구문은 `Food` 에 `init(name: String)` _지정된_ 초기화 구문으로 같은 파라미터를 가지고 있습니다. 이 편의 초기화 구문은 상위 클래스의 지정된 초기화 구문을 재정의 하기 때문에 <doc:Initialization#초기화-구문-상속과-재정의-Initializer-Inheritance-and-Overriding> 에서 설명 했듯이 `override` 수식어를 붙여줘야 합니다.
+`RecipeIngredient` 에 제공된 `init(name: String)` 편의 초기화 구문은 `Food` 에 `init(name: String)` _지정된_ 초기화 구문으로 같은 파라미터를 가지고 있습니다. 이 편의 초기화 구문은 상위 클래스의 지정된 초기화 구문을 재정의 하기 때문에 <doc:Initialization#초기화-구문-상속과-재정의-Initializer-Inheritance-and-Overriding> 에서 설명했듯이 `override` 수식어를 붙여줘야 합니다.
 
 `RecipeIngredient` 는 편의 초기화 구문으로 `init(name: String)` 을 제공하지만 `RecipeIngredient` 는 상위 클래스의 지정된 초기화 구문의 모든 구현을 제공했습니다. 따라서 `RecipeIngredient` 는 자동으로 모든 상위 클래스의 편의 초기화 구문도 상속합니다.
 

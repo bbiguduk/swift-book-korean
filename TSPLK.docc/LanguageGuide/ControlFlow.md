@@ -273,9 +273,9 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 
 위의 예제는 범위, 배열, 딕셔너리, 문자열을
 조회하기 위해 `for`-`in` 루프를 사용합니다.
-그러나 이 구문은 *모든* 콜렉션을 조회할 수 있으며,
+그러나 이 구문은 *모든* 컬렉션을 조회할 수 있으며,
 [시퀀스 (Sequence)](https://developer.apple.com/documentation/swift/sequence) 프로토콜을 준수하는
-사용자가 정의한 클래스나 콜렉션 타입도 포함됩니다.
+사용자가 정의한 클래스나 컬렉션 타입도 포함됩니다.
 
 <!--
   TODO: for (index, object) in enumerate(collection)

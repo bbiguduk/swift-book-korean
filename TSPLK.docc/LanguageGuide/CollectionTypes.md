@@ -1,25 +1,25 @@
-# 콜렉션 타입 (Collection Types)
+# 컬렉션 타입 (Collection Types)
 
 배열, 집합, 딕셔너리를 사용하여 데이터를 구성합니다.
 
-Swift는 콜렉션의 값을 저장하기 위한
+Swift는 컬렉션의 값을 저장하기 위한
 배열(array), 집합(set), 딕셔너리(dictionary)와 같은
-세 가지 *콜렉션 타입(collection types)*을 제공합니다.
-배열은 콜렉션 값에 순서를 가지고 있습니다.
-집합은 반복되지 않는 값에 순서가 없는 콜렉션 타입입니다.
-딕셔너리는 키-값 쌍의 순서가 없는 콜렉션 타입입니다.
+세 가지 *컬렉션 타입(collection types)*을 제공합니다.
+배열은 컬렉션 값에 순서를 가지고 있습니다.
+집합은 반복되지 않는 값에 순서가 없는 컬렉션 타입입니다.
+딕셔너리는 키-값 쌍의 순서가 없는 컬렉션 타입입니다.
 
 ![Collection types intro](CollectionTypes_intro)
 
 Swift의 배열, 집합, 딕셔너리는
 저장할 수 있는 값의 타입과 키의 타입에 대해 명확합니다.
-이것은 실수로 콜렉션에 잘못된 타입을
+이것은 실수로 컬렉션에 잘못된 타입을
 추가할 수 없다는 의미입니다.
-또한 콜렉션에서 값을 조회할 때
+또한 컬렉션에서 값을 조회할 때
 타입이 명확하다는 것을 의미합니다.
 
-> Note: Swift의 배열, 집합, 딕셔너리 타입은 *제너릭 콜렉션(generic collections)*으로 구현됩니다.
-> 제너릭 타입과 콜렉션에 대한 자세한 내용은 <doc:Generics>을 참고 바랍니다.
+> Note: Swift의 배열, 집합, 딕셔너리 타입은 *제너릭 컬렉션(generic collections)*으로 구현됩니다.
+> 제너릭 타입과 컬렉션에 대한 자세한 내용은 <doc:Generics>을 참고 바랍니다.
 
 <!--
   TODO: should I mention the Collection protocol, to which both of these conform?
@@ -33,20 +33,20 @@ Swift의 배열, 집합, 딕셔너리는
   TODO: discuss collection equality
 -->
 
-## 콜렉션의 가변성 (Mutablility of Collections)
+## 컬렉션의 가변성 (Mutablility of Collections)
 
 배열, 집합, 딕셔너리를 생성하고 변수에 할당하면,
-생성된 콜렉션은 *변경 가능(mutable)*합니다.
-이것은 콜렉션이 생성된 후에 콜렉션의 아이템을
+생성된 컬렉션은 *변경 가능(mutable)*합니다.
+이것은 컬렉션이 생성된 후에 컬렉션의 아이템을
 추가, 삭제, 변경할 수 있다는 뜻입니다.
 배열, 집합, 딕셔너리를 상수에 할당하면
-이 콜렉션은 불가변성이며,
+이 컬렉션은 불가변성이며,
 크기와 콘텐츠를 변경할 수 없습니다.
 
-> Note: 콜렉션을 변경할 필요가 없는 경우에
-> 변경 불가능한 콜렉션을 만드는 것이 좋습니다.
+> Note: 컬렉션을 변경할 필요가 없는 경우에
+> 변경 불가능한 컬렉션을 만드는 것이 좋습니다.
 > 이렇게 하면 코드에 대해 더 쉽게 추론할 수 있고,
-> Swift 컴파일러가 생성한 콜렉션의 성능을
+> Swift 컴파일러가 생성한 컬렉션의 성능을
 > 최적화 할 수 있습니다.
 
 ## 배열 (Arrays)
@@ -184,7 +184,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 
 ### 배열 리터럴로 생성 (Creating an Array with an Array Literal)
 
-배열 콜렉션으로 하나 이상의 값을 *배열 리터럴(array literal)*에 작성하여
+배열 컬렉션으로 하나 이상의 값을 *배열 리터럴(array literal)*에 작성하여
 배열을 생성할 수 있습니다.
 배열 리터럴은 값을 리스트로 작성하고 콤마로 구분하며,
 대괄호로 둘러싸서 작성합니다:
@@ -577,7 +577,7 @@ for (index, value) in shoppingList.enumerated() {
 
 ## 집합 (Sets)
 
-*집합(set)*은 콜렉션에 순서와 상관없이
+*집합(set)*은 컬렉션에 순서와 상관없이
 같은 타입의 다른 값을 저장합니다.
 아이템의 순서가 중요하지 않거나
 아이템이 반복되면 안될 때 배열 대신에 집합을 사용할 수 있습니다.
@@ -667,7 +667,7 @@ letters = []
 
 ### 배열 리터럴로 집합 생성 (Creating a Set with an Array Literal)
 
-집합 콜렉션으로 하나 이상의 값으로 축약형 방법과 같이
+집합 컬렉션으로 하나 이상의 값으로 축약형 방법과 같이
 배열 리터럴을 사용하여 집합을 초기화 할 수도 있습니다.
 
 아래 예제는 `String` 값을 저장하는 `favoriteGenres`라는 집합을 생성합니다:
@@ -1021,7 +1021,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
 
 ## 딕셔너리 (Dictionaries)
 
-*딕셔너리(dictionary)*는 순서와 상관없이 콜렉션에
+*딕셔너리(dictionary)*는 순서와 상관없이 컬렉션에
 같은 타입의 키(key)와 같은 타입의 값(value)을
 저장합니다.
 각 값은 고유한 *키*와 연결되어 있으며,
@@ -1101,7 +1101,7 @@ namesOfIntegers = [:]
 
 앞서 배열 리터럴과 비슷한 구문을 가진
 *딕셔너리 리터럴(dictionary literal)*로 딕셔너리를 초기화 할 수 있습니다.
-딕셔너리 리터럴은 `Dictionary` 콜렉션으로
+딕셔너리 리터럴은 `Dictionary` 컬렉션으로
 하나 이상의 키-값 쌍으로 작성하는 축약형입니다.
 
 *키-값 쌍*은 키와 값의 결합입니다.
@@ -1405,7 +1405,7 @@ for (airportCode, airportName) in airports {
 `for`-`in` 루프에 대한 자세한 설명은 <doc:ControlFlow#For-In-루프-For-In-Loops>를 참고 바랍니다.
 
 딕셔너리의 `keys`와 `values` 프로퍼티로
-딕셔너리의 키나 값에 반복 가능한 콜렉션을 가져올 수도 있습니다:
+딕셔너리의 키나 값에 반복 가능한 컬렉션을 가져올 수도 있습니다:
 
 ```swift
 for airportCode in airports.keys {

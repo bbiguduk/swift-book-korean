@@ -970,7 +970,7 @@ print("the number of characters in \(word) is \(word.count)")
 ## 문자열 접근과 수정 (Accessing and Modifying a String)
 
 메서드와 프로퍼티
-또는 서브 스크립트 구문으로 문자열에 접근, 수정할 수 있습니다.
+또는 서브스크립트 구문으로 문자열에 접근, 수정할 수 있습니다.
 
 ### 문자열 인덱스 (String Indices)
 
@@ -988,7 +988,7 @@ print("the number of characters in \(word) is \(word.count)")
 `startIndex` 프로퍼티를 사용합니다.
 `endIndex` 프로퍼티는 `String`에 마지막 문자의 다음 위치입니다.
 그 결과
-`endIndex` 프로퍼티는 문자열의 서브 스크립트에 유효한 인수가 아닙니다.
+`endIndex` 프로퍼티는 문자열의 서브스크립트에 유효한 인수가 아닙니다.
 `String`이 비어있다면, `startIndex`와 `endIndex`는 같습니다.
 
 `String`의 메서드 `index(before:)`와 `index(after:)`를 사용하여
@@ -998,7 +998,7 @@ print("the number of characters in \(word) is \(word.count)")
 `index(_:offsetBy:)` 메서드를 사용할 수 있습니다.
 
 특정 `String` 인덱스의 `Character`에 접근하기 위해
-서브 스크립트 구문을 사용할 수 있습니다.
+서브스크립트 구문을 사용할 수 있습니다.
 
 ```swift
 let greeting = "Guten Tag!"
@@ -1098,7 +1098,7 @@ for index in greeting.indices {
 > `startIndex`와 `endIndex` 프로퍼티와
 > `index(before:)`, `index(after:)`, `index(_:offsetBy:)` 메서드를 사용할 수 있습니다.
 > 이것은 여기서 봤듯이 `String` 뿐만 아니라
-> `Array`, `Dictionary`, `Set`과 같은 콜렉션 타입도 포함됩니다.
+> `Array`, `Dictionary`, `Set`과 같은 컬렉션 타입도 포함됩니다.
 
 ### 삽입과 삭제 (Inserting and Removing)
 
@@ -1168,12 +1168,12 @@ welcome.removeSubrange(range)
 > `insert(_:at:)`, `insert(contentsOf:at:)`,
 > `remove(at:)`, `removeSubrange(_:)` 메서드를 사용할 수 있습니다.
 > 이것은 여기서 봤듯이 `String` 뿐만 아니라
-> `Array`, `Dictionary`, `Set`과 같은 콜렉션 타입도 포함됩니다.
+> `Array`, `Dictionary`, `Set`과 같은 컬렉션 타입도 포함됩니다.
 
 ## 부분 문자열 (Substrings)
 
 문자열에서 부분 문자열(substring)을 얻기위해 ---
-예를 들어 서브 스크립트나 `prefix(_:)`와 같은 메서드를 사용하면 ---
+예를 들어 서브스크립트나 `prefix(_:)`와 같은 메서드를 사용하면 ---
 결과는
 다른 문자열이 아닌
 [`Substring`](https://developer.apple.com/documentation/swift/substring) 인스턴스 입니다.

@@ -234,7 +234,7 @@ unit4A = nil
 ![Weak Reference 03](weakReference03)
 
 > Note   
-> 가비지 콜렉션을 사용하는 시스템에서는 메모리 압력이 가비지 콜렉션을 트리거 할 때만 강한 참조가 없는 객체가 할당 해제되기 때문에 간단한 캐싱 메커니즘을 구현하는데 약한 포인터가 사용되는 경우가 있습니다. 그러나 ARC를 사용하면 마지막 강한 참조가 제거되자마자 값이 할당 해제되어 약한 참조는 이러한 목적에 적합하지 않습니다.
+> 가비지 컬렉션을 사용하는 시스템에서는 메모리 압력이 가비지 컬렉션을 트리거 할 때만 강한 참조가 없는 객체가 할당 해제되기 때문에 간단한 캐싱 메커니즘을 구현하는데 약한 포인터가 사용되는 경우가 있습니다. 그러나 ARC를 사용하면 마지막 강한 참조가 제거되자마자 값이 할당 해제되어 약한 참조는 이러한 목적에 적합하지 않습니다.
 
 ### 미소유 참조 \(Unowned References\)
 
@@ -410,9 +410,9 @@ class City {
 
 두 클래스 간의 상호 종속성을 설정하기 위해 `City` 에 대한 초기화 구문은 `Country` 인스턴스를 가지고 있고 `country` 프로퍼티에 저장합니다.
 
-`City` 에 대한 초기화 구문은 `Country` 에 대한 초기화 구문 내에서 호출됩니다. 그러나 `Country` 에 대한 초기화 구문은 <doc:Initialization#2단계-초기화-Two-Phase-Initialization> 에서 설명 했듯이 새로운 `Country` 인스턴스가 완벽히 초기화 될 때까지 `City` 초기화 구문에 `self` 를 전달할 수 없습니다.
+`City` 에 대한 초기화 구문은 `Country` 에 대한 초기화 구문 내에서 호출됩니다. 그러나 `Country` 에 대한 초기화 구문은 <doc:Initialization#2단계-초기화-Two-Phase-Initialization> 에서 설명했듯이 새로운 `Country` 인스턴스가 완벽히 초기화 될 때까지 `City` 초기화 구문에 `self` 를 전달할 수 없습니다.
 
-이 요구사항을 처리하려면 `Country` 의 `capitalCity` 프로퍼티를 타입 설명의 끝에 느낌표 \(`City!`\)로 표시되는 암시적 언래핑된 옵셔널 프로퍼티로 선언합니다. `capitalCity` 프로퍼티는 다른 옵셔널과 같이 `nil` 의 기본값을 가지지만 <doc:TheBasics#암시적으로-언래핑된-옵셔널-Implicitly-Unwrapped-Optionals> 에서 설명 했듯이 언래핑 할 필요없이 값에 접근할 수 있다는 의미입니다.
+이 요구사항을 처리하려면 `Country` 의 `capitalCity` 프로퍼티를 타입 설명의 끝에 느낌표 \(`City!`\)로 표시되는 암시적 언래핑된 옵셔널 프로퍼티로 선언합니다. `capitalCity` 프로퍼티는 다른 옵셔널과 같이 `nil` 의 기본값을 가지지만 <doc:TheBasics#암시적으로-언래핑된-옵셔널-Implicitly-Unwrapped-Optionals> 에서 설명했듯이 언래핑 할 필요없이 값에 접근할 수 있다는 의미입니다.
 
 `capitalCity` 는 기본 `nil` 값을 가지므로 새로운 `Country` 인스턴스는 `Country` 인스턴스가 초기화 구문 내에서 `name` 프로퍼티를 설정하는 즉시 새로운 `Country`인스턴스는 완벽히 초기화 된 것으로 간주합니다. 이것은 `Country` 초기화 구문은 `name` 프로퍼티가 설정되는 즉시 암시적 `self` 프로퍼티를 참조하고 전달할 수 있다는 의미입니다. 따라서 `Country` 초기화 구문은 `capitalCity` 프로퍼티를 설정할 때 `City` 초기화 구문에 대한 하나의 파라미터로 `self` 를 전달할 수 있습니다.
 

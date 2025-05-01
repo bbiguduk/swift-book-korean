@@ -182,7 +182,7 @@ Swift 표준 라이브러리는 의도적으로 안전하지 않은 기능을 �
 
 ## 비동기 시퀀스 \(Asynchronous Sequences\)
 
-이전 섹션에서 `listPhotos(inGallery:)` 함수는 비동기적으로 배열의 모든 요소가 준비된 후에 전체 배열을 한번에 반환합니다. 또 다른 접근 방식은 _비동기 시퀀스 \(asynchronous sequence\)_ 를 사용하여 한번에 콜렉션의 한 요소를 기다리는 것입니다. 비동기 시퀀스에 대한 조회 동작은 다음과 같습니다:
+이전 섹션에서 `listPhotos(inGallery:)` 함수는 비동기적으로 배열의 모든 요소가 준비된 후에 전체 배열을 한번에 반환합니다. 또 다른 접근 방식은 _비동기 시퀀스 \(asynchronous sequence\)_ 를 사용하여 한번에 컬렉션의 한 요소를 기다리는 것입니다. 비동기 시퀀스에 대한 조회 동작은 다음과 같습니다:
 
 ```swift
 import Foundation
@@ -352,7 +352,7 @@ Swift 동시성은 협동 취소 모델 (cooperative cancellation model) 을 사
 취소에 대한 응답은 다음 중 하나에 해당합니다:
 
 - `CancellationError` 와 같은 에러 발생
-- `nil` 또는 빈 콜렉션 반환
+- `nil` 또는 빈 컬렉션 반환
 - 부분적으로 완료된 작업 반환
 
 사진이 크거나 네트워크가 느려서
