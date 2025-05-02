@@ -37,7 +37,7 @@ class Person {
 }
 ```
 
-`Person` 클래스는 인스턴스의 `name` 프로퍼티에 설정하고 초기화가 진행 중임을 나타내는 메세지를 출력하는 초기화 구문을 가집니다. `Person` 클래스는 클래스의 인스턴스가 할당 해제될 때 메시지를 출력하는 초기화 해제 구문도 가지고 있습니다.
+`Person` 클래스는 인스턴스의 `name` 프로퍼티에 설정하고 초기화가 진행 중임을 나타내는 메세지를 출력하는 이니셜라이저를 가집니다. `Person` 클래스는 클래스의 인스턴스가 할당 해제될 때 메시지를 출력하는 디이니셜라이저도 가지고 있습니다.
 
 다음 코드는 뒤따르는 코드에 새로운 `Person` 인스턴스에 여러개 참조를 설정하기 위해 사용되는 `Person?` 타입의 3개의 변수를 정의합니다. 이 변수는 `Person` 이 아닌 `Person?` 인 옵셔널 타입 이므로 `nil` 의 값으로 자동으로 초기화 되고 현재는 `Person` 인스턴스를 참조하지 않습니다.
 
@@ -54,7 +54,7 @@ reference1 = Person(name: "John Appleseed")
 // Prints "John Appleseed is being initialized"
 ```
 
-`"John Appleseed is being initialized"` 메세지는 `Person` 클래스의 초기화 구문을 호출할 때 출력됩니다. 이것은 초기화가 발생했음을 확인합니다.
+`"John Appleseed is being initialized"` 메세지는 `Person` 클래스의 이니셜라이저를 호출할 때 출력됩니다. 이것은 초기화가 발생했음을 확인합니다.
 
 새로운 `Person` 인스턴스는 `reference1` 변수에 할당되기 때문에 `reference1` 에서 새로운 `Person` 인스턴스에 대한 강한 참조가 있습니다. 하나의 강한 참조가 있기 때문에 ARC는 이 `Person` 을 메모리에 유지하고 할당 해제하지 않습니다.
 
@@ -111,7 +111,7 @@ class Apartment {
 
 유사하게 모든 `Apartment` 인스턴스는 `String` 타입의 `unit` 프로퍼티와 초기값이 `nil` 인 옵셔널 `tenant` 프로퍼티를 가지고 있습니다. 아파트는 항상 세입자를 보유하는 것이 아니므로 `tenant` 프로퍼티는 옵셔널입니다.
 
-이 클래스 모두 클래스의 인스턴스가 초기화 해제 됨을 출력하는 초기화 해제 구문을 정의합니다. 이것을 사용하면 `Person` 과 `Apartment` 의 인스턴스가 예상대로 초기화 해제되었는지 확인할 수 있습니다.
+이 클래스 모두 클래스의 인스턴스가 초기화 해제 됨을 출력하는 디이니셜라이저를 정의합니다. 이것을 사용하면 `Person` 과 `Apartment` 의 인스턴스가 예상대로 초기화 해제되었는지 확인할 수 있습니다.
 
 다음 코드는 아래에서 특정 `Apartment` 와 `Person` 인스턴스를 설정할 `john` 과 `unit4A` 라는 옵셔널 타입의 2개의 변수를 정의합니다. 이 변수 모두 옵셔널 이므로 초기값으로 `nil` 을 가집니다:
 
@@ -149,7 +149,7 @@ john = nil
 unit4A = nil
 ```
 
-두 변수를 `nil` 로 설정할 때 초기화 해제 구문은 호출되지 않습니다. 강한 참조 사이클은 `Person` 과 `Apartment` 인스턴스가 할당 해제되는 것을 방지하여 앱에서 메모리 누수를 유발합니다.
+두 변수를 `nil` 로 설정할 때 디이니셜라이저는 호출되지 않습니다. 강한 참조 사이클은 `Person` 과 `Apartment` 인스턴스가 할당 해제되는 것을 방지하여 앱에서 메모리 누수를 유발합니다.
 
 다음은 `john` 과 `unit4A` 변수를 `nil` 로 설정한 후에 강한 참조를 나타냅니다:
 
@@ -251,7 +251,7 @@ unit4A = nil
 
 `Customer` 와 `CreditCard` 간의 관계는 위의 약한 참조 예제에서 본 `Apartment` 와 `Person` 간의 관계와 약간 다릅니다. 이 데이터 모델은 고객은 신용카드를 가지고 있거나 가지고 있지 않을 수 있지만 신용카드는 _항상_ 고객과 연관되어 있습니다. `CreditCard` 인스턴스는 참조하는 `Customer` 보다 오래 지속되지 않습니다. 이것을 표현하기 위해 `Customer` 클래스는 옵셔널 `card` 프로퍼티를 가지지만 `CreditCard` 클래스는 미소유와 옵셔널이 아닌 `customer` 프로퍼티를 가집니다.
 
-또한 새로운 `CreditCard` 인스턴스는 사용자 정의 `CreditCard` 초기화 구문에 `number` 값과 `customer` 인스턴스를 전달해서만 생성될 수 있습니다. 이렇게 하면 `CreditCard` 인스턴스가 생성될 때 `CreditCard` 인스턴스에 항상 연관된 `customer` 인스턴스를 가지고 있습니다.
+또한 새로운 `CreditCard` 인스턴스는 사용자 정의 `CreditCard` 이니셜라이저에 `number` 값과 `customer` 인스턴스를 전달해서만 생성될 수 있습니다. 이렇게 하면 `CreditCard` 인스턴스가 생성될 때 `CreditCard` 인스턴스에 항상 연관된 `customer` 인스턴스를 가지고 있습니다.
 
 신용카드는 항상 고객을 가지고 있으므로 강한 참조 사이클을 피하기 위해 `customer` 프로퍼티에 미소유 참조로 정의합니다:
 
@@ -310,7 +310,7 @@ john = nil
 // Prints "Card #1234567890123456 is being deinitialized"
 ```
 
-위의 마지막 코드는 `john` 변수를 `nil` 로 설정한 후에 `Customer` 인스턴스와 `CreditCard` 인스턴스 모두 "deinitialized" 메서지를 출력하는 초기화 해제 구문을 보여줍니다.
+위의 마지막 코드는 `john` 변수를 `nil` 로 설정한 후에 `Customer` 인스턴스와 `CreditCard` 인스턴스 모두 "deinitialized" 메서지를 출력하는 디이니셜라이저를 보여줍니다.
 
 > Note   
 > 위의 예제는 _안전한_ 미소유 참조를 어떻게 사용해야 하는지 보여줍니다. Swift는 성능상의 이유 등으로 런타임 안전 검사를 비활성화 하는 경우에 대해 _안전하지 않은_ 미소유 참조 \(unsafe unowned references\)를 제공합니다. 모든 안전하지 않은 작업과 마찬가지로 해당 코드의 안정성을 검사하는 것에 책임을 져야 합니다.
@@ -408,13 +408,13 @@ class City {
 }
 ```
 
-두 클래스 간의 상호 종속성을 설정하기 위해 `City` 에 대한 초기화 구문은 `Country` 인스턴스를 가지고 있고 `country` 프로퍼티에 저장합니다.
+두 클래스 간의 상호 종속성을 설정하기 위해 `City` 에 대한 이니셜라이저는 `Country` 인스턴스를 가지고 있고 `country` 프로퍼티에 저장합니다.
 
-`City` 에 대한 초기화 구문은 `Country` 에 대한 초기화 구문 내에서 호출됩니다. 그러나 `Country` 에 대한 초기화 구문은 <doc:Initialization#2단계-초기화-Two-Phase-Initialization> 에서 설명했듯이 새로운 `Country` 인스턴스가 완벽히 초기화 될 때까지 `City` 초기화 구문에 `self` 를 전달할 수 없습니다.
+`City` 에 대한 이니셜라이저는 `Country` 에 대한 이니셜라이저 내에서 호출됩니다. 그러나 `Country` 에 대한 이니셜라이저는 <doc:Initialization#2단계-초기화-Two-Phase-Initialization> 에서 설명했듯이 새로운 `Country` 인스턴스가 완벽히 초기화 될 때까지 `City` 이니셜라이저에 `self` 를 전달할 수 없습니다.
 
 이 요구사항을 처리하려면 `Country` 의 `capitalCity` 프로퍼티를 타입 설명의 끝에 느낌표 \(`City!`\)로 표시되는 암시적 언래핑된 옵셔널 프로퍼티로 선언합니다. `capitalCity` 프로퍼티는 다른 옵셔널과 같이 `nil` 의 기본값을 가지지만 <doc:TheBasics#암시적으로-언래핑된-옵셔널-Implicitly-Unwrapped-Optionals> 에서 설명했듯이 언래핑 할 필요없이 값에 접근할 수 있다는 의미입니다.
 
-`capitalCity` 는 기본 `nil` 값을 가지므로 새로운 `Country` 인스턴스는 `Country` 인스턴스가 초기화 구문 내에서 `name` 프로퍼티를 설정하는 즉시 새로운 `Country`인스턴스는 완벽히 초기화 된 것으로 간주합니다. 이것은 `Country` 초기화 구문은 `name` 프로퍼티가 설정되는 즉시 암시적 `self` 프로퍼티를 참조하고 전달할 수 있다는 의미입니다. 따라서 `Country` 초기화 구문은 `capitalCity` 프로퍼티를 설정할 때 `City` 초기화 구문에 대한 하나의 파라미터로 `self` 를 전달할 수 있습니다.
+`capitalCity` 는 기본 `nil` 값을 가지므로 새로운 `Country` 인스턴스는 `Country` 인스턴스가 이니셜라이저 내에서 `name` 프로퍼티를 설정하는 즉시 새로운 `Country`인스턴스는 완벽히 초기화 된 것으로 간주합니다. 이것은 `Country` 이니셜라이저는 `name` 프로퍼티가 설정되는 즉시 암시적 `self` 프로퍼티를 참조하고 전달할 수 있다는 의미입니다. 따라서 `Country` 이니셜라이저는 `capitalCity` 프로퍼티를 설정할 때 `City` 이니셜라이저에 대한 하나의 파라미터로 `self` 를 전달할 수 있습니다.
 
 이 모든 것은 강한 참조 사이클을 만들지 않고 단일 구문으로 `Country` 와 `City` 인스턴스를 생성하고 `capitalCity` 프로퍼티는 옵셔널 값을 언래핑 하기위해 느낌표를 사용할 필요없이 직접 접근할 수 있다는 의미입니다:
 
@@ -424,7 +424,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // Prints "Canada's capital city is called Ottawa"
 ```
 
-위의 예제에서 암시적 언래핑된 옵셔널의 사용은 모든 2단계 클래스 초기화 구문 요구사항을 충족한다는 의미입니다. `capitalCity` 프로퍼티는 초기화가 완료되면 옵셔널이 아닌 값처럼 사용되고 접근할 수 있지만 강한 참조 사이클은 피할 수 있습니다.
+위의 예제에서 암시적 언래핑된 옵셔널의 사용은 모든 2단계 클래스 이니셜라이저 요구사항을 충족한다는 의미입니다. `capitalCity` 프로퍼티는 초기화가 완료되면 옵셔널이 아닌 값처럼 사용되고 접근할 수 있지만 강한 참조 사이클은 피할 수 있습니다.
 
 ## 클로저에 대한 강한 참조 사이클 \(Strong Reference Cycles for Closures\)
 
@@ -487,7 +487,7 @@ print(heading.asHTML())
 > Note   
 > `asHTML` 프로퍼티는 요소가 실제로 일부 HTML 출력 타겟에 대한 문자열 값으로 렌더링 되어야 하는 경우에만 필요하므로 지연 프로퍼티로 선언됩니다. `asHTML` 이 지연 프로퍼티라는 사실은 초기화가 완료되고 `self` 가 존재할 때까지 접근할 수 없으므로 기본 클로저 내에서 `self` 를 참조할 수 있다는 의미입니다.
 
-`HTMLElement` 클래스는 `name` 인수와 필요하면 `text` 인수를 사용하여 새로운 요소를 초기화 하는 단일 초기화 구문을 제공합니다. 이 클래스는 `HTMLElement` 인스턴스가 할당 해제될 때 메세지를 출력하는 초기화 해제 구문도 정의합니다.
+`HTMLElement` 클래스는 `name` 인수와 필요하면 `text` 인수를 사용하여 새로운 요소를 초기화 하는 단일 이니셜라이저를 제공합니다. 이 클래스는 `HTMLElement` 인스턴스가 할당 해제될 때 메세지를 출력하는 디이니셜라이저도 정의합니다.
 
 다음은 어떻게 `HTMLElement` 클래스가 새로운 인스턴스를 생성하고 출력하기 위해 사용되는지 보여줍니다:
 
@@ -515,7 +515,7 @@ print(paragraph!.asHTML())
 paragraph = nil
 ```
 
-`HTMLElement` 초기화 해제 구문에 메세지는 출력되지 않으며 `HTMLElement` 인스턴스는 할당 해제 되지 않음을 보여줍니다.
+`HTMLElement` 디이니셜라이저에 메세지는 출력되지 않으며 `HTMLElement` 인스턴스는 할당 해제 되지 않음을 보여줍니다.
 
 ## 클로저에 대한 강한 참조 사이클 해결 \(Resolving Strong Reference Cycles for Closures\)
 
@@ -599,7 +599,7 @@ print(paragraph!.asHTML())
 
 ![Closure Reference Cycle 02](closureReferenceCycle02)
 
-이번에는 클로저에 의해 `self` 의 캡처는 미소유 참조이고 캡처한 `HTMLElement` 인스턴스를 강하게 유지하지 않습니다. `paragraph` 변수를 `nil` 로 강한 참조를 설정하면 아래 예제에서 초기화 해제 구문 메세지를 출력하는 것을 확인했듯이 `HTMLElement` 인스턴스는 할당 해제 됩니다.
+이번에는 클로저에 의해 `self` 의 캡처는 미소유 참조이고 캡처한 `HTMLElement` 인스턴스를 강하게 유지하지 않습니다. `paragraph` 변수를 `nil` 로 강한 참조를 설정하면 아래 예제에서 디이니셜라이저 메세지를 출력하는 것을 확인했듯이 `HTMLElement` 인스턴스는 할당 해제 됩니다.
 
 ```swift
 paragraph = nil

@@ -52,7 +52,7 @@ struct SundaeToppings: OptionSet {
 }
 ```
 
-이 코드에서 `SundaeToppings` 옵션 셋의 각 옵션은 반복적이고 수동적인 초기화 구문 호출을 포함합니다. 이러한 코드는 줄 끝에 잘못된 숫자를 입력하는 것과 같은 새로운 옵션을 추가할 때 실수하기 쉽습니다.
+이 코드에서 `SundaeToppings` 옵션 셋의 각 옵션은 반복적이고 수동적인 이니셜라이저 호출을 포함합니다. 이러한 코드는 줄 끝에 잘못된 숫자를 입력하는 것과 같은 새로운 옵션을 추가할 때 실수하기 쉽습니다.
 
 다음의 코드는 매크로를 사용한 버전입니다:
 
@@ -119,7 +119,7 @@ public macro OptionSet<RawType>() =
         #externalMacro(module: "SwiftMacros", type: "OptionSetMacro")
 ```
 
-`@attached` 속성은 각 매크로 역할에 대해 한번씩 선언에서 두번 나타납니다. 첫번째는 `@attached(member)` 를 사용하고 매크로가 적용된 타입에 새로운 멤버를 추가한다고 나타냅니다. `@OptionSet` 매크로는 `OptionSet` 프로토콜에 의해 요구되는 `init(rawValue:)` 초기화 구문과 멤버를 추가합니다.
+`@attached` 속성은 각 매크로 역할에 대해 한번씩 선언에서 두번 나타납니다. 첫번째는 `@attached(member)` 를 사용하고 매크로가 적용된 타입에 새로운 멤버를 추가한다고 나타냅니다. `@OptionSet` 매크로는 `OptionSet` 프로토콜에 의해 요구되는 `init(rawValue:)` 이니셜라이저과 멤버를 추가합니다.
 두번째는 `@attached(extension, conformances: OptionSet)` 를 사용하고 `@OptionSet` 이 `OptionSet` 프로토콜의 준수성을 추가한다고 나타냅니다.
 `@OptionSet` 매크로는 매크로를 적용한 타입을 확장하여 `OptionSet` 프로토콜의 준수성을 추가합니다.  
 

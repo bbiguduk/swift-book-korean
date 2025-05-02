@@ -735,13 +735,13 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 > Note: 슈퍼클래스의 프로퍼티에 대한 `willSet`과 `didSet` 관찰자는
 > 슈퍼클래스 초기화가 완료된 후
-> 서브클래스 초기화 구문에서 해당 프로퍼티가 설정될 때 호출됩니다.
+> 서브클래스 이니셜라이저에서 해당 프로퍼티가 설정될 때 호출됩니다.
 > 슈퍼클래스가 초기화 완료되기 전에
 > 클래스가 자신의 프로퍼티를 설정하는 도중에는 호출되지 않습니다.
 >
 > 초기화 위임에 대한 자세한 내용은
-> <doc:Initialization#값-타입을-위한-초기화-구문-위임-Initializer-Delegation-for-Value-Types>과
-> <doc:Initialization#클래스-타입에-대한-초기화-구문-위임-Initializer-Delegation-for-Class-Types>을 참고 바랍니다.
+> <doc:Initialization#값-타입을-위한-이니셜라이저-위임-Initializer-Delegation-for-Value-Types>과
+> <doc:Initialization#클래스-타입에-대한-이니셜라이저-위임-Initializer-Delegation-for-Class-Types>을 참고 바랍니다.
 
 <!--
   - test: `observersDuringInitialization`
@@ -1111,7 +1111,7 @@ struct SmallRectangle {
 `SmallRectangle` 정의에
 `height`나 `width` 초기 값을 지정할 수 없습니다.
 초기 값 설정을 지원하거나 다른 커스터마이징을 지원하려면,
-프로퍼티 래퍼에 초기화 구문을 추가해야 합니다.
+프로퍼티 래퍼에 이니셜라이저를 추가해야 합니다.
 다음은 래핑된 값과 최대 값을 설정하는 초기화를 정의하는
 `SmallNumber`라는 확장된 `TwelveOrLess`를 나타냅니다:
 
@@ -1181,11 +1181,11 @@ struct SmallNumber {
   so it's clearer to make each init stand on its own.
 -->
 
-`SmallNumber`의 정의는 세 가지 초기화 구문이 포함되어 있으며 ---
+`SmallNumber`의 정의는 세 가지 이니셜라이저이 포함되어 있으며 ---
 `init()`, `init(wrappedValue:)`, `init(wrappedValue:maximum:)` 가 포함되어 있으며 ---
 아래 예제에서는
-이 초기화 구문을 사용해 래핑된 값과 최대 값을 설정합니다.
-초기화와 초기화 구문에 대한 자세한 내용은
+이 이니셜라이저를 사용해 래핑된 값과 최대 값을 설정합니다.
+초기화와 이니셜라이저에 대한 자세한 내용은
 <doc:Initialization>를 참고 바랍니다.
 
 프로퍼티에 래퍼를 적용할 때 초기 값을 지정하지 않으면,
@@ -1307,13 +1307,13 @@ print(unitRectangle.height, unitRectangle.width)
 이는 `init(wrappedValue:)` 초기화 호출로 변환됩니다.
 `height`와 `width`를 래핑하는 `SmallNumber` 인스턴스는
 `SmallNumber(wrappedValue: 1)`을 호출하여 생성됩니다.
-이 초기화 구문은 여기서 지정된 래핑 값을 사용하고,
+이 이니셜라이저는 여기서 지정된 래핑 값을 사용하고,
 최대 값은 기본 값인 12를 사용합니다.
 
 사용자 지정 속성 뒤에 소괄호로 인수를 작성하면,
-Swift는 해당 인수를 받는 초기화 구문을 사용하여 래퍼를 설정합니다.
+Swift는 해당 인수를 받는 이니셜라이저를 사용하여 래퍼를 설정합니다.
 예를 들어 초기 값과 최대 값을 제공하면,
-Swift는 `init(wrappedValue:maximum:)` 초기화 구문을 사용합니다:
+Swift는 `init(wrappedValue:maximum:)` 이니셜라이저를 사용합니다:
 
 ```swift
 struct NarrowRectangle {
@@ -1387,12 +1387,12 @@ print(narrowRectangle.height, narrowRectangle.width)
 래퍼가 생성될 때 다른 옵션을 전달할 수 있습니다.
 이 구문은 프로퍼티 래퍼를 사용하는 가장 일반적인 방법입니다.
 필요한 인수를 속성에 제공하면,
-해당 인수가 초기화 구문에 전달됩니다.
+해당 인수가 이니셜라이저에 전달됩니다.
 
 프로퍼티 래퍼 인수를 포함하면,
 할당을 사용하여 초기 값을 지정할 수도 있습니다.
 Swift는 할당을 `wrappedValue` 인수처럼 처리하고
-저장한 인수를 수용하는 초기화 구문을 사용합니다.
+저장한 인수를 수용하는 이니셜라이저를 사용합니다.
 예를 들어:
 
 ```swift
@@ -1767,7 +1767,7 @@ func someFunction() {
 > Note: 저장 인스턴스 프로퍼티와 다르게
 > 저장 타입 프로퍼티에는 반드시 기본 값을 제공해야 합니다.
 > 이는 타입 자체에는 저장 타입 프로퍼티를 초기화할 수 있는
-> 초기화 구문이 존재하지 않기 때문입니다.
+> 이니셜라이저이 존재하지 않기 때문입니다.
 >
 > 저장 타입 프로퍼티는 처음 접근될 때 지연 초기화됩니다.
 > 여러 쓰레드에서 동시에 접근할 때도

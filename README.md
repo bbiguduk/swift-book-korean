@@ -46,8 +46,8 @@
 | Delegate                     | 대리자          |
 | Class                        | 클래스          |
 | Context                      | 컨텍스트         |
-| Initializer                  | 초기화 구문       |
-| Deinitializer                | 초기화 해제 구문    |
+| Initializer                  | 이니셜라이저       |
+| Deinitializer                | 디이니셜라이저    |
 | Subclass                     | 서브클래스       |
 | Superclass                   | 슈퍼클래스       |
 | Property                     | 프로퍼티         |
@@ -108,8 +108,8 @@
 | Inheritance                  | 상속           |
 | Overriding                   | 재정의          |
 | Delegation                   | 위임           |
-| Designated Initializer       | 지정된 초기화 구문   |
-| Convenience Initializer      | 편의 초기화 구문    |
+| Designated Initializer       | 지정된 이니셜라이저   |
+| Convenience Initializer      | 편의 이니셜라이저    |
 | Optional Chaining            | 옵셔널 체이닝      |
 | Error Handling               | 에러 처리        |
 | Concurrency                  | 동시성          |

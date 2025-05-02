@@ -399,7 +399,7 @@ print(wrapper.x)
 
 ### inlinable
 
-모듈의 public 인터페이스의 부분으로 선언의 구현을 노출하기 위해 함수, 메서드, 계산된 프로퍼티, 서브스크립트, 편리한 초기화 구문, 또는 초기화 해제 구문 선언에 이 속성을 적용합니다. 컴파일러는 호출 부분에서 기호의 구현을 복사본으로 인라인 가능한 기호로 호출을 대체할 수 있습니다.
+모듈의 public 인터페이스의 부분으로 선언의 구현을 노출하기 위해 함수, 메서드, 계산된 프로퍼티, 서브스크립트, 편리한 이니셜라이저, 또는 디이니셜라이저 선언에 이 속성을 적용합니다. 컴파일러는 호출 부분에서 기호의 구현을 복사본으로 인라인 가능한 기호로 호출을 대체할 수 있습니다.
 
 인라인 가능한 코드는 `public` 기호로 선언된 모든 모듈에서 상호작용 할 수 있고 `usableFromInline` 속성으로 표시된 동일한 모듈에서 선언된 `internal` 기호와 상호작용 할 수 있습니다. 인라인 가능한 코드는 `private` 또는 `fileprivate` 기호와 상호작용 할 수 없습니다.
 
@@ -430,11 +430,11 @@ protocol ProvidesMain {
 
 ### nonobjc
 
-암시적으로 `objc` 속성을 억제하기 위해 메서드, 프로퍼티, 서브스크립트, 또는 초기화 구문 선언에 이 속성을 적용합니다. `nonobjc` 속성은 Objective-C 에서 표현 가능하더라도 Objective-C 코드로 선언이 불가능 하도록 컴파일러에게 말합니다.
+암시적으로 `objc` 속성을 억제하기 위해 메서드, 프로퍼티, 서브스크립트, 또는 이니셜라이저 선언에 이 속성을 적용합니다. `nonobjc` 속성은 Objective-C 에서 표현 가능하더라도 Objective-C 코드로 선언이 불가능 하도록 컴파일러에게 말합니다.
 
 확장에 이 속성을 적용하는 것은 명시적으로 `objc` 속성으로 표시되지 않은 확장의 모든 멤버에 같은 영향을 미칩니다.
 
-`objc` 속성으로 표시된 클래스의 브릿징 메서드에 대한 순환성을 확인하고 `objc` 속성으로 표시된 클래스의 메서드와 초기화 구문에 오버로딩을 허용하기 위해 `nonobjc` 속성을 사용합니다.
+`objc` 속성으로 표시된 클래스의 브릿징 메서드에 대한 순환성을 확인하고 `objc` 속성으로 표시된 클래스의 메서드와 이니셜라이저에 오버로딩을 허용하기 위해 `nonobjc` 속성을 사용합니다.
 
 `nonobjc` 속성으로 표시된 메서드는 `objc` 속성으로 표시된 메서드로 재정의할 수 없습니다. 그러나 `objc` 속성으로 표시된 메서드는 `nonobjc` 속성으로 표시된 메서드로 재정의할 수 있습니다. 유사하게 `nonobjc` 속성으로 표시된 메서드는 `objc` 속성으로 표시된 메서드에 대한 프로토콜 요구사항을 충족할 수 없습니다.
 
@@ -469,7 +469,7 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 ### objc
 
-Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니다. 예를 들어 중첩되지 않은 클래스, 프로토콜, 제너릭이 아닌 열거형 (정수 원시값 타입으로 제한), 클래스의 프로퍼티, 그리고 메서드 (getter 와 setter 포함), 프로토콜과 프로토콜의 옵셔널 멤버, 초기화 구문, 그리고 서브스크립트 입니다. `objc` 속성은 선언이 Objective-C 코드에서 사용 가능함을 컴파일러에게 말합니다.
+Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니다. 예를 들어 중첩되지 않은 클래스, 프로토콜, 제너릭이 아닌 열거형 (정수 원시값 타입으로 제한), 클래스의 프로퍼티, 그리고 메서드 (getter 와 setter 포함), 프로토콜과 프로토콜의 옵셔널 멤버, 이니셜라이저, 그리고 서브스크립트 입니다. `objc` 속성은 선언이 Objective-C 코드에서 사용 가능함을 컴파일러에게 말합니다.
 
 확장에 이 속성을 적용하는 것은 암시적으로 `nonobjc` 속성으로 표시되지 않은 확장의 모든 멤버에 적용됩니다.
 
@@ -483,7 +483,7 @@ Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니
 
 열거형에 objc 속성을 적용하면 각 열거형 케이스는 열거형 이름과 케이스 이름의 연결로 Objective-C 코드에 노출됩니다. 케이스 이름의 첫번째 문자는 대문자입니다. 예를 들어 Swift `Planet` 열거형에서 명명된 케이스 `venus` 는 명명된 케이스 `PlanetVenus` 로 Objective-C 코드로 노출됩니다.
 
-`objc` 속성은 식별자로 구성된 단일 속성 인수를 선택적으로 허용합니다. 식별자는 `objc` 속성을 적용하는 엔티티에 대해 Objective-C 로 노출될 이름을 지정합니다. 클래스, 열거형, 열거형 케이스, 프로토콜, 메서드, getter, setter, 그리고 초기화 구문 이름으로 이 인수를 사용할 수 있습니다. 클래스, 프로토콜, 또는 열거형에 대해 Objective-C 이름을 지정하는 경우 [Objective-C 를 사용한 프로그래밍 (Programming with Objective-C)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 에 [규칙 (Conventions)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 에서 설명한대로 세글자의 접두사를 포함합니다. 아래 예제는 프로퍼티 자체의 이름이 아닌 `isEnabled` 로 Objective-C 에 `ExampleClass` 의 `enabled` 프로퍼티에 대한 getter 를 노출합니다.
+`objc` 속성은 식별자로 구성된 단일 속성 인수를 선택적으로 허용합니다. 식별자는 `objc` 속성을 적용하는 엔티티에 대해 Objective-C 로 노출될 이름을 지정합니다. 클래스, 열거형, 열거형 케이스, 프로토콜, 메서드, getter, setter, 그리고 이니셜라이저 이름으로 이 인수를 사용할 수 있습니다. 클래스, 프로토콜, 또는 열거형에 대해 Objective-C 이름을 지정하는 경우 [Objective-C 를 사용한 프로그래밍 (Programming with Objective-C)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 에 [규칙 (Conventions)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 에서 설명한대로 세글자의 접두사를 포함합니다. 아래 예제는 프로퍼티 자체의 이름이 아닌 `isEnabled` 로 Objective-C 에 `ExampleClass` 의 `enabled` 프로퍼티에 대한 getter 를 노출합니다.
 
 ```swift
 class ExampleClass: NSObject {
@@ -519,7 +519,7 @@ class ExampleClass: NSObject {
 - 프로토콜 (Protocols)
 - 변수 (Variables) 와 상수 (constants)
 - 서브스크립트 (Subscripts)
-- 초기화 구문 (Initializers)
+- 이니셜라이저 (Initializers)
 - 함수 (Functions)
 
 가져오기 (import) 선언에서 이 속성은
@@ -568,7 +568,7 @@ Objective-C 의 선언은 항상
 
 프로퍼티 래퍼를 가지는 프로퍼티는 `willSet` 과 `didSet` 블럭을 포함할 수 있지만 컴파일러가 합성한 `get` 또는 `set` 블럭을 재정의할 수 없습니다.
 
-Swift 는 프로퍼티 래퍼의 초기화에 대해 두가지의 구문 설탕 (syntactic sugar) 을 제공합니다. 래핑된 값의 정의에 할당 구문을 사용하여 할당의 오른쪽에 있는 표현식을 프로퍼티 래퍼에 초기화 구문의 `wrappedValue` 파라미터에 대한 인수로 전달할 수 있습니다. 프로퍼티에 속성을 적용할 때 속성에 인수를 제공할 수도 있으며 이 인수는 프로퍼티 래퍼의 초기화 구문으로 전달됩니다. 예를 들어 아래 코드에서 `SomeStruct` 는 `SomeWrapper` 가 정의한 각 초기화 구문을 호출합니다.
+Swift 는 프로퍼티 래퍼의 초기화에 대해 두가지의 구문 설탕 (syntactic sugar) 을 제공합니다. 래핑된 값의 정의에 할당 구문을 사용하여 할당의 오른쪽에 있는 표현식을 프로퍼티 래퍼에 이니셜라이저의 `wrappedValue` 파라미터에 대한 인수로 전달할 수 있습니다. 프로퍼티에 속성을 적용할 때 속성에 인수를 제공할 수도 있으며 이 인수는 프로퍼티 래퍼의 이니셜라이저으로 전달됩니다. 예를 들어 아래 코드에서 `SomeStruct` 는 `SomeWrapper` 가 정의한 각 이니셜라이저를 호출합니다.
 
 ```swift
 @propertyWrapper
@@ -980,7 +980,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 ### usableFromInline
 
-선언과 동일한 모듈에 정의된 인라인 가능 코드에서 해당 기호를 사용할 수 있도록 하기 위해 함수, 메서드, 계산된 프로퍼티, 서브스크립트, 초기화 구문, 또는 초기화 해제 구문 선언에 이 속성을 적용합니다. 선언은 `internal` 접근 수준 수식어를 가지고 있어야 합니다. `usableFromInline` 으로 표시된 구조체나 클래스는 프로퍼티에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다. `usableFromInline` 으료 표시된 열거형은 케이스의 원시값과 연관된 값에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다.
+선언과 동일한 모듈에 정의된 인라인 가능 코드에서 해당 기호를 사용할 수 있도록 하기 위해 함수, 메서드, 계산된 프로퍼티, 서브스크립트, 이니셜라이저, 또는 디이니셜라이저 선언에 이 속성을 적용합니다. 선언은 `internal` 접근 수준 수식어를 가지고 있어야 합니다. `usableFromInline` 으로 표시된 구조체나 클래스는 프로퍼티에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다. `usableFromInline` 으료 표시된 열거형은 케이스의 원시값과 연관된 값에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다.
 
 `public` 접근 수준 수식어와 같이 이 속성은 모듈의 공개 인터페이스의 부분으로 선언을 노출합니다. `public` 과 다르게 컴파일러는 선언의 기호를 내보내더라도 모듈 외부의 코드에서 이름으로 참조되기 위해 `usableFromInline` 으로 표시된 선언을 허용하지 않습니다. 그러나 모듈 외부의 코드는 런타임 동작을 사용하여 선언의 기호와 상호작용 할 수 있습니다.
 

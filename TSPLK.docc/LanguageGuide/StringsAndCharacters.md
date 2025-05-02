@@ -352,7 +352,7 @@ Here are three more double quotes: """
 긴 문자열을 만들기 위한
 시작점으로 빈 `String` 값을 생성하려면,
 빈 문자열 리터럴을 변수에 할당하거나
-초기화 구문으로 새로운 `String` 인스턴스를 초기화합니다:
+이니셜라이저으로 새로운 `String` 인스턴스를 초기화합니다:
 
 ```swift
 var emptyString = ""               // empty string literal

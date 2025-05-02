@@ -319,7 +319,7 @@ self(<#initializer arguments#>)
 self.init(<#initializer arguments#>)
 ```
 
-초기화 구문, 서브스크립트, 또는 인스턴스 메서드에서 `self` 는 해당 타입의 현재 인스턴스를 참조합니다. 타입 메서드에서 `self` 는 현재 타입을 참조합니다.
+이니셜라이저, 서브스크립트, 또는 인스턴스 메서드에서 `self` 는 해당 타입의 현재 인스턴스를 참조합니다. 타입 메서드에서 `self` 는 현재 타입을 참조합니다.
 
 `self` 표현식은 멤버에 접근할 때 범위를 지정하는데 사용되고 함수 파라미터와 같이 범위에 같은 이름의 다른 변수가 있을 때 명확성을 제공합니다. 예를 들어:
 
@@ -361,9 +361,9 @@ super[<#subscript index#>]
 super.init(<#initializer arguments#>)
 ```
 
-첫번째 형식은 슈퍼클래스의 멤버에 접근하기 위해 사용됩니다. 두번째 형식은 슈퍼클래스의 서브스크립트 구현에 접근하기 위해 사용됩니다. 세번째 형식은 슈퍼클래스의 초기화 구문에 접근하기 위해 사용됩니다.
+첫번째 형식은 슈퍼클래스의 멤버에 접근하기 위해 사용됩니다. 두번째 형식은 슈퍼클래스의 서브스크립트 구현에 접근하기 위해 사용됩니다. 세번째 형식은 슈퍼클래스의 이니셜라이저에 접근하기 위해 사용됩니다.
 
-서브클래스는 멤버, 서브스크립트 그리고 초기화 구문에서 슈퍼클래스 표현식을 사용하여 슈퍼클래스의 구현을 사용할 수 있습니다.
+서브클래스는 멤버, 서브스크립트 그리고 이니셜라이저에서 슈퍼클래스 표현식을 사용하여 슈퍼클래스의 구현을 사용할 수 있습니다.
 
 > Grammar of a superclass expression:
 >
@@ -1157,15 +1157,15 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 > *labeled-trailing-closures* → *labeled-trailing-closure* *labeled-trailing-closures*_?_ \
 > *labeled-trailing-closure* → *identifier* **`:`** *closure-expression*
 
-### 초기화 구문 표현식 (Initializer Expression)
+### 이니셜라이저 표현식 (Initializer Expression)
 
-_초기화 구문 표현식 (initializer expression)_ 은 타입의 초기화 구문에 접근하는 것을 제공합니다. 형식은 다음과 같습니다:
+_이니셜라이저 표현식 (initializer expression)_ 은 타입의 이니셜라이저에 접근하는 것을 제공합니다. 형식은 다음과 같습니다:
 
 ```swift
 <#expression#>.init(<#initializer arguments#>)
 ```
 
-타입의 새로운 인스턴스를 초기화하기 위해 함수 호출 표현식 내에 초기화 구문 표현식을 사용합니다. 슈퍼클래스의 초기화 구문을 위임하기 위해 초기화 구문 표현식을 사용할 수도 있습니다.
+타입의 새로운 인스턴스를 초기화하기 위해 함수 호출 표현식 내에 이니셜라이저 표현식을 사용합니다. 슈퍼클래스의 이니셜라이저를 위임하기 위해 이니셜라이저 표현식을 사용할 수도 있습니다.
 
 ```swift
 class SomeSubClass: SomeSuperClass {
@@ -1176,7 +1176,7 @@ class SomeSubClass: SomeSuperClass {
 }
 ```
 
-함수와 같이 초기화 구문은 값으로 사용될 수 있습니다. 예를 들어:
+함수와 같이 이니셜라이저는 값으로 사용될 수 있습니다. 예를 들어:
 
 ```swift
 // Type annotation is required because String has multiple initializers.
@@ -1186,7 +1186,7 @@ print(oneTwoThree)
 // Prints "123"
 ```
 
-이름으로 타입을 지정하면 초기화 구문 표현식 사용없이 타입의 초기화 구문에 접근할 수 있습니다. 다른 모든 상황에서는 초기화 구문 표현식을 사용해야 합니다.
+이름으로 타입을 지정하면 이니셜라이저 표현식 사용없이 타입의 이니셜라이저에 접근할 수 있습니다. 다른 모든 상황에서는 이니셜라이저 표현식을 사용해야 합니다.
 
 ```swift
 let s1 = SomeType.init(data: 3)  // Valid
@@ -1231,7 +1231,7 @@ t.0 = t.1
 
 `dynamicMemberLookup` 속성으로 선언된 타입은 <doc:Attributes> 에서 설명한대로 런타임 시 조회되는 멤버가 포함됩니다.
 
-인수 이름만으로 이름이 다른 메서드 또는 초기화 구문을 구별하려면 인수 이름을 소괄호 안에 포함하고 각 인수 이름 뒤에 콜론 (`:`) 을 붙입니다. 인수에 이름이 없는 경우 언더바 (`_`) 를 작성합니다. 오버로드된 메서드를 구별하려면 타입 주석을 사용합니다. 예를 들어:
+인수 이름만으로 이름이 다른 메서드 또는 이니셜라이저를 구별하려면 인수 이름을 소괄호 안에 포함하고 각 인수 이름 뒤에 콜론 (`:`) 을 붙입니다. 인수에 이름이 없는 경우 언더바 (`_`) 를 작성합니다. 오버로드된 메서드를 구별하려면 타입 주석을 사용합니다. 예를 들어:
 
 ```swift
 class SomeClass {

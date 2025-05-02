@@ -70,7 +70,7 @@ class Vehicle {
 -->
 
 타입 이름 뒤에 빈 소괄호를 작성한
-*초기화 구문*으로 `Vehicle`의 새로운 인스턴스를 생성합니다:
+*이니셜라이저*으로 `Vehicle`의 새로운 인스턴스를 생성합니다:
 
 ```swift
 let someVehicle = Vehicle()

@@ -450,7 +450,7 @@ task.cancel()  // Prints "Canceled!"
 
 ### 구조화되지 않은 동시성 \(Unstructured Concurrency\)
 
-이전 섹션에서 설명한 동시성에 대한 구조화된 접근 방식 외에도 Swift 는 구조화되지 않은 동시성 \(unstructured concurrency\) 을 지원합니다. 작업 그룹의 일부인 작업과 달리 _구조화되지 않은 작업 \(unstructured task\)_ 에는 상위 작업이 없습니다. 프로그램이 필요로 하는 방식으로 구조화되지 않은 작업을 관리할 수 있는 완전한 유연성이 있지만 정확성에 대한 완전한 책임도 있습니다. 현재 액터 \(actor\) 에서 실행되는 구조화되지 않은 작업을 생성하려면 [`Task.init(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856790-init) 초기화 구문을 호출해야 합니다. 더 구체적으로 분리된 작업으로 알려진 현재 액터의 일부가 아닌 구조화되지 않은 작업을 생성하려면 [`Task.detached(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856786-detached) 클래스 메서드를 호출합니다. 이 모든 동작은 서로 상호작용 할 수 있는 작업 \(task\)을 반환합니다 — 예를 들어 결과를 기다리거나 취소하는 경우가 해당됩니다.
+이전 섹션에서 설명한 동시성에 대한 구조화된 접근 방식 외에도 Swift 는 구조화되지 않은 동시성 \(unstructured concurrency\) 을 지원합니다. 작업 그룹의 일부인 작업과 달리 _구조화되지 않은 작업 \(unstructured task\)_ 에는 상위 작업이 없습니다. 프로그램이 필요로 하는 방식으로 구조화되지 않은 작업을 관리할 수 있는 완전한 유연성이 있지만 정확성에 대한 완전한 책임도 있습니다. 현재 액터 \(actor\) 에서 실행되는 구조화되지 않은 작업을 생성하려면 [`Task.init(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856790-init) 이니셜라이저를 호출해야 합니다. 더 구체적으로 분리된 작업으로 알려진 현재 액터의 일부가 아닌 구조화되지 않은 작업을 생성하려면 [`Task.detached(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856786-detached) 클래스 메서드를 호출합니다. 이 모든 동작은 서로 상호작용 할 수 있는 작업 \(task\)을 반환합니다 — 예를 들어 결과를 기다리거나 취소하는 경우가 해당됩니다.
 
 ```swift
 let newPhoto = // ... some photo data ...
@@ -484,7 +484,7 @@ actor TemperatureLogger {
 
 `actor` 키워드를 사용하여 액터를 도입하고 중괄호로 정의합니다. `TemperatureLogger` 액터는 액터 외부의 다른 코드가 접근할 수 있는 프로퍼티가 있으며 액터 내부의 코드만 최대값을 업데이트 할 수 있게 `max` 프로퍼티를 제한합니다.
 
-구조체와 클래스와 같은 초기화 구문으로 액터의 인스턴스를 생성합니다. 액터의 프로퍼티 또는 메서드에 접근할 때 일시 중단 지점을 나타내기 위해 `await` 를 사용합니다. 예를 들어:
+구조체와 클래스와 같은 이니셜라이저으로 액터의 인스턴스를 생성합니다. 액터의 프로퍼티 또는 메서드에 접근할 때 일시 중단 지점을 나타내기 위해 `await` 를 사용합니다. 예를 들어:
 
 ```swift
 let logger = TemperatureLogger(label: "Outdoors", measurement: 25)

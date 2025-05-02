@@ -70,7 +70,7 @@ Swift 배열의 타입은 `Array<Element>`로 작성되고,
 
 ### 빈 배열 생성 (Creating an Empty Array)
 
-초기화 구문을 사용하여
+이니셜라이저를 사용하여
 타입을 포함한 빈 배열을 생성할 수 있습니다:
 
 ```swift
@@ -620,7 +620,7 @@ Swift 집합의 타입은 `Element`가 저장할 값의 타입을 나타내는
 
 ### 빈 집합 생성과 초기화 (Creating Initializing an Empty Set)
 
-초기화 구문을 사용하여
+이니셜라이저를 사용하여
 타입을 포함한 빈 집합을 생성할 수 있습니다:
 
 ```swift
@@ -639,7 +639,7 @@ print("letters is of type Set<Character> with \(letters.count) items.")
   ```
 -->
 
-> Note: `letters` 변수의 타입은 초기화 구문을 통해
+> Note: `letters` 변수의 타입은 이니셜라이저를 통해
 > `Set<Character>`로 추론됩니다.
 
 또한 함수 인자나 타입이 명시된 변수나 상수로 타입 정보를
@@ -1053,7 +1053,7 @@ Swift 딕셔너리의 타입은 `Dictionary<Key, Value>`로 적으며,
 ### 빈 딕셔너리 생성 (Creating an Empty Dictionary)
 
 배열 처럼,
-초기화 구문을 사용하여 타입을 포함한 빈 `Dictionary`를 생성할 수 있습니다:
+이니셜라이저를 사용하여 타입을 포함한 빈 `Dictionary`를 생성할 수 있습니다:
 
 ```swift
 var namesOfIntegers = [Int: String]()

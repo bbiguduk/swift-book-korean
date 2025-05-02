@@ -444,7 +444,7 @@ type(of: someInstance).printClassName()
 
 자세한 내용은 Swift 표준 라이브러리에 [`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type) 을 참고 바랍니다.
 
-초기화 구문 표현식을 사용하여 해당 타입의 메타타입 값에서 타입의 인스턴스를 생성합니다. 클래스 인스턴스의 경우 호출되는 초기화 구문은 `required` 키워드로 표시거나 `final` 키워드로 전체 클래스를 표시해야 합니다.
+이니셜라이저 표현식을 사용하여 해당 타입의 메타타입 값에서 타입의 인스턴스를 생성합니다. 클래스 인스턴스의 경우 호출되는 이니셜라이저는 `required` 키워드로 표시거나 `final` 키워드로 전체 클래스를 표시해야 합니다.
 
 ```swift
 class AnotherSubClass: SomeBaseClass {

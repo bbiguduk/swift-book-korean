@@ -187,9 +187,9 @@ lightSwitch.toggle()
 // lightSwitch is now equal to .on
 ```
 
-## 초기화 구문 요구사항 \(Initializer Requirements\)
+## 이니셜라이저 요구사항 \(Initializer Requirements\)
 
-프로토콜은 준수하는 타입에 초기화 구문을 구현하도록 요구할 수 있습니다. 일반적인 초기화 구문과 동일한 방식으로 명시적으로 프로토콜의 정의의 부분으로 초기화 구문을 작성하지만 중괄호 또는 초기화 구문 본문 없이 작성합니다:
+프로토콜은 준수하는 타입에 이니셜라이저를 구현하도록 요구할 수 있습니다. 일반적인 이니셜라이저과 동일한 방식으로 명시적으로 프로토콜의 정의의 부분으로 이니셜라이저를 작성하지만 중괄호 또는 이니셜라이저 본문 없이 작성합니다:
 
 ```swift
 protocol SomeProtocol {
@@ -197,9 +197,9 @@ protocol SomeProtocol {
 }
 ```
 
-### 프로토콜 초기화 구문 요구사항의 클래스 구현 \(Class Implementations of Protocol Initializer Requirements\)
+### 프로토콜 이니셜라이저 요구사항의 클래스 구현 \(Class Implementations of Protocol Initializer Requirements\)
 
-지정된 초기화 구문 또는 편의 초기화 구문으로 준수하는 클래스에 프로토콜 초기화 구문 요구사항을 구현할 수 있습니다. 이 모든 케이스에 대해 `required` 수식어와 함께 초기화 구문 구현에 표시해야 합니다:
+지정된 이니셜라이저 또는 편의 이니셜라이저으로 준수하는 클래스에 프로토콜 이니셜라이저 요구사항을 구현할 수 있습니다. 이 모든 케이스에 대해 `required` 수식어와 함께 이니셜라이저 구현에 표시해야 합니다:
 
 ```swift
 class SomeClass: SomeProtocol {
@@ -209,14 +209,14 @@ class SomeClass: SomeProtocol {
 }
 ```
 
-`required` 수식어를 사용하면 준수하는 클래스의 모든 서브클래스에 초기화 구문 요구사항의 명시적 또는 상속된 구현을 제공하여 프로토콜을 준수할 수 있습니다.
+`required` 수식어를 사용하면 준수하는 클래스의 모든 서브클래스에 이니셜라이저 요구사항의 명시적 또는 상속된 구현을 제공하여 프로토콜을 준수할 수 있습니다.
 
-더 자세한 정보는 <doc:Initialization#필수-초기화-구문-Required-Initializers> 을 참고 바랍니다.
+더 자세한 정보는 <doc:Initialization#필수-이니셜라이저-Required-Initializers> 을 참고 바랍니다.
 
 > Note   
-> final 클래스는 서브클래스가 될 수 없으므로 `final` 수식어로 표시된 클래스에 `required` 수식어를 프로토콜 초기화 구문 구현에 표시할 필요가 없습니다. `final` 수식어에 대한 자세한 내용은 <doc:Inheritance#재정의-방지-Preventing-Overrides> 를 참고 바랍니다.
+> final 클래스는 서브클래스가 될 수 없으므로 `final` 수식어로 표시된 클래스에 `required` 수식어를 프로토콜 이니셜라이저 구현에 표시할 필요가 없습니다. `final` 수식어에 대한 자세한 내용은 <doc:Inheritance#재정의-방지-Preventing-Overrides> 를 참고 바랍니다.
 
-서브클래스가 슈퍼클래스의 지정된 초기화 구문을 재정의 하고 프로토콜로 부터 일치하는 초기화 구문 요구사항이 구현되면 `required` 와 `override` 수식어 둘 다 초기화 구문 구현에 표시합니다:
+서브클래스가 슈퍼클래스의 지정된 이니셜라이저를 재정의 하고 프로토콜로 부터 일치하는 이니셜라이저 요구사항이 구현되면 `required` 와 `override` 수식어 둘 다 이니셜라이저 구현에 표시합니다:
 
 ```swift
 protocol SomeProtocol {
@@ -237,11 +237,11 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 }
 ```
 
-### 실패 가능한 초기화 구문 요구사항 \(Failable Initializer Requirements\)
+### 실패 가능한 이니셜라이저 요구사항 \(Failable Initializer Requirements\)
 
-프로토콜은 <doc:Initialization#실패-가능한-초기화-구문-Failable-Initializers> 에 정의 된대로 준수하는 타입에 대해 실패 가능한 초기화 구문 요구사항을 정의할 수 있습니다.
+프로토콜은 <doc:Initialization#실패-가능한-이니셜라이저-Failable-Initializers> 에 정의 된대로 준수하는 타입에 대해 실패 가능한 이니셜라이저 요구사항을 정의할 수 있습니다.
 
-실패 가능한 초기화 구문 요구사항은 준수하는 타입에 실패 가능하거나 실패 불가능한 초기화 구문에 의해 충족될 수 있습니다. 실패 불가능한 초기화 구문 요구사항은 실패 불가능한 초기화 구문 또는 암시적 언래핑 된 실패 가능한 초기화 구문에 의해 충족될 수 있습니다.
+실패 가능한 이니셜라이저 요구사항은 준수하는 타입에 실패 가능하거나 실패 불가능한 이니셜라이저에 의해 충족될 수 있습니다. 실패 불가능한 이니셜라이저 요구사항은 실패 불가능한 이니셜라이저 또는 암시적 언래핑 된 실패 가능한 이니셜라이저에 의해 충족될 수 있습니다.
 
 ## 타입으로 프로토콜 \(Protocols as Types\)
 
@@ -879,7 +879,7 @@ for _ in 1...5 {
 
 ## 프로토콜 확장 \(Protocol Extensions\)
 
-프로토콜은 준수하는 타입에 제공하기 위해 메서드, 초기화 구문, 서브스크립트, 그리고 계산된 프로퍼티 구현이 확장될 수 있습니다. 이를 통해 각 타입의 개별 적합성 또는 전역 함수가 아닌 프로토콜 자체에 동작을 정의할 수 있습니다.
+프로토콜은 준수하는 타입에 제공하기 위해 메서드, 이니셜라이저, 서브스크립트, 그리고 계산된 프로퍼티 구현이 확장될 수 있습니다. 이를 통해 각 타입의 개별 적합성 또는 전역 함수가 아닌 프로토콜 자체에 동작을 정의할 수 있습니다.
 
 예를 들어 `RandomNumberGenerator` 프로토콜은 임의의 `Bool` 값을 반환하기 위해 필요한 `random()` 메서드의 결과를 사용하는 `randomBool()` 메서드를 제공하기 위해 확장될 수 있습니다:
 
