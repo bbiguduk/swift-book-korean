@@ -246,7 +246,7 @@ func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
 }
 ```
 
-위의 가상 함수는 2개의 타입 파라미터를 가집니다. 첫번째 타입 파라미터 인 `T` 는 `T` 가 `SomeClass` 의 하위 클래스 여야 함을 나타냅니다. 두번째 타입 파라미터 `U` 는 `U` 가 `SomeProtocol` 프로토콜을 준수해야하는 타입 제약이 있습니다.
+위의 가상 함수는 2개의 타입 파라미터를 가집니다. 첫번째 타입 파라미터 인 `T` 는 `T` 가 `SomeClass` 의 서브클래스 여야 함을 나타냅니다. 두번째 타입 파라미터 `U` 는 `U` 가 `SomeProtocol` 프로토콜을 준수해야하는 타입 제약이 있습니다.
 
 ### 타입 제약 동작 \(Type Constraints in Action\)
 

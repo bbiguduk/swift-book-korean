@@ -24,7 +24,7 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 }
 ```
 
-클래스가 상위 클래스를 가진 경우에 콤마로 구분하여 채택한 모든 프로토콜 전에 상위 클래스 이름을 위치 시킵니다:
+클래스가 슈퍼클래스를 가진 경우에 콤마로 구분하여 채택한 모든 프로토콜 전에 슈퍼클래스 이름을 위치 시킵니다:
 
 ```swift
 class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
@@ -209,14 +209,14 @@ class SomeClass: SomeProtocol {
 }
 ```
 
-`required` 수식어를 사용하면 준수하는 클래스의 모든 하위 클래스에 초기화 구문 요구사항의 명시적 또는 상속된 구현을 제공하여 프로토콜을 준수할 수 있습니다.
+`required` 수식어를 사용하면 준수하는 클래스의 모든 서브클래스에 초기화 구문 요구사항의 명시적 또는 상속된 구현을 제공하여 프로토콜을 준수할 수 있습니다.
 
 더 자세한 정보는 <doc:Initialization#필수-초기화-구문-Required-Initializers> 을 참고 바랍니다.
 
 > Note   
-> final 클래스는 하위 클래스가 될 수 없으므로 `final` 수식어로 표시된 클래스에 `required` 수식어를 프로토콜 초기화 구문 구현에 표시할 필요가 없습니다. `final` 수식어에 대한 자세한 내용은 <doc:Inheritance#재정의-방지-Preventing-Overrides> 를 참고 바랍니다.
+> final 클래스는 서브클래스가 될 수 없으므로 `final` 수식어로 표시된 클래스에 `required` 수식어를 프로토콜 초기화 구문 구현에 표시할 필요가 없습니다. `final` 수식어에 대한 자세한 내용은 <doc:Inheritance#재정의-방지-Preventing-Overrides> 를 참고 바랍니다.
 
-하위 클래스가 상위 클래스의 지정된 초기화 구문을 재정의 하고 프로토콜로 부터 일치하는 초기화 구문 요구사항이 구현되면 `required` 와 `override` 수식어 둘 다 초기화 구문 구현에 표시합니다:
+서브클래스가 슈퍼클래스의 지정된 초기화 구문을 재정의 하고 프로토콜로 부터 일치하는 초기화 구문 요구사항이 구현되면 `required` 와 `override` 수식어 둘 다 초기화 구문 구현에 표시합니다:
 
 ```swift
 protocol SomeProtocol {
@@ -635,7 +635,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 
 동시에 여러개의 프로토콜을 준수하는 타입을 요구하는 것이 유용할 수 있습니다. _프로토콜 혼합 \(protocol composition\)_ 을 사용하여 여러 프로토콜을 단일 요구사항으로 결합할 수 있습니다. 프로토콜 혼합은 구성에 모든 프로토콜의 결합된 요구사항을 가진 임시 로컬 프로토콜로 정의된 것처럼 동작합니다. 프로토콜 혼합은 새로운 프로토콜 타입을 정의하지 않습니다.
 
-프로토콜 혼합은 `SomeProtocol & AnotherProtocol` 형식입니다. 앰퍼샌드 \(`&`\)로 구분하여 많은 프로토콜을 리스트화 할 수 있습니다. 프로토콜 리스트 외에도 프로토콜 혼합은 요구된 상위 클래스를 지정하는데 사용할 수 있는 하나의 클래스 타입을 포함할 수도 있습니다.
+프로토콜 혼합은 `SomeProtocol & AnotherProtocol` 형식입니다. 앰퍼샌드 \(`&`\)로 구분하여 많은 프로토콜을 리스트화 할 수 있습니다. 프로토콜 리스트 외에도 프로토콜 혼합은 요구된 슈퍼클래스를 지정하는데 사용할 수 있는 하나의 클래스 타입을 포함할 수도 있습니다.
 
 다음은 `Named` 와 `Aged` 라는 두 프로토콜을 함수 파라미터에 단일 프로토콜 혼합 요구사항으로 결합한 예입니다:
 
@@ -691,9 +691,9 @@ beginConcert(in: seattle)
 // Prints "Hello, Seattle!"
 ```
 
-`beginConcert(in:)` 함수는 "`Location` 의 하위 클래스와 `Named` 프로토콜을 준수하는 모든 타입" 이라는 뜻의 `Location & Named` 타입의 파라미터를 가집니다. 이 경우 `City` 는 이 요구사항에 충족합니다.
+`beginConcert(in:)` 함수는 "`Location` 의 서브클래스와 `Named` 프로토콜을 준수하는 모든 타입" 이라는 뜻의 `Location & Named` 타입의 파라미터를 가집니다. 이 경우 `City` 는 이 요구사항에 충족합니다.
 
-`Person` 은 `Location` 의 하위 클래스가 아니므로 `beginConcert(in:)` 함수로 `birthdayPerson` 전달은 유효하지 않습니다. 마찬가지로 `Named` 프로토콜을 준수하지 않고 `Location` 의 하위 클래스를 만들어 타입의 인스턴스로 `beginConcert(in:)` 을 호출하면 유효하지 않습니다.
+`Person` 은 `Location` 의 서브클래스가 아니므로 `beginConcert(in:)` 함수로 `birthdayPerson` 전달은 유효하지 않습니다. 마찬가지로 `Named` 프로토콜을 준수하지 않고 `Location` 의 서브클래스를 만들어 타입의 인스턴스로 `beginConcert(in:)` 을 호출하면 유효하지 않습니다.
 
 ## 프로토콜 준수에 대한 검사 \(Checking for Protocol Conformance\)
 

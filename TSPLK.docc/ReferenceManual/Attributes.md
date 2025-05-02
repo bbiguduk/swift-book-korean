@@ -473,11 +473,11 @@ Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니
 
 확장에 이 속성을 적용하는 것은 암시적으로 `nonobjc` 속성으로 표시되지 않은 확장의 모든 멤버에 적용됩니다.
 
-컴파일러는 암시적으로 Objective-C 에 정의된 모든 클래스의 하위 클래스에 `objc` 속성을 추가합니다. 그러나 하위 클래스는 제너릭이 아니어야 하며 제너릭 클래스를 상속해선 안됩니다. 아래에서 설명한대로 Objective-C 이름을 지정하기 위해 이러한 기준을 충족하는 하위 클래스에 `objc` 속성을 명시적으로 추가할 수 있습니다. `objc` 속성으로 표시된 프로토콜은 이 속성이 표시되지 않은 프로토콜을 상속할 수 없습니다.
+컴파일러는 암시적으로 Objective-C 에 정의된 모든 클래스의 서브클래스에 `objc` 속성을 추가합니다. 그러나 서브클래스는 제너릭이 아니어야 하며 제너릭 클래스를 상속해선 안됩니다. 아래에서 설명한대로 Objective-C 이름을 지정하기 위해 이러한 기준을 충족하는 서브클래스에 `objc` 속성을 명시적으로 추가할 수 있습니다. `objc` 속성으로 표시된 프로토콜은 이 속성이 표시되지 않은 프로토콜을 상속할 수 없습니다.
 
 `objc` 속성은 다음과 같은 경우에 암시적으로 추가됩니다:
 
-* 선언이 하위 클래스의 재정의이고 하위 클래스의 선언이 `objc` 속성을 가지고 있습니다.
+* 선언이 서브클래스의 재정의이고 서브클래스의 선언이 `objc` 속성을 가지고 있습니다.
 * 선언이 `objc` 속성을 가지는 프로토콜의 요구사항을 충족합니다.
 * 선언이 `IBAction`, `IBSegueAction`, `IBOutlet`, `IBDesignable`, `IBInspectable`, `NSManaged`, 또는 `GKInspectable` 속성을 가지고 있습니다.
 
@@ -502,7 +502,7 @@ class ExampleClass: NSObject {
 
 ### objcMembers
 
-클래스 선언에 이 속성을 적용하여 암시적으로 `objc` 속성을 클래스의 모든 Objective-C 호환 멤버, 확장, 하위 클래스, 그리고 모든 확장의 하위 클래스에 적용합니다.
+클래스 선언에 이 속성을 적용하여 암시적으로 `objc` 속성을 클래스의 모든 Objective-C 호환 멤버, 확장, 서브클래스, 그리고 모든 확장의 서브클래스에 적용합니다.
 
 대부분의 코드는 필요한 선언만 노출시키기 위해 `objc` 속성을 대신 사용합니다. 많은 선언의 노출이 필요하다면 `objc` 속성을 가지는 확장에 그룹화 할 수 있습니다. `objcMembers` 속성은 Objective-C 런타임의 내부 기능을 많이 사용하는 라이브러리에 대해 편리합니다. 필요하지 않은 곳에 `objc` 속성을 적용하면 바이너리 크기를 증가시키고 성능에 부정적인 영향을 미칠 수 있습니다.
 
@@ -968,7 +968,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 앱 대리자를 나타내기 위해 클래스에 이 속성을 적용합니다. 이 속성을 사용하는 것은 `UIApplicationMain` 함수를 호출하는 것과 대리자 클래스의 이름으로 클래스의 이름을 전달하는 것과 같습니다.
 
-이 속성을 사용하지 않으면 [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 함수를 호출하는 최상위 수준의 코드를 가지는 `main.swift` 파일을 제공해야 합니다. 예를 들어 주 클래스로 `UIApplication` 의 사용자 정의 하위 클래스를 사용하면 이 속성을 사용하는 것 대신에 `UIApplicationMain(_:_:_:_:)` 함수를 호출합니다.
+이 속성을 사용하지 않으면 [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 함수를 호출하는 최상위 수준의 코드를 가지는 `main.swift` 파일을 제공해야 합니다. 예를 들어 주 클래스로 `UIApplication` 의 사용자 정의 서브클래스를 사용하면 이 속성을 사용하는 것 대신에 `UIApplicationMain(_:_:_:_:)` 함수를 호출합니다.
 
 실행 가능하도록 만들기 위해 컴파일 한 Swift 코드는 <doc:Declarations#최상위-수준-코드-Top-Level-Code> 에서 설명한대로 하나의 최상위-수준 시작 지점을 포함해야 합니다.
 

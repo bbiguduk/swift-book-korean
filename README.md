@@ -48,8 +48,8 @@
 | Context                      | 컨텍스트         |
 | Initializer                  | 초기화 구문       |
 | Deinitializer                | 초기화 해제 구문    |
-| Subclass                     | 하위 클래스       |
-| Superclass                   | 상위 클래스       |
+| Subclass                     | 서브클래스       |
+| Superclass                   | 슈퍼클래스       |
 | Property                     | 프로퍼티         |
 | Getter                       | Getter       |
 | Setter                       | Setter       |

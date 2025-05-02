@@ -351,9 +351,9 @@ struct Point {
 > *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`** \
 > *self-initializer-expression* → **`self`** **`.`** **`init`**
 
-### 상위 클래스 표현식 (Superclass Expression)
+### 슈퍼클래스 표현식 (Superclass Expression)
 
-_상위 클래스 표현식 (superclass expression)_ 을 사용하면 클래스가 상위 클래스와 상호작용 할 수 있습니다. 다음 형식 중 하나가 있습니다:
+_슈퍼클래스 표현식 (superclass expression)_ 을 사용하면 클래스가 슈퍼클래스와 상호작용 할 수 있습니다. 다음 형식 중 하나가 있습니다:
 
 ```swift
 super.<#member name#>
@@ -361,9 +361,9 @@ super[<#subscript index#>]
 super.init(<#initializer arguments#>)
 ```
 
-첫번째 형식은 상위 클래스의 멤버에 접근하기 위해 사용됩니다. 두번째 형식은 상위 클래스의 서브스크립트 구현에 접근하기 위해 사용됩니다. 세번째 형식은 상위 클래스의 초기화 구문에 접근하기 위해 사용됩니다.
+첫번째 형식은 슈퍼클래스의 멤버에 접근하기 위해 사용됩니다. 두번째 형식은 슈퍼클래스의 서브스크립트 구현에 접근하기 위해 사용됩니다. 세번째 형식은 슈퍼클래스의 초기화 구문에 접근하기 위해 사용됩니다.
 
-하위 클래스는 멤버, 서브스크립트 그리고 초기화 구문에서 상위 클래스 표현식을 사용하여 상위 클래스의 구현을 사용할 수 있습니다.
+서브클래스는 멤버, 서브스크립트 그리고 초기화 구문에서 슈퍼클래스 표현식을 사용하여 슈퍼클래스의 구현을 사용할 수 있습니다.
 
 > Grammar of a superclass expression:
 >
@@ -592,7 +592,7 @@ x = .anotherValue
 var someOptional: MyEnumeration? = .someValue
 ```
 
-암시적 멤버 표현식 뒤에는 접미사 연산자 (postfix operator) 또는 <doc:Expressions#접미사-표현식-Postfix-Expressions> 에 나열된 다른 접미사 구문이 올 수 있습니다. 이것을 _연결된 암시적 멤버 표현식 (chained postfix expressions)_ 이라 합니다. 연결된 접미사 표현식이 동일한 타입을 갖는 것이 일반적이지만 유일한 요구사항은 전체 연결된 암시적 멤버 표현식이 컨텍스트에 의해 암시된 타입으로 변환될 수 있어야 한다는 것입니다. 특히, 암시적 타입이 옵셔널인 경우 옵셔널 타입이 아닌 값을 사용할 수 있고 암시적 타입이 클래스 타입인 경우 해당 하위 클래스 중 하나의 값을 사용할 수 있습니다. 예를 들어:
+암시적 멤버 표현식 뒤에는 접미사 연산자 (postfix operator) 또는 <doc:Expressions#접미사-표현식-Postfix-Expressions> 에 나열된 다른 접미사 구문이 올 수 있습니다. 이것을 _연결된 암시적 멤버 표현식 (chained postfix expressions)_ 이라 합니다. 연결된 접미사 표현식이 동일한 타입을 갖는 것이 일반적이지만 유일한 요구사항은 전체 연결된 암시적 멤버 표현식이 컨텍스트에 의해 암시된 타입으로 변환될 수 있어야 한다는 것입니다. 특히, 암시적 타입이 옵셔널인 경우 옵셔널 타입이 아닌 값을 사용할 수 있고 암시적 타입이 클래스 타입인 경우 해당 서브클래스 중 하나의 값을 사용할 수 있습니다. 예를 들어:
 
 ```swift
 class SomeClass {
@@ -1139,7 +1139,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 이러한 암시적 변환에 의해 생성된 포인터는 함수 호출 동안에만 유효합니다. 정의되지 않은 동작을 방지하려면 함수 호출이 끝난 후에 코드가 포인터를 유지되지 않도록 해야합니다.
 
 > Note\
-> 암시적으로 배열을 안전하지 않은 포인터 (unsafe pointer) 로 변환할 때 Swift 는 필요에 따라 배열을 변환하거나 복사하여 배열의 저장소가 연속되도록 합니다. 예를 들어 저장소에 대한 API 계약을 작성하지 않은 `NSArray` 하위 클래스에서 `Array` 로 연결된 배열에 이 구문을 사용할 수 있습니다. 배열의 저장소가 이미 연속됨을 보장해야 하므로 암시적 변환은 이 작업을 수행할 필요가 없는 경우 `Array` 대신 `ContiguousArray` 를 사용하십시오.
+> 암시적으로 배열을 안전하지 않은 포인터 (unsafe pointer) 로 변환할 때 Swift 는 필요에 따라 배열을 변환하거나 복사하여 배열의 저장소가 연속되도록 합니다. 예를 들어 저장소에 대한 API 계약을 작성하지 않은 `NSArray` 서브클래스에서 `Array` 로 연결된 배열에 이 구문을 사용할 수 있습니다. 배열의 저장소가 이미 연속됨을 보장해야 하므로 암시적 변환은 이 작업을 수행할 필요가 없는 경우 `Array` 대신 `ContiguousArray` 를 사용하십시오.
 
 `withUnsafePointer(to:)` 와 같이 명시적 함수 대신 `&` 사용하는 것은 특히 함수가 여러 포인터 인수를 가지고 있을 때 저수준 C 함수 (low-level C functions) 를 더 읽기 쉽게 호출할 수 있습니다. 그러나 다른 Swift 코드에서 함수를 호출할 때 안전하지 않은 API 를 명시적으로 사용하는 대신 `&` 을 사용하는 것은 피해야 합니다.
 
@@ -1165,7 +1165,7 @@ _초기화 구문 표현식 (initializer expression)_ 은 타입의 초기화 �
 <#expression#>.init(<#initializer arguments#>)
 ```
 
-타입의 새로운 인스턴스를 초기화하기 위해 함수 호출 표현식 내에 초기화 구문 표현식을 사용합니다. 상위 클래스의 초기화 구문을 위임하기 위해 초기화 구문 표현식을 사용할 수도 있습니다.
+타입의 새로운 인스턴스를 초기화하기 위해 함수 호출 표현식 내에 초기화 구문 표현식을 사용합니다. 슈퍼클래스의 초기화 구문을 위임하기 위해 초기화 구문 표현식을 사용할 수도 있습니다.
 
 ```swift
 class SomeSubClass: SomeSuperClass {
