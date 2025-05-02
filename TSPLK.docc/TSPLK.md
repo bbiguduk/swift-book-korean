@@ -98,8 +98,8 @@
 | Actor                        | 액터           |
 | Reference Type               | 참조 타입        |
 | Instance Property            | 인스턴스 프로퍼티    |
-| Stored Property              | 저장된 프로퍼티     |
-| Computed Property            | 계산된 프로퍼티     |
+| Stored Property              | 저장 프로퍼티     |
+| Computed Property            | 연산 프로퍼티     |
 | Property Observer            | 프로퍼티 관찰자     |
 | Property Wrapper             | 프로퍼티 래퍼      |
 | Projected Value              | 투영된 값        |

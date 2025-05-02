@@ -250,7 +250,7 @@ private var privateInstance = SomePrivateClass()
 해당 변수, 프로퍼티, 또는 서브스크립트에 읽기-쓰기 범위를 제한하기 위해 getter 보다 _더 낮은_ 접근 수준으로 setter를 제공할 수 있습니다. `var` 또는 `subscript` 전에 `fileprivate(set)`, `private(set)`, 또는 `internal(set)` 을 작성하여 더 낮은 접근 수준을 할당합니다.
 
 > Note   
-> 이 규칙은 저장된 프로퍼티 뿐만 아니라 계산된 프로퍼티에도 적용됩니다. 저장된 프로퍼티에 대해 명시적으로 getter와 setter를 작성하지 않아도 Swift는 저장된 프로퍼티의 저장소에 대한 접근을 제공하기 위해 여전히 암시적으로 getter와 setter를 합성합니다. 계산된 프로퍼티의 명시적 setter와 같은 방식으로 합성된 setter의 접근 수준을 변경하기 위해 `fileprivate(set)`, `private(set)`, 그리고 `internal(set)` 을 사용합니다.
+> 이 규칙은 저장 프로퍼티 뿐만 아니라 연산 프로퍼티에도 적용됩니다. 저장 프로퍼티에 대해 명시적으로 getter와 setter를 작성하지 않아도 Swift는 저장 프로퍼티의 저장소에 대한 접근을 제공하기 위해 여전히 암시적으로 getter와 setter를 합성합니다. 연산 프로퍼티의 명시적 setter와 같은 방식으로 합성된 setter의 접근 수준을 변경하기 위해 `fileprivate(set)`, `private(set)`, 그리고 `internal(set)` 을 사용합니다.
 
 아래 예제는 문자열 프로퍼티가 몇번 수정되는지 추적하는 `TrackedString` 이라는 구조체를 정의합니다:
 
@@ -265,7 +265,7 @@ struct TrackedString {
 }
 ```
 
-`TrackedString` 구조체는 빈 문자열 인 `""` 의 초기값을 가진 `value` 라는 저장된 문자열 프로퍼티를 정의합니다. 이 구조체는 또한 `value` 가 몇번이나 수정되는지 추적하는데 사용되는 `numberOfEdits` 라는 저장된 정수 프로퍼티도 정의합니다. 이 수정 추적은 `value` 프로퍼티에 새로운 값이 설정될 때마다 `numberOfEdits` 를 증가시키는 `value` 프로퍼티에 `didSet` 프로퍼티 관찰자로 구현됩니다.
+`TrackedString` 구조체는 빈 문자열 인 `""` 의 초기 값을 가진 `value` 라는 저장된 문자열 프로퍼티를 정의합니다. 이 구조체는 또한 `value` 가 몇번이나 수정되는지 추적하는데 사용되는 `numberOfEdits` 라는 저장된 정수 프로퍼티도 정의합니다. 이 수정 추적은 `value` 프로퍼티에 새로운 값이 설정될 때마다 `numberOfEdits` 를 증가시키는 `value` 프로퍼티에 `didSet` 프로퍼티 관찰자로 구현됩니다.
 
 `TrackedString` 구조체와 `value` 프로퍼티는 명시적으로 접근 수준 수식어를 제공하지 않으므로 internal의 기본 접근 수준을 받습니다. 그러나 `numberOfEdits` 에 대한 접근 수준은 프로퍼티의 getter는 여전히 internal의 기본 접근 수준을 가지지만 프로퍼티는 `TrackedString` 구조체의 부분의 코드 내에서만 설정 가능함을 나타내기 위해 `private(set)` 수식어로 표기됩니다. 이렇게 하면 `TrackedString` 이 내부적으로 `numberOfEdits` 프로퍼티를 수정할 수 있지만 구조체의 정의 외부에서 사용될 때는 읽기전용 프로퍼티로 표시할 수 있습니다.
 
@@ -310,7 +310,7 @@ public struct TrackedString {
 
 ### 구조체 타입에 대한 기본 멤버별 이니셜라이저 \(Default Memberwise Initializers for Structure Types\)
 
-구조체의 모든 저장된 프로퍼티가 private라면 구조체 타입의 기본 멤버별 이니셜라이저는 private라고 간주합니다. 마찬가지로 구조체의 모든 저장된 프로퍼티가 file private라면 이니셜라이저는 file private 입니다. 그렇지 않으면 이니셜라이저는 internal의 접근 수준을 가집니다.
+구조체의 모든 저장 프로퍼티가 private라면 구조체 타입의 기본 멤버별 이니셜라이저는 private라고 간주합니다. 마찬가지로 구조체의 모든 저장 프로퍼티가 file private라면 이니셜라이저는 file private 입니다. 그렇지 않으면 이니셜라이저는 internal의 접근 수준을 가집니다.
 
 위의 기본 이니셜라이저과 마찬가지로 다른 모듈에서 사용될 때 멤버별 이니셜라이저으로 초기화 하는 public 구조체 타입은 타입의 정의의 부분으로 public 멤버별 이니셜라이저를 자체적으로 제공해야 합니다.
 

@@ -66,9 +66,9 @@ struct BlackjackCard {
 * `Int` 타입의 `first`
 * `Int?` 또는 "옵셔널 `Int`" 타입의 `second`
 
-`Rank` 는 `Values` 구조체의 인스턴스를 반환하는 `values` 라는 계산된 프로퍼티도 정의합니다. 이 계산된 프로퍼티는 카드의 순위를 고려하고 그 순위를 기반으로 적절한 값으로 새로운 `Values` 인스턴스를 초기화 합니다. `jack`, `queen`, `king`, 그리고 `ace` 에 대한 특별한 값을 사용합니다. 숫자 카드에 대해서는 순위의 원시 `Int` 값을 사용합니다.
+`Rank` 는 `Values` 구조체의 인스턴스를 반환하는 `values` 라는 연산 프로퍼티도 정의합니다. 이 연산 프로퍼티는 카드의 순위를 고려하고 그 순위를 기반으로 적절한 값으로 새로운 `Values` 인스턴스를 초기화 합니다. `jack`, `queen`, `king`, 그리고 `ace` 에 대한 특별한 값을 사용합니다. 숫자 카드에 대해서는 순위의 원시 `Int` 값을 사용합니다.
 
-`BlackjackCard` 구조체 자체는 `rank` 와 `suit` 의 2개의 프로퍼티를 가지고 있습니다. 이름과 카드의 값의 설명을 만들기 위해 `rank` 와 `suit` 에 저장된 값을 사용하는 `description` 이라는 계산된 프로퍼티도 정의합니다. `description` 프로퍼티는 화면에 표시하기 위해 두번째 값이 있는지 확인하고 있으면 두번째 값에 대해 상세 설명을 추가합니다.
+`BlackjackCard` 구조체 자체는 `rank` 와 `suit` 의 2개의 프로퍼티를 가지고 있습니다. 이름과 카드의 값의 설명을 만들기 위해 `rank` 와 `suit` 에 저장된 값을 사용하는 `description` 이라는 연산 프로퍼티도 정의합니다. `description` 프로퍼티는 화면에 표시하기 위해 두번째 값이 있는지 확인하고 있으면 두번째 값에 대해 상세 설명을 추가합니다.
 
 `BlackjackCard` 는 사용자 지정 이니셜라이저이 없는 구조체이기 때문에 <doc:Initialization#구조체의-멤버별-이니셜라이저-Memberwise-Initializers-for-Structure-Types> 에서 설명했듯이 암시적 멤버별 이니셜라이저를 가지고 있습니다. `theAceOfSpades` 라는 새로운 상수를 초기화 하기 위해 이니셜라이저를 사용할 수 있습니다:
 

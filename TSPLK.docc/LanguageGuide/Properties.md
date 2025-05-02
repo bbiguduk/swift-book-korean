@@ -1676,7 +1676,7 @@ struct SizedRectangle {
 -->
 
 > Note: 전역 상수와 변수는 항상 지연 방식으로 계산되며,
-> 이는 <doc:Properties#지연-저장된-프로퍼티-Lazy-Stored-Properties>에서 설명과 유사합니다.
+> 이는 <doc:Properties#지연-저장-프로퍼티-Lazy-Stored-Properties>에서 설명과 유사합니다.
 > 지연 저장 프로퍼티와 다르게
 > 전역 상수와 변수는 `lazy` 수식어가 필요하지 않습니다.
 >

@@ -258,7 +258,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 이를 위해 메서드 정의에 `mutating` 키워드를 추가하여
 프로퍼티를 수정을 허용합니다.
 
-<doc:Properties#상수-구조체-인스턴스의-저장된-프로퍼티-Stored-Properties-of-Constant-Structure-Instances>에서 설명했듯이
+<doc:Properties#상수-구조체-인스턴스의-저장-프로퍼티-Stored-Properties-of-Constant-Structure-Instances>에서 설명했듯이
 프로퍼티가 변수 프로퍼티라도 변경할 수 없기 때문에
 구조체 타입의 상수에 대해 변경 메서드를 호출할 수 없습니다:
 

@@ -71,7 +71,7 @@ var currentLoginAttempt = 0
 "`maximumNumberOfLoginAttempts` 인 새로운 상수를 선언하고,
 `10`이라는 값을 설정합니다.
 그리고 `currentLoginAttempt` 인 새로운 변수를 선언하고,
-`0`으로 초기값을 설정합니다."
+`0`으로 초기 값을 설정합니다."
 
 이 예제에서,
 최대 로그인 시도 횟수는 최대값은 절대 변경되지 않아야 하므로
@@ -87,7 +87,7 @@ var currentLoginAttempt = 0
 위의 예제처럼
 선언과 함께 값을 지정할 수 있습니다.
 또는
-프로그램 내에서 초기값을 나중에 할당할 수 있지만,
+프로그램 내에서 초기 값을 나중에 할당할 수 있지만,
 처음으로 해당 값을 읽기 전에
 반드시 값이 지정되어야 합니다.
 
@@ -129,7 +129,7 @@ if environment == "development" {
 `if` 구문의 각 조건에서
 어떠한 값으로 `maximumNumberOfLoginAttempts`을 초기화하고,
 이 상수는 항상 값이 있음을 보장합니다.
-이 방법으로 초기값을 설정할 때,
+이 방법으로 초기 값을 설정할 때,
 Swift가 어떻게 코드를 검사하는지 자세한 내용은
 <doc:Declarations#상수-선언-Constant-Declaration>을 참고 바랍니다.
 
@@ -212,11 +212,11 @@ var red, green, blue: Double
 -->
 
 > Note: 실제로 타입 명시가 필요한 경우는 드뭅니다.
-> 상수 또는 변수를 선언할 때 초기값을 지정하면
+> 상수 또는 변수를 선언할 때 초기 값을 지정하면
 > Swift는 <doc:TheBasics#타입-세이프티와-타입-추론-Type-Safety-and-Type-Inference>에서 설명된 대로
 > 해당 상수 또는 변수에 사용될 타입을 거의 항상 추론할 수 있습니다.
-> 위의 `welcomeMessage` 예제에서 초기값을 지정하지 않았으므로,
-> `welcomeMessage` 변수의 타입은 초기값에서 유추되지 않고
+> 위의 `welcomeMessage` 예제에서 초기 값을 지정하지 않았으므로,
+> `welcomeMessage` 변수의 타입은 초기 값에서 유추되지 않고
 > 타입을 명시 하였습니다.
 
 ### 상수와 변수의 이름 (Naming Constants and Variables)
@@ -586,7 +586,7 @@ Swift는 적절한 타입으로 *타입 추론(Type Inference)*을 사용합니�
 타입을 지정하는 대부분의 동작은 자동으로 처리됩니다.
 
 타입 추론은 상수나 변수에
-초기값을 선언할 때 아주 유용합니다.
+초기 값을 선언할 때 아주 유용합니다.
 이것은 종종 상수나 변수를 선언할 때
 *리터럴 값(literal value)*(또는 *리터럴(literal)*)을 할당하여 이루어집니다.
 (리터럴 값은 아래 예에서 `42` 및 `3.14159`와 같은

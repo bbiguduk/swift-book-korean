@@ -117,7 +117,7 @@ class Residence {
 }
 ```
 
-이 `Residence` 버전은 `Room` 인스턴스의 배열을 저장하기 때문에 `numberOfRooms` 프로퍼티는 저장된 프로퍼티가 아닌 계산된 프로퍼티로 구현됩니다. 계산된 `numberOfRooms` 프로퍼티는 `rooms` 배열에서 `count` 프로퍼티의 값을 반환합니다.
+이 `Residence` 버전은 `Room` 인스턴스의 배열을 저장하기 때문에 `numberOfRooms` 프로퍼티는 저장 프로퍼티가 아닌 연산 프로퍼티로 구현됩니다. 계산된 `numberOfRooms` 프로퍼티는 `rooms` 배열에서 `count` 프로퍼티의 값을 반환합니다.
 
 `rooms` 배열에 접근하는 짧은 구문을 위해 `Residence` 는 `rooms` 배열에 요청된 인덱스로 방에 접근을 제공하는 읽기-쓰기 서브스크립트를 제공합니다.
 
