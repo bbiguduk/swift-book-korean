@@ -69,7 +69,7 @@
 <doc:Initialization#기본-프로퍼티-값-Default-Property-Values>에서 설명한 대로
 저장 프로퍼티에는 정의할 때 기본 값을 제공할 수 있습니다.
 초기화 중에 저장 프로퍼티에 초기 값을 설정하고 수정할 수도 있습니다.
-<doc:Initialization#초기화-동안-프로퍼티-상수-할당-Assigning-Constant-Properties-During-Initialization>에서 설명한 대로
+<doc:Initialization#초기화-중-상수-프로퍼티-값-할당-Assigning-Constant-Properties-During-Initialization>에서 설명한 대로
 상수 저장 프로퍼티에도 마찬가지 입니다.
 
 아래 예제는 `FixedLengthRange`라는 구조체를 정의합니다.
@@ -741,7 +741,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 >
 > 초기화 위임에 대한 자세한 내용은
 > <doc:Initialization#값-타입을-위한-이니셜라이저-위임-Initializer-Delegation-for-Value-Types>과
-> <doc:Initialization#클래스-타입에-대한-이니셜라이저-위임-Initializer-Delegation-for-Class-Types>을 참고 바랍니다.
+> <doc:Initialization#클래스-타입의-이니셜라이저-위임-Initializer-Delegation-for-Class-Types>을 참고 바랍니다.
 
 <!--
   - test: `observersDuringInitialization`

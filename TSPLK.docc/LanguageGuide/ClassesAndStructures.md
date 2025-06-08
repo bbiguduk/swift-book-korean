@@ -248,12 +248,12 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
   ```
 -->
 
-### 구조체의 멤버별 이니셜라이저 \(Memberwise Initializers for Structure Types\)
+### 구조체의 멤버와이즈 이니셜라이저 (Memberwise Initializers for Structure Types)
 
 모든 구조체는 새로운 구조체 인스턴스의 멤버 프로퍼티를 초기화 할 때 사용할 수 있는
-자동으로 생성되는 *멤버별 이니셜라이저(memberwise intializer)*을 가집니다.
+자동으로 생성되는 *멤버와이즈 이니셜라이저(memberwise intializer)*를 가집니다.
 새로운 인스턴스의 프로퍼티 초기 값은
-이름으로 멤버별 초기화에 전달할 수 있습니다:
+이름으로 멤버와이즈 초기화에 전달할 수 있습니다:
 
 ```swift
 let vga = Resolution(width: 640, height: 480)
@@ -267,7 +267,7 @@ let vga = Resolution(width: 640, height: 480)
   ```
 -->
 
-구조체와 다르게, 클래스 인스턴스는 멤버별 초기화를 제공하지 않습니다.
+구조체와 다르게, 클래스 인스턴스는 멤버와이즈 초기화를 제공하지 않습니다.
 초기화에 대한 자세한 설명은 <doc:Initialization>을 참고 바랍니다.
 
 <!--
