@@ -812,7 +812,7 @@ class Counter {
 
 여기서 2단계 옵셔널 체이닝을 사용합니다. 먼저 `dataSource` 는 `nil` 이 가능하므로 `dataSource` 가 `nil` 이 아닌 경우에만 `increment(forCount:)` 호출해야 된다는 것을 나타내기 위해 `dataSource` 는 이름 뒤에 물음표를 붙입니다. 두번째로 옵셔널 요구사항 이므로 `dataSource` 가 존재하더라도 `increment(forCount:)` 가 구현되었다고 보장하지 않습니다. 여기서 `increment(forCount:)` 가 구현되지 않은 가능성은 옵셔널 체이닝에 의해 처리됩니다. `increment(forCount:)` 가 존재할 경우에만 `increment(forCount:)` 호출이 이뤄지고 존재하지 않으면 `nil` 입니다. 이것이 `increment(forCount:)` 이름 뒤에 물음표가 붙는 이유입니다.
 
-`increment(forCount:)` 를 호출하는 것은 위의 2가지 이유로 실패할 수 있으므로 이 호출은 _옵셔널_ `Int` 값을 반환합니다. `increment(forCount:)` 가 `CounterDataSource` 의 정의에서 옵셔널이 아닌 `Int` 값으로 반환하더라도 마찬가지입니다. 2개의 옵셔널 체이닝 연산자가 차례로 있지만 결과는 여전히 단일 옵셔널로 래핑됩니다. 여러개 옵셔널 체이닝 연산자 사용에 대한 자세한 내용은 <doc:OptionalChaining#여러-수준의-체인연결-Linking-Multiple-Levels-of-Chaining> 을 참고 바랍니다.
+`increment(forCount:)` 를 호출하는 것은 위의 2가지 이유로 실패할 수 있으므로 이 호출은 _옵셔널_ `Int` 값을 반환합니다. `increment(forCount:)` 가 `CounterDataSource` 의 정의에서 옵셔널이 아닌 `Int` 값으로 반환하더라도 마찬가지입니다. 2개의 옵셔널 체이닝 연산자가 차례로 있지만 결과는 여전히 단일 옵셔널로 래핑됩니다. 여러개 옵셔널 체이닝 연산자 사용에 대한 자세한 내용은 <doc:OptionalChaining#여러-단계의-체이닝-연결-Linking-Multiple-Levels-of-Chaining> 을 참고 바랍니다.
 
 `increment(forCount:)` 호출 후에 반환한 옵셔널 `Int` 는 옵셔널 바인딩을 사용하여 `amount` 라는 상수에 언래핑 됩니다. 옵셔널 `Int` 에 값이 포함되어 있다면 — 이것은 위임자와 메서드가 모두 존재하고 메서드가 값을 반환 한 경우 — 언래핑된 `amount` 는 저장된 `count` 프로퍼티에 추가하고 증가를 완료합니다.
 
