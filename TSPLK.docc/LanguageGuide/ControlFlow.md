@@ -1454,7 +1454,7 @@ Swift는 다섯 개의 제어 변경 구문이 있습니다:
 
 `continue`, `break`, `fallthrough` 구문은 아래 설명되어 있습니다.
 `return` 구문은 <doc:Functions>에 설명되어 있고,
-`throw` 구문은 <doc:ErrorHandling#던지기-함수를-이용한-에러-전파-Propagating-Errors-Using-Throwing-Functions>에 설명되어 있습니다.
+`throw` 구문은 <doc:ErrorHandling#던지는-함수를-이용한-에러-전파-Propagating-Errors-Using-Throwing-Functions>에 설명되어 있습니다.
 
 ### 계속 (Continue)
 

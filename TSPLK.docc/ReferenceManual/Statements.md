@@ -404,7 +404,7 @@ _표현식 (expression)_ 의 값은 `Error` 프로토콜을 준수하는 타입�
 발생하는 에러의 타입을 선언하면,
 *표현식* 의 값은 해당 타입의 인스턴스여야 합니다.
 
-`throw` 구문을 어떻게 사용하는지에 대한 예제는 <doc:ErrorHandling> 에 <doc:ErrorHandling#던지기-함수를-이용한-에러-전파-Propagating-Errors-Using-Throwing-Functions> 를 참고 바랍니다.
+`throw` 구문을 어떻게 사용하는지에 대한 예제는 <doc:ErrorHandling> 에 <doc:ErrorHandling#던지는-함수를-이용한-에러-전파-Propagating-Errors-Using-Throwing-Functions> 를 참고 바랍니다.
 
 > Grammar of a throw statement:
 >
