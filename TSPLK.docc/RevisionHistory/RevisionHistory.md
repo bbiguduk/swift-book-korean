@@ -87,7 +87,7 @@
 
 * 오탈자 수정
 * Swift 5.7 기반으로 문서 작업 완료
-* 행위자 (actor) 와 작업 (task) 간의 데이터 전송에 대한 내용을 <doc:Concurrency#전송-가능-타입-Sendable-Types> 섹션에 추가하고 `@Sendable` 과 `@unchecked` 속성에 대한 내용을 <doc:Attributes#Sendable> 과 <doc:Attributes#unchecked> 섹션에 추가하였습니다.
+* 행위자 (actor) 와 작업 (task) 간의 데이터 전송에 대한 내용을 <doc:Concurrency#Sendable-타입-Sendable-Types> 섹션에 추가하고 `@Sendable` 과 `@unchecked` 속성에 대한 내용을 <doc:Attributes#Sendable> 과 <doc:Attributes#unchecked> 섹션에 추가하였습니다.
 * 정규 표현식 생성에 대한 내용을 <doc:LexicalStructure#정규-표현식-리터럴-Regular-Expression-Literals> 섹션에 추가하였습니다.
 * `if`-`let` 형식에 대한 내용을 <doc:TheBasics#옵셔널-바인딩-Optional-Binding> 섹선에 추가하였습니다.
 * `#unavailable` 에 대한 내용을 <doc:ControlFlow#사용-가능한-API-확인-Checking-API-Availability> 섹션에 추가하였습니다.
