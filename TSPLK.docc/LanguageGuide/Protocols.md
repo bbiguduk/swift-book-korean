@@ -80,7 +80,7 @@ let john = Person(fullName: "John Appleseed")
 
 이 예제는 특정 이름을 가진 사람을 나타내는 `Person` 이라는 구조체를 정의합니다. 정의의 첫번째 줄의 부분으로 `FullyNamed` 프로토콜을 채택합니다.
 
-`Person` 의 각 인스턴스는 `String` 타입의 `fullName` 이라는 단일 저장 프로퍼티를 가집니다. 이것은 `FullyNamed` 프로토콜의 단일 요구사항과 일치하고 `Person` 은 프로토콜을 올바르게 준수하고 있다고 얘기합니다 \(Swift는 프로토콜 요구사항이 충족되지 않으면 컴파일 시 에러가 발생합니다\).
+`Person` 의 각 인스턴스는 `String` 타입의 `fullName` 이라는 단일 저장 프로퍼티를 가집니다. 이것은 `FullyNamed` 프로토콜의 단일 요구사항과 일치하고 `Person` 은 프로토콜을 올바르게 준수하고 있다고 얘기합니다 \(Swift는 프로토콜 요구사항이 충족되지 않으면 컴파일 시 오류가 발생합니다\).
 
 다음은 `FullyNamed` 프로토콜을 채택하고 준수하는 더 복잡한 클래스입니다:
 
@@ -626,7 +626,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 }
 ```
 
-위의 예제에서 `SomeClassOnlyProtocol` 은 클래스 타입에만 채택될 수 있습니다. `SomeClassOnlyProtocol` 을 구조체 또는 열거형 정의에 채택하면 컴파일 시 에러가 발생합니다.
+위의 예제에서 `SomeClassOnlyProtocol` 은 클래스 타입에만 채택될 수 있습니다. `SomeClassOnlyProtocol` 을 구조체 또는 열거형 정의에 채택하면 컴파일 시 오류가 발생합니다.
 
 > Note   
 > 프로토콜의 요구사항에 의해 정의된 동작이 준수하는 타입에 값 의미 체계가 아닌 참조 의미 체계가 있다고 가정하거나 요구하는 경우 클래스 전용 프로토콜을 사용합니다. 참조와 값 의미 체계에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 과 <doc:ClassesAndStructures#클래스는-참조-타입-Classes-Are-Reference-Types> 을 참고 바랍니다.
@@ -701,7 +701,7 @@ beginConcert(in: seattle)
 
 * `is` 연산자는 인스턴스가 프로토콜을 준수한다면 `true` 를 반환하고 그렇지 않으면 `false` 를 반환합니다.
 * 다운 캐스트 연산자의 `as?` 버전은 프로토콜의 타입의 옵셔널 값을 반환하고 인스턴스가 프로토콜을 준수하지 않으면 그 값은 `nil` 입니다.
-* 다운 캐스트 연산자의 `as!` 버전은 프로토콜 타입으로 강제로 다운 캐스팅 하고 다운 캐스트가 성공하지 못하면 런타임 에러가 발생합니다.
+* 다운 캐스트 연산자의 `as!` 버전은 프로토콜 타입으로 강제로 다운 캐스팅 하고 다운 캐스트가 성공하지 못하면 런타임 오류가 발생합니다.
 
 아래 예제는 `area` 라는 gettable `Double` 프로퍼티의 단일 프로퍼티 요구사항을 가지는 `HasArea` 라는 프로토콜을 정의합니다:
 

@@ -14,8 +14,8 @@
 - Swift 6 Beta 기반으로 문서 업데이트.
 - 엄격한 동시성 검사로 변환을 위한 정보를
   <doc:Attributes#preconcurrency> 섹션에 추가.
-- 특정 타입의 에러 발생에 대한 내용을
-  <doc:ErrorHandling#에러-타입-지정-Specifying-the-Error-Type> 섹션에 추가.
+- 특정 타입의 오류 발생에 대한 내용을
+  <doc:ErrorHandling#오류-타입-지정-Specifying-the-Error-Type> 섹션에 추가.
 - <doc:AccessControl> 챕터에
   패키지-수준 접근에 대한 내용 추가.
 
@@ -76,7 +76,7 @@
 ### 2023-04-04(화)
 
 * Swift 5.8 기반으로 문서 작업
-* 에러 처리 외의 `defer` 를 표시하는 <doc:ControlFlow#연기된-동작-Deferred-Actions> 추가
+* 오류 처리 외의 `defer` 를 표시하는 <doc:ControlFlow#연기된-동작-Deferred-Actions> 추가
 * 오탈자 수정
 
 ### 2022-09-13(화)

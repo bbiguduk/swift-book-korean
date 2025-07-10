@@ -1044,7 +1044,7 @@ greeting[index]
 
 문자열 범위에 벗어나는 인덱스로 접근하거나
 문자열 범위에 벗어나는 인덱스의 `Character`를 접근하려고 하면
-런타임 에러가 발생합니다.
+런타임 오류가 발생합니다.
 
 ```swift
 greeting[greeting.endIndex] // Error

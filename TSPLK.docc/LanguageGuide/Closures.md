@@ -586,8 +586,8 @@ func loadPicture(from server: Server, completion: (Picture) -> Void, onFailure: 
 두 개의 클로저를 전달합니다.
 첫 번째 클로저는 사진 다운로드 완료 후에
 사진을 표시하는 완료 핸들러입니다.
-두 번째 클로저는 에러를 표시하는
-에러 핸들러입니다.
+두 번째 클로저는 오류를 표시하는
+오류 핸들러입니다.
 
 ```swift
 loadPicture(from: someServer) { picture in
@@ -925,7 +925,7 @@ func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
 `someFunctionWithEscapingClosure(_:)` 함수는 인수로 클로저를 가지고 있고
 함수 외부에 선언된 배열에 추가합니다.
 함수의 파라미터에 `@escaping`을 표시하지 않으면,
-컴파일시 에러가 발생합니다.
+컴파일시 오류가 발생합니다.
 
 클래스 인스턴스를 참조하는 `self`가
 탈출 클로저 안에서 사용되는 경우에는 특히 주의가 필요합니다.
@@ -1081,7 +1081,7 @@ struct SomeStruct {
 
 위의 예제에서 `someFunctionWithEscapingClosure` 함수 호출은
 변경 가능한 메서드 내부에 있기 때문에
-에러이고
+오류이고
 `self`는 변경 가능합니다.
 이것은 탈출 클로저는 구조체인 `self`를 변경가능한 참조로
 캡처할 수 없다는 규칙을 위반합니다.

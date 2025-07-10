@@ -376,7 +376,7 @@ shoppingList[0] = "Six eggs"
 유효한 인덱스를 지정해야 합니다.
 예를 들어 `shoppingList[shoppingList.count] = "Salt"`으로
 배열 끝에 추가하면
-런타임 에러가 발생합니다.
+런타임 오류가 발생합니다.
 
 <!--
   Unlike Ruby and Javascript, where accessing an invalid index
@@ -455,7 +455,7 @@ let mapleSyrup = shoppingList.remove(at: 0)
 
 > Note: 배열의 범위를 넘는 인덱스로 값에
 > 접근이나 수정할 경우,
-> 런타임 에러가 발생합니다.
+> 런타임 오류가 발생합니다.
 > 배열의 `count` 프로퍼티를 사용하여
 > 인덱스가 유효한지 확인할 수 있습니다.
 > 배열은 0부터 인덱스되기 때문에

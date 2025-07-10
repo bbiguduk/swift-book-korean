@@ -262,7 +262,7 @@ print("Tandem: \(tandem.description)")
 실수로 일치하는 정의를 제공하지 않도록 합니다.
 실수로 재정의하면 예기치 않은 동작을 야기하고,
 `override` 키워드 없이 재정의하면
-코드가 컴파일될 때 에러가 발생합니다.
+코드가 컴파일될 때 오류가 발생합니다.
 
 `override` 키워드는 컴파일러에게
 현재 정의하려는 멤버가 슈퍼클래스(또는 그 상위 클래스)에서
@@ -507,7 +507,7 @@ print("AutomaticCar: \(automatic.description)")
 (`final var`, `final func`, `final class func`, `final subscript` 와 같이 작성).
 
 서브클래스에서 final 메서드, final 프로퍼티, final 서브스크립트를 재정의 하면
-컴파일 시 에러가 발생합니다.
+컴파일 시 오류가 발생합니다.
 확장한 클래스에 추가된 메서드, 프로퍼티, 서브스크립트는
 확장의 정의 내에서 final로 표시할 수도 있습니다.
 자세한 내용은 <doc:Extensions>을 참고 바랍니다.
@@ -548,7 +548,7 @@ print("AutomaticCar: \(automatic.description)")
 
 클래스 정의에 `class` 키워드 전에
 `final` 키워드를 표시하여 final로 전체 클래스를 표시할 수 있습니다(`final class`).
-final 클래스를 서브클래스하려는 모든 시도는 컴파일 시 에러가 발생합니다.
+final 클래스를 서브클래스하려는 모든 시도는 컴파일 시 오류가 발생합니다.
 
 <!--
   - test: `finalClassPreventsOverriding`

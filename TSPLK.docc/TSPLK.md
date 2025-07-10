@@ -114,7 +114,7 @@
 | Designated Initializer       | 지정된 이니셜라이저   |
 | Convenience Initializer      | 편의 이니셜라이저    |
 | Optional Chaining            | 옵셔널 체이닝      |
-| Error Handling               | 에러 처리        |
+| Error Handling               | 오류 처리        |
 | Concurrency                  | 동시성          |
 | Asynchronous                 | 비동기          |
 | Parallel                     | 병렬           |
