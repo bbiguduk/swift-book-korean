@@ -477,7 +477,7 @@ let anotherInstance = metatype.init(string: "some string")
 let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
 ```
 
-인스턴스에 대해 구체적인 타입으로 `Any` 를 사용할 때 해당 프로퍼티 또는 메서드에 접근하려면 먼저 알려진 타입으로 인스턴스를 캐스팅 해야 합니다. `Any` 의 구체적인 타입인 인스턴스는 본래 동적 타입을 유지하고 `as`, `as?`, 또는 `as!` 와 같은 타입 캐스팅 연산자 (type-cast operators) 중 하나를 사용하여 타입을 캐스팅 할 수 있습니다. 예를 들어 `as?` 을 사용하여 배열의 첫번째 객체를 `String` 으로 조건부로 다운캐스트 합니다:
+인스턴스에 대해 구체적인 타입으로 `Any` 를 사용할 때 해당 프로퍼티 또는 메서드에 접근하려면 먼저 알려진 타입으로 인스턴스를 캐스팅 해야 합니다. `Any` 의 구체적인 타입인 인스턴스는 본래 동적 타입을 유지하고 `as`, `as?`, 또는 `as!` 와 같은 타입 캐스팅 연산자 (type-cast operators) 중 하나를 사용하여 타입을 캐스팅 할 수 있습니다. 예를 들어 `as?` 을 사용하여 배열의 첫번째 객체를 `String` 으로 조건부로 다운 캐스트 합니다:
 
 ```swift
 if let first = mixed.first as? String {

@@ -213,7 +213,7 @@ print(vertical.draw())
 
 이 경우 박스형 프로토콜 타입은 `VerticalShapes` 의 호출자가 다른 종류의 모양을 혼합할 수 있는 유일한 접근 방식입니다.
 
-박스형 값 (boxed value) 의 타입을 알고 있는 경우에 `as` 캐스트를 사용할 수 있습니다. 예를 들어:
+박스형 값 (boxed value) 의 타입을 알고 있는 경우에 `as` 변환을 사용할 수 있습니다. 예를 들어:
 
 ```swift
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
