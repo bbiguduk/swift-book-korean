@@ -395,7 +395,7 @@ print(wrapper.x)
 
 ### GKInspectable
 
-사용자 정의 GameplayKit 구성요소 프로퍼티를 SpriteKit 에디터 UI 에 노출하기 위해 이 속성을 적용합니다. 이 속성을 적용하면 `objc` 속성을 의미합니다.
+커스텀 GameplayKit 구성요소 프로퍼티를 SpriteKit 에디터 UI 에 노출하기 위해 이 속성을 적용합니다. 이 속성을 적용하면 `objc` 속성을 의미합니다.
 
 ### inlinable
 
@@ -562,7 +562,7 @@ Objective-C 의 선언은 항상
 
 ### propertyWrapper
 
-프로퍼티 래퍼 (protperty wrapper) 로 해당 타입을 사용하기 위해 클래스, 구조체, 또는 열거형 선언에 이 속성을 적용합니다. 타입에 이 속성을 적용하면 타입과 동일한 이름으로 사용자 정의 속성을 생성합니다. 래퍼 타입의 인스턴스로 프로퍼티에 대한 접근을 래핑하려면 클래스, 구조체, 또는 열거형의 프로퍼티에 새로운 속성을 적용해야 합니다. 지역과 전역 변수는 프로퍼티 래퍼를 사용할 수 없습니다.
+프로퍼티 래퍼 (protperty wrapper) 로 해당 타입을 사용하기 위해 클래스, 구조체, 또는 열거형 선언에 이 속성을 적용합니다. 타입에 이 속성을 적용하면 타입과 동일한 이름으로 커스텀 속성을 생성합니다. 래퍼 타입의 인스턴스로 프로퍼티에 대한 접근을 래핑하려면 클래스, 구조체, 또는 열거형의 프로퍼티에 새로운 속성을 적용해야 합니다. 지역과 전역 변수는 프로퍼티 래퍼를 사용할 수 없습니다.
 
 래퍼는 `wrappedValue` 인스턴스 프로퍼티를 정의해야 합니다. 프로퍼티의 _래핑된 값 (wrapped value)_ 은 이 프로퍼티에 대해 getter 와 setter 를 노출하는 값입니다. 대부분의 경우 `wrappedValue` 는 계산된 값이지만 대신 저장된 값이 될 수 있습니다. 래퍼는 래핑된 값에 필요한 기본 저장소를 정의하고 관리합니다. 컴파일러는 래핑된 프로퍼티의 이름 앞에 언더바 (`_`) 로 래퍼 타입의 인스턴스에 대해 저장소를 합성합니다. 예를 들어 `someProperty` 에 대한 래퍼는 `_someProperty` 로 저장됩니다. 래퍼에 대한 합성된 저장소는 `private` 의 접근 제어 수준을 가집니다.
 
@@ -940,9 +940,9 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 가능할 때마다 변환이 통합됩니다. 예를 들어 표현식 `4 + 5 * 6` 은 해당 함수를 여러번 호출하는 대신 `buildExpression(4 + 5 * 6)` 으로 됩니다. 마찬가지로 중첩된 분기 구문은 `buildEither` 메서드에 대한 호출의 단일 이진 트리가 됩니다.
 
-#### 사용자 정의 결과-빌더 속성 (Custom Result-Builder Attributes)
+#### 커스텀 결과-빌더 속성 (Custom Result-Builder Attributes)
 
-결과 빌더 타입을 생성하면 동일한 이름의 사용자 정의 속성을 생성합니다. 다음 위치에 해당 속성을 적용할 수 있습니다:
+결과 빌더 타입을 생성하면 동일한 이름의 커스텀 속성을 생성합니다. 다음 위치에 해당 속성을 적용할 수 있습니다:
 
 * 함수 선언에서 결과 빌더는 함수의 본문을 빌드합니다.
 * getter 를 포함하는 변수 또는 서브스크립트 선언에서 결과 빌더는 getter 의 본문을 빌드합니다.
@@ -968,7 +968,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 앱 대리자를 나타내기 위해 클래스에 이 속성을 적용합니다. 이 속성을 사용하는 것은 `UIApplicationMain` 함수를 호출하는 것과 대리자 클래스의 이름으로 클래스의 이름을 전달하는 것과 같습니다.
 
-이 속성을 사용하지 않으면 [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 함수를 호출하는 최상위 수준의 코드를 가지는 `main.swift` 파일을 제공해야 합니다. 예를 들어 주 클래스로 `UIApplication` 의 사용자 정의 서브클래스를 사용하면 이 속성을 사용하는 것 대신에 `UIApplicationMain(_:_:_:_:)` 함수를 호출합니다.
+이 속성을 사용하지 않으면 [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 함수를 호출하는 최상위 수준의 코드를 가지는 `main.swift` 파일을 제공해야 합니다. 예를 들어 주 클래스로 `UIApplication` 의 커스텀 서브클래스를 사용하면 이 속성을 사용하는 것 대신에 `UIApplicationMain(_:_:_:_:)` 함수를 호출합니다.
 
 실행 가능하도록 만들기 위해 컴파일 한 Swift 코드는 <doc:Declarations#최상위-수준-코드-Top-Level-Code> 에서 설명한대로 하나의 최상위-수준 시작 지점을 포함해야 합니다.
 

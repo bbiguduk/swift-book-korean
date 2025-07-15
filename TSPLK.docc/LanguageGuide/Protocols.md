@@ -16,7 +16,7 @@ protocol SomeProtocol {
 }
 ```
 
-사용자 정의 타입은 콜론으로 구분된 타입의 이름 뒤에 특정 프로토콜의 이름을 위치시켜 정의의 부분으로 특정 프로토콜을 채택합니다. 여러 프로토콜은 콤마로 구분되고 리스트화 할 수 있습니다:
+커스텀 타입은 콜론으로 구분된 타입의 이름 뒤에 특정 프로토콜의 이름을 위치시켜 정의의 부분으로 특정 프로토콜을 채택합니다. 여러 프로토콜은 콤마로 구분되고 리스트화 할 수 있습니다:
 
 ```swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
@@ -488,7 +488,7 @@ print(somethingTextRepresentable.textualDescription)
 
 Swift는 많은 경우에 `Equatable`, `Hashable`, 그리고 `Comparable` 에 대해 프로토콜 준수성을 자동으로 제공할 수 있습니다. 합성된 구현을 사용하면 프로토콜 요구사항 구현을 위해 반복적인 상용구 코드를 작성할 필요가 없습니다.
 
-Swift는 다음과 같은 사용자 정의 타입에 대해 `Equatable` 의 합성된 구현을 제공합니다:
+Swift는 다음과 같은 커스텀 타입에 대해 `Equatable` 의 합성된 구현을 제공합니다:
 
 * `Equatable` 프로토콜을 준수하는 저장 프로퍼티만 있는 구조체
 * `Equatable` 프로토콜을 준수하는 연관된 타입만 있는 열거형
@@ -511,7 +511,7 @@ if twoThreeFour == anotherTwoThreeFour {
 // Prints "These two vectors are also equivalent."
 ```
 
-Swift는 아래와 같은 사용자 정의 타입에 대해 `Hashable` 에 합성된 구현을 제공합니다:
+Swift는 아래와 같은 커스텀 타입에 대해 `Hashable` 에 합성된 구현을 제공합니다:
 
 * `Hashable` 프로토콜을 준수하는 저장 프로퍼티만 가지는 구조체
 * `Hashable` 프로토콜을 준수하는 연관된 타입만 가지는 열거형
@@ -788,7 +788,7 @@ for object in objects {
 `CounterDataSource` 프로토콜은 `increment(forCount:)` 라는 옵셔널 메서드 요구사항과 `fixedIncrement` 라는 옵셔널 프로퍼티 요구사항을 정의합니다. 이 요구사항은 `Counter` 인스턴스에 대해 적절한 증가값을 제공하기 위해 데이터 소스에 대한 2가지 다른 방법을 정의합니다.
 
 > Note   
-> 엄밀히 말하면 프로토콜 요구사항을 구현하지 않고도 `CounterDataSource` 를 준수하는 사용자 정의 클래스를 작성할 수 있습니다. 둘 다 옵셔널 입니다. 기술적으로는 허용되지만 좋은 데이터 소스로는 적합합지 않습니다.
+> 엄밀히 말하면 프로토콜 요구사항을 구현하지 않고도 `CounterDataSource` 를 준수하는 커스텀 클래스를 작성할 수 있습니다. 둘 다 옵셔널 입니다. 기술적으로는 허용되지만 좋은 데이터 소스로는 적합합지 않습니다.
 
 아래 정의된 `Counter` 클래스는 `CounterDataSource?` 타입의 옵셔널 `dataSource` 프로퍼티를 가지고 있습니다:
 

@@ -24,7 +24,7 @@
 이러한 프로퍼티를 타입 프로퍼티라 합니다.
 
 또한 프로퍼티 관찰자(property observers)를 정의하여 프로퍼티의 값이 변경되는 것을 감지하고
-사용자 정의 동작에 응답할 수 있습니다.
+커스텀 동작에 응답할 수 있습니다.
 프로퍼티 관찰자는 직접 정의한 저장 프로퍼티와
 상속받은 프로퍼티에도 추가할 수 있습니다.
 
@@ -409,7 +409,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 `Rect` 구조체는 `center`라는 연산 프로퍼티를 제공합니다.
 `Rect`에 현재 중심 위치는 항상 `origin`과 `size`로 계산될 수 있고,
 명시적인 `Point` 값으로 저장할 필요가 없습니다.
-대신에 `Rect`는 `center`라는 연산 변수에 대해 사용자 정의 getter와 setter를 정의하고,
+대신에 `Rect`는 `center`라는 연산 변수에 대해 커스텀 getter와 setter를 정의하고,
 실제 저장 프로퍼티처럼 사각형의 `center`를 동작하도록 합니다.
 
 위의 예제는 `square`라는 새로운 `Rect` 변수를 생성합니다.

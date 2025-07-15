@@ -112,7 +112,7 @@ swapTwoValues(&someString, &anotherString)
 
 ## 제너릭 타입 \(Generic Types\)
 
-제너릭 함수 외에도 Swift는 고유한 _제너릭 타입 \(generic types\)_ 을 정의할 수 있습니다. 이것은 `Array` 와 `Dictionary` 와 유사한 방식으로 _모든 타입_ 에서 동작할 수 있는 사용자 정의 클래스, 구조체, 그리고 열거형입니다.
+제너릭 함수 외에도 Swift는 고유한 _제너릭 타입 \(generic types\)_ 을 정의할 수 있습니다. 이것은 `Array` 와 `Dictionary` 와 유사한 방식으로 _모든 타입_ 에서 동작할 수 있는 커스텀 클래스, 구조체, 그리고 열거형입니다.
 
 이번 섹션은 `Stack` 이라는 제너릭 컬렉션 타입을 어떻게 작성하는지 보여줍니다. 스택은 배열과 유사하지만 Swift의 `Array` 타입보다 더 제한된 작업 집합을 가진 순서가 지정된 집합입니다. 배열은 모든 위치에서 새 항목을 삽입하고 제거할 수 있습니다. 그러나 스택은 새로운 항목이 컬렉션의 끝에 추가하는 것만 허락합니다 \(스택에 새로운 값을 _푸쉬 \(pushing\)_ 한다고 알려져 있음\). 마찬가지로 스택은 컬렉션의 끝부분의 항목만 제거할 수 있습니다 \(스택에서 값을 _팝 \(popping\)_ 한다고 알려져 있음\).
 
@@ -232,9 +232,9 @@ if let topItem = stackOfStrings.topItem {
 
 예를 들어 Swift의 `Dictionary` 타입은 딕셔너리에 대해 키로 사용될 수 있는 타입에 제한을 둡니다. <doc:CollectionTypes#딕셔너리-Dictionaries> 에서 설명했듯이 딕셔너리 키의 타입은 _hashable_ 이어야 합니다. 즉, 고유하게 표현할 수 있는 방법을 제공해야 합니다. `Dictionary` 는 특정 키에 대해 값이 이미 포함되어 있는지 확인할 수 있도록 키를 해시 할 수 있어야 합니다. 이 요구사항이 없으면 `Dictionary` 는 특정 키에 대해 값을 삽입 또는 대체해야 하는지 알 수 없으며 이미 딕셔너리에 있는 주어진 키에 대한 값을 찾을 수 없습니다.
 
-이 요구사항은 키 타입이 Swift 표준 라이브러리에서 정의된 특수 프로토콜 인 `Hashable` 프로토콜을 준수해야 함을 지정하는 `Dictionary` 의 키 타입에서 타입 제약에 의해 강제됩니다. Swift의 모든 기본 타입 \(`String`, `Int`, `Double`, 그리고 `Bool`\)은 기본적으로 해시 가능해야 합니다. `Hashable` 프로토콜을 준수하는 자체 사용자 정의 타입을 만드는 것에 대한 자세한 내용은 [해시 가능한 프로토콜 준수 \(Conforming to the Hashable Protocol\)](https://developer.apple.com/documentation/swift/hashable#2849490) 를 참고 바랍니다.
+이 요구사항은 키 타입이 Swift 표준 라이브러리에서 정의된 특수 프로토콜 인 `Hashable` 프로토콜을 준수해야 함을 지정하는 `Dictionary` 의 키 타입에서 타입 제약에 의해 강제됩니다. Swift의 모든 기본 타입 \(`String`, `Int`, `Double`, 그리고 `Bool`\)은 기본적으로 해시 가능해야 합니다. `Hashable` 프로토콜을 준수하는 자체 커스텀 타입을 만드는 것에 대한 자세한 내용은 [해시 가능한 프로토콜 준수 \(Conforming to the Hashable Protocol\)](https://developer.apple.com/documentation/swift/hashable#2849490) 를 참고 바랍니다.
 
-사용자 정의 제너릭 타입을 생성할 때 고유 타입 제약을 정의할 수 있고 이러한 제약은 제너릭 프로그래밍에 많은 기능을 제공합니다. `Hashable` 같은 추상 개념은 구체적인 타입이 아닌 개념적 특성 측면에서 타입을 특성화 합니다.
+커스텀 제너릭 타입을 생성할 때 고유 타입 제약을 정의할 수 있고 이러한 제약은 제너릭 프로그래밍에 많은 기능을 제공합니다. `Hashable` 같은 추상 개념은 구체적인 타입이 아닌 개념적 특성 측면에서 타입을 특성화 합니다.
 
 ### 타입 제약 구문 \(Type Constraint Syntax\)
 

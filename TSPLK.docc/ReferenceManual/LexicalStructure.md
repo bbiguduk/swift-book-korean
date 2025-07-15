@@ -460,7 +460,7 @@ Swift 표준 라이브러리는 사용할 수 있는 여러가지 연산자를 �
 
 특정 구문에서 선행으로 `<` 또는 `>` 연산자는 둘 이상의 토큰으로 분리될 수 있습니다. 나머지는 동일한 방식으로 처리되고 다시 분리될 수 있습니다. 그 결과로 `Dictionary<String, Array<Int>>` 와 같은 구문에서 닫는 `>` 문자 사이를 명확하게 하기 위해 공백을 추가할 필요가 없습니다. 예를 들어 닫는 `>` 문자는 비트 시프트 `>>` 연산자로 잘못 해석될 수 있는 단일 토큰으로 처리되지 않습니다.
 
-새로운 사용자 정의 연산자를 정의하는 방법을 알아보려면 <doc:AdvancedOperators#사용자-정의-연산자-Custom-Operators> 와 <doc:Declarations#연산자-선언-Operator-Declaration> 을 참고 바랍니다. 기존 연산자를 오버로드 하는 방법을 알아보려면 <doc:AdvancedOperators#연산자-메서드-Operator-Methods> 를 참고 바랍니다.
+새로운 커스텀 연산자를 정의하는 방법을 알아보려면 <doc:AdvancedOperators#사용자-정의-연산자-Custom-Operators> 와 <doc:Declarations#연산자-선언-Operator-Declaration> 을 참고 바랍니다. 기존 연산자를 오버로드 하는 방법을 알아보려면 <doc:AdvancedOperators#연산자-메서드-Operator-Methods> 를 참고 바랍니다.
 
 > Grammar of operators:
 >

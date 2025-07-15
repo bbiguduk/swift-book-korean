@@ -1448,7 +1448,7 @@ doSomething(with: oneAndTwo)
 // Prints "(one, two)"
 ```
 
-`log()` 가 `doSomething(_:)` 에 전달된 인스턴스에서 호출되면 사용자 정의 된 타이틀은 로깅 된 문자열에서 생략됩니다.
+`log()` 가 `doSomething(_:)` 에 전달된 인스턴스에서 호출되면 커스텀된 타이틀은 로깅 된 문자열에서 생략됩니다.
 
 ### 프로토콜 준수성은 중복되지 않아야 함 (Protocol Conformance Must Not Be Redundant)
 

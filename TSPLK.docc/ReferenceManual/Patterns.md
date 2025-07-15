@@ -209,7 +209,7 @@ default:
 // Prints "(1, 2) is near the origin."
 ```
 
-사용자 정의 표현식 일치 동작을 제공하기 위해 `~=` 연산자를 오버로드 할 수 있습니다. 예를 들어 포인트의 문자열 표현으로 `point` 표현식을 비교하기 위해 위의 예제를 다시 작성할 수 있습니다.
+커스텀 표현식 일치 동작을 제공하기 위해 `~=` 연산자를 오버로드 할 수 있습니다. 예를 들어 포인트의 문자열 표현으로 `point` 표현식을 비교하기 위해 위의 예제를 다시 작성할 수 있습니다.
 
 ```swift
 // Overload the ~= operator to match a string with an integer.
