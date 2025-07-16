@@ -72,7 +72,7 @@
 <doc:Initialization#초기화-중-상수-프로퍼티-값-할당-Assigning-Constant-Properties-During-Initialization>에서 설명한 대로
 상수 저장 프로퍼티에도 마찬가지 입니다.
 
-아래 예제는 `FixedLengthRange`라는 구조체를 정의합니다.
+아래 예시는 `FixedLengthRange`라는 구조체를 정의합니다.
 이 구조체는 범위 길이가 생성된 후에 변경할 수 없는
 정수 범위를 나타냅니다:
 
@@ -105,7 +105,7 @@ rangeOfThreeItems.firstValue = 6
 `FixedLengthRange`의 인스턴스는
 `firstValue`라는 변수 저장 프로퍼티가 있으며
 `length`라는 상수 저장 프로퍼티가 있습니다.
-위의 예제에서 `length`는 새 범위가 생성될 때 초기화되며
+위의 예시에서 `length`는 새 범위가 생성될 때 초기화되며
 상수 프로퍼티이므로 그 이후에는 변경할 수 없습니다.
 
 ### 상수 구조체 인스턴스의 저장 프로퍼티 (Stored Properties of Constant Structure Instances)
@@ -198,9 +198,9 @@ rangeOfFourItems.firstValue = 6
   the initial value you give in your code will be ignored.
 -->
 
-아래의 예제는 복잡한 클래스에 불필요한 초기화를
+아래의 예시는 복잡한 클래스에 불필요한 초기화를
 피하기 위해 지연 저장 프로퍼티를 사용합니다.
-이 예제는 `DataImporter`와 `DataManager`라는 두 개의 클래스를 정의하며,
+이 예시는 `DataImporter`와 `DataManager`라는 두 개의 클래스를 정의하며,
 이 클래스의 전체 내용은 생략되어 있습니다:
 
 ```swift
@@ -400,7 +400,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
   ```
 -->
 
-이 예제는 도형을 다루기 위한 세 가지 구조체를 정의합니다:
+이 예시는 도형을 다루기 위한 세 가지 구조체를 정의합니다:
 
 - `Point`는 x, y 좌표의 위치를 캡슐화합니다.
 - `Size`는 `width`와 `height`를 캡슐화합니다.
@@ -412,7 +412,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 대신에 `Rect`는 `center`라는 연산 변수에 대해 커스텀 getter와 setter를 정의하고,
 실제 저장 프로퍼티처럼 사각형의 `center`를 동작하도록 합니다.
 
-위의 예제는 `square`라는 새로운 `Rect` 변수를 생성합니다.
+위의 예시는 `square`라는 새로운 `Rect` 변수를 생성합니다.
 `square` 변수는 `(0, 0)`의 원점으로
 너비와 높이를 `10`으로 초기화 됩니다.
 이 사각형은 아래의 다이어그램에서 연한 초록색 사각형으로 표현됩니다.
@@ -596,7 +596,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
   ```
 -->
 
-이 예제는 `width`, `height`, `depth` 프로퍼티를 가지는 3D 직육면체를 나타내는
+이 예시는 `width`, `height`, `depth` 프로퍼티를 가지는 3D 직육면체를 나타내는
 `Cuboid`라는 새로운 구조체를 정의합니다.
 이 구조체는 직육면체의 현재 부피를 계산하고 반환하는
 `volume`이라는 읽기 전용 연산 프로퍼티를 가지고 있습니다.
@@ -771,8 +771,8 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
   ```
 -->
 
-다음은 `willSet`과 `didSet` 동작에 대한 예제입니다.
-아래 예제는 사람이 걷는 동안의 걸음 수를 측정하는
+다음은 `willSet`과 `didSet` 동작에 대한 예시입니다.
+아래 예시는 사람이 걷는 동안의 걸음 수를 측정하는
 `StepCounter`라는 새로운 클래스를 정의합니다.
 이 클래스는 만보계나 다른 걸음 측정기의 입력 데이터와 함께 사용하여
 일상생활에서 사람의 운동 루틴을 추적할 수 있습니다.
@@ -838,9 +838,9 @@ stepCounter.totalSteps = 896
 새로운 값이 프로퍼티에 할당될 때마다 호출됩니다.
 새로운 값이 현재 값과 같더라도 항상 호출됩니다.
 
-이 예제의 `willSet` 관찰자는
+이 예시의 `willSet` 관찰자는
 새로운 값을 위한 `newTotalSteps`의 사용자 파라미터 명을 사용합니다.
-이 예제는 단순히 설정될 값을 출력합니다.
+이 예시는 단순히 설정될 값을 출력합니다.
 
 `didSet` 관찰자는 `totalSteps` 값이 업데이트된 후에 호출됩니다.
 이 관찰자는 새로운 `totalSteps` 값과 이전 값을 비교합니다.
@@ -936,7 +936,7 @@ struct TwelveOrLess {
 setter는 새로운 값이 12 이하인지 확인하고,
 getter는 저장된 값을 반환합니다.
 
-> Note: 위의 예제에서 `number` 프로퍼티는
+> Note: 위의 예시에서 `number` 프로퍼티는
 > `TwelveOrLess`의 구현에서만
 > `number`가 사용될 수 있도록
 > `private`로 선언되어 있습니다.
@@ -1101,7 +1101,7 @@ struct SmallRectangle {
 
 ### 래핑된 프로퍼티에 초기 값 설정 (Setting Initial Values for Wrapped Properties)
 
-위 예제의 코드는
+위 예시의 코드는
 `TwelveOrLess` 정의 안에서 `number`에 초기 값을 부여함으로써,
 래핑된 프로퍼티의 초기 값을 설정합니다.
 이 프로퍼티 래퍼를 사용한 코드는
@@ -1183,7 +1183,7 @@ struct SmallNumber {
 
 `SmallNumber`의 정의는 세 가지 이니셜라이저이 포함되어 있으며 ---
 `init()`, `init(wrappedValue:)`, `init(wrappedValue:maximum:)` 가 포함되어 있으며 ---
-아래 예제에서는
+아래 예시에서는
 이 이니셜라이저를 사용해 래핑된 값과 최대 값을 설정합니다.
 초기화와 이니셜라이저에 대한 자세한 내용은
 <doc:Initialization>를 참고 바랍니다.
@@ -1247,7 +1247,7 @@ print(zeroRectangle.height, zeroRectangle.width)
 초기 래핑 값과 초기 최대 값을 설정합니다.
 이 방식은 이전에 `SmallRectangle`에서 `TwelveOrLess`를 사용했던 예전처럼,
 프로퍼티 래퍼가 모든 초기 값을 제공합니다.
-예제와 다르게
+예시와 다르게
 `SmallNumber`이 초기 값을
 프로퍼티 선언 시 직접 작성할 수 있다는 점에서 다릅니다.
 
@@ -1447,7 +1447,7 @@ print(mixedRectangle.height)
 코드에서 `$`로 시작하는 프로퍼티를 정의할 수 없기 때문에
 투영된 값은 정의한 프로퍼티와 충돌하지 않습니다.
 
-위의 `SmallNumber` 예제에서
+위의 `SmallNumber` 예시에서
 프로퍼티에 너무 큰 수를 설정하려고 하면,
 프로퍼티 래퍼가 값을 조정한 뒤 저장합니다.
 아래의 코드는 새로운 값을 저장하기 전에
@@ -1542,7 +1542,7 @@ print(someStructure.$someNumber)
 투영된 값은 `true`입니다.
 
 프로퍼티 래퍼는 어떤 타입이든 투영된 값으로 반환할 수 있습니다.
-이 예제에서
+이 예시에서
 프로퍼티 래퍼는 숫자가 변경되었는지에 대한 ---
 정보만 노출합니다 ---
 그래서 투영된 값으로 Boolean 값을 노출합니다.
@@ -1555,7 +1555,7 @@ print(someStructure.$someNumber)
 프로퍼티 getter나 인스턴스 메서드와
 다른 프로퍼티를 접근할 때처럼
 프로퍼티 이름 앞에 `self.`을 생략할 수 있습니다.
-다음 예제의 코드는 `$height`와 `$width`로 `height`와 `width` 래퍼의
+다음 예시의 코드는 `$height`와 `$width`로 `height`와 `width` 래퍼의
 투영된 값을 참조합니다:
 
 ```swift
@@ -1761,7 +1761,7 @@ func someFunction() {
 특정 타입의 *모든* 인스턴스에 공통되는 값을 정의하는데 유용합니다.
 
 저장 타입 프로퍼티는 변수나 상수로 선언할 수 있습니다.
-연산 타입 프로퍼티는 연산 인스턴스 프로퍼티와 같은 방식으로
+타입 연산 프로퍼티는 인스턴스 연산 프로퍼티와 같은 방식으로
 항상 변수 프로퍼티로 선언됩니다.
 
 > Note: 저장 인스턴스 프로퍼티와 다르게
@@ -1783,10 +1783,10 @@ C와 Objective-C에서 *전역* static 변수로
 각 타입 프로퍼티는 명시적으로 해당 타입의 범위에 속하도록 선언됩니다.
 
 타입 프로퍼티는 `static` 키워드를 사용하여 정의합니다.
-클래스 타입에서 연산 타입 프로퍼티를 정의할 때는,
+클래스 타입에서 타입 연산 프로퍼티를 정의할 때는,
 `class` 키워드를 대신 사용하여
 서브클래스에서 해당 프로퍼티를 재정의 할 수 있습니다.
-아래의 예제는 저장 타입 프로퍼티와 연산 타입 프로퍼티의 문법을 보여줍니다:
+아래의 예시는 저장 타입 프로퍼티와 타입 연산 프로퍼티의 문법을 보여줍니다:
 
 ```swift
 struct SomeStructure {
@@ -1866,9 +1866,9 @@ class SomeClass {
   ```
 -->
 
-> Note: 위 예제의 연산 타입 프로퍼티는 읽기 전용 연산 타입 프로퍼티를 위한 것이지만,
-> 연산 인스턴스 프로퍼티와 동일한 문법을 사용하여
-> 읽기 쓰기 연산 타입 프로퍼티를 정의할 수 있습니다.
+> Note: 위 예시의 타입 연산 프로퍼티는 읽기 전용 타입 연산 프로퍼티를 위한 것이지만,
+> 인스턴스 연산 프로퍼티와 동일한 문법을 사용하여
+> 읽기 쓰기 타입 연산 프로퍼티를 정의할 수 있습니다.
 
 ### 타입 프로퍼티 접근과 설정 (Querying and Setting Type Properties)
 
@@ -1904,7 +1904,7 @@ print(SomeClass.computedTypeProperty)
   ```
 -->
 
-다음 예제는 여러 오디오 채널에 대한 오디오 레벨 미터를 모델링하는
+다음 예시는 여러 오디오 채널에 대한 오디오 레벨 미터를 모델링하는
 구조체의 일부분으로 두 개의 저장 타입 프로퍼티를 사용합니다.
 각 채널은 `0`부터 `10`까지의 정수인 오디오 레벨을 가지고 있습니다.
 

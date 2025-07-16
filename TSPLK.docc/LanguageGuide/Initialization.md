@@ -59,7 +59,7 @@ init() {
   ```
 -->
 
-아래의 예제는 화씨 온도를 저장하는
+아래의 예시는 화씨 온도를 저장하는
 `Fahrenheit`라는 새로운 구조체를 정의합니다.
 `Fahrenheit` 구조체는 `Double` 타입의 `temperature`라는
 하나의 저장 프로퍼티를 가지고 있습니다:
@@ -149,7 +149,7 @@ struct Fahrenheit {
 초기화 파라미터는 함수 및 메서드 파라미터와
 동일한 기능과 구문을 가지고 있습니다.
 
-다음 예제는 섭씨 온도를 저장하는
+다음 예시는 섭씨 온도를 저장하는
 `Celsius`라는 구조체를 정의합니다.
 `Celsius` 구조체는 `init(fromFahrenheit:)`와 `init(fromKelvin:)`이라는
 두 개의 커스텀 이니셜라이저를 구현하며,
@@ -221,7 +221,7 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
 이러한 이유 때문에 Swift는 인수 레이블을 제공하지 않으면
 이니셜라이저의 *모든* 파라미터에 대해 자동으로 인수 레이블을 제공합니다.
 
-다음 예제는 `red`, `green`, `blue`라는 세 개의 상수 프로퍼티를 가지는
+다음 예시는 `red`, `green`, `blue`라는 세 개의 상수 프로퍼티를 가지는
 `Color`라는 구조체를 정의합니다.
 이 프로퍼티는 색상에서의 빨강, 초록, 파랑의 비율을 나타내기 위해
 `0.0`에서 `1.0`사이의 값을 저장합니다.
@@ -318,7 +318,7 @@ let veryGreen = Color(0.0, 1.0, 0.0)
 기본 동작을 무시할 수 있습니다.
 
 다음은 <doc:Initialization#초기화-파라미터-Initialization-Parameters>에서의
-`Celsius` 예제를 확장한 것으로
+`Celsius` 예시를 확장한 것으로
 이미 섭씨 온도 값인 `Double` 값을 이용해
 새로운 `Celsius` 인스턴스를 생성할 수 있는 추가 이니셜라이저를 포함하고 있습니다:
 
@@ -376,7 +376,7 @@ let bodyTemperature = Celsius(37.0)
 "아직 값 없음"을 가진다는 의도를 위해
 `nil`의 값으로 초기화 됩니다.
 
-다음의 예제는 `response`라는 옵셔널 `String` 프로퍼티를 가지는
+다음의 예시는 `response`라는 옵셔널 `String` 프로퍼티를 가지는
 `SurveyQuestion`이라는 클래스를 정의합니다:
 
 ```swift
@@ -480,7 +480,7 @@ cheeseQuestion.response = "Yes, I do like cheese."
 > 초기화 중에 수정할 수 있습니다.
 > 서브클래스에서는 해당 상수 프로퍼티를 수정할 수 없습니다.
 
-위의 `SurveyQuestion` 예제를 수정하여
+위의 `SurveyQuestion` 예시를 수정하여
 `SurveyQuestion`의 인스턴스가 생성되면 질문이 바뀌지 않는다는 것을 나타내기 위해
 질문의 `text` 프로퍼티를 변수 프로퍼티 대신 상수 프로퍼티로 정의할 수 있습니다.
 이제 `text` 프로퍼티는 상수이지만,
@@ -547,7 +547,7 @@ Swift는 모든 프로퍼티에 기본 값을 제공하고
   ```
 -->
 
-이 예제는 쇼핑 목록에 있는
+이 예시는 쇼핑 목록에 있는
 항목의 이름, 수량, 구매 상태를 캡슐화하는
 `ShoppingListItem`이라는 클래스를 정의합니다:
 
@@ -580,7 +580,7 @@ var item = ShoppingListItem()
 (`name` 프로퍼티는 코드에서 값을 작성하지 않았지만
 옵셔널 `String` 프로퍼티이므로,
 자동으로 `nil`의 기본 값이 할당됩니다.)
-위의 예제는 `ShoppingListItem` 클래스의 기본 이니셜라이저를 사용하여
+위의 예시는 `ShoppingListItem` 클래스의 기본 이니셜라이저를 사용하여
 `ShoppingListItem()`으로
 클래스의 새로운 인스턴스를 생성하고,
 이를 `item`이라는 변수에 할당합니다.
@@ -610,7 +610,7 @@ var item = ShoppingListItem()
 새로운 인스턴스의 프로퍼티에 대한 초기 값은
 이름으로 멤버와이즈 이니셜라이저에 전달할 수 있습니다.
 
-아래의 예제는 `width`와 `height`라는 두 개의 프로퍼티를 가지는
+아래의 예시는 `width`와 `height`라는 두 개의 프로퍼티를 가지는
 `Size`라는 구조체를 정의합니다.
 두 프로퍼티 모두 `0.0`의 기본 값이 할당되어
 `Double` 타입으로 추론됩니다.
@@ -640,7 +640,7 @@ let twoByTwo = Size(width: 2.0, height: 2.0)
 멤버와이즈 이니셜라이저를 호출할 때,
 기본 값을 가지는
 모든 프로퍼티는 생략할 수 있습니다.
-위의 예제에서
+위의 예시에서
 `Size` 구조체는 `height`와 `width` 프로퍼티 둘 다
 기본 값을 가지고 있습니다.
 하나 또는 프로퍼티 둘 다 생략할 수 있고,
@@ -708,8 +708,8 @@ print(zeroByZero.width, zeroByZero.height)
 > 확장에서 작성해야 합니다.
 > 자세한 내용은 <doc:Extensions>을 참고 바랍니다.
 
-다음의 예제는 기하학적 사각형을 나타내는 `Rect` 구조체를 정의합니다.
-이 예제는 `Size`와 `Point`라는 두 개의 보조 구조체가 필요하고,
+다음의 예시는 기하학적 사각형을 나타내는 `Rect` 구조체를 정의합니다.
+이 예시는 `Size`와 `Point`라는 두 개의 보조 구조체가 필요하고,
 둘 다 모든 프로퍼티에 대해 `0,0`의 기본 값을 제공합니다:
 
 ```swift
@@ -858,7 +858,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 더 편리하고 의도도 더 명확하게 드러낼 수 있습니다.
 
 > Note: `init()`과 `init(origin:size:)` 이니셜라이저를
-> 직접 정의하지 않고 이 예제를 작성하는 다른 방법은
+> 직접 정의하지 않고 이 예시를 작성하는 다른 방법은
 > <doc:Extensions>을 참고 바랍니다.
 
 ## 클래스 상속과 초기화 (Class Inheritance and Initialization)
@@ -884,7 +884,7 @@ Swift는 클래스의 모든 저장 프로퍼티가 초기 값을 가질 수 있
 이 경로를 통해 초기화가 상위 클래스 체인으로 이어집니다.
 
 모든 클래스는 최소 하나의 지정 이니셜라이저를 가지고 있어야 합니다.
-경우에 따라 이 요구 사항은
+경우에 따라 이 요구사항은
 아래의 <doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance>에서 설명 하듯이
 상위 클래스의 지정 이니셜라이저를 하나 이상 상속받는 것으로 충족됩니다.
 
@@ -1058,7 +1058,7 @@ Swift 컴파일러는 2단계 초기화가 오류없이 완료되도록
 
 ![Two-Phase Initialization 1](twoPhaseInitialization01)
 
-이 예제에서 초기화는 하위 클래스의 편의 이니셜라이저를
+이 예시에서 초기화는 하위 클래스의 편의 이니셜라이저를
 호출하며 시작합니다.
 이 편의 이니셜라이저는 아직 프로퍼티를 수정할 수 없습니다.
 이것은 같은 클래스의 지정 이니셜라이저로 위임합니다.
@@ -1221,7 +1221,7 @@ Swift는 단순한 이니셜라이저가
   ```
 -->
 
-아래 예제는 `Vehicle`이라는 기본 클래스를 정의합니다.
+아래 예시는 `Vehicle`이라는 기본 클래스를 정의합니다.
 이 기본 클래스는 `numberOfWheels`라는 저장 프로퍼티를 선언하며,
 이 프로퍼티는 기본 `Int` 값 `0`을 가집니다.
 `numberOfWheels` 프로퍼티는 `description`이라는 연산 프로퍼티에서 사용되어,
@@ -1272,7 +1272,7 @@ print("Vehicle: \(vehicle.description)")
   ```
 -->
 
-다음 예제는 `Bicycle`이라는 `Vehicle`의 하위 클래스를 정의합니다:
+다음 예시는 `Bicycle`이라는 `Vehicle`의 하위 클래스를 정의합니다:
 
 ```swift
 class Bicycle: Vehicle {
@@ -1335,7 +1335,7 @@ print("Bicycle: \(bicycle.description)")
 상위 클래스의 이니셜라이저가 비동기라면,
 명시적으로 `await super.init()`을 작성해야 합니다.
 
-아래 예제는 `Vehicle`의 다른 하위 클래스인 `Hoverboard`라는 클래스를 정의합니다.
+아래 예시는 `Vehicle`의 다른 하위 클래스인 `Hoverboard`라는 클래스를 정의합니다.
 `Hoverboard` 클래스의 이니셜라이저에서는 `color` 프로퍼티만 설정합니다.
 `super.init()`을 명시적으로 호출하는 대신에,
 상위 클래스의 이니셜라이저가 암시적으로 호출되어
@@ -1471,9 +1471,9 @@ print("Hoverboard: \(hoverboard.description)")
 
 ### 지정 이니셜라이저와 편의 이니셜라이저의 동작 (Designated and Convenience Initializers in Action)
 
-다음 예제는 지정 이니셜라이저, 편의 이니셜라이저,
+다음 예시는 지정 이니셜라이저, 편의 이니셜라이저,
 자동 이니셜라이저 상속이 실제로 어떻게 동작하는지 보여줍니다.
-이 예제는 `Food`, `RecipeIngredient`, `ShoppingListItem`이라는
+이 예시는 `Food`, `RecipeIngredient`, `ShoppingListItem`이라는
 세 개의 클래스로 구성된 계층 구조를 정의하고,
 이니셜라이저가 상호작용하는 방식을 보여줍니다.
 
@@ -1637,7 +1637,7 @@ class RecipeIngredient: Food {
 따라서 `RecipeIngredient`는 자동으로
 모든 상위 클래스의 편의 이니셜라이저를 상속받습니다.
 
-이 예제에서 `RecipeIngredient`의 상위 클래스인 `Food`는
+이 예시에서 `RecipeIngredient`의 상위 클래스인 `Food`는
 `init()`이라는 단일 편의 이니셜라이저를 가지고 있습니다.
 따라서 이 이니셜라이저는 `RecipeIngredient`에 의해 상속됩니다.
 상속된 `init()`은 `Food`에서와 동일하게 동작하지만,
@@ -1869,7 +1869,7 @@ if valueChanged == nil {
   ```
 -->
 
-아래 예제는 `Animal`이라는 구조체를 정의하고,
+아래 예시는 `Animal`이라는 구조체를 정의하고,
 `species`라는 `String` 상수 프로퍼티를 가지고 있습니다.
 `Animal` 구조체는 `species`라는 하나의 파라미터를 가진
 실패 가능한 이니셜라이저도 정의합니다.
@@ -1957,7 +1957,7 @@ if anonymousCreature == nil {
 
 > Note: 빈 문자열 값(`"Giraffe"`가 아닌 `""`)을 확인하는 것은
 > *옵셔널* `String` 값이 없음을 나타내는 `nil`을 확인하는 것과는 다릅니다.
-> 위의 예제에서 빈 문자열(`""`)은 유효한 옵셔널이 아닌 `String`입니다.
+> 위의 예시에서 빈 문자열(`""`)은 유효한 옵셔널이 아닌 `String`입니다.
 > 그러나 `species` 프로퍼티의 값으로 빈 문자열을 갖는 것은
 > 동물에 대해 적절하지 않습니다.
 > 이러한 제약을 모델링하기 위해
@@ -1970,7 +1970,7 @@ if anonymousCreature == nil {
 이 이니셜라이저는 제공된 파라미터가 적절한 열거형 케이스와 일치하지 않으면
 실패할 수 있습니다.
 
-아래의 예제는 `TemperatureUnit`이라는 열거형을 정의하며,
+아래의 예시는 `TemperatureUnit`이라는 열거형을 정의하며,
 가능한 세 가지 상태(`kelvin`, `celsius`, `fahrenheit`)를 가집니다.
 실패 가능한 이니셜라이저는 온도 단위를 나타내는
 `Character` 값에 대한 적절한 열거형 케이스를 찾습니다:
@@ -2060,7 +2060,7 @@ if unknownUnit == nil {
 일치하는 값이 없으면 초기화 실패를 나타내기 위해
 자동으로 실패 가능한 이니셜라이저를 갖습니다.
 
-위의 `TemperatureUnit` 예제를
+위의 `TemperatureUnit` 예시를
 `Character` 타입의 원시값을 사용하도록 다시 작성하면,
 `init?(rawValue:)` 이니셜라이저를 활용할 수 있습니다:
 
@@ -2168,7 +2168,7 @@ if unknownUnit == nil {
 > 실패하지 않는 기존 초기화 과정에
 > 실패 가능성을 추가해야 할 때 이 방식을 사용합니다.
 
-아래 예제는 `CartItem`이라는 `Product`의 하위 클래스를 정의합니다.
+아래 예시는 `CartItem`이라는 `Product`의 하위 클래스를 정의합니다.
 `CartItem` 클래스는 온라인 쇼핑 카트에 있는 상품을 모델링합니다.
 `CartItem`은 `quantity`라는 저장 상수 프로퍼티를 도입하고,
 적어도 이 프로퍼티는 `1`이상의 값을 가지도록 보장합니다:
@@ -2332,7 +2332,7 @@ if let oneUnnamed = CartItem(name: "", quantity: 1) {
   ```
 -->
 
-아래의 예제는 `Document`라는 클래스를 정의합니다.
+아래의 예시는 `Document`라는 클래스를 정의합니다.
 이 클래스는 비어 있지 않은 문자열 값이나 `nil`은 가능하지만,
 빈 문자열은 불가능한
 `name` 프로퍼티를 가지고 초기화할 수 있는 문서를 모델링합니다:
@@ -2367,7 +2367,7 @@ class Document {
   ```
 -->
 
-다음 예제는 `Document`의 하위 클래스인 `AutomaticallyNamedDocument`를 정의합니다.
+다음 예시는 `Document`의 하위 클래스인 `AutomaticallyNamedDocument`를 정의합니다.
 `AutomaticallyNamedDocument` 하위 클래스는
 `Document`에서 제공하는 지정 이니셜라이저 둘 다 재정의합니다.
 이러한 재정의는 `AutomaticallyNamedDocument` 인스턴스가
@@ -2753,7 +2753,7 @@ class SomeSubclass: SomeClass {
   ```
 -->
 
-> Note: 상속받은 이니셜라이저로 요구 사항을 충족할 수 있으면,
+> Note: 상속받은 이니셜라이저로 요구사항을 충족할 수 있으면,
 > 필수 이니셜라이저를 명시적으로 구현을 제공하지 않아도 됩니다.
 
 <!--
@@ -2862,7 +2862,7 @@ class SomeClass {
 > 또한 암시적인 `self`를 사용할 수 없으며,
 > 인스턴스의 메서드를 호출할 수 없습니다.
 
-아래 예제는 체스 게임을 위한 보드를 모델링하는
+아래 예시는 체스 게임을 위한 보드를 모델링하는
 `Chessboard`라는 구조체를 정의합니다.
 체스는 검은색과 하얀색의 사각형이 번갈아 가며
 8 x 8 보드에서 플레이 됩니다.
@@ -2925,7 +2925,7 @@ struct Chessboard {
 
 새로운 `Chessboard` 인스턴스가 생성될 때마다 클로저가 실행되고,
 `boardColors`의 기본 값은 계산되어 반환됩니다.
-위의 예제의 클로저는
+위의 예시의 클로저는
 `temporaryBoard`라는 임시 배열에
 보드의 각 사각형에 대한 적절한 색깔을 계산하고 설정하고
 설정이 완료되면

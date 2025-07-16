@@ -59,7 +59,7 @@ enum SomeEnumeration {
   ```
 -->
 
-다음 예제는 나침반의 네 가지 주요 방향을 나타냅니다:
+다음 예시는 나침반의 네 가지 주요 방향을 나타냅니다:
 
 ```swift
 enum CompassPoint {
@@ -90,7 +90,7 @@ enum CompassPoint {
 
 > Note: Swift 열거형 케이스는 C와 Objective-C 같은 언어와는 달리,
 > 기본적으로 정수 값을 가지지 않습니다.
-> 위 예제 `CompassPoint`에
+> 위 예시 `CompassPoint`에
 > `north`, `south`, `east`, `west`는
 > 암시적으로
 > `0`, `1`, `2`, `3`에 해당하지 않습니다.
@@ -137,7 +137,7 @@ var directionToHead = CompassPoint.west
 `directionToHead` 타입은
 `CompassPoint`의 가능한 값 중 하나로 초기화될 때, 추론됩니다.
 한 번 `directionToHead`가 `CompassPoint`로 선언되면,
-이후에는 더 짧게 점 구문을 사용하여 다른 `CompassPoint` 값으로 설정할 수 있습니다:
+이후에는 더 짧게 점 문법을 사용하여 다른 `CompassPoint` 값으로 설정할 수 있습니다:
 
 ```swift
 directionToHead = .east
@@ -247,7 +247,7 @@ default:
 열거형 이름 뒤에 `: CaseIterable`을 작성하여 활성화 합니다.
 그러면 Swift는 열거형 타입에 `allCases` 프로퍼티를 통해
 모든 케이스의 컬렉션을 제공합니다.
-다음은 그 예제입니다:
+다음은 그 예시입니다:
 
 ```swift
 enum Beverage: CaseIterable {
@@ -271,14 +271,14 @@ print("\(numberOfChoices) beverages available")
   ```
 -->
 
-위의 예제에서
+위의 예시에서
 `Beverage` 열거형에 모든 케이스를 포함하는
 컬렉션에 접근하기 위해 `Beverage.allCases`를 사용합니다.
 일반 컬렉션처럼 `allCases`를 사용할 수 있습니다 ---
 컬렉션의 요소는 열거형 타입의 인스턴스이기 때문에
 이 경우에 각 요소는 `Beverage` 값입니다.
-위의 예제는 얼마나 많은 케이스가 존재하는지 계산하고,
-아래의 예제는 `for`-`in` 루프를 사용하여 모든 케이스를 반복합니다.
+위의 예시는 얼마나 많은 케이스가 존재하는지 계산하고,
+아래의 예시는 `for`-`in` 루프를 사용하여 모든 케이스를 반복합니다.
 
 ```swift
 for beverage in Beverage.allCases {
@@ -305,14 +305,14 @@ for beverage in Beverage.allCases {
   ```
 -->
 
-위 예제에서 사용된 문법은
+위 예시에서 사용된 문법은
 열거형이 [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) 프로토콜을
 준수하도록 표시한 것입니다.
 프로토콜에 대한 자세한 내용은 <doc:Protocols>을 참조 바랍니다.
 
 ## 연관 값 (Associated Values)
 
-이전 섹션의 예제는 열거형 케이스가
+이전 섹션의 예시는 열거형 케이스가
 그 자체로 정의된(그리고 타입이 지정된) 값임을 보여줍니다.
 상수나 변수를 `Planet.earth`로 설정하고,
 나중에 값을 확인할 수 있습니다.
@@ -393,7 +393,7 @@ var productBarcode = Barcode.upc(8, 85909, 51226, 3)
   ```
 -->
 
-이 예제는 `productBarcode`라는 새로운 변수를 생성하고,
+이 예시는 `productBarcode`라는 새로운 변수를 생성하고,
 연관 값으로 `(8, 85909, 51226, 3)`이라는 튜플을 가진
 `Barcode.upc` 값을 할당합니다.
 
@@ -419,7 +419,7 @@ productBarcode = .qrCode("ABCDEFGHIJKLMNOP")
 저장할 수 있지만 동시에 둘 다 저장할 수 없습니다.
 
 <doc:Enumerations#스위치-구문에서-열거형-값-일치-Matching-Enumeration-Values-with-a-Switch-Statement>에서의
-예제와 유사하게
+예시와 유사하게
 스위치 구문을 이용하여 바코드 타입을 확인할 수 있습니다.
 그러나 이번에는
 스위치 구문을 통해 연관 값을 추출할 수 있습니다.
@@ -481,7 +481,7 @@ case let .qrCode(productCode):
 
 ## 원시 값 (Raw Values)
 
-<doc:Enumerations#연관-값-Associated-Values>에서의 바코드 예제는
+<doc:Enumerations#연관-값-Associated-Values>에서의 바코드 예시는
 열거형 케이스에 다른 타입의 연관 값을
 저장할 수 있음을 보여줍니다.
 연관 값과는 별개로,
@@ -489,7 +489,7 @@ case let .qrCode(productCode):
 (원시값(raw values))으로
 미리 채워질 수도 있습니다.
 
-다음은 명명된 열거형 케이스와 함께 ASCII 값을 저장하는 예제입니다:
+다음은 명명된 열거형 케이스와 함께 ASCII 값을 저장하는 예시입니다:
 
 ```swift
 enum ASCIIControlCharacter: Character {
@@ -558,7 +558,7 @@ enum Planet: Int {
   ```
 -->
 
-위의 예제에서
+위의 예시에서
 `Planet.mercury`는 명시적으로 원시 값 `1`을 가지고,
 `Planet.venus`는 암시적으로 원시 값 `2`를 가집니다.
 
@@ -584,7 +584,7 @@ enum CompassPoint: String {
   ```
 -->
 
-위의 예제에서
+위의 예시에서
 `CompassPoint.south`는 암시적으로 `"south"`라는 원시 값을 가지고, 다른 케이스도 마찬가지로 케이스 이름을 원 값으로 자동 할당받습니다.
 
 `rawValue` 프로퍼티를 사용하여 열거형 케이스의 원시 값에 접근할 수 있습니다:
@@ -619,7 +619,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 열거형 케이스나 `nil`을 반환합니다.
 이 이니셜라이저를 사용하여 열거형의 새 인스턴스를 생성할 수 있습니다.
 
-이 예제는 `7` 원시 값으로 천왕성을 식별합니다:
+이 예시는 `7` 원시 값으로 천왕성을 식별합니다:
 
 ```swift
 let possiblePlanet = Planet(rawValue: 7)
@@ -640,7 +640,7 @@ let possiblePlanet = Planet(rawValue: 7)
 
 모든 `Int` 값이 행성과 일치하는 것은 아닙니다.
 이러한 점 때문에, 원시 값 이니셜라이저는 항상 *옵셔널* 열거형 케이스를 반환합니다.
-위의 예제에서 `possiblePlanet`은 `Planet?` 타입이나
+위의 예시에서 `possiblePlanet`은 `Planet?` 타입이나
 "옵셔널 `Planet`" 타입입니다.
 
 > Note: 원시 값 이니셜라이저는 모든 원시 값을 열거형 케이스로 반환할 수 없으므로,
@@ -684,7 +684,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
   ```
 -->
 
-이 예제는 `11`의 원시 값으로 행성을 찾기위해 옵셔널 바인딩을 사용합니다.
+이 예시는 `11`의 원시 값으로 행성을 찾기위해 옵셔널 바인딩을 사용합니다.
 `if let somePlanet = Planet(rawValue: 11)` 구문은 옵셔널 `Planet`을 생성하고,
 해당 값이 존재한다면 옵셔널 `Planet`의 값을 `somePlanet`에 설정합니다.
 이 경우 `11`의 위치로 행성을 가져올 수 없으므로,

@@ -19,7 +19,7 @@ Swift에서 타입 캐스팅은 `is`와 `as` 연산자로 구현합니다.
 특정 클래스 인스턴스의 타입을 확인하고
 같은 계층도 내에서 다른 클래스로 인스턴스를 변환할 수 있습니다.
 아래의 세 코드는
-타입 캐스팅의 예제에서 사용하기 위해
+타입 캐스팅의 예시에서 사용하기 위해
 클래스의 계층도와 해당 클래스의 인스턴스를 포함하는 배열을 정의합니다.
 
 첫 번째 코드는 `MediaItem`이라는 새로운 기본 클래스를 정의합니다.
@@ -150,7 +150,7 @@ let library = [
 이 타입 검사 연산자는 인스턴스가 하위 클래스 타입이면 `true`
 아니면 `false`를 반환합니다.
 
-아래의 예제는 `library` 배열의 `Movie`와 `Song` 인스턴스의 개수를 나타내는
+아래의 예시는 `library` 배열의 `Movie`와 `Song` 인스턴스의 개수를 나타내는
 두 변수 `movieCount`와 `songCount`를 정의합니다:
 
 ```swift
@@ -189,7 +189,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
   ```
 -->
 
-이 예제는 `library` 배열의 모든 항목을 반복합니다.
+이 예시는 `library` 배열의 모든 항목을 반복합니다.
 반복문 실행 시에 `for`-`in` 루프는 배열에서 다음 `MediaItem`을
 `item` 상수에 설정합니다.
 
@@ -224,7 +224,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 이 연산자의 형식은 유효하지 않은 클래스 타입으로 다운 캐스트를 시도하면
 런타임 오류가 발생합니다.
 
-아래의 예제는 `library`의 각 `MediaItem`을 반복하고
+아래의 예시는 `library`의 각 `MediaItem`을 반복하고
 각 항목에 대한 적절한 설명을 출력합니다.
 이렇게 하려면 `MediaItem`이 아닌,
 `Movie`나 `Song`으로 각 항목에 접근해야 합니다.
@@ -232,7 +232,7 @@ print("Media library contains \(movieCount) movies and \(songCount) songs")
 설명에 사용할
 `Movie`나 `Song`의 `director`나 `artist` 프로퍼티에 접근할 수 있도록 하기위해 필요합니다.
 
-이 예제는 배열의 각 항목은 `Movie`나
+이 예시는 배열의 각 항목은 `Movie`나
 `Song`일 수 있습니다.
 각 항목에 사용할 실제 클래스를 미리 알지 못하므로,
 루프를 통해 매번 다운 캐스트를 확인하기 위해
@@ -274,7 +274,7 @@ for item in library {
   ```
 -->
 
-이 예제는 `Movie`로 현재 `item`을 다운 캐스트 하는 것으로 시작합니다.
+이 예시는 `Movie`로 현재 `item`을 다운 캐스트 하는 것으로 시작합니다.
 `item`은 `MediaItem` 인스턴스 이므로, `Movie`일 수도 *있고*;
 마찬가지로 `Song`일 수 있습니다.
 또는 기본 `MediaItem`일 수도 있습니다.
@@ -284,7 +284,7 @@ for item in library {
 
 라이브러리 배열에 `Song` 인스턴스로
 적용할 때 `Movie`로 다운 캐스팅은 실패합니다.
-이것을 대응하기 위해 위의 예제는 옵셔널 `Movie`가 실제 값이
+이것을 대응하기 위해 위의 예시는 옵셔널 `Movie`가 실제 값이
 포함되어 있는지 확인하기 위해 옵셔널 바인딩을 사용합니다.
 (다운 캐스트가 성공 되었는지 확인합니다.)
 이 옵셔널 바인딩은 "`if let movie = item as? Movie`"로 작성되고,
@@ -329,8 +329,8 @@ Swift는 비특정 타입 작업을 위해 두 가지 특별한 타입을 제공
 코드에서 작업할 것으로 예상되는 타입에 대해 구체적으로 지정하는 것이 항상 좋습니다.
 
 다음은 함수 타입과 비 클래스 타입을 포함하여
-다른 타입에 혼합으로 작업하기 위해 `Any`를 사용하는 예제입니다.
-이 예제는 `Any` 타입의 값을 저장할 수 있는 `things`라는 배열을 생성합니다:
+다른 타입에 혼합으로 작업하기 위해 `Any`를 사용하는 예시입니다.
+이 예시는 `Any` 타입의 값을 저장할 수 있는 `things`라는 배열을 생성합니다:
 
 ```swift
 var things: [Any] = []
@@ -372,7 +372,7 @@ things.append({ (name: String) -> String in "Hello, \(name)" })
 `Any`나 `AnyObject` 타입으로만 알려진
 상수나 변수의 특정 타입을 알아보려면
 `switch` 구문의 케이스로 `is`나 `as` 패턴을 사용할 수 있습니다.
-아래의 예제는 `things` 배열에 항목을 반복하고
+아래의 예시는 `things` 배열에 항목을 반복하고
 `switch` 구문으로 각 항목의 타입을 조회합니다.
 몇몇의 `switch` 구문의 케이스는 일치된 값을
 지정된 타입의 상수에 바인딩하여 해당 값을 출력할 수 있도록 합니다:

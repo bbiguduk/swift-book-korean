@@ -31,7 +31,7 @@ _in-out 표현식 (in-out expression)_ 은 in-out 인수로 함수 호출 표현
 &<#expression#>
 ```
 
-in-out 파라미터에 대한 설명과 예제는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 를 참고 바랍니다.
+in-out 파라미터에 대한 설명과 예시는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 를 참고 바랍니다.
 
 in-out 표현식은 <doc:Expressions#포인터-타입으로-암시적-변환-Implicit-Conversion-to-a-Pointer-Type> 에서 설명한 대로 포인터가 필요한 컨텍스트에서 비포인터 인수 (non-pointer argument) 를 제공할 때도 사용됩니다.
 
@@ -78,7 +78,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
 
 중위 연산자가 할당 연산자 이거나 `try` 표현식이 괄호로 묶여있지 않으면 `try` 표현식은 중위 연산자의 오른쪽에 나타날 수 없습니다.
 
-더 자세한 정보와 `try`, `try?`, 그리고 `try!` 사용법에 대한 예제는 <doc:ErrorHandling> 를 참고 바랍니다.
+더 자세한 정보와 `try`, `try?`, 그리고 `try!` 사용법에 대한 예시는 <doc:ErrorHandling> 를 참고 바랍니다.
 
 > Grammar of a try expression:
 >
@@ -173,7 +173,7 @@ _삼항 조건 연산자 (ternary conditional operator)_ 는 조건의 값을 �
 
 _조건_ 이 `true` 이면 조건부 연산자는 첫번째 표현식을 평가하고 해당 값을 반환합니다. 그렇지 않으면 두번째 표현식을 평가하고 그것의 값을 반환합니다. 사용하지 않은 표현식은 평가되지 않습니다.
 
-삼항 조건 연산자 사용에 대한 예제는 <doc:BasicOperators#삼항-조건-연산자-Ternary-Conditional-Operator> 를 참고 바랍니다.
+삼항 조건 연산자 사용에 대한 예시는 <doc:BasicOperators#삼항-조건-연산자-Ternary-Conditional-Operator> 를 참고 바랍니다.
 
 > Grammar of a conditional operator:
 >
@@ -217,7 +217,7 @@ f(x as Any)
 
 `as!` 연산자는 지정한 _타입_ 으로 _표현식_ 의 강제 캐스팅을 수행합니다. `as!` 연산자는 옵셔널 타입이 아닌 지정한 _타입_ 의 값을 반환합니다. 캐스팅이 실패하면 런타임 오류가 발생합니다. `x as! T` 의 동작은 `(x as? T)!` 의 동작과 동일합니다.
 
-타입 캐스팅에 대한 자세한 내용과 타입 캐스팅 연산자 사용에 대한 예제는 <doc:TypeCasting> 을 참고 바랍니다.
+타입 캐스팅에 대한 자세한 내용과 타입 캐스팅 연산자 사용에 대한 예시는 <doc:TypeCasting> 을 참고 바랍니다.
 
 > Grammar of a type-casting operator:
 >
@@ -488,7 +488,7 @@ myFunction { $0 + $1 }
 
 함수에 인수로 클로저를 전달하는 것에 대한 정보는 <doc:Expressions#함수-호출-표현식-Function-Call-Expression> 을 참고 바랍니다.
 
-클로저 표현식은 함수 호출의 일부로 클로저를 즉시 사용할 때와 같이 변수나 상수에 저장하지 않고 사용될 수 있습니다. 위 코드에서 `myFunction` 에 전달된 클로저 표현식은 이러한 종류의 즉각적인 사용의 예제입니다. 결과적으로 클로저 표현식은 탈출 (escaping) 인지 비탈출 (nonescaping) 인지 여부는 주변의 컨텍스트에 의해 결정됩니다. 클로저 표현식은 즉시 호출되거나 비탈출 함수 인수로 전달되면 비탈출 입니다. 그렇지 않으면 클로저 표현식은 탈출입니다.
+클로저 표현식은 함수 호출의 일부로 클로저를 즉시 사용할 때와 같이 변수나 상수에 저장하지 않고 사용될 수 있습니다. 위 코드에서 `myFunction` 에 전달된 클로저 표현식은 이러한 종류의 즉각적인 사용의 예시입니다. 결과적으로 클로저 표현식은 탈출 (escaping) 인지 비탈출 (nonescaping) 인지 여부는 주변의 컨텍스트에 의해 결정됩니다. 클로저 표현식은 즉시 호출되거나 비탈출 함수 인수로 전달되면 비탈출 입니다. 그렇지 않으면 클로저 표현식은 탈출입니다.
 
 탈출 클로저에 대한 자세한 내용은 <doc:Closures#탈출-클로저-Escaping-Closures> 를 참고 바랍니다.
 
@@ -549,7 +549,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-클로저 표현식에 자세한 내용과 예제는 <doc:Closures#클로저-표현식-Closure-Expressions> 을 참고 바랍니다. 캡처 리스트에 자세한 내용과 예제는 <doc:AutomaticReferenceCounting#클로저에-대한-강한-참조-사이클-해결-Resolving-Strong-Reference-Cycles-for-Closures> 을 참고 바랍니다.
+클로저 표현식에 자세한 내용과 예시는 <doc:Closures#클로저-표현식-Closure-Expressions> 을 참고 바랍니다. 캡처 리스트에 자세한 내용과 예시는 <doc:AutomaticReferenceCounting#클로저에-대한-강한-참조-사이클-해결-Resolving-Strong-Reference-Cycles-for-Closures> 을 참고 바랍니다.
 
 > Grammar of a closure expression:
 >
@@ -814,7 +814,7 @@ let nestedValue = nested[keyPath: nestedKeyPath]
 // nestedValue is 24
 ```
 
-_경로 (path)_ 는 서브스크립트의 파라미터 타입이 `Hashable` 프로토콜을 준수하는 한 대괄호를 사용하여 서브스크립트를 포함할 수 있습니다. 이 예제는 배열의 두번째 요소를 접근하기 위해 키 경로로 서브스크립트를 사용합니다:
+_경로 (path)_ 는 서브스크립트의 파라미터 타입이 `Hashable` 프로토콜을 준수하는 한 대괄호를 사용하여 서브스크립트를 포함할 수 있습니다. 이 예시는 배열의 두번째 요소를 접근하기 위해 키 경로로 서브스크립트를 사용합니다:
 
 ```swift
 let greetings = ["hello", "hola", "bonjour", "안녕"]
@@ -1055,7 +1055,7 @@ _함수 이름 (function name)_ 은 값이 함수 타입인 모든 표현식이 
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
-함수 호출 표현식은 닫는 소괄호 바로 다음에 클로저 표현식의 형식으로 후행 클로저 (trailing closures) 를 포함할 수 있습니다. 이 후행 클로저는 마지막 괄호 인수 후에 추가된 함수의 인수로 이해됩니다. 첫번째 클로저 표현식은 라벨이 없습니다; 모든 추가 클로저 표현식은 인수 라벨이 앞에 옵니다. 아래 예제에서 후행 클로저 구문을 사용하거나 사용하지 않는 함수 호출의 동등한 버전을 보여줍니다:
+함수 호출 표현식은 닫는 소괄호 바로 다음에 클로저 표현식의 형식으로 후행 클로저 (trailing closures) 를 포함할 수 있습니다. 이 후행 클로저는 마지막 괄호 인수 후에 추가된 함수의 인수로 이해됩니다. 첫번째 클로저 표현식은 라벨이 없습니다; 모든 추가 클로저 표현식은 인수 라벨이 앞에 옵니다. 아래 예시에서 후행 클로저 구문을 사용하거나 사용하지 않는 함수 호출의 동등한 버전을 보여줍니다:
 
 ```swift
 // someFunction takes an integer and a closure as its arguments
@@ -1111,7 +1111,7 @@ someFunction { return $0 + 100 }  // Ambiguous
 someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
 ```
 
-위의 예제에서 "Ambiguous" 로 표시된 함수 호출은 "- 120" 을 출력하고 Swift 5.3 에서 컴파일러는 경고가 발생합니다. Swift 향후 버전은 "110 -" 이 출력될 것입니다.
+위의 예시에서 "Ambiguous" 로 표시된 함수 호출은 "- 120" 을 출력하고 Swift 5.3 에서 컴파일러는 경고가 발생합니다. Swift 향후 버전은 "110 -" 이 출력될 것입니다.
 
 클래스, 구조체, 또는 열거형 타입은 <doc:Declarations#특별한-이름의-메서드-Methods-with-Special-Names> 에서 설명한대로 여러 메서드 중 하나로 선언하여 함수 호출 구문에 대한 문법적 설탕 (syntactic sugar) 을 활성화 할 수 있습니다.
 
@@ -1357,14 +1357,14 @@ _옵셔널-체이닝 표현식 (optional-chaining expression)_ 은 접미사 표
 
 옵셔널-체이닝 표현식은 접미사 표현식 내에 나타나야 하고 접미사 표현식이 특별한 방법으로 평가되도록 합니다. 옵셔널-체이닝 표현식의 값이 `nil` 이면 접미사 표현식의 다른 모든 동작은 무시되고 전체 접미사 표현식은 `nil` 로 평가됩니다. 옵셔널-체이닝 표현식의 값이 `nil` 이 아니면 옵셔널-체이닝 표현식의 값은 언래핑되고 나머지 접미사 표현식에 평가하기 위해 사용됩니다. 두 경우 모두 접미사 표현식의 값은 여전히 옵셔널 타입입니다.
 
-옵셔널-체이닝 표현식이 포함된 접미사 표현식이 다른 접미사 표현식 내에 중첩되었다면 가장 바깥쪽 표현식만 옵셔널 타입을 반환합니다. 아래의 예제에서 `c` 가 `nil` 이 아닐 때 `.performAction()` 을 평가하기 위해 사용되는 `.property` 를 평가하는데 사용됩니다. 전체 표현식 `c?.property.performAction()` 은 옵셔널 타입의 값을 가집니다.
+옵셔널-체이닝 표현식이 포함된 접미사 표현식이 다른 접미사 표현식 내에 중첩되었다면 가장 바깥쪽 표현식만 옵셔널 타입을 반환합니다. 아래의 예시에서 `c` 가 `nil` 이 아닐 때 `.performAction()` 을 평가하기 위해 사용되는 `.property` 를 평가하는데 사용됩니다. 전체 표현식 `c?.property.performAction()` 은 옵셔널 타입의 값을 가집니다.
 
 ```swift
 var c: SomeClass?
 var result: Bool? = c?.property.performAction()
 ```
 
-다음의 예제는 옵셔널 체이닝 사용없이 위의 예제의 동작을 보여줍니다.
+다음의 예시는 옵셔널 체이닝 사용없이 위의 예시의 동작을 보여줍니다.
 
 ```swift
 var result: Bool?

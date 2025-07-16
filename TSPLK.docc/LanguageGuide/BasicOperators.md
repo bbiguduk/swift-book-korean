@@ -339,7 +339,7 @@ let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
 ## 복합 할당 연산자 (Compound Assignment Operators)
 
 C처럼, Swift는 할당(`=`)과 다른 연산자를 결합한 *복합 할당 연산자(compound assignment operators)*를 제공합니다.
-아래 예제는 *덧셈 할당 연산자*(`+=`)입니다:
+아래 예시는 *덧셈 할당 연산자*(`+=`)입니다:
 
 ```swift
 var a = 1
@@ -483,7 +483,7 @@ if name == "world" {
   ```
 -->
 
-위 예제의
+위 예시의
 첫번째 줄에서 왼쪽에서 오른쪽으로 비교하는 동작을 확인할 수 있습니다.
 튜플의 다른 어떤 값과 상관없이
 `1`이 `2`보다 작기 때문에,
@@ -493,7 +493,7 @@ if name == "world" {
 그러나
 튜플의 첫번째 요소가 같을 때는
 두번째 요소를 *비교합니다* ---
-위 예제에서 두 번째와 세 번째 줄의 결과를 살펴보면 알 수 있습니다.
+위 예시에서 두 번째와 세 번째 줄의 결과를 살펴보면 알 수 있습니다.
 
 튜플은 해당 튜플의 각 값에 연산자를 적용할 수 있을 때에만
 주어진 연산자로 비교할 수 있습니다. 예를 들어
@@ -596,7 +596,7 @@ if question {
   Swift doesn't have 'if' expressions.
 -->
 
-테이블 열의 높이를 계산하는 예제가 있습니다.
+테이블 열의 높이를 계산하는 예시가 있습니다.
 테이블 열은 헤더를 가지고 있다면 콘텐츠 높이보다 50 포인트 더 커야 하고
 헤더가 없다면 20 포인트 더 커야 합니다:
 
@@ -619,7 +619,7 @@ let rowHeight = contentHeight + (hasHeader ? 50 : 20)
   ```
 -->
 
-위의 예제는 아래의 코드를 짧게 표현한 것입니다:
+위의 예시는 아래의 코드를 짧게 표현한 것입니다:
 
 ```swift
 let contentHeight = 40
@@ -697,7 +697,7 @@ nil-병합 연산자는 조건 검사 및 언래핑을
 > `b`는 절대 반환되지 않습니다.
 > 이러한 경우를 *단락 평가(short-circuit evaluation)*라 합니다.
 
-아래 예제는 기본 컬러 이름과 사용자가 정의한 옵셔널 컬러 이름 중 선택하기 위해
+아래 예시는 기본 컬러 이름과 사용자가 정의한 옵셔널 컬러 이름 중 선택하기 위해
 nil-병합 연산자를 사용합니다:
 
 ```swift
@@ -725,7 +725,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
 옵셔널 `String`으로 정의됩니다.
 `userDefinedColorName`은 옵셔널 타입이기 때문에
 값을 선택하기 위해 nil-병합 연산자를 사용할 수 있습니다.
-위의 예제에서 연산자는
+위의 예시에서 연산자는
 `colorNameToUse`라는 `String` 변수의 초기 값을 결정하는데 사용됩니다.
 `userDefinedColorName`이 `nil`이기 때문에,
 표현식 `userDefinedColorName ?? defaultColorName`은
@@ -1030,7 +1030,7 @@ Swift는 C-기반 언어에서 볼 수 있는 세 가지 표준 논리 연산자
 논리적 NOT 연산자는 접두사 연산자이며,
 동작할 값 바로 앞에
 공백없이 위치합니다.
-이것은 아래 예제와 같이 "`a`가 아니다"라고 읽을 수 있습니다:
+이것은 아래 예시와 같이 "`a`가 아니다"라고 읽을 수 있습니다:
 
 ```swift
 let allowedEntry = false
@@ -1056,7 +1056,7 @@ if !allowedEntry {
 다음 라인은 "엔트리가 허락되지 않음"이 참일 때;
 이 말은 `allowedEntry`가 `false` 일 경우에만 실행된다는 의미입니다.
 
-이 예제와 같이
+이 예시와 같이
 Boolean 상수와 변수 이름을 신중하게 선택하면
 중복 부정이나 논리적 상태의 혼동을 피하기 위해
 읽기 쉽고 간결함을 유지할 수 있습니다.
@@ -1073,7 +1073,7 @@ Boolean 상수와 변수 이름을 신중하게 선택하면
 두번째 값은 살펴보지 않습니다.
 이러한 경우를 *단락 평가(short-circuit evaluation)*라 합니다.
 
-이 예제는 두 `Bool` 값이
+이 예시는 두 `Bool` 값이
 `true` 일 경우에만 접근을 허용합니다:
 
 ```swift
@@ -1116,7 +1116,7 @@ if enteredDoorCode && passedRetinaScan {
 표현식의 결과는 바뀌지 않으므로
 우변은 고려하지 않습니다.
 
-아래 예제에서
+아래 예시에서
 첫번째 `Bool` 값(`hasDoorKey`)은 `false`이지만,
 두번째 값(`knowsOverridePassword`)은 `true`입니다.
 하나의 값이 `true`이기 때문에,
@@ -1175,10 +1175,10 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
   ```
 -->
 
-이 예제는 긴 복합 표현식을 생성하기 위해 여러 개의 `&&`와 `||` 연산자를 사용하였습니다.
+이 예시는 긴 복합 표현식을 생성하기 위해 여러 개의 `&&`와 `||` 연산자를 사용하였습니다.
 그러나 `&&`와 `||` 연산자는 오직 두 값에서만 동작하므로,
 이것은 세 개의 작은 표현식이 함께 엮어있는 형태입니다.
-이 예제는 아래와 같이 읽을 수 있습니다:
+이 예시는 아래와 같이 읽을 수 있습니다:
 
 올바른 출입문 코드를 입력하고 망막 스캔을 통과했거나
 유효한 키를 가지고 있거나
@@ -1198,7 +1198,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 
 소괄호를 포함하는 것이 영향이 없을 때 복합 표현식을 읽기 쉽게 하기위해
 소괄호를 포함하는 것은 때때로 유용합니다.
-위의 출입문 접근 예제에서
+위의 출입문 접근 예시에서
 의도를 명확하게 하기위해
 복합 표현식의 첫 번째 부분을 소괄호를 추가하면 유용합니다:
 

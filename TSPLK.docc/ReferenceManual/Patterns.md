@@ -67,7 +67,7 @@ case let (x, y):
 // Prints "The point is at (3, 2)."
 ```
 
-위의 예제에서 `let` 은 튜플 패턴 `(x, y)` 에서 각 식별자 패턴에 배포합니다. 이 동작으로 인해 `switch` 케이스 `case let (x, y):` 와 `case (let x, let y):` 은 동일합니다.
+위의 예시에서 `let` 은 튜플 패턴 `(x, y)` 에서 각 식별자 패턴에 배포합니다. 이 동작으로 인해 `switch` 케이스 `case let (x, y):` 와 `case (let x, let y):` 은 동일합니다.
 
 > Grammar of a value-binding pattern:
 >
@@ -107,7 +107,7 @@ let (a): Int = 2 // a: Int = 2
 
 _열거형 케이스 패턴 (enumeration case pattern)_ 은 존재하는 열거형 타입의 케이스와 일치합니다. 열거형 케이스 패턴은 `switch` 구문 케이스 라벨과 `if`, `while`, `guard`, 그리고 `for`-`in` 구문의 케이스 조건에서 나타납니다.
 
-일치 시키려는 열거형 케이스에 연관된 값이 있는 경우 해당 열거형 케이스 패턴은 각 연관된 값에 대한 하나의 요소를 포함하는 튜플 패턴을 지정해야 합니다. 연관된 값을 포함하는 열거형 케이스를 일치 시키기 위해 `switch` 구문을 사용하는 예제는 <doc:Enumerations#연관된-값-Associated-Values> 을 참고 바랍니다.
+일치 시키려는 열거형 케이스에 연관된 값이 있는 경우 해당 열거형 케이스 패턴은 각 연관된 값에 대한 하나의 요소를 포함하는 튜플 패턴을 지정해야 합니다. 연관된 값을 포함하는 열거형 케이스를 일치 시키기 위해 `switch` 구문을 사용하는 예시는 <doc:Enumerations#연관된-값-Associated-Values> 을 참고 바랍니다.
 
 열거형 케이스 패턴은 옵셔널로 래핑된 케이스의 값과도 일치합니다. 이 간략한 구문으로 옵셔널 패턴을 생략할 수 있습니다. `Optional` 은 열거형으로 구현되므로 `.none` 과 `.some` 은 열거형 타입의 케이스로 동일한 switch 에 나타날 수 있습니다.
 
@@ -178,7 +178,7 @@ is <#type#>
 
 `as` 패턴은 런타임 시 해당 값의 타입이 `as` 패턴의 오른편에 지정한 타입과 일치하거나 해당 타입의 서브클래스가 일치하면 값으로 일치합니다. 일치가 성공하면 일치된 값의 타입은 `as` 패턴의 오른편에 지정한 _패턴 (pattern)_ 으로 캐스팅 됩니다.
 
-`is` 와 `as` 패턴으로 값을 일치 시키기 위해 `switch` 구문을 사용하는 예제는 <doc:TypeCasting#Any와-AnyObject에-대한-타입-캐스팅-Type-Casting-for-Any-and-AnyObject> 을 참고 바랍니다.
+`is` 와 `as` 패턴으로 값을 일치 시키기 위해 `switch` 구문을 사용하는 예시는 <doc:TypeCasting#Any와-AnyObject에-대한-타입-캐스팅-Type-Casting-for-Any-and-AnyObject> 을 참고 바랍니다.
 
 > Grammar of a type casting pattern:
 >
@@ -194,7 +194,7 @@ _표현식 패턴 (expression pattern)_ 은 표현식의 값을 표현합니다.
 Swift 표준 라이브러리의 패턴 일치 연산자 (`~=`) 를 사용하여 입력 표현식의 값과 비교합니다.
 `~=` 연산자가 `true` 를 반환하면 일치는 성공합니다.
 기본적으로 `~=` 연산자는 `==` 연산자를 사용하여 동일한 타입의 두 값을 비교합니다.
-다음 예제에서 보듯이 범위내에 값이 포함되는지 검사하기 위해 값의 범위로 값을 일치시킬 수도 있습니다.
+다음 예시에서 보듯이 범위내에 값이 포함되는지 검사하기 위해 값의 범위로 값을 일치시킬 수도 있습니다.
 
 ```swift
 let point = (1, 2)
@@ -209,7 +209,7 @@ default:
 // Prints "(1, 2) is near the origin."
 ```
 
-커스텀 표현식 일치 동작을 제공하기 위해 `~=` 연산자를 오버로드 할 수 있습니다. 예를 들어 포인트의 문자열 표현으로 `point` 표현식을 비교하기 위해 위의 예제를 다시 작성할 수 있습니다.
+커스텀 표현식 일치 동작을 제공하기 위해 `~=` 연산자를 오버로드 할 수 있습니다. 예를 들어 포인트의 문자열 표현으로 `point` 표현식을 비교하기 위해 위의 예시를 다시 작성할 수 있습니다.
 
 ```swift
 // Overload the ~= operator to match a string with an integer.

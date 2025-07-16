@@ -78,7 +78,7 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 
 `swapTwoValues(_:_:)` 함수는 이제 `swapTwoInts` 와 동일한 방식으로 호출될 수 있지만 두 값이 서로 동일한 타입이면 모든 타입의 두 값을 전달할 수 있다는 점이 다릅니다. `swapTwoValues(_:_:)` 가 호출될 때마다 `T` 로 사용한 타입은 함수에 전달된 값의 타입으로 부터 유추됩니다.
 
-아래의 2개의 예제에서 `T` 는 각각 `Int` 와 `String` 으로 추론됩니다:
+아래의 2개의 예시에서 `T` 는 각각 `Int` 와 `String` 으로 추론됩니다:
 
 ```swift
 var someInt = 3
@@ -97,7 +97,7 @@ swapTwoValues(&someString, &anotherString)
 
 ## 타입 파라미터 \(Type Parameters\)
 
-위의 `swapTwoValues(_:_:)` 예제에서 임의의 타입 `T` 는 _타입 파라미터 \(type parameter\)_ 의 예입니다. 타입 파라미터는 임의의 타입을 지정하고 이름을 지정하며 꺾쇠 괄호 \(예: `<T>`\) 사이에 기록하고 함수의 이름 바로 뒤에 작성됩니다.
+위의 `swapTwoValues(_:_:)` 예시에서 임의의 타입 `T` 는 _타입 파라미터 \(type parameter\)_ 의 예입니다. 타입 파라미터는 임의의 타입을 지정하고 이름을 지정하며 꺾쇠 괄호 \(예: `<T>`\) 사이에 기록하고 함수의 이름 바로 뒤에 작성됩니다.
 
 타입 파라미터를 지정하면 함수의 파라미터 \(`swapTwoValues(_:_:)` 함수의 `a` 와 `b` 와 같이\) 타입을 정의하기 위해 사용하거나 함수의 반환 타입이나 함수의 본문 내에 타입 주석으로 사용할 수 있습니다. 각각의 경우 타입 파라미터는 함수가 호출될 때마다 _실제_ 타입으로 대체됩니다 \(위의 예 `swapTwoValues(_:_:)` 에서 `T` 는 첫번째 함수가 호출될 때 `Int` 로 대체되고 두번째 호출될 때 `String` 으로 대체됩니다\).
 
@@ -201,7 +201,7 @@ stackOfStrings.push("cuatro")
 
 제너릭 타입을 확장할 때 확장의 정의의 부분으로 타입 파라미터 리스트를 제공하지 않습니다. 대신에 _기존_ 타입 정의에서 타입 파라미터 리스트는 확장의 본문 내에서 가능하고 기존 타입 파라미터 이름은 기존 정의에서 타입 파라미터를 참조하는데 사용됩니다.
 
-다음의 예제는 스택에 팝 없이 스택의 가장 상단의 항목을 반환하는 `topItem` 이라는 읽기전용 연산 프로퍼티를 추가하기 위해 제너릭 `Stack` 타입을 확장합니다:
+다음의 예시는 스택에 팝 없이 스택의 가장 상단의 항목을 반환하는 `topItem` 이라는 읽기전용 연산 프로퍼티를 추가하기 위해 제너릭 `Stack` 타입을 확장합니다:
 
 ```swift
 extension Stack {
@@ -275,7 +275,7 @@ if let foundIndex = findIndex(ofString: "llama", in: strings) {
 
 그러나 배열에서 값의 인덱스를 찾는 원리는 문자열에만 유용하지 않습니다. 문자열에 대한 언급을 `T` 타입의 값으로 대체하여 제너릭 함수로 같은 기능을 작성할 수 있습니다.
 
-다음은 `findIndex(of:in:)` 이라는 `findIndex(ofString:in:)` 의 제너릭 버전을 나타냅니다. 이 함수는 배열의 옵셔널 값이 아닌 옵셔널 인덱스를 반환하므로 반환 타입이 여전히 `Int?` 입니다. 하지만 이 함수는 예제 뒤에 설명된 이유로 컴파일 되지 않습니다:
+다음은 `findIndex(of:in:)` 이라는 `findIndex(ofString:in:)` 의 제너릭 버전을 나타냅니다. 이 함수는 배열의 옵셔널 값이 아닌 옵셔널 인덱스를 반환하므로 반환 타입이 여전히 `Int?` 입니다. 하지만 이 함수는 예시 뒤에 설명된 이유로 컴파일 되지 않습니다:
 
 ```swift
 func findIndex<T>(of valueToFind: T, in array:[T]) -> Int? {
@@ -450,7 +450,7 @@ protocol SuffixableContainer: Container {
 }
 ```
 
-이 프로토콜에서 `Suffix` 는 위의 `Container` 예제에서 `Item` 타입과 같은 연관된 타입입니다. `Suffix` 는 2개의 제약을 가지고 있으며 먼저 현재 정의되어 있는 프로토콜 인 `SuffixableContainer` 프로토콜을 준수해야 하며 `Item` 타입은 컨테이너의 `Item` 타입과 동일해야 합니다. `Item` 에 대한 제약은 아래의 <doc:Generics#제너릭-Where-절이-있는-연관된-타입-Associated-Types-with-a-Generic-Where-Clause> 에서 설명할 제너릭 `where` 절입니다.
+이 프로토콜에서 `Suffix` 는 위의 `Container` 예시에서 `Item` 타입과 같은 연관된 타입입니다. `Suffix` 는 2개의 제약을 가지고 있으며 먼저 현재 정의되어 있는 프로토콜 인 `SuffixableContainer` 프로토콜을 준수해야 하며 `Item` 타입은 컨테이너의 `Item` 타입과 동일해야 합니다. `Item` 에 대한 제약은 아래의 <doc:Generics#제너릭-Where-절이-있는-연관된-타입-Associated-Types-with-a-Generic-Where-Clause> 에서 설명할 제너릭 `where` 절입니다.
 
 다음은 `SuffixableContainer` 프로토콜의 준수성을 추가하는 위의 <doc:Generics#제너릭-타입-Generic-Types> 에서 `Stack` 타입의 확장입니다:
 
@@ -473,7 +473,7 @@ let suffix = stackOfInts.suffix(2)
 // suffix contains 20 and 30
 ```
 
-위의 예제에서 `Stack` 에 대한 `Suffix` 연관된 타입도 `Stack` 이므로 `Stack` 에서 접미사 연산자는 다른 `Stack` 을 반환합니다. 또한 `SuffixableContainer` 를 준수하는 타입은 자체와 다른 `Suffix` 타입을 가질 수 있습니다. 접미사 연산자는 다른 타입을 반환할 수 있다는 의미입니다. 예를 들어 다음은 `IntStack` 대신 `Stack<Int>` 를 접미사 타입으로 사용하여 `SuffixableContainer` 준수성을 추가하는 제너릭이 아닌 `IntStack` 타입에 대한 확장입니다:
+위의 예시에서 `Stack` 에 대한 `Suffix` 연관된 타입도 `Stack` 이므로 `Stack` 에서 접미사 연산자는 다른 `Stack` 을 반환합니다. 또한 `SuffixableContainer` 를 준수하는 타입은 자체와 다른 `Suffix` 타입을 가질 수 있습니다. 접미사 연산자는 다른 타입을 반환할 수 있다는 의미입니다. 예를 들어 다음은 `IntStack` 대신 `Stack<Int>` 를 접미사 타입으로 사용하여 `SuffixableContainer` 준수성을 추가하는 제너릭이 아닌 `IntStack` 타입에 대한 확장입니다:
 
 ```swift
 extension IntStack: SuffixableContainer {
@@ -494,7 +494,7 @@ extension IntStack: SuffixableContainer {
 
 연관된 타입에 대한 요구사항을 정의하는 것도 유용할 수 있습니다. _제너릭 where 절 \(generic where clause\)_ 을 정의하여 이것을 수행할 수 있습니다. 제너릭 `where` 절을 사용하면 연관된 타입이 특정 프로토콜을 준수해야 하거나 특정 타입 파라미터와 연관된 타입이 동일해야 한다고 요구할 수 있습니다. 제너릭 `where` 절은 `where` 키워드로 시작하고 이어서 연관된 타입 또는 타입과 연관된 타입 사이의 동등 관계에 대한 제약이 따라옵니다. 타입 또는 함수의 본문에 여는 중괄호 바로 전에 제너릭 `where` 절을 작성합니다.
 
-아래의 예제는 2개의 `Container` 인스턴스가 같은 순서로 같은 항목을 가지고 있는지 확인하는 `allItemsMatch` 라는 제너릭 함수를 정의합니다. 이 함수는 모든 항목이 일치하면 `true` 의 부울 값을 반환하고 그렇지 않으면 `false` 의 값을 반환합니다.
+아래의 예시는 2개의 `Container` 인스턴스가 같은 순서로 같은 항목을 가지고 있는지 확인하는 `allItemsMatch` 라는 제너릭 함수를 정의합니다. 이 함수는 모든 항목이 일치하면 `true` 의 부울 값을 반환하고 그렇지 않으면 `false` 의 값을 반환합니다.
 
 확인할 2개의 컨테이너는 같은 타입의 컨테이너 일 필요는 없지만 같은 타입의 항목을 가지고 있어야 합니다. 이 요구사항은 타입 제약과 제너릭 `where` 절의 조합으로 표현됩니다:
 
@@ -566,7 +566,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 // Prints "All items match."
 ```
 
-위의 예제는 `String` 값을 저장하는 `Stack` 인스턴스를 생성하고 스택에 3개의 문자열을 푸쉬합니다. 이 예제는 스택과 동일한 3개의 문자열을 포함하는 배열 리터럴로 초기화 된 `Array` 인스턴스도 생성합니다. 스택과 배열은 다른 타입이지만 둘다 `Container` 프로토콜을 준수하고 둘다 같은 타입의 값을 포함합니다. 따라서 이 2개의 컨테이너를 인수로 `allItemsMatch(_:_:)` 함수를 호출합니다. 위의 예제에서 `allItemsMatch(_:_:)` 함수는 두 컨테이너의 모든 항목이 정확히 일치한다고 알려줍니다.
+위의 예시는 `String` 값을 저장하는 `Stack` 인스턴스를 생성하고 스택에 3개의 문자열을 푸쉬합니다. 이 예시는 스택과 동일한 3개의 문자열을 포함하는 배열 리터럴로 초기화 된 `Array` 인스턴스도 생성합니다. 스택과 배열은 다른 타입이지만 둘다 `Container` 프로토콜을 준수하고 둘다 같은 타입의 값을 포함합니다. 따라서 이 2개의 컨테이너를 인수로 `allItemsMatch(_:_:)` 함수를 호출합니다. 위의 예시에서 `allItemsMatch(_:_:)` 함수는 두 컨테이너의 모든 항목이 정확히 일치한다고 알려줍니다.
 
 ## Where 절이 있는 제너릭 확장 \(Extensions with a Generic Where Clause\)
 
@@ -574,7 +574,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 You can also use a generic where clause as part of an extension. The example below extends the generic Stack structure from the previous examples to add an isTop(_:) method.
 -->
 
-확장의 부분으로 제너릭 `where` 절을 사용할 수도 있습니다. 아래의 예제는 이전 예제의 제너릭 `Stack` 구조체에 `isTop(_:)` 메서드를 추가하기 위해 확장합니다.
+확장의 부분으로 제너릭 `where` 절을 사용할 수도 있습니다. 아래의 예시는 이전 예시의 제너릭 `Stack` 구조체에 `isTop(_:)` 메서드를 추가하기 위해 확장합니다.
 
 ```swift
 extension Stack where Element: Equatable {
@@ -610,7 +610,7 @@ notEquatableStack.push(notEquatableValue)
 notEquatableStack.isTop(notEquatableValue)  // Error
 ```
 
-프로토콜 확장에 제너릭 `where` 절을 사용할 수 있습니다. 아래의 예제는 이전 예제의 `Container` 프로토콜에 `startsWith(_:)` 메서드를 추가하기 위해 확장합니다.
+프로토콜 확장에 제너릭 `where` 절을 사용할 수 있습니다. 아래의 예시는 이전 예시의 `Container` 프로토콜에 `startsWith(_:)` 메서드를 추가하기 위해 확장합니다.
 
 ```swift
 extension Container where Item: Equatable {
@@ -631,7 +631,7 @@ if [9, 9, 9].startsWith(42) {
 // Prints "Starts with something else."
 ```
 
-위의 예제에서 제너릭 `where` 절은 `Item` 은 프로토콜을 준수해야 하지만 `Item` 이 특정 타입을 요구하도록 제너릭 `where` 절을 작성할 수도 있습니다. 예를 들어:
+위의 예시에서 제너릭 `where` 절은 `Item` 은 프로토콜을 준수해야 하지만 `Item` 이 특정 타입을 요구하도록 제너릭 `where` 절을 작성할 수도 있습니다. 예를 들어:
 
 ```swift
 extension Container where Item == Double {
@@ -647,13 +647,13 @@ print([1260.0, 1200.0, 98.6, 37.0].average())
 // Prints "648.9"
 ```
 
-이 예제는 `Item` 타입이 `Double` 인 컨테이너에 `average()` 메서드를 추가합니다. 컨테이너의 항목을 더하고 컨테이너의 수로 나누어 평균을 계산합니다. 부동 소수점 나누기가 가능하기 위해 카운트를 `Int` 에서 `Double` 로 명시적으로 변환합니다.
+이 예시는 `Item` 타입이 `Double` 인 컨테이너에 `average()` 메서드를 추가합니다. 컨테이너의 항목을 더하고 컨테이너의 수로 나누어 평균을 계산합니다. 부동 소수점 나누기가 가능하기 위해 카운트를 `Int` 에서 `Double` 로 명시적으로 변환합니다.
 
 다른 곳에서 작성하는 제너릭 `where` 절과 마찬가지로 확장의 부분인 제너릭 `where` 절에 여러 요구사항을 포함할 수 있습니다. 콤마로 리스트의 각 요구사항을 구분합니다.
 
 ## 상황별 Where 절 \(Contextual Where Clauses\)
 
-제너릭 타입의 컨텍스트에서 이미 작업중인 경우 고유한 제너릭 타입 제약조건이 없는 선언의 부분으로 제너릭 `where` 절을 작성할 수 있습니다. 예를 들어 제너릭 타입의 서브스크립트나 제너릭 타입에 확장에 대한 확장 메서드에 제너릭 `where` 절을 작성할 수 있습니다. `Container` 구조체는 제너릭 이고 아래의 예제에서 `where` 절은 컨테이너에서 이러한 새로운 메서드를 사용할 수 있도록 충족해야 하는 타입 제약조건을 지정합니다.
+제너릭 타입의 컨텍스트에서 이미 작업중인 경우 고유한 제너릭 타입 제약조건이 없는 선언의 부분으로 제너릭 `where` 절을 작성할 수 있습니다. 예를 들어 제너릭 타입의 서브스크립트나 제너릭 타입에 확장에 대한 확장 메서드에 제너릭 `where` 절을 작성할 수 있습니다. `Container` 구조체는 제너릭 이고 아래의 예시에서 `where` 절은 컨테이너에서 이러한 새로운 메서드를 사용할 수 있도록 충족해야 하는 타입 제약조건을 지정합니다.
 
 ```swift
 extension Container {
@@ -675,9 +675,9 @@ print(numbers.endsWith(37))
 // Prints "true"
 ```
 
-이 예제는 항목이 정수이면 `Container` 에 `average()` 메서드를 추가하고 항목이 동등성이 가능하면 `endsWith(_:)` 메서드를 추가합니다. 두 함수 모두 `Container` 의 기존 선언에 제너릭 `Item` 타입 파라미터에 대해 타입 제약조건을 추가한 제너릭 `where` 절을 포함합니다.
+이 예시는 항목이 정수이면 `Container` 에 `average()` 메서드를 추가하고 항목이 동등성이 가능하면 `endsWith(_:)` 메서드를 추가합니다. 두 함수 모두 `Container` 의 기존 선언에 제너릭 `Item` 타입 파라미터에 대해 타입 제약조건을 추가한 제너릭 `where` 절을 포함합니다.
 
-상황별 `where` 절 사용없이 코드를 작성하고 싶다면 2개의 확장을 작성하고 각각에 제너릭 `where` 절을 추가하면 됩니다. 위의 예제와 아래의 예제는 같은 동작을 가집니다.
+상황별 `where` 절 사용없이 코드를 작성하고 싶다면 2개의 확장을 작성하고 각각에 제너릭 `where` 절을 추가하면 됩니다. 위의 예시와 아래의 예시는 같은 동작을 가집니다.
 
 ```swift
 extension Container where Item == Int {
@@ -696,7 +696,7 @@ extension Container where Item: Equatable {
 }
 ```
 
-상황별 `where` 절을 사용하는 이 예제의 버전에서 각 메서드의 제너릭 `where` 절은 해당 메서드를 사용할 수 있도록 충족해야 할 요구사항을 명시하기 때문에 `average()` 와 `endsWith(_:)` 의 구현은 모두 같은 확장에 있습니다. 이러한 요구사항을 확장의 제너릭 `where` 절로 이동하면 동일한 상황에서 메서드를 사용할 수 있지만 요구사항 당 하나의 확장이 필요합니다.
+상황별 `where` 절을 사용하는 이 예시의 버전에서 각 메서드의 제너릭 `where` 절은 해당 메서드를 사용할 수 있도록 충족해야 할 요구사항을 명시하기 때문에 `average()` 와 `endsWith(_:)` 의 구현은 모두 같은 확장에 있습니다. 이러한 요구사항을 확장의 제너릭 `where` 절로 이동하면 동일한 상황에서 메서드를 사용할 수 있지만 요구사항 당 하나의 확장이 필요합니다.
 
 ## 제너릭 Where 절이 있는 연관된 타입 \(Associated Types with a Generic Where Clause\)
 

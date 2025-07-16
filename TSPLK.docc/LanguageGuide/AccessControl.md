@@ -156,7 +156,7 @@ private class SomePrivateClass {                 // explicitly private class
 
 함수 타입에 대한 접근 수준은 함수의 파라미터 타입과 반환 타입 중 가장 제한적인 접근 수준으로 계산됩니다. 함수의 계산된 접근 수준이 컨텍스트 기본값과 일치하지 않는다면 함수의 정의의 부분으로 접근 수준을 명시적으로 지정해야 합니다.
 
-아래의 예제는 함수 자체에 대해 지정된 접근 수준 수식어가 없는 `someFunction()` 이라는 전역 함수를 정의합니다. 이 함수는 "internal"의 기본 접근 수준을 가지리라 생각되지만 여기서는 그렇지 않습니다. 실제로 `someFunction()` 은 아래와 같이 작성되면 컴파일되지 않습니다:
+아래의 예시는 함수 자체에 대해 지정된 접근 수준 수식어가 없는 `someFunction()` 이라는 전역 함수를 정의합니다. 이 함수는 "internal"의 기본 접근 수준을 가지리라 생각되지만 여기서는 그렇지 않습니다. 실제로 `someFunction()` 은 아래와 같이 작성되면 컴파일되지 않습니다:
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
@@ -180,7 +180,7 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 열거형의 개별 케이스는 열거형과 같은 접근 수준을 자동으로 받습니다. 개별 열거형 케이스에 대해 다른 접근 수준을 지정할 수 없습니다.
 
-아래의 예제에서 `CompassPoint` 열거형은 public의 명시적 접근 수준을 갖습니다. 따라서 `north`, `south`, `east`, 그리고 `west` 열거형 케이스 또한 public의 접근 수준을 가집니다:
+아래의 예시에서 `CompassPoint` 열거형은 public의 명시적 접근 수준을 갖습니다. 따라서 `north`, `south`, `east`, 그리고 `west` 열거형 케이스 또한 public의 접근 수준을 가집니다:
 
 ```swift
 public enum CompassPoint {
@@ -205,7 +205,7 @@ public enum CompassPoint {
 
 또한 같은 모듈에 정의된 클래스의 경우 특정 접근 컨텍스트에 표시되는 모든 클래스 멤버 \(메서드, 프로퍼티, 이니셜라이저 또는 서브스크립트\)를 재정의 할 수 있습니다. 다른 모듈에 정의된 클래스의 경우 모든 open 클래스 멤버를 재정의 할 수 있습니다.
 
-재정의는 상속된 클래스 멤버를 슈퍼클래스 버전보다 더 쉽게 접근할 수 있도록 만들 수 있습니다. 아래의 예제에서 클래스 `A` 는 `someMethod()` 라는 file-private 메서드를 가진 public 클래스 입니다. 클래스 `B` 는 "internal"로 줄어든 접근 수준을 가진 `A` 의 서브클래스입니다. 그럼에도 불구하고 클래스 `B` 는 `someMethod()` 의 기존 구현보다 _높은_ "internal" 의 접근 수준을 가진 `someMethod()` 의 재정의를 제공합니다:
+재정의는 상속된 클래스 멤버를 슈퍼클래스 버전보다 더 쉽게 접근할 수 있도록 만들 수 있습니다. 아래의 예시에서 클래스 `A` 는 `someMethod()` 라는 file-private 메서드를 가진 public 클래스 입니다. 클래스 `B` 는 "internal"로 줄어든 접근 수준을 가진 `A` 의 서브클래스입니다. 그럼에도 불구하고 클래스 `B` 는 `someMethod()` 의 기존 구현보다 _높은_ "internal" 의 접근 수준을 가진 `someMethod()` 의 재정의를 제공합니다:
 
 ```swift
 public class A {
@@ -252,7 +252,7 @@ private var privateInstance = SomePrivateClass()
 > Note   
 > 이 규칙은 저장 프로퍼티 뿐만 아니라 연산 프로퍼티에도 적용됩니다. 저장 프로퍼티에 대해 명시적으로 getter와 setter를 작성하지 않아도 Swift는 저장 프로퍼티의 저장소에 대한 접근을 제공하기 위해 여전히 암시적으로 getter와 setter를 합성합니다. 연산 프로퍼티의 명시적 setter와 같은 방식으로 합성된 setter의 접근 수준을 변경하기 위해 `fileprivate(set)`, `private(set)`, 그리고 `internal(set)` 을 사용합니다.
 
-아래 예제는 문자열 프로퍼티가 몇번 수정되는지 추적하는 `TrackedString` 이라는 구조체를 정의합니다:
+아래 예시는 문자열 프로퍼티가 몇번 수정되는지 추적하는 `TrackedString` 이라는 구조체를 정의합니다:
 
 ```swift
 struct TrackedString {
@@ -282,7 +282,7 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 
 다른 소스 파일에서 `numberOfEdits` 프로퍼티의 현재값을 조회할 수 있지만 다른 소스 파일에서 프로퍼티를 _수정_ 할 수 없습니다. 이 제한은 `TrackedString` 편집 추적 기능의 구현 세부사항을 보호하는 동시에 해당 기능의 측면에 대한 편리한 접근을 제공합니다.
 
-필요한 경우 getter와 setter 모두에 명시적으로 접근 수준을 할당할 수 있습니다. 아래 예제는 public의 명시적 접근 수준으로 정의된 `TrackedString` 구조체 버전을 보여줍니다. 따라서 구조체의 멤버 \(`numberOfEdits` 프로퍼티 포함\)는 기본적으로 internal 접근 수준을 가집니다. `public` 과 `private(set)` 접근 수준 수식어를 결합하여 구조체의 `numberOfEdits` 프로퍼티 getter를 public으로 setter를 private로 만들 수 있습니다:
+필요한 경우 getter와 setter 모두에 명시적으로 접근 수준을 할당할 수 있습니다. 아래 예시는 public의 명시적 접근 수준으로 정의된 `TrackedString` 구조체 버전을 보여줍니다. 따라서 구조체의 멤버 \(`numberOfEdits` 프로퍼티 포함\)는 기본적으로 internal 접근 수준을 가집니다. `public` 과 `private(set)` 접근 수준 수식어를 결합하여 구조체의 `numberOfEdits` 프로퍼티 getter를 public으로 setter를 private로 만들 수 있습니다:
 
 ```swift
 public struct TrackedString {

@@ -26,7 +26,7 @@ Swift의 `switch` 구문은 C와 같은 언어들의 구문보다
 배열에 아이템, 범위의 숫자, 문자열에 문자와 같은
 연속된 것에 대해 `for`-`in` 루프를 사용하여 반복할 수 있습니다.
 
-이 예제는 `for`-`in` 루프를 사용하여 배열의 아이템을 반복합니다:
+이 예시는 `for`-`in` 루프를 사용하여 배열의 아이템을 반복합니다:
 
 ```swift
 let names = ["Anna", "Alex", "Brian", "Jack"]
@@ -59,7 +59,7 @@ for name in names {
 `(key, value)` 튜플로 반환되고
 `for`-`in` 루프 본문 내에서 사용하기 위해
 `(key, value)` 튜플의 멤버를 명시적으로 이름을 가진 상수로 분해할 수 있습니다.
-아래의 예제에서 딕셔너리의 키는 `animalName` 상수로 분해되고,
+아래의 예시에서 딕셔너리의 키는 `animalName` 상수로 분해되고,
 딕셔너리의 값은 `legCount` 상수로 분해됩니다.
 
 ```swift
@@ -100,7 +100,7 @@ for (animalName, legCount) in numberOfLegs {
 -->
 
 숫자 범위에 대해 `for`-`in` 루프를 사용할 수도 있습니다.
-이 예제는 5의 배수 항목을 몇 개 출력합니다:
+이 예시는 5의 배수 항목을 몇 개 출력합니다:
 
 ```swift
 for index in 1...5 {
@@ -140,7 +140,7 @@ for index in 1...5 {
 `print(_:separator:terminator:)` 함수가 다시 호출됩니다.
 이 프로세스는 범위의 끝에 도달할 때까지 계속 됩니다.
 
-위의 예제에서 `index`는 루프의 각 반복이 시작할 때
+위의 예시에서 `index`는 루프의 각 반복이 시작할 때
 자동으로 설정되는 상수입니다.
 따라서 `index`를 사용하기 전에 선언할 필요가 없습니다.
 `let` 선언 키워드가 필요없이
@@ -175,7 +175,7 @@ print("\(base) to the power of \(power) is \(answer)")
   ```
 -->
 
-위의 예제는 한 숫자를 다른 숫자의 제곱으로 계산하는 방법을 보여줍니다
+위의 예시는 한 숫자를 다른 숫자의 제곱으로 계산하는 방법을 보여줍니다
 (이 경우 `3`의 `10`제곱).
 `1`로 시작하고 `10`으로 끝나는 닫힌 범위를 사용하여
 시작값 `1`
@@ -271,7 +271,7 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
   ```
 -->
 
-위의 예제는 범위, 배열, 딕셔너리, 문자열을
+위의 예시는 범위, 배열, 딕셔너리, 문자열을
 조회하기 위해 `for`-`in` 루프를 사용합니다.
 그러나 이 구문은 *모든* 컬렉션을 조회할 수 있으며,
 [시퀀스 (Sequence)](https://developer.apple.com/documentation/swift/sequence) 프로토콜을 준수하는
@@ -306,7 +306,7 @@ while <#condition#> {
 }
 ```
 
-이 예제는 *Snakes and Ladders* 게임을 플레이 합니다
+이 예시는 *Snakes and Ladders* 게임을 플레이 합니다
 (또는 *Chutes and Ladders*):
 
 <!-- Apple Books screenshot begins here. -->
@@ -326,7 +326,7 @@ while <#condition#> {
 게임 보드는 `Int` 값의 배열로 표현됩니다.
 크기는 `finalSquare`라는 상수를 기반으로 하며
 배열을 초기화하고
-나중에 예제에서 승리 조건을 확인하는데 사용됩니다.
+나중에 예시에서 승리 조건을 확인하는데 사용됩니다.
 "정사각형 0"에서 플레이어는 시작하기 때문에
 보드는 `Int` 값 0을 포함하여 25가 아닌 26의 크기로 초기화 됩니다.
 
@@ -447,7 +447,7 @@ print("Game over!")
   ```
 -->
 
-위의 예제는 주사위 굴리기에 매우 간단한 접근 방식을 사용합니다.
+위의 예시는 주사위 굴리기에 매우 간단한 접근 방식을 사용합니다.
 난수를 생성하는 대신에
 `diceRoll`은 `0`의 값으로 시작합니다.
 매 `while` 루프를 실행할 때 마다
@@ -499,7 +499,7 @@ repeat {
 } while <#condition#>
 ```
 
-*Snakes and Ladders* 예제에서
+*Snakes and Ladders* 예시에서
 `while` 루프보다 `repeat`-`while` 루프를 쓰는 것이 더 좋습니다.
 `finalSquare`, `board`, `square`, `diceRoll`의 값은
 `while` 루프에서와 같은 방식으로 초기화 됩니다.
@@ -606,12 +606,12 @@ print("Game over!")
 
 루프의 조건(`while square < finalSquare`)은 이전과 같지만,
 이번에는 루프가 처음 실행된 후 *끝*에서 평가됩니다.
-이전 예제의 `while` 루프보다
+이전 예시의 `while` 루프보다
 이 게임에서는 `repeat`-`while` 루프가 더 적합합니다.
 위의 `repeat`-`while` 루프에서
 `square += board[square]`는 루프의 `while` 조건이 `square` 가 항상 보드 위에 있는 것을
 확인 한 *직후*에 실행 됩니다.
-이 동작은 이전 예제에서 `while` 루프 버전에서
+이 동작은 이전 예시에서 `while` 루프 버전에서
 배열의 범위를 체크할 필요가 없습니다.
 
 ## 조건 구문 (Conditional Statements)
@@ -656,7 +656,7 @@ if temperatureInFahrenheit <= 32 {
   ```
 -->
 
-위 예제는 기온이
+위 예시는 기온이
 화씨 32도 보다 작거나 같은지 확인합니다
 (물이 어는 온도 입니다).
 만약 화씨 32도 보다 작거나 같으면 메세지가 출력됩니다.
@@ -866,7 +866,7 @@ let weatherAdvice = if temperatureInCelsius > 100 {
 }
 ```
 
-이 예제에서
+이 예시에서
 `if` 표현식은 예보된 온도가
 100℃ --- 물의 끓는점보다 높은지 확인합니다.
 이렇게 높은 온도에서는 텍스트의 요약을 반환하는 대신에
@@ -875,7 +875,7 @@ let weatherAdvice = if temperatureInCelsius > 100 {
 `try`를 전에 작성하지 않습니다.
 오류에 대한 자세한 내용은 <doc:ErrorHandling>을 참고 바랍니다.
 
-위의 예제에서와 같이
+위의 예시에서와 같이
 할당의 오른편으로
 `if` 표현식을 사용하는 것 외에
 함수나 클로저가 반환하는 값으로도 사용할 수 있습니다.
@@ -923,7 +923,7 @@ Swift는 각 케이스에 대해 더 복잡한 일치 패턴을 지정하는
 기본 케이스는 `default` 키워드로 나타내고
 항상 마지막에 위치합니다.
 
-이 예제는 `switch` 구문을 사용하여
+이 예시는 `switch` 구문을 사용하여
 `someCharacter`의 소문자를 고려합니다:
 
 ```swift
@@ -983,7 +983,7 @@ print(message)
 // Prints "The first letter of the Latin alphabet"
 ```
 
-이 예제에서
+이 예시에서
 `switch` 표현식에 각 케이스는
 `anotherCharacter`와 동일한 케이스일 때 사용될
 `message`에 대한 값을 포함합니다.
@@ -994,7 +994,7 @@ print(message)
 주어진 케이스에 대해 값을 제공하는 대신에
 오류를 발생시키거나
 반환되지 않는 `fatalError(_:file:line:)`와 같은 함수를 호출할 수 있습니다.
-위의 예제에서와 같이
+위의 예시에서와 같이
 할당의 오른편에 있는
 `switch` 표현식을
 함수나 클로저가 반환하는 값으로 사용할 수 있습니다. 
@@ -1100,7 +1100,7 @@ default:
 #### 범위 일치 (Interval Matching)
 
 `switch` 케이스에서 값이 특정 범위에 포함되는지 확인할 수 있습니다.
-이 예제에서는 숫자 범위를 사용하여
+이 예시에서는 숫자 범위를 사용하여
 모든 크기의 숫자에도 자연스러운 언어 표현을 제공합니다:
 
 <!--
@@ -1156,7 +1156,7 @@ print("There are \(naturalCount) \(countedThings).")
   ```
 -->
 
-위의 예제에서 `approximateCount`는 `switch` 구문에서 평가됩니다.
+위의 예시에서 `approximateCount`는 `switch` 구문에서 평가됩니다.
 각 `case`는 숫자 값이나 범위를 비교합니다.
 `approximateCount`의 값은 12와 100 사이에 속하므로,
 `naturalCount`는 `"dozens of"` 값이 할당되고,
@@ -1170,9 +1170,9 @@ print("There are \(naturalCount) \(countedThings).")
 와일드카드 패턴(wildcard pattern)으로 알려진
 언더바 문자(`_`)를 사용할 수 있습니다.
 
-아래 예제는 타입 `(Int, Int)`의 단순한 튜플로 표현된
+아래 예시는 타입 `(Int, Int)`의 단순한 튜플로 표현된
 (x, y) 좌표를 받아서,
-예제 다음에 나오는 그래프에서 해당 좌료를 분류합니다.
+예시 다음에 나오는 그래프에서 해당 좌료를 분류합니다.
 
 ```swift
 let somePoint = (1, 1)
@@ -1222,7 +1222,7 @@ default:
 외부에 있는지 판단합니다.
 
 C와 다르게 Swift는 여러 `switch` 케이스가 같은 값인지 고려할 수 있습니다.
-사실 좌표(0, 0)는 이 예제의 모든 4개의 케이스에 일치합니다.
+사실 좌표(0, 0)는 이 예시의 모든 4개의 케이스에 일치합니다.
 그러나 여러 개가 일치할 수 있다면,
 첫 번째 일치하는 케이스가 항상 사용됩니다.
 좌표(0, 0)는 첫번째 `case (0, 0)`와 일치하고,
@@ -1235,7 +1235,7 @@ C와 다르게 Swift는 여러 `switch` 케이스가 같은 값인지 고려할 
 값은 케이스의 본문 내부에서 임시적 상수나 변수로 바인드 되기 때문에
 이러한 동작을 *값 바인딩(value binding)*이라 합니다.
 
-아래 예제는 튜플의 타입 `(Int, Int)`로 표현된
+아래 예시는 튜플의 타입 `(Int, Int)`로 표현된
 좌표 (x, y)를 받아서,
 이어지는 그래프에서 해당 좌표를 분류합니다:
 
@@ -1300,7 +1300,7 @@ case let (x, y):
 
 `switch` 케이스는 추가 조건으로 `where` 절을 사용할 수 있습니다.
 
-아래 예제는 그래프에 (x, y)를 분류합니다:
+아래 예시는 그래프에 (x, y)를 분류합니다:
 
 ```swift
 let yetAnotherPoint = (1, -1)
@@ -1346,7 +1346,7 @@ case let (x, y):
 `switch` 케이스는 `where` 절의 조건이
 `true`일 때만 현재 `point` 값을 일치시킵니다.
 
-이전 예제와 마찬가지로 마지막 케이스는 가능한 남아있는 값과 모두 일치하므로,
+이전 예시와 마찬가지로 마지막 케이스는 가능한 남아있는 값과 모두 일치하므로,
 `switch` 구문을 완벽하게 하기 위해 `default` 케이스가 필요치 않습니다.
 
 #### 합성 케이스 (Compound Cases)
@@ -1463,7 +1463,7 @@ Swift는 다섯 개의 제어 변경 구문이 있습니다:
 이것은 "현재 루프 반복을 끝냈다."라고 선언하지만,
 루프 자체를 완전히 종료하지는 않습니다.
 
-아래 예제는 비밀의 퍼즐 구문을 생성하기 위해
+아래 예시는 비밀의 퍼즐 구문을 생성하기 위해
 소문자 문자열에서 모음과 공백을 삭제합니다:
 
 ```swift
@@ -1541,7 +1541,7 @@ Swift의 `switch` 구문은 완벽하고
 > 주석은 구문이 아니며 `switch` 케이스는 무시되지 않습니다.
 > 항상 `switch` 케이스를 무시하려면 `break` 구문을 사용하십시오.
 
-아래 예제는 `Character` 값을 바꾸고
+아래 예시는 `Character` 값을 바꾸고
 네 언어중 하나의 언어로 숫자 기호를 표기하는지 판단합니다.
 간결함을 위해 단일 `switch` 케이스에 여러 값이 포함됩니다.
 
@@ -1595,7 +1595,7 @@ if let integerValue = possibleIntegerValue {
   ```
 -->
 
-이 예제는 `numberSymbol`이
+이 예시는 `numberSymbol`이
 `1`부터 `4`의 숫자 기호가
 라틴어, 아랍어, 중국어, 태국어 인지 판단합니다.
 일치하는 것을 찾으면,
@@ -1604,14 +1604,14 @@ if let integerValue = possibleIntegerValue {
 `possibleIntegerValue`라 불리는 옵셔널 `Int?` 변수에 할당합니다.
 
 `switch` 구문이 실행을 완료한 후에
-이 예제에서는 옵셔널 바인딩을 사용하여 값이 존재하는지 확인합니다.
+이 예시에서는 옵셔널 바인딩을 사용하여 값이 존재하는지 확인합니다.
 `possibleIntegerValue` 변수는 옵셔널 타입이기 때문에
 초기 값은 `nil`을 가지며,
 옵셔널 바인딩이 성공하려면
 `switch` 구문의 케이스 중 하나에서
 실제 값이 할당되어야 합니다.
 
-위 예제에서 가능한 모든 `Character` 값을 리스트화 할 수 없기 때문에
+위 예시에서 가능한 모든 `Character` 값을 리스트화 할 수 없기 때문에
 `default` 케이스로 일치되지 않는 문자를 처리합니다.
 `default` 케이스는 어떠한 동작도 수행할 필요가 없으므로,
 `break` 구문만 적습니다.
@@ -1631,7 +1631,7 @@ C의 대응문 보다 훨씬 간결하고 예측 가능하다는 것을 의미�
 
 C처럼 다음 케이스로 넘어가려면
 `fallthrough` 키워드로 케이스 별로 동작을 선택할 수 있습니다.
-아래 예제에서 `fallthrough`를 사용하여 숫자의 설명을 생성합니다.
+아래 예시에서 `fallthrough`를 사용하여 숫자의 설명을 생성합니다.
 
 ```swift
 let integerToDescribe = 5
@@ -1665,7 +1665,7 @@ print(description)
   ```
 -->
 
-이 예제는 `description`이라 불리는 새로운 `String` 변수를 선언하고
+이 예시는 `description`이라 불리는 새로운 `String` 변수를 선언하고
 초기 값을 할당합니다.
 이 함수는 `switch` 구문을 사용하여 `integerToDescribe`의 값을 고려합니다.
 `integerToDescribe`의 값이 리스트에서의 소수 중 하나이면
@@ -1682,7 +1682,7 @@ print(description)
 
 `switch` 구문 실행이 완료된 후에
 숫자의 설명은 `print(_:separator:terminator:)` 함수를 사용하여 출력됩니다.
-이 예제에서
+이 예시에서
 숫자 `5`는 소수로써 유효합니다.
 
 > Note: `fallthrough` 키워드는 `switch` 케이스 실행을 위한
@@ -1715,7 +1715,7 @@ Swift에서는 루프문과 조건문을
 
 레이블이 있는 구문(labeled statement)을 나타내는
 키워드와 같은 줄에 위치하고, 바로 다음에 콜론을 붙여 표시합니다.
-다음은 `while` 루프에서 이 구문을 사용하는 예제이며,
+다음은 `while` 루프에서 이 구문을 사용하는 예시이며,
 동일한 원리가 모든 루프 및 `switch` 구문에도 적용됩니다:
 
 ```swift
@@ -1724,7 +1724,7 @@ Swift에서는 루프문과 조건문을
 }
 ```
 
-다음 예제는 이 챕터의 이전에 봤던
+다음 예시는 이 챕터의 이전에 봤던
 *Snakes and Ladders* 게임에 적절한 버전을 위해 레이블이 있는 `while` 루프와
 `break`와 `continue` 구문을 사용합니다.
 이번에는 게임에 추가 규칙이 있습니다:
@@ -2019,7 +2019,7 @@ if score < 10 {
   ```
 -->
 
-위의 예제에서
+위의 예시에서
 `defer` 블럭 안의 코드는
 `if` 구문의 본문이 종료되기 전에 실행됩니다.
 먼저 `score`를 5 증가시키는
@@ -2212,7 +2212,7 @@ func chooseBestColor() -> String {
   ```
 -->
 
-위의 예제에서
+위의 예시에서
 `ColorPreference` 구조체는 macOS 10.12 이상을 요구합니다.
 `chooseBestColor()` 함수는 가용성 가드로 시작합니다.
 플랫폼 버전이 `ColorPreference`를 사용하기에 너무 예전 버전이면,

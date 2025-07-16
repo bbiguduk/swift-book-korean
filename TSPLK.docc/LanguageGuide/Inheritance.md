@@ -30,7 +30,7 @@ Swift는 재정의에 일치하는 슈퍼클래스 정의가 있는지 확인하
 > 슈퍼클래스를 명시하지 않고 정의한 클래스는
 > 자동으로 빌드할 때 기본 클래스가 됩니다.
 
-아래 예제는 `Vehicle`이라는 기본 클래스를 정의합니다.
+아래 예시는 `Vehicle`이라는 기본 클래스를 정의합니다.
 이 기본 클래스는 `currentSpeed`라는 저장 프로퍼티를 가지며,
 기본 값은 `0.0`입니다 (프로퍼티 타입을 `Double`로 추론합니다).
 `currentSpeed` 프로퍼티는
@@ -134,7 +134,7 @@ class SomeSubclass: SomeSuperclass {
   ```
 -->
 
-다음의 예제는 `Vehicle`을 슈퍼클래스로 하는
+다음의 예시는 `Vehicle`을 슈퍼클래스로 하는
 `Bicycle`이라는 서브클래스를 정의합니다:
 
 ```swift
@@ -199,7 +199,7 @@ print("Bicycle: \(bicycle.description)")
 -->
 
 서브클래스도 서브클래싱할 수 있습니다.
-다음 예제는 "tandem"이라는
+다음 예시는 "tandem"이라는
 2인승 자전거를 위한 `Bicycle`의 서브클래스를 정의합니다:
 
 ```swift
@@ -293,7 +293,7 @@ print("Tandem: \(tandem.description)")
 상속받은 인스턴스 메서드나 타입 메서드를 재정의하여,
 서브클래스 내에서 메서드의 맞춤형 또는 대체 구현을 제공합니다.
 
-아래 예제는 `Train`이라는 `Vehicle`의 새로운 서브클래스를 정의하고,
+아래 예시는 `Train`이라는 `Vehicle`의 새로운 서브클래스를 정의하고,
 `Vehicle`을 상속한 `Train`에 `makeNoise()` 메서드를 재정의합니다:
 
 ```swift
@@ -365,7 +365,7 @@ train.makeNoise()
 > getter에서 `super.someProperty`를 반환하면
 > 상속된 값을 간단하게 전달할 수 있습니다.
 
-다음의 예제는 `Vehicle`의 서브클래스인
+다음의 예시는 `Vehicle`의 서브클래스인
 `Car`라는 새로운 클래스를 정의합니다.
 `Car` 클래스는 기본 정수 값이 `1`인
 `gear`라는 새로운 저장 프로퍼티를 가집니다.
@@ -443,7 +443,7 @@ print("Car: \(car.description)")
 > 이미 프로퍼티에 커스텀 setter를 제공하고 있다면
 > 커스텀 setter 내에서 간단하게 값 변경을 관찰할 수 있습니다.
 
-다음 예제는 `Car`의 서브클래스 인
+다음 예시는 `Car`의 서브클래스 인
 `AutomaticCar`라는 새로운 클래스를 정의합니다.
 `AutomaticCar` 클래스는 현재 속도에 기반하여 적절한 기어를 자동으로 선택하는
 자동 기어 박스가 있는 자동차를 나타냅니다:

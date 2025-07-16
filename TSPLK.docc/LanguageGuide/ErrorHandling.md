@@ -188,7 +188,7 @@ func cannotThrowErrors() -> String
 > 던지기 선언이 되지 않은 함수 내에서 발생된 모든 오류는
 > 함수 내에서 처리되어야 합니다.
 
-아래 예제에서
+아래 예시에서
 `VendingMachine` 클래스는
 요청된 항목이 불가능 하거나,
 품절이거나,
@@ -281,17 +281,17 @@ class VendingMachine {
 -->
 
 `vend(itemNamed:)` 메서드의 구현은
-스낵 구매 요구 사항 중 하나라도 충족하지 않으면 `guard` 구문을 사용하여 메서드를 일찍 종료시키고 
+스낵 구매 요구사항 중 하나라도 충족하지 않으면 `guard` 구문을 사용하여 메서드를 일찍 종료시키고 
 적절한 오류를 발생합니다.
 `throw` 구문은 프로그램 제어를 즉시 이동하므로,
-항목은 요구 사항이 모두 만족해야만 판매됩니다.
+항목은 요구사항이 모두 만족해야만 판매됩니다.
 
 `vend(itemNamed:)` 메서드는 발생하는 오류를 전파하기 때문에,
 이 메서드를 호출하는 코드는 `do`-`catch` 구문,
 `try?`나 `try!`를 사용하여
 오류를 처리하거나 계속 전파해야 합니다.
 예를 들어
-아래 예제에서 `buyFavoriteSnack(person:vendingMachine:)`은
+아래 예시에서 `buyFavoriteSnack(person:vendingMachine:)`은
 던지는 함수이며,
 `vend(itemNamed:)` 메서드에서 발생한 오류는
 `buyFavoriteSnack(person:vendingMachine:)` 함수가 호출된 지점까지 전파될 것입니다.
@@ -328,7 +328,7 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
   ```
 -->
 
-이 예제에서
+이 예시에서
 `buyFavoriteSnack(person:vendingMachine:)` 함수는 주어진 사람의 좋아하는 스낵을 검색하고
 `vend(itemNamed:)` 메서드를 호출하여 그 제품을 구입합니다.
 `vend(itemNamed:)` 메서드는 오류를 발생할 수 있으므로,
@@ -461,7 +461,7 @@ do {
   ```
 -->
 
-위의 예제에서
+위의 예시에서
 `buyFavoriteSnack(person:vendingMachine:)` 함수는 오류를 발생할 수 있으므로
 `try` 표현식으로 호출됩니다.
 오류가 발생하면,
@@ -489,7 +489,7 @@ do {
 범위의 최상위로 전파되면 
 타임 오류를 발생합니다.
 
-예를 들어 위의 예제는
+예를 들어 위의 예시는
 `VendingMachineError`가 아닌 모든 오류가
 호출 함수에서 포착되도록 작성할 수 있습니다:
 
@@ -701,7 +701,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 
 ## 오류 타입 지정 (Specifying the Error Type)
 
-위에 모든 예제에서 사용하는 오류 처리의 방법에서
+위에 모든 예시에서 사용하는 오류 처리의 방법에서
 오류는
 `Error` 프로토콜을 준수하는 타입의 값입니다.
 이러한 접근방식은
@@ -714,7 +714,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 새로운 오류를 던질 수 있고,
 개발이나 테스트 중에 보여지지 않는
 실패 모드를 나타낼 수 있습니다.
-위의 예제에서 오류를 처리하는 코드는
+위의 예시에서 오류를 처리하는 코드는
 특정 `catch` 구문이 없는
 오류 처리를 위해 기본 케이스를 포함합니다.
 
@@ -794,7 +794,7 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
 함수의 시작 부분에 오류 타입을 지정해서 작성하면,
 Swift는 다른 오류 타입을 던지는지 확인합니다.
 예를 들어,
-이 챕터의 위 예제에서 `summarize(_:)` 함수에
+이 챕터의 위 예시에서 `summarize(_:)` 함수에
 `VendingMachineError`를 사용하면,
 코드는 컴파일 때 오류가 발생합니다.
 
@@ -883,7 +883,7 @@ Swift는 `switch` 구문이 완전하기 않기 때문에
 함수나 `do` 블럭에서 하나의 타입으로 오류를 던지면,
 Swift는 타입이 지정된 던지기를 사용하는 코드라고 추론합니다.
 이 짧은 구문을 사용하면,
-위 예제에서 `do`-`catch`를 아래와 같이 작성할 수 있습니다:
+위 예시에서 `do`-`catch`를 아래와 같이 작성할 수 있습니다:
 
 ```swift
 let ratings = []
@@ -973,7 +973,7 @@ func processFile(filename: String) throws {
   ```
 -->
 
-위의 예제는 `open(_:)` 함수에
+위의 예시는 `open(_:)` 함수에
 `close(_:)`에 대한 호출이 있는지
 확인하기 위해 `defer` 구문을 사용합니다.
 

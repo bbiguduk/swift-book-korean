@@ -213,15 +213,15 @@ default:
 
 `switch` 구문의 _제어 표현식 (control expression)_ 은 평가된 다음에 각 케이스에 지정한 패턴과 비교됩니다. 일치하는 항목이 있으면 프로그램은 해당 케이스의 범위내에 _구문 (statements)_ 을 실행합니다. 각 케이스의 범위는 비어 있을 수 없습니다. 결과적으로 각 케이스 라벨의 콜론 (`:`) 다음에 적어도 하나의 구문이 포함되어야 합니다. 일치하는 케이스의 본문에서 코드를 실행하지 않으려면 단일 `break` 구문을 사용해야 합니다.
 
-코드가 분기할 수 있는 표현식의 값은 매우 유연합니다. 예를 들어 정수와 문자와 같은 스칼라 타입의 값을 제외하고 코드는 부동 소수점 숫자, 문자열, 튜플, 커스텀 클래스의 인스턴스, 그리고 옵셔널을 포함하는 모든 타입의 값으로 분기할 수 있습니다. _제어 표현식 (control expression)_ 의 값은 열거형의 케이스의 값과 일치하고 지정된 값 범위에 포함되는지 확인할 수도 있습니다. `switch` 구문에서 값의 이러한 여러가지 타입을 어떻게 사용하는지에 대한 예제는 <doc:ControlFlow> 에 <doc:ControlFlow#Switch> 를 참고 바랍니다.
+코드가 분기할 수 있는 표현식의 값은 매우 유연합니다. 예를 들어 정수와 문자와 같은 스칼라 타입의 값을 제외하고 코드는 부동 소수점 숫자, 문자열, 튜플, 커스텀 클래스의 인스턴스, 그리고 옵셔널을 포함하는 모든 타입의 값으로 분기할 수 있습니다. _제어 표현식 (control expression)_ 의 값은 열거형의 케이스의 값과 일치하고 지정된 값 범위에 포함되는지 확인할 수도 있습니다. `switch` 구문에서 값의 이러한 여러가지 타입을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#Switch> 를 참고 바랍니다.
 
-`switch` 케이스는 각 패턴 후에 선택적으로 `where` 절을 포함할 수 있습니다. _where 절 (where clause)_ 은 `where` 키워드 다음에 표현식을 붙여 도입되고 케이스에 패턴이 _제어 표현식 (control expression)_ 에 일치되는지 간주되기 전에 추가 조건을 제공하는데 사용됩니다. `where` 절이 있는 경우 연관된 케이스 내에 _구문 (statements)_ 은 _제어 표현식 (control expression)_ 의 값이 케이스의 패턴 중 하나와 일치하고 `where` 절의 표현식이 `true` 로 평가될 때만 실행됩니다. 예를 들어 _제어 표현식 (control expression)_ 은 `(1, 1)` 과 같이 동일한 값의 두 요소가 포함된 튜플인 경우에만 아래 예제의 케이스는 일치됩니다.
+`switch` 케이스는 각 패턴 후에 선택적으로 `where` 절을 포함할 수 있습니다. _where 절 (where clause)_ 은 `where` 키워드 다음에 표현식을 붙여 도입되고 케이스에 패턴이 _제어 표현식 (control expression)_ 에 일치되는지 간주되기 전에 추가 조건을 제공하는데 사용됩니다. `where` 절이 있는 경우 연관된 케이스 내에 _구문 (statements)_ 은 _제어 표현식 (control expression)_ 의 값이 케이스의 패턴 중 하나와 일치하고 `where` 절의 표현식이 `true` 로 평가될 때만 실행됩니다. 예를 들어 _제어 표현식 (control expression)_ 은 `(1, 1)` 과 같이 동일한 값의 두 요소가 포함된 튜플인 경우에만 아래 예시의 케이스는 일치됩니다.
 
 ```swift
 case let (x, y) where x == y:
 ```
 
-위의 예제에서 볼 수 있듯이 케이스의 패턴은 `let` 키워드를 사용하여 상수에 바인딩 할 수 있고 `var` 키워드를 사용하여 변수에 바인딩 할 수도 있습니다. 이 상수 또는 변수는 해당 where 절과 케이스의 범위 내의 나머지 코드에서 참조될 수 있습니다. 케이스에 제어 표현식과 일치하는 여러 패턴을 포함하는 경우 모든 패턴에는 동일한 상수 또는 변수 바인딩이 포함되어야 하고 바인딩 된 변수 또는 상수는 케이스의 모든 패턴에서 동일한 타입을 가져야 합니다.
+위의 예시에서 볼 수 있듯이 케이스의 패턴은 `let` 키워드를 사용하여 상수에 바인딩 할 수 있고 `var` 키워드를 사용하여 변수에 바인딩 할 수도 있습니다. 이 상수 또는 변수는 해당 where 절과 케이스의 범위 내의 나머지 코드에서 참조될 수 있습니다. 케이스에 제어 표현식과 일치하는 여러 패턴을 포함하는 경우 모든 패턴에는 동일한 상수 또는 변수 바인딩이 포함되어야 하고 바인딩 된 변수 또는 상수는 케이스의 모든 패턴에서 동일한 타입을 가져야 합니다.
 
 `switch` 구문은 `default` 키워드로 도입되는 기본 케이스를 포함할 수도 있습니다. 기본 케이스 내에 코드는 제어 표현식이 일치하는 케이스가 없는 경우에만 실행됩니다. `switch` 구문은 오직 하나의 기본 케이스만 포함되고 `switch` 구문의 마지막에 위치해야 합니다.
 
@@ -237,7 +237,7 @@ _비고정 열거형 (nonfrozen enumeration)_ 은 앱을 컴파일하고 출시�
 
 비고정 열거형 값을 변경할 때 열거형의 모든 케이스가 해당 전환 케이스가 있더라도 기본 케이스를 포함해야 합니다.향후에 추가된 열거형 케이스에만 일치되는 기본 케이스를 나타내기 위해 기본 케이스에 `@unknown` 속성을 적용할 수 있습니다. Swift 는 컴파일 시에 모든 열거형 케이스와 일치하는 기본 케이스가 있다면 경고를 발생시킵니다. 향후 이 경고는 라이브러리 작성자가 해당 스위치 케이스가 없는 열거형에 새로운 케이스를 추가했음을 알려줍니다.
 
-다음 예제는 Swift 표준 라이브러리의 [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation) 열거형의 세가지 기존 케이스를 모두 전환합니다. 향후에 추가 케이스를 추가하면 컴파일러는 새로운 케이스를 고려하기 위해 switch 구문을 업데이트 해야 한다고 나타내는 경고를 생성합니다.
+다음 예시는 Swift 표준 라이브러리의 [`Mirror.AncestorRepresentation`](https://developer.apple.com/documentation/swift/mirror/ancestorrepresentation) 열거형의 세가지 기존 케이스를 모두 전환합니다. 향후에 추가 케이스를 추가하면 컴파일러는 새로운 케이스를 고려하기 위해 switch 구문을 업데이트 해야 한다고 나타내는 경고를 생성합니다.
 
 ```swift
 let representation: Mirror.AncestorRepresentation = .generated
@@ -285,7 +285,7 @@ case .suppressed:
 
 라벨 구문의 범위는 구문 라벨 다음에 오는 전체 구문입니다. 라벨 구문을 중첩할 수 있지만 각 구문 라벨의 이름은 고유해야 합니다.
 
-구문 라벨을 어떻게 사용하는지 자세한 내용과 예제는 <doc:ControlFlow> 에 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
+구문 라벨을 어떻게 사용하는지 자세한 내용과 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
 
 > Grammar of a labeled statement:
 >
@@ -324,7 +324,7 @@ break <#label name#>
 
 두 경우 모두 프로그램 제어는 루프나 `switch` 구문 다음 코드의 첫번째 줄로 전송됩니다.
 
-break 구문을 어떻게 사용하는지에 대한 예제는 <doc:ControlFlow> 에 <doc:ControlFlow#중단-Break> 와 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
+break 구문을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#중단-Break> 와 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
 
 > Grammar of a break statement:
 >
@@ -347,7 +347,7 @@ continue <#label name#>
 
 `for` 구문에서 증가 표현식은 루프의 본문이 실행된 후에 평가되므로 `continue` 구문 후에도 계속 계산됩니다.
 
-`continue` 구문 사용에 대한 예제는 <doc:ControlFlow> 에 <doc:ControlFlow#계속-Continue> 과 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
+`continue` 구문 사용에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#계속-Continue> 과 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
 
 > Grammar of a continue statement:
 >
@@ -359,7 +359,7 @@ continue <#label name#>
 
 `fallthrough` 구문은 케이스 블럭의 마지막 구문 뿐만 아니라 `switch` 구문 내 어디든 나타날 수 있지만 마지막 케이스 블럭에서는 사용될 수 없습니다. 또한 패턴에 값 바인딩 패턴이 포함된 케이스 블럭으로 제어를 전송할 수 없습니다.
 
-`switch` 구문에서 `fallthrough` 구문을 사용하는 방법에 대한 예제는 <doc:ControlFlow> 에 <doc:ControlFlow#제어-변경-구문-Control-Transfer-Statements> 을 참고 바랍니다.
+`switch` 구문에서 `fallthrough` 구문을 사용하는 방법에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#제어-변경-구문-Control-Transfer-Statements> 을 참고 바랍니다.
 
 > Grammar of a fallthrough statement:
 >
@@ -404,7 +404,7 @@ _표현식 (expression)_ 의 값은 `Error` 프로토콜을 준수하는 타입�
 발생하는 오류의 타입을 선언하면,
 *표현식* 의 값은 해당 타입의 인스턴스여야 합니다.
 
-`throw` 구문을 어떻게 사용하는지에 대한 예제는 <doc:ErrorHandling> 에 <doc:ErrorHandling#던지는-함수를-이용한-오류-전파-Propagating-Errors-Using-Throwing-Functions> 를 참고 바랍니다.
+`throw` 구문을 어떻게 사용하는지에 대한 예시는 <doc:ErrorHandling> 에 <doc:ErrorHandling#던지는-함수를-이용한-오류-전파-Propagating-Errors-Using-Throwing-Functions> 를 참고 바랍니다.
 
 > Grammar of a throw statement:
 >
@@ -533,7 +533,7 @@ Swift 는 다음과 같이 오류 타입을 추론합니다:
 
 오류가 처리되도록 보장하려면 와일드카드 패턴 (`_`) 과 같이 모든 오류를 일치하는 패턴으로 `catch` 절을 사용해야 합니다. `catch` 절에 패턴을 지정하지 않으면 `catch` 절은 모든 오류와 일치하고 `error` 라는 이름의 지역 상수에 바인딩 됩니다. `catch` 절에서 사용할 수 있는 패턴에 대한 자세한 내용은 <doc:Patterns> 을 참고 바랍니다.
 
-여러 `catch` 절과 `do` 구문을 사용하는 방법에 대한 예제는 <doc:ErrorHandling#오류-처리-Handling-Errors> 를 참고 바랍니다.
+여러 `catch` 절과 `do` 구문을 사용하는 방법에 대한 예시는 <doc:ErrorHandling#오류-처리-Handling-Errors> 를 참고 바랍니다.
 
 > Grammar of a do statement:
 >

@@ -193,7 +193,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
 [<#value 1#>, <#value 2#>, <#value 3#>]
 ```
 
-아래 예제는 `String` 값을 저장하는 `shoppingList` 배열을 생성하는 예제입니다:
+아래 예시는 `String` 값을 저장하는 `shoppingList` 배열을 생성하는 예시입니다:
 
 ```swift
 var shoppingList: [String] = ["Eggs", "Milk"]
@@ -216,7 +216,7 @@ var shoppingList: [String] = ["Eggs", "Milk"]
 여기서 `shoppingList` 배열은 배열 리터럴 안에 쓰여진 두 `String` 값
 (`"Eggs"`와 `"Milk"`)으로 초기화됩니다.
 
-> Note: 아래 예제에서 쇼핑 리스트에 더 많은 아이템이 추가되기 때문에
+> Note: 아래 예시에서 쇼핑 리스트에 더 많은 아이템이 추가되기 때문에
 > `shoppingList` 배열은 상수(`let`으로 선언)가 아닌
 > 변수(`var`로 선언)로 선언되었습니다.
 
@@ -386,7 +386,7 @@ shoppingList[0] = "Six eggs"
 
 변경할 값들이 변경할 범위와 다른 길이를 가지고 있더라도
 서브스크립트 구문으로 범위 안에 값을 한 번에 변경할 수 있습니다.
-아래 예제는 `"Chocolate Spread"`, `"Cheese"`, `"Butter"`를
+아래 예시는 `"Chocolate Spread"`, `"Cheese"`, `"Butter"`를
 `"Bananas"`와 `"Apples"`로 대체합니다:
 
 ```swift
@@ -670,7 +670,7 @@ letters = []
 집합 컬렉션으로 하나 이상의 값으로 축약형 방법과 같이
 배열 리터럴을 사용하여 집합을 초기화 할 수도 있습니다.
 
-아래 예제는 `String` 값을 저장하는 `favoriteGenres`라는 집합을 생성합니다:
+아래 예시는 `String` 값을 저장하는 `favoriteGenres`라는 집합을 생성합니다:
 
 ```swift
 var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
@@ -693,7 +693,7 @@ var favoriteGenres: Set<String> = ["Rock", "Classical", "Hip hop"]
 여기서 `favoriteGenres` 집합은 배열 리터럴 내에 적힌 세 개의 `String` 값
 (`"Rock"`, `"Classical"`, `"Hip hop"`)으로 초기화 됩니다.
 
-> Note: `favoriteGenres` 집합은 아래 예제에서 아이템을 추가하거나 삭제하기 때문에
+> Note: `favoriteGenres` 집합은 아래 예시에서 아이템을 추가하거나 삭제하기 때문에
 > 상수(`let`)가 아닌
 > 변수(`var`)로 선언되었습니다.
 
@@ -1069,7 +1069,7 @@ var namesOfIntegers = [Int: String]()
   ```
 -->
 
-이 예제에서 정수 값을 사람이 읽을 수 있는 이름을 저장하는
+이 예시에서 정수 값을 사람이 읽을 수 있는 이름을 저장하는
 `[Int: String]` 타입의 빈 딕셔너리를 생성합니다.
 키는 `Int` 타입이고 값은 `String` 타입 입니다.
 
@@ -1114,7 +1114,7 @@ namesOfIntegers = [:]
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#key 3#>: <#value 3#>]
 ```
 
-아래 예제는 국제 공항의 이름을 저장하는 딕셔너리를 생성합니다.
+아래 예시는 국제 공항의 이름을 저장하는 딕셔너리를 생성합니다.
 딕셔너리에 키는 세 글자로 된 국제 항공 운송 협회(Air Transport Association) 코드이고,
 값은 공항 이름입니다:
 
@@ -1134,7 +1134,7 @@ var airports: [String: String] = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 `Dictionary` 키는 `String` 타입이고
 값은 `String` 타입인 `[String: String]` 타입을 갖도록 선언됩니다.
 
-> Note: `airports` 딕셔너리는 아래 예제에서 딕셔너리에 더 많은 공항이 추가되므로
+> Note: `airports` 딕셔너리는 아래 예시에서 딕셔너리에 더 많은 공항이 추가되므로
 > 상수(`let`)가 아닌
 > 변수(`var`)로 선언됩니다.
 
@@ -1257,7 +1257,7 @@ airports["LHR"] = "London Heathrow"
 서브스크립트를 대체할 수 있는 방법으로,
 딕셔너리의 `updateValue(_:forKey:)` 메서드를 사용하여
 특정 키에 값을 설정하거나 업데이트할 수 있습니다.
-위의 서브스크립트 예제와 같이, `updateValue(_:forKey:)` 메서드는
+위의 서브스크립트 예시와 같이, `updateValue(_:forKey:)` 메서드는
 해당 키에 값이 존재하지 않으면 값을 설정 하거나
 해당 키에 값이 존재하면 값을 업데이트 합니다.
 그러나 서브스크립트와 다르게,

@@ -56,7 +56,7 @@ where <#requirements#>
 
 제너릭 `where` 절은 타입 파라미터를 포함하는 선언의 부분 또는 타입 파라미터를 포함하는 선언의 내부에 중첩된 선언의 부분으로 나타날 수 있습니다. 중첩된 선언에 대한 제너릭 `where` 절은 둘러싸는 선언의 타입 파라미터를 참조할 수 있습니다; 그러나 `where` 절의 요구사항은 작성된 선언에만 적용됩니다.
 
-둘러싸는 선언도 `where` 절을 가지고 있으면 두 절의 요구사항은 결합됩니다. 아래 예제에서 `startsWithZero()` 는 `Element` 가 `SomeProtocol` 과 `Numeric` 모두 준수하는 경우에만 가능합니다.
+둘러싸는 선언도 `where` 절을 가지고 있으면 두 절의 요구사항은 결합됩니다. 아래 예시에서 `startsWithZero()` 는 `Element` 가 `SomeProtocol` 과 `Numeric` 모두 준수하는 경우에만 가능합니다.
 
 ```swift
 extension Collection where Element: SomeProtocol {
@@ -68,7 +68,7 @@ extension Collection where Element: SomeProtocol {
 
 타입 파라미터에 다른 제약조건, 요구사항, 또는 둘 다 제공하여 제너릭 함수 또는 이니셜라이저를 오버로드 할 수 있습니다. 오버로드 된 제너릭 함수 또는 이니셜라이저를 호출할 때 컴파일러는 호출할 오버로드 된 함수 또는 이니셜라이저를 확인하기 위해 이 제약조건을 사용합니다.
 
-제너릭 `where` 절에 대한 자세한 정보와 제너릭 함수 선언의 예제를 보려면 <doc:Generics#제너릭-Where-절-Generic-Where-Clauses> 을 참고 바랍니다.
+제너릭 `where` 절에 대한 자세한 정보와 제너릭 함수 선언의 예시를 보려면 <doc:Generics#제너릭-Where-절-Generic-Where-Clauses> 을 참고 바랍니다.
 
 > Grammar of a generic parameter clause:
 >
@@ -94,7 +94,7 @@ _제너릭 인수 절 (generic argument clause)_ 은 제너릭 타입의 타입 
 <<#generic argument list#>>
 ```
 
-_제너릭 인수 리스트 (generic argument list)_ 는 콤마로 구분된 타입 인수의 리스트입니다. _타입 인수 (type argument)_ 는 제너릭 타입의 제너릭 파라미터 절에서 해당 타입 파라미터를 대체하는 실제 구체적인 타입의 이름입니다. 결과는 해당 제너릭 타입의 특수 버전입니다. 아래 예제는 Swift 표준 라이브러리의 제너릭 딕셔너리 타입의 간단한 버전을 보여줍니다.
+_제너릭 인수 리스트 (generic argument list)_ 는 콤마로 구분된 타입 인수의 리스트입니다. _타입 인수 (type argument)_ 는 제너릭 타입의 제너릭 파라미터 절에서 해당 타입 파라미터를 대체하는 실제 구체적인 타입의 이름입니다. 결과는 해당 제너릭 타입의 특수 버전입니다. 아래 예시는 Swift 표준 라이브러리의 제너릭 딕셔너리 타입의 간단한 버전을 보여줍니다.
 
 ```swift
 struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
@@ -102,7 +102,7 @@ struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLite
 }
 ```
 
-제너릭 `Dictionary` 타입의 특수한 버전인 `Dictionary<String, Int>` 는 제너릭 파라미터 `Key: Hashable` 과 `Value` 를 구체적인 타입 인수 `String` 과 `Int` 로 대체하여 구성됩니다. 각 타입 인수는 제너릭 `where` 절에 지정된 추가 요구사항을 포함하여 대체하는 제너릭 파라미터의 모든 제약사항을 충족해야 합니다. 위의 예제에서 `Key` 타입 파라미터는 `Hashable` 프로토콜을 준수하도록 제한되므로 `String` 도 `Hashable` 프로토콜을 준수해야 합니다.
+제너릭 `Dictionary` 타입의 특수한 버전인 `Dictionary<String, Int>` 는 제너릭 파라미터 `Key: Hashable` 과 `Value` 를 구체적인 타입 인수 `String` 과 `Int` 로 대체하여 구성됩니다. 각 타입 인수는 제너릭 `where` 절에 지정된 추가 요구사항을 포함하여 대체하는 제너릭 파라미터의 모든 제약사항을 충족해야 합니다. 위의 예시에서 `Key` 타입 파라미터는 `Hashable` 프로토콜을 준수하도록 제한되므로 `String` 도 `Hashable` 프로토콜을 준수해야 합니다.
 
 타입 파라미터를 적절한 제약사항과 요구사항을 충족하는 경우 그 자체가 제너릭 타입의 특별한 버전인 타입 인수로 대체할 수 있습니다. 예를 들어 요소 자체가 정수의 배열인 `Array<Int>` 은 `Array<Element>` 배열의 특별한 버전으로 타입 파라미터 `Element` 를 대체할 수 있습니다.
 

@@ -39,7 +39,7 @@ Swift에서는 함수 타입을 다른 타입처럼 사용할 수 있으므로,
 함수의 인수는 항상 함수의 파라미터 순서와
 동일하게 제공해야 합니다.
 
-아래 예제의 함수는 `greet(person:)`이라는 이름을 가지고,
+아래 예시의 함수는 `greet(person:)`이라는 이름을 가지고,
 사람의 이름을 입력으로 받아,
 해당 사람에게 인사말을 반환하는 역할을 합니다.
 이것을 수행하기 위해 `person`이라는 `String` 타입의
@@ -117,7 +117,7 @@ print(greet(person: "Brian"))
 함수는 실행을 완료하고 `greeting`의 현재 값을 반환합니다.
 
 다른 입력 값으로 `greet(person:)` 함수를 여러 번 호출할 수 있습니다.
-위의 예제에서 `"Anna"`와 `"Brian"`의 입력값으로 호출할 경우
+위의 예시에서 `"Anna"`와 `"Brian"`의 입력값으로 호출할 경우
 어떤 일이 생기는지 보여줍니다.
 이 함수는 각 경우에 맞춰 인사말을 반환합니다.
 
@@ -337,7 +337,7 @@ otherwise, using `_ = foo()` at the call site is better.
 튜플 타입을 함수의 반환 타입으로 사용하면
 여러 값을 하나의 복합 반환 값으로 반환할 수 있습니다.
 
-아래 예제는 `Int` 값의 배열에서 가장 작은 값과 가장 큰 값을 찾는
+아래 예시는 `Int` 값의 배열에서 가장 작은 값과 가장 큰 값을 찾는
 `minMax(array:)` 함수를 정의합니다:
 
 ```swift
@@ -388,7 +388,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 두 개의 `Int` 값인 튜플로 반환됩니다.
 
 튜플의 멤버 값은 함수의 반환 타입이므로
-가장 작은 값과 가장 큰 값을 찾기 위해 점 구문으로 접근할 수 있습니다:
+가장 작은 값과 가장 큰 값을 찾기 위해 점 문법으로 접근할 수 있습니다:
 
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
@@ -745,7 +745,7 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
 함수 본문 내에서
 `[Double]` 타입의 `numbers`라 불리는 상수 배열로 사용할 수 있습니다.
 
-아래 예제는 길이에 관계없이 숫자 목록에 대한
+아래 예시는 길이에 관계없이 숫자 목록에 대한
 *산술 평균*(*평균*)을 계산합니다:
 
 ```swift
@@ -853,7 +853,7 @@ in-out 파라미터에 변수를 인수로 전달할 때는
 > Note: in-out 파라미터는 기본 값을 가질 수 없고,
 > 가변 파라미터는 `inout`으로 표기할 수 없습니다.
 
-다음 예제는 `a`와 `b`라 하는 두 개의 in-out 정수 파라미터를 가지는
+다음 예시는 `a`와 `b`라 하는 두 개의 in-out 정수 파라미터를 가지는
 `swapTwoInts(_:_:)`라는 함수입니다:
 
 ```swift
@@ -907,13 +907,13 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
   ```
 -->
 
-위의 예제는
+위의 예시는
 `someInt`와 `anotherInt`의 함수의 외부에서 정의되었지만
 `swapTwoInts(_:_:)` 함수로 인해
 원래 값이 수정되는 것을 보여줍니다.
 
 > Note: in-out 파라미터는 함수에서 값을 반환하는 것과 다릅니다.
-> 위의 `swapTwoInts` 예제는 반환 타입을 정의하거나 값을 반환하지 않지만,
+> 위의 `swapTwoInts` 예시는 반환 타입을 정의하거나 값을 반환하지 않지만,
 > `someInt`와 `anotherInt`의 값은 수정됩니다.
 > In-out 파라미터는 함수 본문 범위를 벗어난 곳에서도
 > 영향을 미칠 수 있는 또 다른 방법입니다.
@@ -956,7 +956,7 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
   ```
 -->
 
-이 예제는 `addTwoInts`와 `multiplyTwoInts`라 불리는
+이 예시는 `addTwoInts`와 `multiplyTwoInts`라 불리는
 간단한 수학 방정식 함수를 정의합니다.
 이 함수는 각각 두 개의 `Int` 값을 가지며,
 적절한 수학 연산을 수행하여
@@ -968,7 +968,7 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
 "함수는 모두 `Int` 타입인 두 개의 파라미터를 가지며,
 `Int` 타입을 반환합니다."
 
-다음의 예제는 파라미터나 반환 값이 없는 함수 입니다:
+다음의 예시는 파라미터나 반환 값이 없는 함수 입니다:
 
 ```swift
 func printHelloWorld() {
@@ -1085,7 +1085,7 @@ let anotherMathFunction = addTwoInts
 이렇게 하면 함수의 일부 구현을
 해당 함수를 호출하는 쪽에서 제공하도록 할 수 있습니다.
 
-다음의 예제는 위 수학 함수의 결과를 출력합니다:
+다음의 예시는 위 수학 함수의 결과를 출력합니다:
 
 ```swift
 func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
@@ -1107,7 +1107,7 @@ printMathResult(addTwoInts, 3, 5)
   ```
 -->
 
-이 예제는 세 개의 파라미터를 가지는 `printMathResult(_:_:_:)`라는 함수를 정의합니다.
+이 예시는 세 개의 파라미터를 가지는 `printMathResult(_:_:_:)`라는 함수를 정의합니다.
 첫 번째 파라미터는 `mathFunction`이라 불리는 `(Int, Int) -> Int` 타입입니다.
 이 첫 번째 파라미터의 인수로 해당 타입의 함수를 전달할 수 있습니다.
 두 번째 세 번째 파라미터는 `a`와 `b`라 불리고 둘 다 `Int` 타입입니다.
@@ -1130,7 +1130,7 @@ printMathResult(addTwoInts, 3, 5)
 반환하는 함수의 반환 화살표(`->`) 바로 뒤에
 전체 함수 타입을 작성하여 이를 수행합니다.
 
-다음 예제는 `stepForward(_:)`와 `stepBackward(_:)`라 불리는 간단한 두 개의 함수를 정의합니다.
+다음 예시는 `stepForward(_:)`와 `stepBackward(_:)`라 불리는 간단한 두 개의 함수를 정의합니다.
 `stepForward(_:)` 함수는 입력 값에 1을 더해 반환하고,
 `stepBackward(_:)` 함수는 입력 값에 1을 빼고 반환합니다.
 두 함수 모두 `(Int) -> Int` 타입입니다:
@@ -1199,7 +1199,7 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
   ```
 -->
 
-위의 예제는 `currentValue`라는 변수를 점차적으로 0에 가깝게 이동하기 위해
+위의 예시는 `currentValue`라는 변수를 점차적으로 0에 가깝게 이동하기 위해
 양수 또는 음수 단계가 필요한지 판단합니다.
 `currentValue`는 `3`의 초기 값을 가지며,
 이것은 `currentValue > 0`이 `true`를 반환한다는 의미이며,
@@ -1253,7 +1253,7 @@ print("zero!")
 중첩 함수를 둘러싼 함수는 중첩 함수 중 하나를 반환하여
 중첩 함수를 다른 범위에서 사용할 수도 있습니다.
 
-위의 예제 `chooseStepFunction(backward:)`를 중첩 함수를 사용하고 반환하도록
+위의 예시 `chooseStepFunction(backward:)`를 중첩 함수를 사용하고 반환하도록
 다시 작성할 수 있습니다:
 
 ```swift

@@ -174,7 +174,7 @@ static 변수를 생성하기 위해 매크로를 사용하는
 
 매크로는 `macro` 키워드로 선언합니다.
 예를 들어
-이전 예제에서 사용된 `@OptionSet` 매크로에 대한
+이전 예시에서 사용된 `@OptionSet` 매크로에 대한
 선언의 부분입니다:
 
 ```swift
@@ -417,7 +417,7 @@ Swift는 매크로를 구현한 코드를 제한하여
 let magicNumber = 1145258561 as UInt32
 ```
 
-이 예제에서 입력 소스 코드는 하나의 매크로만 가지지만,
+이 예시에서 입력 소스 코드는 하나의 매크로만 가지지만,
 실제 프로그램에서는 동일한 매크로의 여러 인스턴스와
 다른 매크로에 대한 여러 호출이 있을 수 있습니다.
 컴파일러는 한 번에 하나씩 매크로를 확장합니다.
@@ -469,7 +469,7 @@ Swift Package Manager를 사용하여 새로운 매크로를 생성하기 위해
 - `CompilerPluginSupport` 모듈을 가져옵니다.
 - `platforms` 목록에 최소 배포 타겟으로 macOS 10.15를 포함합니다.
 
-아래의 코드는 `Package.swift` 파일의 예제를 보여줍니다.
+아래의 코드는 `Package.swift` 파일의 예시를 보여줍니다.
 
 ```swift
 // swift-tools-version: 5.9
@@ -607,7 +607,7 @@ AST와 컨텍스트를 인수로 메서드에 전달합니다.
 `#fourCharacterCode`에 인수로 전달된 문자열을 찾고,
 부호없는 32-bit 정수 리터럴 값으로 계산합니다.
 
-위 예제에서
+위 예시에서
 첫 번재 `guard` 블럭은 AST에서 문자열 리터럴을 추출하고,
 `literalSegment`에 해당 AST 요소를 할당합니다.
 두 번째 `guard` 블럭에서
@@ -739,7 +739,7 @@ let expectedDescription =
 precondition(transformedSF.description == expectedDescription)
 ```
 
-위 예제는 사전 조건을 사용하여 매크로를 테스트 하지만,
+위 예시는 사전 조건을 사용하여 매크로를 테스트 하지만,
 테스트 프레임워크를 사용할 수도 있습니다. 
 
 <!-- OUTLINE:

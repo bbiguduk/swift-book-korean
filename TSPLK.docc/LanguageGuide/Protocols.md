@@ -1,14 +1,33 @@
-# 프로토콜 \(Protocols\)
+# 프로토콜 (Protocols)
 
-준수하는 타입이 구현해야 하는 요구사항을 정의합니다.
+타입이 구현해야 하는 요구사항을 정의합니다.
 
-_프로토콜 \(protocol\)_ 은 메서드, 프로퍼티, 그리고 특정 작업이나 기능의 부분이 적합한 다른 요구사항의 청사진을 정의합니다. 프로토콜은 요구사항의 구현을 제공하기 위해 클래스, 구조체, 또는 열거형에 의해 채택될 수 있습니다. 프로토콜의 요구사항에 충족하는 모든 타입은 프로토콜에 _준수 \(conform\)_ 한다고 합니다.
+*프로토콜(protocol)*은 특정 작업이나 기능에 적합한
+메서드, 프로퍼티, 그리고 다른 요구사항의
+청사진을 정의합니다.
+프로토콜은 클래스, 구조체, 열거형이 *채택*하여
+이 요구사항의 구현을 제공할 수 있습니다.
+프로토콜의 요구사항을 만족하는 모든 타입은
+프로토콜을 *준수(conform)*한다고 합니다.
 
-준수하는 타입의 요구사항을 지정하는 것 외에도 요구사항의 일부를 구현 하거나 준수하는 타입에 추가 기능을 구현하기 위해 프로토콜을 확장할 수 있습니다.
+프로토콜을 준수하는 타입이 구현해야 하는 요구사항을 명시하는 것 외에도,
+프로토콜을 확장하여 이 요구사항 중 일부를 구현하거나
+준수하는 타입이 활용할 수 있는 추가 기능을 구현할 수도 있습니다.
 
-## 프로토콜 구문 \(Protocol Syntax\)
+<!--
+  FIXME: Protocols should also be able to support initializers,
+  and indeed you can currently write them,
+  but they don't work due to
+  <rdar://problem/13695680> Constructor requirements in protocols (needed for NSCoding).
+  I'll need to write about them once this is fixed.
+  UPDATE: actually, they *can* be used right now,
+  but only in a generic function, and not more generally with the protocol type.
+  I'm not sure I should mention them in this chapter until they work more generally.
+-->
 
-클래스, 구조체, 그리고 열거형과 유사한 방법으로 프로토콜을 정의합니다:
+## 프로토콜 문법 (Protocol Syntax)
+
+프로토콜은 클래스, 구조체, 열거형과 유사한 방법으로 정의합니다:
 
 ```swift
 protocol SomeProtocol {
@@ -16,7 +35,20 @@ protocol SomeProtocol {
 }
 ```
 
-커스텀 타입은 콜론으로 구분된 타입의 이름 뒤에 특정 프로토콜의 이름을 위치시켜 정의의 부분으로 특정 프로토콜을 채택합니다. 여러 프로토콜은 콤마로 구분되고 리스트화 할 수 있습니다:
+<!--
+  - test: `protocolSyntax`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+        // protocol definition goes here
+     }
+  ```
+-->
+
+커스텀 타입이 특정 프로토콜을 채택한다고 나타내려면
+타입 이름 뒤에 콜론과 함께
+프로토콜 이름을 나열합니다.
+여러 프로토콜을 채택하려면 콤마로 구분하여 나열할 수 있습니다:
 
 ```swift
 struct SomeStructure: FirstProtocol, AnotherProtocol {
@@ -24,7 +56,20 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 }
 ```
 
-클래스가 슈퍼클래스를 가진 경우에 콤마로 구분하여 채택한 모든 프로토콜 전에 슈퍼클래스 이름을 위치 시킵니다:
+<!--
+  - test: `protocolSyntax`
+
+  ```swifttest
+  >> protocol FirstProtocol {}
+  >> protocol AnotherProtocol {}
+  -> struct SomeStructure: FirstProtocol, AnotherProtocol {
+        // structure definition goes here
+     }
+  ```
+-->
+
+클래스에 상위 클래스가 존재한다면,
+상위 클래스 다음에 콤마로 구분하여 채택하는 모든 프로토콜을 나열합니다:
 
 ```swift
 class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
@@ -32,16 +77,46 @@ class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
 }
 ```
 
-> Note
-> 프로토콜은 타입이기 때문에 Swift 에서 다른 타입 (`Int`, `String`, 그리고 `Double` 등) 의 이름처럼 대문자로 시작합니다 (`FullyNamed` 그리고 `RandomNumberGenerator` 등).
+<!--
+  - test: `protocolSyntax`
 
-## 프로퍼티 요구사항 \(Property Requirements\)
+  ```swifttest
+  >> class SomeSuperclass {}
+  -> class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
+        // class definition goes here
+     }
+  ```
+-->
 
-프로토콜은 특정 이름과 타입을 가진 인스턴스 프로퍼티 또는 타입 프로퍼티를 제공하기 위해 모든 준수하는 타입을 요구할 수 있습니다. 프로토콜은 요구된 프로퍼티 이름과 타입만 지정하고 프로퍼티가 저장 프로퍼티 또는 연산 프로퍼티 인지에 대한 것은 지정하지 않습니다. 프로토콜은 각 프로퍼티가 gettable 인지 gettable과 settable 인지도 지정해줘야 합니다.
+> Note: 프로토콜은 타입이기 때문에
+> Swift에서 다른 타입의 이름처럼
+> (`Int`, `String`, `Double` 등)
+> 대문자로 시작합니다
+> (`FullyNamed`, `RandomNumberGenerator` 등).
 
-프로토콜이 gettable과 settable 인 프로퍼티를 요구할 경우 프로퍼티 요구사항은 저장 프로퍼티 상수 또는 읽기전용 연산 프로퍼티는 충족할 수 없습니다. 프로토콜이 gettable 인 프로퍼티 만 요구할 경우 이 요구사항은 모든 종류의 프로퍼티에 충족될 수 있고 이것이 유용한 경우 settable 또한 프로퍼티에 대해 유효합니다.
+## 프로퍼티 요구사항 (Property Requirements)
 
-프로퍼티 요구사항은 항상 `var` 키워드와 함께 변수 프로퍼티로 선언됩니다. gettable과 settable 프로퍼티는 타입 선언 뒤에 `{ get set }` 으로 작성하여 나타내고 gettable 프로퍼티는 `{ get }` 으로 작성하여 나타냅니다.
+프로토콜은 이를 준수하는 타입이
+특정 이름과 타입을 가진 인스턴스 프로퍼티나 타입 프로퍼티를 제공하도록 요구할 수 있습니다.
+프로토콜은 프로퍼티가
+저장 프로퍼티나 연산 프로퍼티인지 지정하지 않습니다 ---
+필요한 프로퍼티 이름과 타입만 지정합니다.
+프로토콜은 각 프로퍼티가 읽기만 가능한지
+읽기와 쓰기가 모두 가능한지도 지정합니다.
+
+프로토콜이 프로퍼티의 읽기와 쓰기를 모두 요구하는 경우,
+상수 저장 프로퍼티나 읽기 전용 계산 프로퍼티는
+해당 요구사항을 충족할 수 없습니다.
+프로토콜이 프로퍼티의 읽기만 요구하는 경우,
+모든 종류의 프로퍼티로 요구사항을 충족할 수 있고
+필요한 경우
+쓰기가 가능하게 구현해도 무방합니다.
+
+프로퍼티 요구사항은 항상 `var` 키워드로
+변수 프로퍼티로 선언됩니다.
+읽기와 쓰기 가능한 프로퍼티는
+타입 선언 뒤에 `{ get set }`으로 작성하여 나타내고,
+읽기만 가능한 프로퍼티는 `{ get }`으로 작성하여 나타냅니다.
 
 ```swift
 protocol SomeProtocol {
@@ -50,7 +125,21 @@ protocol SomeProtocol {
 }
 ```
 
-타입 프로퍼티 요구하려면 프로토콜에 정의할 때 `static` 키워드를 접두사로 둡니다. 이 규칙은 타입 프로퍼티 요구사항이 클래스에 의해 구현될 때 `class` 또는 `static` 키워드를 붙일 수 있는 경우에도 적용됩니다:
+<!--
+  - test: `instanceProperties`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+        var mustBeSettable: Int { get set }
+        var doesNotNeedToBeSettable: Int { get }
+     }
+  ```
+-->
+
+프로토콜에 타입 프로퍼티 요구사항을 정의하려면
+`static` 키워드를 붙여야 합니다.
+클래스에 타입 프로퍼티 요구사항을 구현할 때는 `class`나 `static` 키워드를 사용할 수 있지만,
+프로토콜에서는 `static` 키워드만 사용해야 합니다:
 
 ```swift
 protocol AnotherProtocol {
@@ -58,7 +147,17 @@ protocol AnotherProtocol {
 }
 ```
 
-다음은 단일 인스턴스 프로퍼티 요구사항을 가지는 프로토콜의 예입니다:
+<!--
+  - test: `instanceProperties`
+
+  ```swifttest
+  -> protocol AnotherProtocol {
+        static var someTypeProperty: Int { get set }
+     }
+  ```
+-->
+
+다음은 단일 인스턴스 프로퍼티 요구사항을 가지는 프로토콜 예시입니다:
 
 ```swift
 protocol FullyNamed {
@@ -66,9 +165,24 @@ protocol FullyNamed {
 }
 ```
 
-`FullyNamed` 프로토콜은 완벽한 이름을 제공하기 위해 준수하는 타입을 요구합니다. 이 프로토콜은 다른 준수하는 타입을 지정하지 않으며 타입이 자체에 대한 전체 이름을 제공해야 된다고만 지정합니다. 이 프로토콜은 모든 `FullyNamed` 타입이 `String` 타입의 `fullName` 이라는 gettable 인스턴스 프로퍼티를 가져야 합니다.
+<!--
+  - test: `instanceProperties`
 
-다음은 `FullyNamed` 프로토콜은 채택하고 준수하는 구조체에 대한 예입니다:
+  ```swifttest
+  -> protocol FullyNamed {
+        var fullName: String { get }
+     }
+  ```
+-->
+
+`FullyNamed` 프로토콜은 이를 준수하는 타입이 완벽한 이름을 제공하도록 요구합니다.
+이 프로토콜은 준수 타입의 성격에 대해 다른 것은 지정하지 않으며 ---
+해당 타입이 전체 이름을 제공해야 된다고만 요구합니다.
+이것은 `FullyNamed` 타입은
+`String` 타입의 `fullName`이라는 읽기만 가능한 인스턴스 프로퍼티를 가져야 합니다.
+
+다음은 `FullyNamed` 프로토콜을
+채택하고 준수하는 구조체의 예시입니다:
 
 ```swift
 struct Person: FullyNamed {
@@ -78,9 +192,29 @@ let john = Person(fullName: "John Appleseed")
 // john.fullName is "John Appleseed"
 ```
 
-이 예제는 특정 이름을 가진 사람을 나타내는 `Person` 이라는 구조체를 정의합니다. 정의의 첫번째 줄의 부분으로 `FullyNamed` 프로토콜을 채택합니다.
+<!--
+  - test: `instanceProperties`
 
-`Person` 의 각 인스턴스는 `String` 타입의 `fullName` 이라는 단일 저장 프로퍼티를 가집니다. 이것은 `FullyNamed` 프로토콜의 단일 요구사항과 일치하고 `Person` 은 프로토콜을 올바르게 준수하고 있다고 얘기합니다 \(Swift는 프로토콜 요구사항이 충족되지 않으면 컴파일 시 오류가 발생합니다\).
+  ```swifttest
+  -> struct Person: FullyNamed {
+        var fullName: String
+     }
+  -> let john = Person(fullName: "John Appleseed")
+  /> john.fullName is \"\(john.fullName)\"
+  </ john.fullName is "John Appleseed"
+  ```
+-->
+
+이 예시는 특정 이름을 가진 사람을 나타내는
+`Person`이라는 구조체를 정의합니다.
+정의의 첫 번째 줄에
+`FullyNamed` 프로토콜을 채택합니다.
+
+`Person`의 각 인스턴스는 `String` 타입의
+`fullName`이라는 단일 저장 프로퍼티를 가집니다.
+이것은 `FullyNamed` 프로토콜의 단일 요구사항과 일치하고
+`Person`은 프로토콜을 올바르게 준수하고 있다는 의미입니다.
+(Swift는 프로토콜 요구사항이 충족되지 않으면 컴파일 시 오류가 발생합니다.)
 
 다음은 `FullyNamed` 프로토콜을 채택하고 준수하는 더 복잡한 클래스입니다:
 
@@ -100,13 +234,52 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 // ncc1701.fullName is "USS Enterprise"
 ```
 
-이 클래스는 스타십에 대해 계산된 읽기전용 프로퍼티로 `fullName` 프로퍼티 요구사항을 구현합니다. 각 `Starship` 클래스 인스턴스는 필수로 `name` 과 옵셔널 `prefix` 를 저장합니다. `fullName` 프로퍼티는 `prefix` 값이 존재하면 사용하고 스타십에 대한 전체 이름을 생성하기 위해 `name` 의 앞에 추가합니다.
+<!--
+  - test: `instanceProperties`
 
-## 메서드 요구사항 \(Method Requirements\)
+  ```swifttest
+  -> class Starship: FullyNamed {
+        var prefix: String?
+        var name: String
+        init(name: String, prefix: String? = nil) {
+           self.name = name
+           self.prefix = prefix
+        }
+        var fullName: String {
+           return (prefix != nil ? prefix! + " " : "") + name
+        }
+     }
+  -> var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
+  /> ncc1701.fullName is \"\(ncc1701.fullName)\"
+  </ ncc1701.fullName is "USS Enterprise"
+  ```
+-->
 
-프로토콜은 준수하는 타입에 의해 구현되기 위해 지정한 인스턴스 메서드와 타입 메서드를 요구할 수 있습니다. 이 메서드는 일반적인 인스턴스와 타입 메서드와 같은 방식으로 명시적으로 프로토콜의 정의의 부분으로 작성되지만 중괄호가 없거나 메서드 본문이 없습니다. 일반적인 메서드와 같은 규칙에 따라 가변 파라미터는 허용됩니다. 그러나 기본 값은 프로토콜의 정의 내에서 메서드 파라미터에 대해 지정될 수 없습니다.
+이 클래스는 스타십에 대해 읽기 전용 연산 프로퍼티로
+`fullName` 프로퍼티 요구사항을 구현합니다.
+각 `Starship` 클래스 인스턴스는 필수 `name`과 옵셔널 `prefix`를 저장합니다.
+`fullName` 프로퍼티는 `prefix` 값이 존재하면 사용하여
+`name`의 앞에 추가해 스타십의 전체 이름을 생성합니다.
 
-타입 프로퍼티 요구사항과 마찬가지로 프로토콜에 정의될 때 `static` 키워드를 항상 타입 메서드 요구사항 앞에 표기합니다. 클래스에 의해 구현될 때 타입 메서드 요구사항에 `class` 또는 `static` 키워드가 접두사로 붙는 경우에도 마찬가지입니다:
+<!--
+  TODO: add some advice on how protocols should be named
+-->
+
+## 메서드 요구사항 (Method Requirements)
+
+프로토콜은 이를 준수하는 타입이
+특정 인스턴스 메서드와 타입 메서드를 구현하도록 요구할 수 있습니다.
+이 메서드는 일반 인스턴스 메서드와 타입 메서드를 정의하는 방식과 동일하게
+프로토콜의 정의에 작성되지만
+중괄호나 메서드 본문 없이 작성합니다.
+가변 파라미터(variadic parameter)도 일반 메서드와 같은 규칙에 따라 사용할 수 있습니다.
+그러나 프로토콜의 정의 내에서 메서드 파라미터에 대해 기본 값은 지정할 수 없습니다.
+
+타입 프로퍼티 요구사항과 마찬가지로
+프로토콜에 타입 메서드 요구사항을 정의할 때
+`static` 키워드를 항상 표기합니다.
+클래스에 타입 메서드 요구사항을 구현할 때는 `class`나 `static` 키워드를 사용할 수 있지만,
+프로토콜에서는 `static` 키워드만 사용해야 합니다:
 
 ```swift
 protocol SomeProtocol {
@@ -114,7 +287,17 @@ protocol SomeProtocol {
 }
 ```
 
-아래의 예제는 단일 인스턴스 메서드 요구사항을 가지는 프로토콜을 정의합니다:
+<!--
+  - test: `typeMethods`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+        static func someTypeMethod()
+     }
+  ```
+-->
+
+다음 예시는 단일 인스턴스 메서드 요구사항을 가지는 프로토콜을 정의합니다:
 
 ```swift
 protocol RandomNumberGenerator {
@@ -122,11 +305,32 @@ protocol RandomNumberGenerator {
 }
 ```
 
-`RandomNumberGenerator` 프로토콜은 호출될 때마다 `Double` 값을 반환하는 `random` 이라는 인스턴스 메서드를 가지는 모든 준수하는 타입을 요구합니다. 프로토콜 부분으로 지정되지 않았지만 이 값은 `0.0` 부터 `1.0` 미만의 숫자라고 가정합니다.
+<!--
+  - test: `protocols`
 
-`RandomNumberGenerator` 프로토콜은 각 난수가 생성되는 방법에 대해 어떠한 것도 가정하지 않습니다. 단순히 생성기가 새로운 난수를 생성하는 표준 방법을 제공하면 됩니다.
+  ```swifttest
+  -> protocol RandomNumberGenerator {
+        func random() -> Double
+     }
+  ```
+-->
 
-다음은 `RandomNumberGenerator` 프로토콜을 채택하고 준수하는 클래스의 구현입니다. 이 클래스는 _선형 합동 생성기 \(linear congruential generator\)_ 로 알려진 의사 난수 \(pseudorandom number\) 생성기 알고리즘을 구현합니다:
+`RandomNumberGenerator` 프로토콜은
+`random` 이라는 인스턴스 메서드 요구사항을 가지며
+호출할 때마다 `Double` 값을 반환합니다.
+프로토콜에 지정하지 않았지만,
+이 값은
+`0.0`부터 `1.0`미만의 숫자라고 가정합니다.
+
+`RandomNumberGenerator` 프로토콜은 각 난수가 생성되는 방법에 대해
+어떠한 것도 가정하지 않습니다 ---
+이것은 새로운 난수를 생성하는
+표준 방법을 제공할 것을 요구합니다.
+
+다음은 `RandomNumberGenerator` 프로토콜을
+채택하고 준수하는 클래스의 구현입니다.
+이 클래스는 *선형 합동 생성기(linear congruential generator)*로 알려진
+의사 난수(pseudorandom number) 생성 알고리즘을 구현합니다:
 
 ```swift
 class LinearCongruentialGenerator: RandomNumberGenerator {
@@ -147,18 +351,60 @@ print("And another one: \(generator.random())")
 // Prints "And another one: 0.729023776863283"
 ```
 
-## 변경 메서드 요구사항 \(Mutating Method Requirements\)
+<!--
+  - test: `protocols`
 
-메서드가 속한 인스턴스를 수정 또는 변경 해야하는 경우가 있습니다. 값 타입 \(구조체와 열거형\)에 대한 인스턴스 메서드의 경우 메서드의 `func` 키워드 앞에 `mutating` 키워드를 위치시켜 메서드가 속한 인스턴스와 인스턴스의 모든 프로퍼티를 수정할 수 있음을 나타냅니다. 이 프로세스는 <doc:Methods#인스턴스-메서드-내부에서-값-타입-수정-Modifying-Value-Types-from-Within-Instance-Methods> 에 설명되어 있습니다.
+  ```swifttest
+  -> class LinearCongruentialGenerator: RandomNumberGenerator {
+        var lastRandom = 42.0
+        let m = 139968.0
+        let a = 3877.0
+        let c = 29573.0
+        func random() -> Double {
+           lastRandom = ((lastRandom * a + c)
+               .truncatingRemainder(dividingBy:m))
+           return lastRandom / m
+        }
+     }
+  -> let generator = LinearCongruentialGenerator()
+  -> print("Here's a random number: \(generator.random())")
+  <- Here's a random number: 0.3746499199817101
+  -> print("And another one: \(generator.random())")
+  <- And another one: 0.729023776863283
+  ```
+-->
 
-프로토콜을 채택하는 모든 타입의 인스턴스를 변경하기 위한 프로토콜 인스턴스 메서드 요구사항을 정의하는 경우 프로토콜의 정의의 부분으로 `mutating` 키워드로 메서드를 표시합니다. 이를 통해 구조체와 열거형이 프로토콜을 채택하고 메서드 요구사항을 충족할 수 있습니다.
+## 변경 메서드 요구사항 (Mutating Method Requirements)
 
-> Note   
-> `mutating` 으로 프로토콜 인스턴스 메서드 요구사항을 표시하면 클래스에 대한 해당 메서드의 구현을 작성할 때 `mutating` 키워드를 작성할 필요가 없습니다. `mutating` 키워드는 구조체와 열거형에 의해서만 사용됩니다.
+메서드가 속한 인스턴스를 수정이나 *변경*해야 하는 경우가 있습니다.
+값 타입(구조체와 열거형)의 인스턴스 메서드의 경우
+메서드의 `func` 키워드 앞에 `mutating` 키워드를 작성하여
+메서드가 속한 인스턴스와
+인스턴스의 모든 프로퍼티를 수정할 수 있음을 나타냅니다.
+이 프로세스는 <doc:Methods#인스턴스-메서드-내부에서-값-타입-수정-Modifying-Value-Types-from-Within-Instance-Methods>에 설명되어 있습니다.
 
-아래의 예제는 `toggle` 이라는 단일 인스턴스 메서드 요구사항을 정의하는 `Togglable` 이라는 프로토콜을 정의합니다. 이름에서 알 수 있듯이 `toggle()` 메서드는 해당 타입의 프로퍼티를 수정하여 모든 준수하는 타입의 상태를 전환하거나 반전하기 위한 것입니다.
+프로토콜 인스턴스 메서드 요구사항이
+프로토콜을 채택하는 모든 타입의 인스턴스도 변경할 수 있도록 정의하는 경우
+프로토콜의 정의에서
+해당 메서드에 `mutating` 키워드를 붙여야 합니다.
+이를 통해 구조체와 열거형도 프로토콜을 채택하고
+메서드 요구사항을 충족할 수 있습니다.
 
-`toggle()` 메서드는 호출될 때 준수하는 인스턴스의 상태를 변경하기 위한 메서드를 나타내기 위해 `Togglable` 프로토콜 정의의 부분으로 `mutating` 키워드로 표시됩니다:
+> Note: `mutating`으로 프로토콜 인스턴스 메서드 요구사항을 표시하면,
+> 클래스에 대한 해당 메서드의 구현을 작성할 때
+> `mutating` 키워드를 작성할 필요가 없습니다.
+> `mutating` 키워드는 구조체와 열거형에서만 사용합니다.
+
+아래의 예시는 `toggle`이라는 단일 인스턴스 메서드 요구사항을 정의하는
+`Togglable`이라는 프로토콜을 정의합니다.
+이름에서 알 수 있듯이, `toggle()` 메서드는
+해당 타입의 프로퍼티를 수정하여
+프로토콜을 준수하는 타입의 상태를 전환하거나 반전하기 위한 것입니다.
+
+`toggle()` 메서드는
+`Togglable` 프로토콜 정의에서 `mutating` 키워드로 표시되고,
+이 메서드가 호출될 때
+준수하는 인스턴스의 상태를 변경한다고 나타냅니다:
 
 ```swift
 protocol Togglable {
@@ -166,9 +412,26 @@ protocol Togglable {
 }
 ```
 
-구조체 또는 열거형에 대해 `Togglable` 프로토콜을 구현하면 해당 구조체 또는 열거형은 `mutating` 으로 표시된 `toggle()` 메서드의 구현을 제공하는 프로토콜을 준수할 수 있습니다.
+<!--
+  - test: `mutatingRequirements`
 
-아래의 예제는 `OnOffSwitch` 라는 열거형을 정의합니다. 이 열거형은 열거형 케이스 인 `on` 과 `off` 를 나타내기 위해 2개의 상태를 변경합니다. 이 열거형의 `toggle` 구현은 `Togglable` 프로토콜의 요구사항을 일치 시키기 위해 `mutating` 으로 표시됩니다:
+  ```swifttest
+  -> protocol Togglable {
+        mutating func toggle()
+     }
+  ```
+-->
+
+구조체나 열거형에 `Togglable` 프로토콜을 구현하면,
+해당 구조체나 열거형은 `mutating`으로 표시된
+`toggle()` 메서드의 구현을 제공하여
+프로토콜을 준수할 수 있습니다.
+
+아래의 예시는 `OnOffSwitch`라는 열거형을 정의합니다.
+이 열거형은 열거형 케이스 인 `on`과 `off`를 나타내기 위해
+두 가지 상태를 가집니다.
+이 열거형의 `toggle` 구현은
+`Togglable` 프로토콜의 요구사항에 맞게 `mutating`으로 표시됩니다:
 
 ```swift
 enum OnOffSwitch: Togglable {
@@ -187,7 +450,28 @@ lightSwitch.toggle()
 // lightSwitch is now equal to .on
 ```
 
-## 이니셜라이저 요구사항 \(Initializer Requirements\)
+<!--
+  - test: `mutatingRequirements`
+
+  ```swifttest
+  -> enum OnOffSwitch: Togglable {
+        case off, on
+        mutating func toggle() {
+           switch self {
+              case .off:
+                 self = .on
+              case .on:
+                 self = .off
+           }
+        }
+     }
+  -> var lightSwitch = OnOffSwitch.off
+  -> lightSwitch.toggle()
+  // lightSwitch is now equal to .on
+  ```
+-->
+
+## 이니셜라이저 요구사항 (Initializer Requirements)
 
 프로토콜은 준수하는 타입에 이니셜라이저를 구현하도록 요구할 수 있습니다. 일반적인 이니셜라이저과 동일한 방식으로 명시적으로 프로토콜의 정의의 부분으로 이니셜라이저를 작성하지만 중괄호 또는 이니셜라이저 본문 없이 작성합니다:
 
@@ -259,7 +543,7 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
 
 _위임 \(Delegation\)_ 은 클래스 또는 구조체가 책임의 일부를 다른 타입의 인스턴스에 넘겨주거나 위임할 수 있도록 하는 디자인 패턴입니다. 이 디자인 패턴은 위임된 기능을 제공하기 위해 준수하는 타입 \(대리자라고 함\)이 보장되도록 위임된 책임을 캡슐화하는 프로토콜을 정의하여 구현합니다. 위임은 특정 작업에 응답하거나 해당 소스의 기본 타입을 알 필요 없이 외부 소스에서 데이터를 검색하는데 사용할 수 있습니다.
 
-아래 예제는 주사위 게임과
+아래 예시는 주사위 게임과
 게임의 진행사항을 관찰하는
 위임에 대한 중첩된 프로토콜을 정의합니다:
 
@@ -303,7 +587,7 @@ class DiceGame {
 
 `DiceGame` 클래스는 각 플레이어가 주사위를 차례대로 굴리고,
 주사위를 굴려 가장 높은 숫자를 얻는 플레이어가 승리하는 게임을 구현합니다.
-이전 챕터의 예제에서 사용한 선형 합동 생성기를 사용하여
+이전 챕터의 예시에서 사용한 선형 합동 생성기를 사용하여
 주사위 굴림에 대한 난수를 생성합니다.
 
 `DiceGame.Delegate` 프로토콜은
@@ -338,7 +622,7 @@ class DiceGame {
 `delegate` 프로퍼티가 `nil` 이 아니면
 이 위임자 메서드가 호출되고 파라미터로 `DiceGame` 인스턴스는 전달됩니다.
 
-다음 예제는 `DiceGame.Delegate` 프로토콜을 채택하는 `DiceGameTracker` 라는 클래스는 보여줍니다:
+다음 예시는 `DiceGame.Delegate` 프로토콜을 채택하는 `DiceGameTracker` 라는 클래스는 보여줍니다:
 
 ```swift
 class DiceGameTracker: DiceGame.Delegate {
@@ -496,7 +780,7 @@ Swift는 다음과 같은 커스텀 타입에 대해 `Equatable` 의 합성된 �
 
 `==` 의 합성된 구현을 받기 위해선 `==` 연산자를 직접 구현하지 않고 원래 선언을 포함한 파일에서 `Equatable` 에 대한 준수성을 선언합니다. `Equatable` 프로토콜은 `!=` 의 기본 구현을 제공합니다.
 
-아래의 예제는 `Vector2D` 구조체와 유사한 3차원의 벡터 `(x, y, z)` 에 대한 `Vector3D` 구조체를 정의합니다. `x`, `y`, 그리고 `z` 프로퍼티는 모두 `Equatable` 타입이므로 `Vector3D` 는 등가 연산자의 합성된 구현을 받습니다.
+아래의 예시는 `Vector2D` 구조체와 유사한 3차원의 벡터 `(x, y, z)` 에 대한 `Vector3D` 구조체를 정의합니다. `x`, `y`, 그리고 `z` 프로퍼티는 모두 `Equatable` 타입이므로 `Vector3D` 는 등가 연산자의 합성된 구현을 받습니다.
 
 ```swift
 struct Vector3D: Equatable {
@@ -521,7 +805,7 @@ Swift는 아래와 같은 커스텀 타입에 대해 `Hashable` 에 합성된 �
 
 Swift는 원시값이 없는 열거형에 대해 `Comparable` 에 합성된 구현을 제공합니다. 열거형이 연관된 타입을 가지고 있다면 모두 `Comparable` 프로토콜을 준수해야 합니다. `<` 의 합성된 구현을 받기 위해선 `<` 연산자를 직접 구현하지 않고 원래 열거형 선언을 포함한 파일에서 `Comparable` 에 대한 준수성을 선언합니다. `<=`, `>`, 그리고 `>=` 의 `Comparable` 프로토콜의 기본 구현은 나머지 비교 연산자를 제공합니다.
 
-아래의 예제는 초보자, 중급자, 그리고 전문가의 케이스를 가진 `SkillLevel` 열거형을 정의합니다. 전문가는 가진 별의 숫자에 따라 추가적으로 순위가 매겨집니다.
+아래의 예시는 초보자, 중급자, 그리고 전문가의 케이스를 가진 `SkillLevel` 열거형을 정의합니다. 전문가는 가진 별의 숫자에 따라 추가적으로 순위가 매겨집니다.
 
 ```swift
 enum SkillLevel: Comparable {
@@ -542,7 +826,7 @@ for level in levels.sorted() {
 
 ## 프로토콜 타입의 컬렉션 \(Collections of Protocol Types\)
 
-프로토콜은 <doc:Protocols#타입으로-프로토콜-Protocols-as-Types> 에서 언급했듯이 배열 또는 딕셔너리와 같은 컬렉션에 저장되기 위해 타입으로 사용될 수 있습니다. 이 예제는 `TextRepresentable` 에 대한 배열을 생성합니다:
+프로토콜은 <doc:Protocols#타입으로-프로토콜-Protocols-as-Types> 에서 언급했듯이 배열 또는 딕셔너리와 같은 컬렉션에 저장되기 위해 타입으로 사용될 수 있습니다. 이 예시는 `TextRepresentable` 에 대한 배열을 생성합니다:
 
 ```swift
 let things: [TextRepresentable] = [game, d12, simonTheHamster]
@@ -579,7 +863,7 @@ protocol PrettyTextRepresentable: TextRepresentable {
 }
 ```
 
-이 예제는 `TextRepresentable` 을 상속하는 `PrettyTextRepresentable` 이라는 새로운 프로토콜을 정의합니다. `PrettyTextRepresentable` 을 채택하는 모든 것은 `TextRepresentable` 과 `PrettyTextRepresentable` 의 모든 요구사항을 충족해야 합니다. 이 예제에서 `PrettyTextRepresentable` 은 `String` 을 반환하는 `prettyTextualDescription` 이라는 gettable 프로퍼티를 제공하기 위해 하나의 요구사항을 추가합니다.
+이 예시는 `TextRepresentable` 을 상속하는 `PrettyTextRepresentable` 이라는 새로운 프로토콜을 정의합니다. `PrettyTextRepresentable` 을 채택하는 모든 것은 `TextRepresentable` 과 `PrettyTextRepresentable` 의 모든 요구사항을 충족해야 합니다. 이 예시에서 `PrettyTextRepresentable` 은 `String` 을 반환하는 `prettyTextualDescription` 이라는 gettable 프로퍼티를 제공하기 위해 하나의 요구사항을 추가합니다.
 
 `SnakesAndLadders` 클래스는 `PrettyTextRepresentable` 을 채택하고 준수하기 위해 확장될 수 있습니다:
 
@@ -626,7 +910,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 }
 ```
 
-위의 예제에서 `SomeClassOnlyProtocol` 은 클래스 타입에만 채택될 수 있습니다. `SomeClassOnlyProtocol` 을 구조체 또는 열거형 정의에 채택하면 컴파일 시 오류가 발생합니다.
+위의 예시에서 `SomeClassOnlyProtocol` 은 클래스 타입에만 채택될 수 있습니다. `SomeClassOnlyProtocol` 을 구조체 또는 열거형 정의에 채택하면 컴파일 시 오류가 발생합니다.
 
 > Note   
 > 프로토콜의 요구사항에 의해 정의된 동작이 준수하는 타입에 값 의미 체계가 아닌 참조 의미 체계가 있다고 가정하거나 요구하는 경우 클래스 전용 프로토콜을 사용합니다. 참조와 값 의미 체계에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 과 <doc:ClassesAndStructures#클래스는-참조-타입-Classes-Are-Reference-Types> 을 참고 바랍니다.
@@ -658,13 +942,13 @@ wishHappyBirthday(to: birthdayPerson)
 // Prints "Happy birthday, Malcolm, you're 21!"
 ```
 
-이 예제에서 `Named` 프로토콜은 `name` 이라는 gettable `String` 프로퍼티인 단일 요구사항을 가지고 있습니다. `Aged` 프로토콜은 `age` 라는 gettable `Int` 프로퍼티인 단일 요구사항을 가지고 있습니다. 두 프로토콜 모두 `Person` 이라는 구조체에 의해 채택됩니다.
+이 예시에서 `Named` 프로토콜은 `name` 이라는 gettable `String` 프로퍼티인 단일 요구사항을 가지고 있습니다. `Aged` 프로토콜은 `age` 라는 gettable `Int` 프로퍼티인 단일 요구사항을 가지고 있습니다. 두 프로토콜 모두 `Person` 이라는 구조체에 의해 채택됩니다.
 
-예제는 `wishHappyBirthday(to:)` 함수도 정의합니다. `celebrator` 파라미터의 타입은 "`Named` 와 `Aged` 프로토콜 모두 준수하는 타입" 이라는 의미인 `Named & Aged` 입니다. 요구된 프로토콜 모두 준수하는 한 함수에 전달되는 특정 타입은 중요하지 않습니다.
+예시는 `wishHappyBirthday(to:)` 함수도 정의합니다. `celebrator` 파라미터의 타입은 "`Named` 와 `Aged` 프로토콜 모두 준수하는 타입" 이라는 의미인 `Named & Aged` 입니다. 요구된 프로토콜 모두 준수하는 한 함수에 전달되는 특정 타입은 중요하지 않습니다.
 
 그런다음 `birthdayPerson` 이라는 새로운 `Person` 인스턴스를 생성하고 `wishHappyBirthday(to:)` 함수에 새로운 인스턴스를 전달합니다. `Person` 은 프로토콜을 모두 준수하기 때문에 이 호출은 유효하고 `wishHappyBirthday(to:)` 함수는 생일 메세지를 출력할 수 있습니다.
 
-다음은 `Location` 클래스와 이전 예제에서의 `Named` 프로토콜을 결합한 예입니다:
+다음은 `Location` 클래스와 이전 예시에서의 `Named` 프로토콜을 결합한 예입니다:
 
 ```swift
 class Location {
@@ -703,7 +987,7 @@ beginConcert(in: seattle)
 * 다운 캐스트 연산자의 `as?` 버전은 프로토콜의 타입의 옵셔널 값을 반환하고 인스턴스가 프로토콜을 준수하지 않으면 그 값은 `nil` 입니다.
 * 다운 캐스팅 연산자의 `as!` 버전은 프로토콜 타입으로 강제로 다운 캐스트하고 다운 캐스트가 성공하지 못하면 런타임 오류가 발생합니다.
 
-아래 예제는 `area` 라는 gettable `Double` 프로퍼티의 단일 프로퍼티 요구사항을 가지는 `HasArea` 라는 프로토콜을 정의합니다:
+아래 예시는 `area` 라는 gettable `Double` 프로퍼티의 단일 프로퍼티 요구사항을 가지는 `HasArea` 라는 프로토콜을 정의합니다:
 
 ```swift
 protocol HasArea {
@@ -776,7 +1060,7 @@ for object in objects {
 
 옵셔널 프로토콜 요구사항은 프로토콜을 준수하는 타입에 의해 요구사항이 구현되지 않았을 가능성을 나타내기 위해 옵셔널 체이닝으로 호출될 수 있습니다. 호출될 때 `someOptionalMethod?(someArgument)` 와 같이 메서드의 이름 뒤에 물음표를 작성하여 옵셔널 메서드의 구현에 대해 확인합니다. <doc:OptionalChaining> 에서 더 자세한 내용을 확인할 수 있습니다.
 
-다음 예제는 증가하는 값을 제공하기 위해 외부 데이터 소스를 사용하는 `Counter` 라는 정수 카운팅 클래스를 정의합니다. 이 데이터 소스는 2개의 옵셔널 요구사항을 가진 `CounterDataSource` 프로토콜에 의해 정의됩니다:
+다음 예시는 증가하는 값을 제공하기 위해 외부 데이터 소스를 사용하는 `Counter` 라는 정수 카운팅 클래스를 정의합니다. 이 데이터 소스는 2개의 옵셔널 요구사항을 가진 `CounterDataSource` 프로토콜에 의해 정의됩니다:
 
 ```swift
 @objc protocol CounterDataSource {

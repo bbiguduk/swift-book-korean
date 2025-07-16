@@ -37,7 +37,7 @@
 일반적으로 `Int`로 반환하는 프로퍼티는 옵셔널 체이닝을 통해 접근하면
 `Int?`를 반환합니다.
 
-다음의 코드 예제는
+다음의 코드 예시는
 옵셔널 체이닝이 강제 언래핑과 어떻게 다른지 보여주고
 성공 여부를 확인할 수 있도록 합니다.
 
@@ -143,7 +143,7 @@ if let roomCount = john.residence?.numberOfRooms {
 
 `numberOfRooms` 접근하기 위한 시도는 실패할 수 있으므로,
 옵셔널 체이닝은 `Int?` 타입이나 "옵셔널 `Int`"의 값을 반환합니다.
-위 예제에서 `residence`가 `nil`일 경우,
+위 예시에서 `residence`가 `nil`일 경우,
 `numberOfRooms` 접근이 불가능한 사실을 반영하기 위해
 옵셔널 `Int`는 `nil`입니다.
 옵셔널 `Int`는 언래핑 한 정수에
@@ -206,8 +206,8 @@ if let roomCount = john.residence?.numberOfRooms {
 해당 하위 프로퍼티의 프로퍼티, 메서드, 서브스크립트에
 접근 가능한지 확인할 수 있습니다.
 
-아래의 코드는 다단계 옵셔널 체이닝 예제를 포함해서
-이후 여러 예제에서 사용할
+아래의 코드는 다단계 옵셔널 체이닝 예시를 포함해서
+이후 여러 예시에서 사용할
 네 개의 모델 클래스를 정의합니다.
 이 클래스는 관련 프로퍼티, 메서드, 서브스크립트를 가지는
 `Room`과 `Address` 클래스를 추가하여
@@ -427,14 +427,14 @@ john.residence?.address = someAddress
   ```
 -->
 
-이 예제에서
+이 예시에서
 `john.residence`이 `nil`이기 때문에
 `john.residence`의 `address` 프로퍼티에 설정하기 위한 시도는 실패 할 것입니다.
 
 이 할당은
 `=` 연산자 오른쪽에 있는 코드가 실행되지 않으므로
 옵셔널 체이닝의 일부입니다.
-이전 예제에서
+이전 예시에서
 상수에 접근하는 것은 어떠한 영향도 없기 때문에
 `someAddress`가 평가되지 않는다는 것을 쉽게 파악할 수 없습니다.
 아래의 리스트는 동일한 할당을 수행하지만
@@ -542,7 +542,7 @@ if john.residence?.printNumberOfRooms() != nil {
 -->
 
 옵셔널 체이닝을 통해 프로퍼티를 설정하려는 경우에도 마찬가지입니다.
-<doc:OptionalChaining#옵셔널-체이닝을-통한-프로퍼티-접근-Accessing-Properties-Through-Optional-Chaining>에서 위의 예제는
+<doc:OptionalChaining#옵셔널-체이닝을-통한-프로퍼티-접근-Accessing-Properties-Through-Optional-Chaining>에서 위의 예시는
 `residence` 프로퍼티가 `nil`이지만
 `John.residence`에 대해 `address` 값을 설정 하려고 합니다.
 옵셔널 체이닝을 통해 프로퍼티를 설정하려는 모든 시도는
@@ -581,7 +581,7 @@ if (john.residence?.address = someAddress) != nil {
 > 옵셔널 체이닝 물음표는
 > 항상 옵셔널 표현구 부분의 바로 다음에 위치합니다.
 
-아래의 예제는 `Residence` 클래스에 정의된 서브스크립트를 사용하여
+아래의 예시는 `Residence` 클래스에 정의된 서브스크립트를 사용하여
 `john.residence` 프로퍼티에 `rooms` 배열의
 첫 번째 방 이름을 조회합니다.
 현재 `john.residence`는 `nil`이므로,
@@ -697,9 +697,9 @@ testScores["Brian"]?[0] = 72
   ```
 -->
 
-위의 예제는 `String` 키를 `Int` 값 배열에 매핑하는 두 개의 키-값 쌍을 포함하는
+위의 예시는 `String` 키를 `Int` 값 배열에 매핑하는 두 개의 키-값 쌍을 포함하는
 `testScores`라는 딕셔너리를 정의합니다.
-이 예제는 `"Dave"` 배열의 첫 번째 항목에 `91`을 설정하고;
+이 예시는 `"Dave"` 배열의 첫 번째 항목에 `91`을 설정하고;
 `"Bev"` 배열의 첫 번째 항목에 `1`을 더하고;
 `"Brian"` 키에 대한 배열의 첫 번째 항목에 값을 설정하기 위해 옵셔널 체이닝을 사용합니다.
 `testScores` 딕셔너리는 `"Dave"`와 `"Bev"`에 대한 키를 가지고 있으므로,
@@ -730,7 +730,7 @@ testScores["Brian"]?[0] = 72
   사용된 체이닝의 수준과 상관없이
   항상 `Int?`가 반환됩니다.
 
-아래의 예제는 `john`의 `residence` 프로퍼티의
+아래의 예시는 `john`의 `residence` 프로퍼티의
 `address` 프로퍼티의 `street` 프로퍼티에 접근합니다.
 여기에서는 `residence`와 `address` 프로퍼티를 통해 연결하기 위해
 *두* 단계 수준의 옵셔널 체이닝이 사용되며
@@ -762,7 +762,7 @@ if let johnsStreet = john.residence?.address?.street {
 그러나 `John.residence.address`의 값은 현재 `nil`입니다.
 이것 때문에 `john.residence?.address?.street`을 호출하면 실패합니다.
 
-위의 예제에서는
+위의 예시에서는
 `street` 프로퍼티의 값을 가져려고 합니다.
 이 프로퍼티의 타입은 `String?`입니다.
 따라서 `john.residence?.address?.street`의 반환 값은
@@ -805,19 +805,19 @@ if let johnsStreet = john.residence?.address?.street {
   ```
 -->
 
-이 예제에서
+이 예시에서
 `john.residence`의 값은
 현재 유효한 `Residence` 인스턴스 이므로,
 `john.residence`의 `address` 프로퍼티에 값을 설정하는 것이 가능합니다.
 
 ## 옵셔널 반환값을 가지는 메서드에 대한 체이닝 (Chaining on Methods with Optional Return Values)
 
-이전 예제는 어떻게 옵셔널 체이닝을 통해
+이전 예시는 어떻게 옵셔널 체이닝을 통해
 옵셔널 타입의 프로퍼티의 값을 가져오는지 보여줍니다.
 옵셔널 체이닝은 옵셔널 타입의 값을 반환하는 메서드를 호출하고
 필요하다면 메서드의 반환 값을 연결해서도 사용할 수 있습니다.
 
-아래의 예제는 옵셔널 체이닝을 통해 `Address` 클래스의 `buildingIdentifier()` 메서드를 호출합니다.
+아래의 예시는 옵셔널 체이닝을 통해 `Address` 클래스의 `buildingIdentifier()` 메서드를 호출합니다.
 이 메서드는 `String?` 타입의 값을 반환합니다.
 위에서 설명했듯이 옵셔널 체이닝 이후 이 메서드 호출의 반환 타입은
 `String?`입니다:
@@ -871,7 +871,7 @@ if let beginsWithThe =
   ```
 -->
 
-> Note: 위의 예제에서
+> Note: 위의 예시에서
 > 연결하려는 옵셔널 값이
 > `buildingIdentifier()` 메서드 자체가 아닌
 > `buildingIdentifier()` 메서드의 반환 값이므로

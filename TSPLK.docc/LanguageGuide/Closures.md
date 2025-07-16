@@ -49,7 +49,7 @@ Swift의 클로저 표현식은 명확한 스타일을 가지고 있으며,
 *클로저 표현식(Closure expressions)*은 간단하고 집중적인 구문으로 인라인 클로저를 작성하는 방법입니다.
 클로저 표현식은 명확성이나 의도를 잃지 않고 더 짧은 형태로 클로저를 작성 하기위한
 여러 구문 최적화를 제공합니다.
-아래의 클로저 표현식 예제는
+아래의 클로저 표현식 예시는
 `sorted(by:)` 메서드의 동일한 기능을 여러 단계에 걸쳐
 점차 간결하게 표현함으로써 이러한 최적화를 보여줍니다.
 
@@ -63,7 +63,7 @@ Swift의 표준 라이브러리는
 그 요소들은 올바른 정렬 순서로 배치되어 있습니다.
 기존 배열은 `sorted(by:)` 메서드로 수정되지 않습니다.
 
-아래 예제의 클로저 표현식은 알파벳 역순으로 `String` 값의 배열을 정렬하기 위해
+아래 예시의 클로저 표현식은 알파벳 역순으로 `String` 값의 배열을 정렬하기 위해
 `sorted(by:)` 메서드를 사용합니다.
 다음은 정렬할 초기 배열입니다:
 
@@ -87,7 +87,7 @@ let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 먼저 와야 하면 `true`를 반환하고,
 그렇지 않으면 `false`를 반환해야 합니다.
 
-이 예제는 `String` 값의 배열을 정렬하고,
+이 예시는 `String` 값의 배열을 정렬하고,
 정렬 클로저는 `(String, String) -> Bool` 타입의 함수여야 합니다.
 
 정렬 클로저를 제공하는 한가지 방법은 올바른 타입의 일반 함수를 작성하고
@@ -126,7 +126,7 @@ var reversedNames = names.sorted(by: backward)
 
 그러나 이 함수는 사실상 단일 표현식 함수(`a > b`)이기 때문에
 이렇게 길게 작성하는 것은 다소 번거롭습니다.
-이 예제에서는 클로저 표현식 구문을 사용하여
+이 예시에서는 클로저 표현식 구문을 사용하여
 정렬 클로저를 인라인으로 작성하는 것이 좋습니다.
 
 ### 클로저 표현식 문법 (Closure Expression Syntax)
@@ -145,7 +145,7 @@ in-out 파라미터로 정의할 수 있지만,
 가변 파라미터의 이름을 지정하면 가변 파라미터를 사용할 수 있습니다.
 튜플은 파라미터 타입이나 반환 타입으로 사용될 수도 있습니다.
 
-아래 예제는 위에서
+아래 예시는 위에서
 `backward(_:_:)` 함수의 클로저 표현입니다:
 
 ```swift
@@ -239,7 +239,7 @@ reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
 ### 단일 표현식 클로저의 암시적 반환 (Implicit Returns from Single-Expression Closures)
 
 단일 표현식 클로저(Single-expression closures)는
-이전 예제에서 `return` 키워드를 생략하여
+이전 예시에서 `return` 키워드를 생략하여
 단일 표현식의 결과를 암시적으로 반환할 수 있습니다:
 
 ```swift
@@ -347,7 +347,7 @@ reversedNames = names.sorted(by: >)
 해당 클로저의 인수 레이블을
 함수 호출 시에 작성하지 않습니다.
 함수 호출은 여러개의 후행 클로저를 포함할 수 있지만;
-아래 예제에서는 하나의 후행 클로저만 사용합니다.
+아래 예시에서는 하나의 후행 클로저만 사용합니다.
 
 ```swift
 func someFunctionThatTakesAClosure(closure: () -> Void) {
@@ -506,7 +506,7 @@ let strings = numbers.map { (number) -> String in
 매핑할 배열의 값에서 추론할 수 있으므로,
 클로저의 입력 파라미터 인 `number` 타입을 지정할 필요가 없습니다.
 
-이 예제에서
+이 예시에서
 변수 `number`는 클로저의 `number` 파라미터 값으로 초기화되기 때문에,
 값은 클로저 본문 내에서 수정될 수 있습니다.
 (함수와 클로저의 파라미터는 기본적으로 상수입니다.)
@@ -522,7 +522,7 @@ let strings = numbers.map { (number) -> String in
 > 느낌표(`!`)가 붙는 이유는,
 > 딕셔너리 서브스크립트는 키가 존재하지 않을 수 있기 때문에
 > 옵셔널 값을 반환하기 때문입니다.
-> 위의 예제에서 `digitNames` 딕셔너리에
+> 위의 예시에서 `digitNames` 딕셔너리에
 > `number % 10`은 항상 유효한 서브스크립트 키를 보장하므로
 > 느낌표는 서브스크립트의 옵셔널 반환 값에 저장된 `String` 값을
 > 강제로 언래핑 하는데 사용됩니다.
@@ -541,7 +541,7 @@ let strings = numbers.map { (number) -> String in
 최종적으로 만들어진 `output` 문자열이 클로저에 의해 반환되고,
 `map(_:)` 메서드에 의해 결과 배열에 추가됩니다.
 
-위의 예제에서 사용된 후행 클로저 구문은,
+위의 예시에서 사용된 후행 클로저 구문은,
 클로저의 기능을 해당 함수를 지원하는 바로 뒤에
 깔끔하게 캡슐화하여 작성할 수 있게 해줍니다.
 이를 통해 클로저 전체를
@@ -615,7 +615,7 @@ loadPicture(from: someServer) { picture in
   ```
 -->
 
-이 예제에서
+이 예시에서
 `loadPicture(from:completion:onFailure:)` 함수는
 네트워크 작업을 백그라운드로 전달하고
 네트워크 작업이 완료되면 두 완료 핸들러 중 하나를 호출합니다.
@@ -643,7 +643,7 @@ Swift에서 값을 캡처할 수 있는 가장 간단한 클로저 형태는
 바깥 함수 내에 정의된 상수와 변수를 캡처할 수도 있습니다.
 
 아래는 `incrementer`라는 중첩 함수가 포함된
-`makeIncrementer`라는 함수의 예제입니다.
+`makeIncrementer`라는 함수의 예시입니다.
 중첩된 `incrementer()` 함수는
 자신을 둘러싼 컨텍스트에서
 `runningTotal`과 `amount`인 두 값을 캡처합니다.
@@ -737,7 +737,7 @@ func incrementer() -> Int {
 > Swift는 더이상 필요하지 않을때 변수를 처리하는 것과
 > 관련된 모든 메모리 관리도 처리합니다.
 
-다음은 `makeIncrementer` 동작에 대한 예제입니다:
+다음은 `makeIncrementer` 동작에 대한 예시입니다:
 
 ```swift
 let incrementByTen = makeIncrementer(forIncrement: 10)
@@ -751,7 +751,7 @@ let incrementByTen = makeIncrementer(forIncrement: 10)
   ```
 -->
 
-이 예제에서는 호출될 때마다 `runningTotal` 변수에
+이 예시에서는 호출될 때마다 `runningTotal` 변수에
 `10`을 더하는 증가 함수를 참조하도록
 `incrementByTen`이라는 상수를 설정합니다.
 함수를 여러 번 호출하면, 이 동작이 어떻게 수행되는지 확인할 수 있습니다:
@@ -838,7 +838,7 @@ incrementByTen()
 
 ## 클로저는 참조 타입 (Closures Are Reference Types)
 
-위 예제에서
+위 예시에서
 `incrementBySeven`과 `incrementByTen`은 상수이지만
 이러한 상수가 참조하는 클로저는
 캡처한 `runningTotal` 변수를 계속 증가시킬 수 있습니다.
@@ -847,7 +847,7 @@ incrementByTen()
 함수나 클로저를 상수나 변수에 할당할 때마다,
 실제로 해당 상수나 변수를
 함수나 클로저에 대한 *참조*로 설정합니다.
-위의 예제에서
+위의 예시에서
 `incrementByTen`이 *참조하는* 클로저 자체는 상수이지만,
 그 클로저의 내용은 고정된 것이 아닙니다.
 
@@ -880,7 +880,7 @@ incrementByTen()
   ```
 -->
 
-위의 예제는 `alsoIncrementByTen` 호출은
+위의 예시는 `alsoIncrementByTen` 호출은
 `incrementByTen` 호출과 같음을 보여줍니다.
 두 상수 모두 같은 클로저를 참조하기 때문에,
 둘 다 증가하고 같은 러닝 합계를 반환합니다.
@@ -1079,7 +1079,7 @@ struct SomeStruct {
   ```
 -->
 
-위의 예제에서 `someFunctionWithEscapingClosure` 함수 호출은
+위의 예시에서 `someFunctionWithEscapingClosure` 함수 호출은
 변경 가능한 메서드 내부에 있기 때문에
 오류이고
 `self`는 변경 가능합니다.

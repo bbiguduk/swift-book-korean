@@ -100,7 +100,7 @@ class SomeClass {
 > (`frameRate`, `incrementCount` 등)으로
 > 작성합니다.
 
-다음은 구조체 정의와 클래스 정의의 예제입니다:
+다음은 구조체 정의와 클래스 정의의 예시입니다:
 
 ```swift
 struct Resolution {
@@ -132,7 +132,7 @@ class VideoMode {
   ```
 -->
 
-위 예제는 픽셀 기반의 화면 해상도를 설명하는
+위 예시는 픽셀 기반의 화면 해상도를 설명하는
 `Resolution`이라는 새로운 구조체를 정의합니다.
 이 구조체는 `width`와 `height`라 불리는 저장 프로퍼티를 가지고 있습니다.
 저장 프로퍼티는 구조체나 클래스의 일부로
@@ -140,7 +140,7 @@ class VideoMode {
 이 두 프로퍼티는 정수 값 `0`으로 초기 값이 설정되므로
 `Int` 타입으로 추론됩니다.
 
-위 예제는 비디오 화면에 대한 특정 비디오 모드를 나타내는
+위 예시는 비디오 화면에 대한 특정 비디오 모드를 나타내는
 `VideoMode`라는 새로운 클래스를 정의합니다.
 이 클래스는 네 개의 저장 프로퍼티를 가지고 있습니다.
 첫 번째 `resolution`은 새로운 `Resolution` 인스턴스로 초기화되며,
@@ -209,7 +209,7 @@ print("The width of someResolution is \(someResolution.width)")
   ```
 -->
 
-이 예제에서
+이 예시에서
 `someResolution.width`는 `someResolution` 인스턴스의 `width` 프로퍼티를 참조하고
 기본 값 `0`을 반환합니다.
 
@@ -317,7 +317,7 @@ Swift에서 모든 구조체와 열거형은 값 타입입니다.
 > 코드에서 보이는 동작은
 > 항상 바로 복사가 일어나는 것처럼 보입니다.
 
-이전 예제에서의 `Resolution` 구조체를 사용하는 다음 예제를 살펴봅시다:
+이전 예시에서의 `Resolution` 구조체를 사용하는 다음 예시를 살펴봅시다:
 
 ```swift
 let hd = Resolution(width: 1920, height: 1080)
@@ -333,7 +333,7 @@ var cinema = hd
   ```
 -->
 
-이 예제는 `hd`라는 상수를 선언하고
+이 예시는 `hd`라는 상수를 선언하고
 풀 HD 비디오
 (1920 픽셀 너비와 1080 픽셀 높이)의
 너비와 높이를 초기화하는 `Resolution` 인스턴스를 생성합니다.
@@ -463,7 +463,7 @@ print("The remembered direction is \(rememberedDirection)")
 함수로 전달될 때 복사되지 않습니다.
 복사본 대신에 존재하는 같은 인스턴스에 대한 참조가 사용됩니다.
 
-다음은 위에 정의된 `VideoMode` 클래스를 사용하는 예제입니다:
+다음은 위에 정의된 `VideoMode` 클래스를 사용하는 예시입니다:
 
 ```swift
 let tenEighty = VideoMode()
@@ -485,7 +485,7 @@ tenEighty.frameRate = 25.0
   ```
 -->
 
-이 예제는 `tenEighty`라는 새로운 상수를 선언하고
+이 예시는 `tenEighty`라는 새로운 상수를 선언하고
 `VideoMode` 클래스의 새로운 인스턴스를 참조하도록 설정합니다.
 비디오 모드는 이전에 `1920` x `1080`의 HD 해상도의 복사본이 할당됩니다.
 인터레이스로 설정되고
@@ -534,7 +534,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
   ```
 -->
 
-이 예제는 참조 타입이 얼마나 추론하기 어려울 수 있는지 보여줍니다.
+이 예시는 참조 타입이 얼마나 추론하기 어려울 수 있는지 보여줍니다.
 `tenEighty`와 `alsoTenEighty`가 프로그램 내에서 서로 멀리 떨어진 위치에 존재한다면,
 비디오 모드가 어디서 어떻게 변경되는지 추적하기 어려울 수 있습니다.
 `tenEighty`를 사용하는 코드가 있다면,

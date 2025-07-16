@@ -218,7 +218,7 @@ struct MyStruct {
 func someFunction() { /* ... */ }
 ```
 
-위의 예제에서,
+위의 예시에서,
 iOS SDK 는 iOS 17 부터 `someFunction()` 을 제공합니다.
 추가로,
 SDK 는 백 배포 (back deployment) 를 사용하여 iOS 16 에서 `someFunction()` 이 사용가능 합니다.
@@ -228,7 +228,7 @@ Swift 는 함수의 구현을 찾는 간접 레이어를 삽입합니다.
 이 함수가 포함된 SDK 의 버전을 사용하여 코드를 실행하면,
 SDK 의 구현이 사용됩니다.
 반대로는 호출자에 포함된 복사본이 사용됩니다.
-위의 예제에서,
+위의 예시에서,
 `someFunction()` 호출은 iOS 17 이상의 버전에서 실행하면,
 SDK 의 구현이 사용되고,
 iOS 16 에서 실행하면
@@ -289,7 +289,7 @@ dial(8, 6, 7, 5, 3, 0, 9)
 dial.dynamicallyCall(withArguments: [4, 1, 1])
 ```
 
-`dynamicallyCall(withArguments:)` 메서드의 선언은 위의 예제에서 `[Int]` 와 같이 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral) 프로토콜을 준수하는 하나의 파라미터만 가져야 합니다. 반환 타입은 모든 타입이 가능합니다.
+`dynamicallyCall(withArguments:)` 메서드의 선언은 위의 예시에서 `[Int]` 와 같이 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral) 프로토콜을 준수하는 하나의 파라미터만 가져야 합니다. 반환 타입은 모든 타입이 가능합니다.
 
 `dynamicallyCall(withKeywordArguments:)` 메서드를 구현하는 경우 동적 메서드 호출에 라벨을 포함할 수 있습니다.
 
@@ -314,11 +314,11 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 // a
 ```
 
-`dynamicallyCall(withKeywordArguments:)` 메서드의 선언은 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 프로토콜을 준수하는 단일 파라미터를 가지고 반환 타입은 모든 타입이 가능합니다. 파라미터의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 는 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 여야 합니다. 이전 예제는 파라미터 타입으로 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 를 사용하므로 호출자는 중복 파라미터 라벨을 포함할 수 있습니다 — `a` 와 `b` 는 `repeat` 을 호출하는데 여러번 나타납니다.
+`dynamicallyCall(withKeywordArguments:)` 메서드의 선언은 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 프로토콜을 준수하는 단일 파라미터를 가지고 반환 타입은 모든 타입이 가능합니다. 파라미터의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 는 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 여야 합니다. 이전 예시는 파라미터 타입으로 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 를 사용하므로 호출자는 중복 파라미터 라벨을 포함할 수 있습니다 — `a` 와 `b` 는 `repeat` 을 호출하는데 여러번 나타납니다.
 
 `dynamicallyCall` 메서드 모두 구현하면 `dynamicallyCall(withKeywordArguments:)` 는 메서드 호출이 키워드 인수를 포함할 때 호출됩니다. 다른 경우에는 `dynamicallyCall(withArguments:)` 가 호출됩니다.
 
-`dynamicallyCall` 메서드 구현 중 하나에서 지정한 타입과 일치하는 인수와 반환값으로만 동적으로 호출 가능한 인스턴스를 호출할 수 있습니다. 다음 예제에서 호출은 `KeyValuePairs<String, String>` 을 가지는 `dynamicallyCall(withArguments:)` 의 구현이 없으므로 컴파일 되지 않습니다.
+`dynamicallyCall` 메서드 구현 중 하나에서 지정한 타입과 일치하는 인수와 반환값으로만 동적으로 호출 가능한 인스턴스를 호출할 수 있습니다. 다음 예시에서 호출은 `KeyValuePairs<String, String>` 을 가지는 `dynamicallyCall(withArguments:)` 의 구현이 없으므로 컴파일 되지 않습니다.
 
 ```swift
 repeatLabels(a: "four") // Error
@@ -483,7 +483,7 @@ Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니
 
 열거형에 objc 속성을 적용하면 각 열거형 케이스는 열거형 이름과 케이스 이름의 연결로 Objective-C 코드에 노출됩니다. 케이스 이름의 첫번째 문자는 대문자입니다. 예를 들어 Swift `Planet` 열거형에서 명명된 케이스 `venus` 는 명명된 케이스 `PlanetVenus` 로 Objective-C 코드로 노출됩니다.
 
-`objc` 속성은 식별자로 구성된 단일 속성 인수를 선택적으로 허용합니다. 식별자는 `objc` 속성을 적용하는 엔티티에 대해 Objective-C 로 노출될 이름을 지정합니다. 클래스, 열거형, 열거형 케이스, 프로토콜, 메서드, getter, setter, 그리고 이니셜라이저 이름으로 이 인수를 사용할 수 있습니다. 클래스, 프로토콜, 또는 열거형에 대해 Objective-C 이름을 지정하는 경우 [Objective-C 를 사용한 프로그래밍 (Programming with Objective-C)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 에 [규칙 (Conventions)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 에서 설명한대로 세글자의 접두사를 포함합니다. 아래 예제는 프로퍼티 자체의 이름이 아닌 `isEnabled` 로 Objective-C 에 `ExampleClass` 의 `enabled` 프로퍼티에 대한 getter 를 노출합니다.
+`objc` 속성은 식별자로 구성된 단일 속성 인수를 선택적으로 허용합니다. 식별자는 `objc` 속성을 적용하는 엔티티에 대해 Objective-C 로 노출될 이름을 지정합니다. 클래스, 열거형, 열거형 케이스, 프로토콜, 메서드, getter, setter, 그리고 이니셜라이저 이름으로 이 인수를 사용할 수 있습니다. 클래스, 프로토콜, 또는 열거형에 대해 Objective-C 이름을 지정하는 경우 [Objective-C 를 사용한 프로그래밍 (Programming with Objective-C)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 에 [규칙 (Conventions)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 에서 설명한대로 세글자의 접두사를 포함합니다. 아래 예시는 프로퍼티 자체의 이름이 아닌 `isEnabled` 로 Objective-C 에 `ExampleClass` 의 `enabled` 프로퍼티에 대한 getter 를 노출합니다.
 
 ```swift
 class ExampleClass: NSObject {
@@ -627,7 +627,7 @@ s.$x.wrapper  // WrapperWithProjection value
 
 ### resultBuilder
 
-결과 빌더 (result builder) 로 타입을 사용하기 위해 클래스, 구조체, 열거형에 이 속성을 적용합니다. _결과 빌더 (result builder)_ 는 데이터 구조체를 단계별로 빌드하는 타입입니다. 자연스럽고 선언적인 방법으로 중첩된 데이터 구조체를 생성하기 위해 도메인-특정 언어 (DSL) 를 구현하기 위해 결과 빌더를 사용합니다. `resultBuilder` 속성을 어떻게 사용하는지에 대한 예제는 <doc:AdvancedOperators#결과-빌더-Result-Builders> 를 참고 바랍니다.
+결과 빌더 (result builder) 로 타입을 사용하기 위해 클래스, 구조체, 열거형에 이 속성을 적용합니다. _결과 빌더 (result builder)_ 는 데이터 구조체를 단계별로 빌드하는 타입입니다. 자연스럽고 선언적인 방법으로 중첩된 데이터 구조체를 생성하기 위해 도메인-특정 언어 (DSL) 를 구현하기 위해 결과 빌더를 사용합니다. `resultBuilder` 속성을 어떻게 사용하는지에 대한 예시는 <doc:AdvancedOperators#결과-빌더-Result-Builders> 를 참고 바랍니다.
 
 #### 결과-빌딩 메서드 (Result-Building Methods)
 
@@ -674,7 +674,7 @@ s.$x.wrapper  // WrapperWithProjection value
   컴파일러-제어 구문 외부로 
   타입 정보가 전파되는 것을 막기위해 이 메서드를 구현할 수 있습니다.
 
-예를 들어 아래 코드는 정수의 배열을 빌드하는 간다한 결과 빌더를 정의합니다. 이 코드는 타입 별칭으로 `Component` 와 `Expression` 을 정의하여 아래 예제를 위의 메서드의 리스트보다 쉽게 일치하도록 만듭니다.
+예를 들어 아래 코드는 정수의 배열을 빌드하는 간다한 결과 빌더를 정의합니다. 이 코드는 타입 별칭으로 `Component` 와 `Expression` 을 정의하여 아래 예시를 위의 메서드의 리스트보다 쉽게 일치하도록 만듭니다.
 
 ```swift
 @resultBuilder
@@ -1006,7 +1006,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 ### autoclosure
 
-인수 없이 해당 표현식을 클로저에 자동으로 래핑하여 표현식의 평가를 지연하기 위해 이 속성을 적용합니다. 메서드 또는 함수 선언에 파라미터의 타입에 인수를 사용하지 않고 표현식의 타입에 값을 반환하는 함수 타입 인 파라미터에 적용합니다. `autoclosure` 속성을 어떻게 사용하는지에 대한 예제는 <doc:Closures#자동-클로저-Autoclosures> 와 <doc:Types#함수-타입-Function-Type> 을 참고 바랍니다.
+인수 없이 해당 표현식을 클로저에 자동으로 래핑하여 표현식의 평가를 지연하기 위해 이 속성을 적용합니다. 메서드 또는 함수 선언에 파라미터의 타입에 인수를 사용하지 않고 표현식의 타입에 값을 반환하는 함수 타입 인 파라미터에 적용합니다. `autoclosure` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Closures#자동-클로저-Autoclosures> 와 <doc:Types#함수-타입-Function-Type> 을 참고 바랍니다.
 
 ### convention
 
@@ -1022,7 +1022,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 ### escaping
 
-나중에 실행하기 위해 파라미터의 값이 저장될 수 있음을 나타내기 위해 메서드 또는 함수 선언의 파라미터 타입에 이 속성을 적용합니다. 이는 값이 호출 수명보다 오래 지속될 수 있음을 의미합니다. `escaping` 타입 속성을 가지는 함수 타입 파라미터는 프로퍼티나 메서드에 대해 `self.` 의 명시적 사용을 요구합니다. `escaping` 속성을 어떻게 사용하는지에 대한 예제는 <doc:Closures#탈출-클로저-Escaping-Closures> 를 참고 바랍니다.
+나중에 실행하기 위해 파라미터의 값이 저장될 수 있음을 나타내기 위해 메서드 또는 함수 선언의 파라미터 타입에 이 속성을 적용합니다. 이는 값이 호출 수명보다 오래 지속될 수 있음을 의미합니다. `escaping` 타입 속성을 가지는 함수 타입 파라미터는 프로퍼티나 메서드에 대해 `self.` 의 명시적 사용을 요구합니다. `escaping` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Closures#탈출-클로저-Escaping-Closures> 를 참고 바랍니다.
 
 ### Sendable
 
@@ -1038,7 +1038,7 @@ switch 케이스에만 switch 케이스 속성을 적용할 수 있습니다.
 
 ### unknown
 
-코드가 컴파일 될 때 알려진 열거형의 케이스와 일치하지 않는 것으로 예상됨을 나타내기 위해 switch 케이스에 이 속성을 적용합니다. `unknown` 속성을 어떻게 사용하는지에 대한 예제는 <doc:Statements#향후-열거형-케이스-전환-Switching-Over-Future-Enumeration-Cases> 을 참고 바랍니다.
+코드가 컴파일 될 때 알려진 열거형의 케이스와 일치하지 않는 것으로 예상됨을 나타내기 위해 switch 케이스에 이 속성을 적용합니다. `unknown` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Statements#향후-열거형-케이스-전환-Switching-Over-Future-Enumeration-Cases> 을 참고 바랍니다.
 
 > Grammar of an attribute:
 >

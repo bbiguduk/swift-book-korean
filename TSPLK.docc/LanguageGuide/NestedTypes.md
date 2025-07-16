@@ -16,7 +16,7 @@
 
 ## 중첩 타입의 동작 (Nested Types in Action)
 
-아래의 예제는 블랙잭 게임에서 사용되는 카드 게임을 모델링하는
+아래의 예시는 블랙잭 게임에서 사용되는 카드 게임을 모델링하는
 `BlackjackCard`라는 구조체를 정의합니다.
 `BlackjackCard` 구조체는 `Suit`와 `Rank`라는
 두 중첩된 열거형을 포함합니다.
@@ -165,7 +165,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 타입은 컨텍스트로부터 유추될 수 있기 때문에
 이 인스턴스의 초기화는 케이스 이름(`.ace`와 `.spades`)만으로
 열거형 케이스를 참조할 수 있습니다.
-위의 예제에서 `description` 프로퍼티는
+위의 예시에서 `description` 프로퍼티는
 스페이드의 에이스는 `1`이나 `11`의 값을 가지고 있다고 올바르게 보여줍니다.
 
 ## 중첩 타입 참조 (Referring to Nested Types)
@@ -188,7 +188,7 @@ let heartsSymbol = BlackjackCard.Suit.hearts.rawValue
   ```
 -->
 
-위의 예제에서
+위의 예시에서
 `Suit`, `Rank`, `Values`의 이름은 정의된 컨텍스트에 따라 자연스럽게 규정되기 때문에
 이름을 의도적으로 짧게 유지할 수 있습니다.
 
