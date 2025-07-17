@@ -473,7 +473,11 @@ lightSwitch.toggle()
 
 ## 이니셜라이저 요구사항 (Initializer Requirements)
 
-프로토콜은 준수하는 타입에 이니셜라이저를 구현하도록 요구할 수 있습니다. 일반적인 이니셜라이저과 동일한 방식으로 명시적으로 프로토콜의 정의의 부분으로 이니셜라이저를 작성하지만 중괄호 또는 이니셜라이저 본문 없이 작성합니다:
+프로토콜은 이를 준수하는 타입이
+특정 이니셜라이저를 구현하도록 요구할 수 있습니다.
+이 이니셜라이저는 일반 이니셜라이저를 정의하는 방식과 동일하게
+프로토콜의 정의에 작성되지만
+중괄호나 이니셜라이저 본문 없이 작성합니다.
 
 ```swift
 protocol SomeProtocol {
@@ -481,7 +485,17 @@ protocol SomeProtocol {
 }
 ```
 
-### 프로토콜 이니셜라이저 요구사항의 클래스 구현 \(Class Implementations of Protocol Initializer Requirements\)
+<!--
+  - test: `initializers`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+        init(someParameter: Int)
+     }
+  ```
+-->
+
+### 프로토콜 이니셜라이저 요구사항의 클래스 구현 (Class Implementations of Protocol Initializer Requirements)
 
 지정된 이니셜라이저 또는 편의 이니셜라이저으로 준수하는 클래스에 프로토콜 이니셜라이저 요구사항을 구현할 수 있습니다. 이 모든 케이스에 대해 `required` 수식어와 함께 이니셜라이저 구현에 표시해야 합니다:
 
