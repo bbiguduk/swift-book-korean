@@ -18,8 +18,8 @@ Swift의 배열, 집합, 딕셔너리는
 또한 컬렉션에서 값을 조회할 때
 타입이 명확하다는 것을 의미합니다.
 
-> Note: Swift의 배열, 집합, 딕셔너리 타입은 *제너릭 컬렉션(generic collections)*으로 구현됩니다.
-> 제너릭 타입과 컬렉션에 대한 자세한 내용은 <doc:Generics>을 참고바랍니다.
+> Note: Swift의 배열, 집합, 딕셔너리 타입은 *제네릭 컬렉션(generic collections)*으로 구현됩니다.
+> 제네릭 타입과 컬렉션에 대한 자세한 내용은 <doc:Generics>을 참고바랍니다.
 
 <!--
   TODO: should I mention the Collection protocol, to which both of these conform?

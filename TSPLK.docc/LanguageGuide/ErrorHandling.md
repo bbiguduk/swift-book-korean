@@ -742,7 +742,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 
 - 코드에서 클로저 인수를 가지고
   클로저로 부터 오류를 전파하는 함수와 같이
-  제너릭 파라미터에 의해 전파되는 오류의 경우입니다.
+  제네릭 파라미터에 의해 전파되는 오류의 경우입니다.
   특정 오류 타입을 전파하는 것과
   `rethrows`를 사용하는 것에 대한 비교는
   <doc:Declarations:다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>를 참고바랍니다.

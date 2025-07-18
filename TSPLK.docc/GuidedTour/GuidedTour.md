@@ -2328,9 +2328,9 @@ print(fridgeIsOpen)
   ```
 -->
 
-## 제너릭 (Generics)
+## 제네릭 (Generics)
 
-제너릭(Generic) 함수 또는 타입을 만들기 위해
+제네릭(Generic) 함수 또는 타입을 만들기 위해
 꺾쇠 괄호 안에 이름을 작성합니다.
 
 <!--
@@ -2370,7 +2370,7 @@ makeArray(repeating: "knock", numberOfTimes: 4)
 -->
 
 함수와 메서드 뿐만 아니라
-클래스, 열거형, 구조체도 제너릭 형태로 만들 수 있습니다.
+클래스, 열거형, 구조체도 제네릭 형태로 만들 수 있습니다.
 
 ```swift
 // Reimplement the Swift standard library's optional type

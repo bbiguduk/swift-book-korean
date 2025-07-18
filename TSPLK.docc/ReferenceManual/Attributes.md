@@ -469,11 +469,11 @@ NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
 
 ### objc
 
-Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니다. 예를 들어 중첩되지 않은 클래스, 프로토콜, 제너릭이 아닌 열거형 (정수 원시값 타입으로 제한), 클래스의 프로퍼티, 그리고 메서드 (getter 와 setter 포함), 프로토콜과 프로토콜의 옵셔널 멤버, 이니셜라이저, 그리고 서브스크립트 입니다. `objc` 속성은 선언이 Objective-C 코드에서 사용 가능함을 컴파일러에게 말합니다.
+Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니다. 예를 들어 중첩되지 않은 클래스, 프로토콜, 제네릭이 아닌 열거형 (정수 원시값 타입으로 제한), 클래스의 프로퍼티, 그리고 메서드 (getter 와 setter 포함), 프로토콜과 프로토콜의 옵셔널 멤버, 이니셜라이저, 그리고 서브스크립트 입니다. `objc` 속성은 선언이 Objective-C 코드에서 사용 가능함을 컴파일러에게 말합니다.
 
 확장에 이 속성을 적용하는 것은 암시적으로 `nonobjc` 속성으로 표시되지 않은 확장의 모든 멤버에 적용됩니다.
 
-컴파일러는 암시적으로 Objective-C 에 정의된 모든 클래스의 서브클래스에 `objc` 속성을 추가합니다. 그러나 서브클래스는 제너릭이 아니어야 하며 제너릭 클래스를 상속해선 안됩니다. 아래에서 설명한대로 Objective-C 이름을 지정하기 위해 이러한 기준을 충족하는 서브클래스에 `objc` 속성을 명시적으로 추가할 수 있습니다. `objc` 속성으로 표시된 프로토콜은 이 속성이 표시되지 않은 프로토콜을 상속할 수 없습니다.
+컴파일러는 암시적으로 Objective-C 에 정의된 모든 클래스의 서브클래스에 `objc` 속성을 추가합니다. 그러나 서브클래스는 제네릭이 아니어야 하며 제네릭 클래스를 상속해선 안됩니다. 아래에서 설명한대로 Objective-C 이름을 지정하기 위해 이러한 기준을 충족하는 서브클래스에 `objc` 속성을 명시적으로 추가할 수 있습니다. `objc` 속성으로 표시된 프로토콜은 이 속성이 표시되지 않은 프로토콜을 상속할 수 없습니다.
 
 `objc` 속성은 다음과 같은 경우에 암시적으로 추가됩니다:
 
@@ -722,7 +722,7 @@ var manualNumber = ArrayBuilder.buildExpression(10)
   다른 분기 구문과 동일한 변환을 사용합니다.
   이 변환은 `buildEither(first:)`, `buildEither(second:)`, 또는 `buildOptional(_:)` 에 대한 호출로 변환되기 전에 발생합니다.
 
-  `buildLimitedAvailability(_:)` 메서드를 사용하여 어떤 분기를 사용하는지에 따라 변경되는 타입 정보를 지웁니다. 예를 들어 아래의 `buildEither(first:)` 와 `buildEither(second:)` 메서드는 두 분기에 대한 타입 정보를 캡처하는 제너릭 타입을 사용합니다.
+  `buildLimitedAvailability(_:)` 메서드를 사용하여 어떤 분기를 사용하는지에 따라 변경되는 타입 정보를 지웁니다. 예를 들어 아래의 `buildEither(first:)` 와 `buildEither(second:)` 메서드는 두 분기에 대한 타입 정보를 캡처하는 제네릭 타입을 사용합니다.
 
 ```swift
 protocol Drawable {
@@ -779,7 +779,7 @@ struct FutureText: Drawable {
 // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
 ```
 
-위의 코드에서 `FutureText` 는 `DrawEither` 제너릭 타입에서 타입 중 하나이므로 `brokenDrawing` 의 타입의 부분으로 나타납니다. 이로 인해 런타임에 `FutureText` 를 사용할 수 없는 경우 해당 타입이 명시적으로 사용되지 않는 경우에도 프로그램이 중된될 수 있습니다.
+위의 코드에서 `FutureText` 는 `DrawEither` 제네릭 타입에서 타입 중 하나이므로 `brokenDrawing` 의 타입의 부분으로 나타납니다. 이로 인해 런타임에 `FutureText` 를 사용할 수 없는 경우 해당 타입이 명시적으로 사용되지 않는 경우에도 프로그램이 중된될 수 있습니다.
 
 이 문제를 해결하려면
 항상 사용가능한 타입을 반환하여 타입 정보를 지우는
@@ -1018,7 +1018,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 * `block` 인수는 Objective-C 호환 블럭 참조를 나타냅니다. 함수 값은 객체 내에 호출 함수 (invocation function) 를 포함하는 `id`-호환성 Objective-C 객체 인 블럭 객체에 대한 참조로 표시됩니다. 호출 함수는 C 호출 규칙을 사용합니다.
 * `c` 인수는 C 함수 참조를 나타냅니다. 함수 값은 컨텍스트를 전달하지 않으며 C 호출 규칙을 사용합니다.
 
-몇가지 예외를 제외하고 모든 호출 규칙의 함수는 다른 호출 규칙이 필요할 때 사용될 수 있습니다. 제너릭이 아닌 전역 함수, 지역 변수를 캡처하지 않는 지역 함수 또는 지역 변수를 캡처하지 않는 클로저는 C 호출 규칙으로 변환될 수 있습니다. 다른 Swift 함수는 C 호출 규칙으로 변환될 수 없습니다. Objective-C 블럭 호출 규칙을 가지는 함수는 C 호출 규칙으로 변환될 수 없습니다.
+몇가지 예외를 제외하고 모든 호출 규칙의 함수는 다른 호출 규칙이 필요할 때 사용될 수 있습니다. 제네릭이 아닌 전역 함수, 지역 변수를 캡처하지 않는 지역 함수 또는 지역 변수를 캡처하지 않는 클로저는 C 호출 규칙으로 변환될 수 있습니다. 다른 Swift 함수는 C 호출 규칙으로 변환될 수 없습니다. Objective-C 블럭 호출 규칙을 가지는 함수는 C 호출 규칙으로 변환될 수 없습니다.
 
 ### escaping
 

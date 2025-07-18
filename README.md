@@ -61,7 +61,7 @@
 | Associated value             | 연관된 값        |
 | Protocol                     | 프로토콜         |
 | Extension                    | 확장           |
-| Generic                      | 제너릭          |
+| Generic                      | 제네릭          |
 | Type-safe                    | 타입-세이프       |
 | Annotation                   | 명시           |
 | Inference                    | 추론           |

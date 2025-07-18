@@ -1058,7 +1058,7 @@
 >
 > *expression-pattern* → *expression*
 
-## 제너릭 파라미터와 인수 \(Generic Parameters and Arguments\)
+## 제네릭 파라미터와 인수 \(Generic Parameters and Arguments\)
 
 > Grammar of a generic parameter clause:
 >
