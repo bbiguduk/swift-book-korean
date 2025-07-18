@@ -538,7 +538,7 @@ struct LevelTracker {
 경우도 있기 때문에,
 이 함수는 `@discardableResult` 속성으로 표시됩니다.
 더 자세한 내용은
-<doc:Attributes>을 참고 바랍니다.
+<doc:Attributes>을 참고바랍니다.
 
 `LevelTracker` 구조체는 아래에 나오는
 각 플레이어의 진행 상태를 추적하고 업데이트하는 `Player` 클래스와 함께 사용됩니다:

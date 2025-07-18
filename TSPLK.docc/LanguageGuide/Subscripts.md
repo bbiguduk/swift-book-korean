@@ -172,7 +172,7 @@ numberOfLegs["bird"] = 2
 `"bird"`라는 `String` 키와 `2`라는 `Int` 값을 딕셔너리에 추가합니다.
 
 `Dictionary` 서브스크립트에 대한 자세한 내용은
-<doc:CollectionTypes#딕셔너리-접근과-수정-Accessing-and-Modifying-a-Dictionary>을 참고 바랍니다.
+<doc:CollectionTypes#딕셔너리-접근과-수정-Accessing-and-Modifying-a-Dictionary>을 참고바랍니다.
 
 > Note: Swift의 `Dictionary` 타입은 키-값 서브스크립트를
 > *옵셔널* 타입을 사용하는 서브스크립트로 구현합니다.

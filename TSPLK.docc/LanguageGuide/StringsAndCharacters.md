@@ -32,7 +32,7 @@ Swift의 `String` 타입은 빠르고, 최신 문자열 구현입니다.
 > 캐스팅 없이 `String`에서 `NSString` 메서드를 접근할 수 있습니다.
 >
 > Foundation과 Cocoa에서 `String` 사용에 대한 자세한 내용은
-> [String과 NSString의 연결 (Bridging Between String and NSString)](https://developer.apple.com/documentation/swift/string#2919514)을 참고 바랍니다.
+> [String과 NSString의 연결 (Bridging Between String and NSString)](https://developer.apple.com/documentation/swift/string#2919514)을 참고바랍니다.
 
 ## 문자열 리터럴 (String Literals)
 

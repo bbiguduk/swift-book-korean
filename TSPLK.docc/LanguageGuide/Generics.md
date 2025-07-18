@@ -232,7 +232,7 @@ if let topItem = stackOfStrings.topItem {
 
 예를 들어 Swift의 `Dictionary` 타입은 딕셔너리에 대해 키로 사용될 수 있는 타입에 제한을 둡니다. <doc:CollectionTypes#딕셔너리-Dictionaries> 에서 설명했듯이 딕셔너리 키의 타입은 _hashable_ 이어야 합니다. 즉, 고유하게 표현할 수 있는 방법을 제공해야 합니다. `Dictionary` 는 특정 키에 대해 값이 이미 포함되어 있는지 확인할 수 있도록 키를 해시 할 수 있어야 합니다. 이 요구사항이 없으면 `Dictionary` 는 특정 키에 대해 값을 삽입 또는 대체해야 하는지 알 수 없으며 이미 딕셔너리에 있는 주어진 키에 대한 값을 찾을 수 없습니다.
 
-이 요구사항은 키 타입이 Swift 표준 라이브러리에서 정의된 특수 프로토콜 인 `Hashable` 프로토콜을 준수해야 함을 지정하는 `Dictionary` 의 키 타입에서 타입 제약에 의해 강제됩니다. Swift의 모든 기본 타입 \(`String`, `Int`, `Double`, 그리고 `Bool`\)은 기본적으로 해시 가능해야 합니다. `Hashable` 프로토콜을 준수하는 자체 커스텀 타입을 만드는 것에 대한 자세한 내용은 [해시 가능한 프로토콜 준수 \(Conforming to the Hashable Protocol\)](https://developer.apple.com/documentation/swift/hashable#2849490) 를 참고 바랍니다.
+이 요구사항은 키 타입이 Swift 표준 라이브러리에서 정의된 특수 프로토콜 인 `Hashable` 프로토콜을 준수해야 함을 지정하는 `Dictionary` 의 키 타입에서 타입 제약에 의해 강제됩니다. Swift의 모든 기본 타입 \(`String`, `Int`, `Double`, 그리고 `Bool`\)은 기본적으로 해시 가능해야 합니다. `Hashable` 프로토콜을 준수하는 자체 커스텀 타입을 만드는 것에 대한 자세한 내용은 [해시 가능한 프로토콜 준수 \(Conforming to the Hashable Protocol\)](https://developer.apple.com/documentation/swift/hashable#2849490) 를 참고바랍니다.
 
 커스텀 제너릭 타입을 생성할 때 고유 타입 제약을 정의할 수 있고 이러한 제약은 제너릭 프로그래밍에 많은 기능을 제공합니다. `Hashable` 같은 추상 개념은 구체적인 타입이 아닌 개념적 특성 측면에서 타입을 특성화 합니다.
 
@@ -414,7 +414,7 @@ struct Stack<Element>: Container {
 
 ### 기존 타입을 확장하여 연관된 타입 지정 \(Extending an Existing Type to Specify an Associated Type\)
 
-<doc:Protocols#확장으로-프로토콜-준수성-추가-Adding-Protocol-Conformance-with-an-Extension> 에서 설명한대로 프로토콜의 준수성을 추가하기 위해 기존 타입을 확장할 수 있습니다. 여기에는 연관된 타입이 있는 프로토콜을 포함합니다.
+<doc:Protocols#확장으로-프로토콜-준수-추가-Adding-Protocol-Conformance-with-an-Extension> 에서 설명한대로 프로토콜의 준수성을 추가하기 위해 기존 타입을 확장할 수 있습니다. 여기에는 연관된 타입이 있는 프로토콜을 포함합니다.
 
 Swift의 `Array` 타입은 이미 `append(_:)` 메서드, `count` 프로퍼티, 그리고 `Int` 인덱스로 요소를 조회하기 위해 서브스크립트를 제공합니다. 이 3가지 기능은 `Container` 프로토콜의 요구사항과 일치합니다. 이것은 `Array` 가 프로토콜을 채택하도록 선언하는 것으로 간단하게 `Container` 프로토콜을 준수하도록 `Array` 를 확장할 수 있다는 의미입니다. <doc:Protocols#확장으로-프로토콜-채택-선언-Declaring-Protocol-Adoption-with-an-Extension> 에서 설명했듯이 빈 확장을 사용하여 이 작업을 수행할 수 있습니다:
 

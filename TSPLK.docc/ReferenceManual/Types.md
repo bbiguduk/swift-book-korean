@@ -74,7 +74,7 @@ var someValue: ExampleModule.MyType
 
 _튜플 타입 (tuple type)_ 은 소괄호로 묶인 콤마로 구분된 타입의 리스트입니다.
 
-튜플 타입을 함수의 반환 타입으로 사용하여 함수가 여러값을 포함하는 단일 튜플을 반환하도록 할 수 있습니다. 튜플 타입의 요소에 이름을 지정하고 해당 이름을 사용하여 개별 요소의 값을 참조할 수도 있습니다. 요소 이름은 바로 뒤에 콜론 (`:`) 이 오는 식별자로 구성됩니다. 이러한 기능을 보여주는 예시는 <doc:Functions#여러개의-반환값이-있는-함수-Functions-with-Multiple-Return-Values> 를 참고 바랍니다.
+튜플 타입을 함수의 반환 타입으로 사용하여 함수가 여러값을 포함하는 단일 튜플을 반환하도록 할 수 있습니다. 튜플 타입의 요소에 이름을 지정하고 해당 이름을 사용하여 개별 요소의 값을 참조할 수도 있습니다. 요소 이름은 바로 뒤에 콜론 (`:`) 이 오는 식별자로 구성됩니다. 이러한 기능을 보여주는 예시는 <doc:Functions#여러개의-반환값이-있는-함수-Functions-with-Multiple-Return-Values> 를 참고바랍니다.
 
 튜플 타입의 요소가 이름을 가지는 경우 이름은 타입의 부분입니다.
 
@@ -104,9 +104,9 @@ someTuple = (left: 5, right: 5)  // Error: names don't match
 
 _파라미터 타입 (parameter type)_ 은 콤마로 구분된 타입의 리스트입니다. _반환 타입 (return type)_ 은 튜플 타입일 수 있기 때문에 함수 타입은 여러값을 반환하는 함수와 메서드를 지원합니다.
 
-함수 타입 `() -> T` (여기서 `T` 는 모든 타입) 의 파라미터는 `autoclosure` 속성을 적용하여 호출 부분에서 암시적으로 클로저를 생성할 수 있습니다. 이것은 함수를 호출할 때 명시적으로 클로저를 작성할 필요없이 표현식의 평가를 연기하는 구문상 편리함을 제공합니다. 자동 클로저 함수 타입 파라미터의 예시는 <doc:Closures#자동-클로저-Autoclosures> 를 참고 바랍니다.
+함수 타입 `() -> T` (여기서 `T` 는 모든 타입) 의 파라미터는 `autoclosure` 속성을 적용하여 호출 부분에서 암시적으로 클로저를 생성할 수 있습니다. 이것은 함수를 호출할 때 명시적으로 클로저를 작성할 필요없이 표현식의 평가를 연기하는 구문상 편리함을 제공합니다. 자동 클로저 함수 타입 파라미터의 예시는 <doc:Closures#자동-클로저-Autoclosures> 를 참고바랍니다.
 
-함수 타입은 _파라미터 타입_ 에 가변 파라미터 (variadic parameters) 를 가질 수 있습니다. 구문적으로 가변 파라미터는 `Int...` 와 같이 기본 타입 이름과 바로 뒤에 점 3개 (`...`) 로 구성됩니다. 가변 파라미터는 기본 타입 이름의 요소를 포함하는 배열로 처리됩니다. 예를 들어 가변 파라미터 `Int...` 는 `[Int]` 로 처리됩니다. 가변 파라미터를 사용하는 예시는 <doc:Functions#가변-파라미터-Variadic-Parameters> 를 참고 바랍니다.
+함수 타입은 _파라미터 타입_ 에 가변 파라미터 (variadic parameters) 를 가질 수 있습니다. 구문적으로 가변 파라미터는 `Int...` 와 같이 기본 타입 이름과 바로 뒤에 점 3개 (`...`) 로 구성됩니다. 가변 파라미터는 기본 타입 이름의 요소를 포함하는 배열로 처리됩니다. 예를 들어 가변 파라미터 `Int...` 는 `[Int]` 로 처리됩니다. 가변 파라미터를 사용하는 예시는 <doc:Functions#가변-파라미터-Variadic-Parameters> 를 참고바랍니다.
 
 in-out 파라미터 (in-out parameter) 를 지정하려면 `inout` 키워드를 파라미터 타입 앞에 붙여야 합니다. `inout` 키워드로 가변 파라미터나 반환 타입으로 표시할 수 없습니다. In-out 파라미터는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 에 설명되어 있습니다.
 
@@ -149,7 +149,7 @@ var operation: (Int, Int) -> Int               // OK
 `throws(any Error)` 로 작성한 것과 같습니다.
 `throws` 를 생략하는 것은 `throws(Never)` 로 작성하는 것과 같습니다.
 함수가 던지는 오류 타입은
-제너릭 타입, 박스형 프로토콜 타입, 그리고 불투명한 타입을 포함하여
+제너릭 타입, 박스형 프로토콜 타입, 그리고 불투명 타입을 포함하여
 `Error` 를 준수하는 모든 타입일 수 있습니다.
 
 함수가 던지는 오류의 타입은 함수 타입의 일부이고,
@@ -180,7 +180,7 @@ var operation: (Int, Int) -> Int               // OK
 <doc:Declarations#함수와-메서드-던지기-Throwing-Functions-and-Methods> 와
 <doc:Declarations#다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods> 에 설명되어 있습니다.
 
-비동기 함수에 대한 함수 타입은 `async` 키워드로 표시되어야 합니다. `async` 키워드는 함수의 타입의 부분이며, 동기 함수는 비동기 함수의 하위 타입 (subtypes) 입니다. 결과적으로 비동기 함수와 같은 위치에서 동기 함수를 사용할 수 있습니다. 비동기 함수에 대한 더 자세한 설명은 <doc:Declarations#비동기-함수와-메서드-Asynchronous-Functions-and-Methods> 를 참고 바랍니다.
+비동기 함수에 대한 함수 타입은 `async` 키워드로 표시되어야 합니다. `async` 키워드는 함수의 타입의 부분이며, 동기 함수는 비동기 함수의 하위 타입 (subtypes) 입니다. 결과적으로 비동기 함수와 같은 위치에서 동기 함수를 사용할 수 있습니다. 비동기 함수에 대한 더 자세한 설명은 <doc:Declarations#비동기-함수와-메서드-Asynchronous-Functions-and-Methods> 를 참고바랍니다.
 
 ### 비탈출 클로저에 대한 제한사항 (Restrictions for Nonescaping Closures)
 
@@ -206,7 +206,7 @@ func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void
 
 위의 예시에서 "Error" 로 표시된 4개의 함수 호출은 컴파일러 오류를 일으킵니다. `first` 와 `second` 파라미터는 비탈출 함수이므로 다른 비탈출 함수 파라미터 인수로 전달될 수 없습니다. 반대로 "OK" 로 표시된 2개의 함수 호출은 컴파일러 오류를 발생시키지 않습니다. 이 함수 호출은 `external` 이 `takesTwoFunctions(first:second:)` 의 파라미터 중 하나가 아니므로 제한사항에 위배되지 않습니다.
 
-제한사항을 피해야 하는 경우 파라미터 중 하나를 탈출로 표시하거나 `withoutActuallyEscaping(_:do:)` 함수를 이용하여 탈출 함수로 비탈출 함수 파라미터 중 하나를 임시로 변경해야 합니다. 메모리에 충돌 접근을 피하는 것에 대한 자세한 내용은 <doc:MemorySafety> 을 참고 바랍니다.
+제한사항을 피해야 하는 경우 파라미터 중 하나를 탈출로 표시하거나 `withoutActuallyEscaping(_:do:)` 함수를 이용하여 탈출 함수로 비탈출 함수 파라미터 중 하나를 임시로 변경해야 합니다. 메모리에 충돌 접근을 피하는 것에 대한 자세한 내용은 <doc:MemorySafety> 을 참고바랍니다.
 
 > Grammar of a function type:
 >
@@ -246,7 +246,7 @@ var array3D: [[[Int]]] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 다차원 배열의 요소에 접근할 때 가장 왼쪽에 있는 서브스크립트 인덱스는 배열의 가장 바깥 쪽에 있는 요소를 참조합니다. 오른쪽에 있는 다음 서브스크립트 인덱스는 한 차원 더 들어가는 중첩된 배열의 요소를 참조합니다. 이것은 위의 예시에서 `array3D[0]` 은 `[[1, 2], [3, 4]]` 를 참조하고 `array3D[0][1]` 은 `[3, 4]` 그리고 `array3D[0][1][1]` 은 값 4를 참조합니다.
 
-Swift 표준 라이브러리 `Array` 타입에 대한 자세한 설명은 <doc:CollectionTypes#배열-Arrays> 을 참고 바랍니다.
+Swift 표준 라이브러리 `Array` 타입에 대한 자세한 설명은 <doc:CollectionTypes#배열-Arrays> 을 참고바랍니다.
 
 > Grammar of an array type:
 >
@@ -273,7 +273,7 @@ let someDictionary: Dictionary<String, Int> = ["Alex": 31, "Paul": 39]
 
 딕셔너리의 키 타입은 Swift 표준 라이브러리 `Hashable` 프로토콜을 준수해야 합니다.
 
-Swift 표준 라이브러리 `Dictionary` 타입의 자세한 설명은 <doc:CollectionTypes#딕셔너리-Dictionaries> 를 참고 바랍니다.
+Swift 표준 라이브러리 `Dictionary` 타입의 자세한 설명은 <doc:CollectionTypes#딕셔너리-Dictionaries> 를 참고바랍니다.
 
 > Grammar of a dictionary type:
 >
@@ -303,7 +303,7 @@ optionalInteger! // 42
 
 옵셔널 표현식에 대해 조건부 수행을 위해 옵셔널 체이닝과 옵셔널 바인딩을 사용할 수도 있습니다. 값이 `nil` 인 경우에 작업은 더이상 수행되지 않으므로 런타임 오류가 발생하지 않습니다.
 
-더 자세한 정보와 옵셔널 타입 사용에 대한 예시를 보려면 <doc:TheBasics#옵셔널-Optionals> 을 참고 바랍니다.
+더 자세한 정보와 옵셔널 타입 사용에 대한 예시를 보려면 <doc:TheBasics#옵셔널-Optionals> 을 참고바랍니다.
 
 > Grammar of an optional type:
 >
@@ -336,7 +336,7 @@ let implicitlyUnwrappedArray: [Int]!                  // OK
 
 암시적으로 언래핑된 옵셔널 표현식에 조건부로 동작을 수행하려면 옵셔널 체이닝을 사용합니다. 값이 `nil` 이라면 더이상 작업이 수행되지 않으며 런타임 오류가 발생하지 않습니다.
 
-암시적으로 언래핑된 옵셔널 타입에 대한 자세한 정보는 <doc:TheBasics#암시적으로-언래핑된-옵셔널-Implicitly-Unwrapped-Optionals> 을 참고 바랍니다.
+암시적으로 언래핑된 옵셔널 타입에 대한 자세한 정보는 <doc:TheBasics#암시적으로-언래핑된-옵셔널-Implicitly-Unwrapped-Optionals> 을 참고바랍니다.
 
 > Grammar of an implicitly unwrapped optional type:
 >
@@ -372,11 +372,11 @@ typealias PQR = PQ & Q & R
 > *protocol-composition-type* → *type-identifier* **`&`** *protocol-composition-continuation* \
 > *protocol-composition-continuation* → *type-identifier* | *protocol-composition-type*
 
-## 불투명한 타입 (Opaque Type)
+## 불투명 타입 (Opaque Type)
 
-_불투명한 타입 (opaque type)_ 은 기본 타입 지정없이 프로토콜 또는 프로토콜 구성을 준수하는 타입을 정의합니다.
+_불투명 타입 (opaque type)_ 은 기본 타입 지정없이 프로토콜 또는 프로토콜 구성을 준수하는 타입을 정의합니다.
 
-불투명한 타입은 함수 또는 서브스크립트의 반환타입 또는 프로퍼티의 타입으로 나타납니다. 불투명한 타입은 배열의 요소 타입 또는 옵셔널의 래핑된 타입과 같은 튜플 타입 또는 제너릭 타입의 부분으로 나타날 수 없습니다.
+불투명 타입은 함수 또는 서브스크립트의 반환타입 또는 프로퍼티의 타입으로 나타납니다. 불투명 타입은 배열의 요소 타입 또는 옵셔널의 래핑된 타입과 같은 튜플 타입 또는 제너릭 타입의 부분으로 나타날 수 없습니다.
 
 불투명 타입은 다음의 형식을 가집니다:
 
@@ -384,13 +384,13 @@ _불투명한 타입 (opaque type)_ 은 기본 타입 지정없이 프로토콜 
 some <#constraint#>
 ```
 
-_제약조건 (constraint)_ 은 클래스 타입, 프로토콜 타입, 프로토콜 구성 타입, 또는 `Any` 입니다. 값은 나열된 프로토콜 또는 프로토콜 구성을 준수하는 타입의 인스턴스나 나열된 클래스를 상속하는 경우에만 불투명한 타입의 인스턴스로 사용될 수 있습니다. 불투명한 값과 상호작용하는 코드는 _제약조건 (constraint)_ 에 의해 정의된 인터페이스의 일부의 방식으로만 값으로 사용할 수 있습니다.
+_제약조건 (constraint)_ 은 클래스 타입, 프로토콜 타입, 프로토콜 구성 타입, 또는 `Any` 입니다. 값은 나열된 프로토콜 또는 프로토콜 구성을 준수하는 타입의 인스턴스나 나열된 클래스를 상속하는 경우에만 불투명 타입의 인스턴스로 사용될 수 있습니다. 불투명한 값과 상호작용하는 코드는 _제약조건 (constraint)_ 에 의해 정의된 인터페이스의 일부의 방식으로만 값으로 사용할 수 있습니다.
 
-컴파일 시간에 타입이 불투명한 값은 특정한 구체적인 타입을 가지며, Swift 는 최적화를 위해 기본 타입을 사용할 수 있습니다. 그러나, 불투명한 타입은 기본 타입에 대한 정보를 교류할 수 없는 경계의 형식을 가집니다.
+컴파일 시간에 타입이 불투명한 값은 특정한 구체적인 타입을 가지며, Swift 는 최적화를 위해 기본 타입을 사용할 수 있습니다. 그러나, 불투명 타입은 기본 타입에 대한 정보를 교류할 수 없는 경계의 형식을 가집니다.
 
-프로토콜 선언은 불투명한 타입을 포함할 수 없습니다. 클래스는 비final 메서드 (nonfinal method) 의 반환 타입으로 불투명한 타입을 사용할 수 없습니다.
+프로토콜 선언은 불투명 타입을 포함할 수 없습니다. 클래스는 비final 메서드 (nonfinal method) 의 반환 타입으로 불투명 타입을 사용할 수 없습니다.
 
-불투명한 타입을 반환 타입으로 사용하는 함수는 단일 기본 타입을 공유하는 값을 반환해야 합니다. 반환 타입은 함수의 제너릭 타입 파라미터의 부분인 타입을 포함할 수 있습니다. 예를 들어 함수 `someFunction<T>()` 는 타입 `T` 또는 `Dictionary<String, T>` 의 값을 반환할 수 있습니다.
+불투명 타입을 반환 타입으로 사용하는 함수는 단일 기본 타입을 공유하는 값을 반환해야 합니다. 반환 타입은 함수의 제너릭 타입 파라미터의 부분인 타입을 포함할 수 있습니다. 예를 들어 함수 `someFunction<T>()` 는 타입 `T` 또는 `Dictionary<String, T>` 의 값을 반환할 수 있습니다.
 
 > Grammar of an opaque type:
 >
@@ -408,7 +408,7 @@ any <#constraint#>
 
 _제약_ 은 프로토콜 타입, 프로토콜 혼합 타입, 프로토콜 타입의 메타타입, 또는 프로토콜 혼합 타입의 메타타입입니다.
 
-런타임에 박스형 프로토콜 타입의 인스턴스는 제약조건에 충족하는 모든 타입의 값을 포함할 수 있습니다. 이런 동작은 불투명한 타입 (opaque type) 동작과 대조되고 컴파일 시간에 알고있는 준수하는 타입이 있습니다. 박스형 프로토콜 타입으로 사용되는 추가 간접수준을 `boxing` 이라 합니다. 박싱 (Boxing) 은 일반적으로 저장을 위한 별도의 메모리 할당과 접근에 대한 추가적인 간접수준을 필요로 하므로 런타임 시 비용이 발생합니다.
+런타임에 박스형 프로토콜 타입의 인스턴스는 제약조건에 충족하는 모든 타입의 값을 포함할 수 있습니다. 이런 동작은 불투명 타입 (opaque type) 동작과 대조되고 컴파일 시간에 알고있는 준수하는 타입이 있습니다. 박스형 프로토콜 타입으로 사용되는 추가 간접수준을 `boxing` 이라 합니다. 박싱 (Boxing) 은 일반적으로 저장을 위한 별도의 메모리 할당과 접근에 대한 추가적인 간접수준을 필요로 하므로 런타임 시 비용이 발생합니다.
 
 `Any` 또는 `AnyObject` 타입은 이미 박스형 프로토콜 타입이므로 `any` 를 적용해도 아무런 효과가 없습니다.
 
@@ -442,7 +442,7 @@ type(of: someInstance).printClassName()
 // Prints "SomeSubClass"
 ```
 
-자세한 내용은 Swift 표준 라이브러리에 [`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type) 을 참고 바랍니다.
+자세한 내용은 Swift 표준 라이브러리에 [`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type) 을 참고바랍니다.
 
 이니셜라이저 표현식을 사용하여 해당 타입의 메타타입 값에서 타입의 인스턴스를 생성합니다. 클래스 인스턴스의 경우 호출되는 이니셜라이저는 `required` 키워드로 표시거나 `final` 키워드로 전체 클래스를 표시해야 합니다.
 
@@ -486,9 +486,9 @@ if let first = mixed.first as? String {
 // Prints "The first item, 'one', is a string."
 ```
 
-캐스팅에 대한 자세한 내용은 <doc:TypeCasting> 을 참고 바랍니다.
+캐스팅에 대한 자세한 내용은 <doc:TypeCasting> 을 참고바랍니다.
 
-`AnyObject` 프로토콜은 `Any` 타입과 유사합니다. 모든 클래스는 암시적으로 `AnyObject` 를 준수합니다. 언어에 의해 정의되는 `Any` 와 달리 `AnyObject` 는 Swift 표준 라이브러리에 의해 정의됩니다. 더 자세한 내용은 <doc:Protocols#클래스-전용-프로토콜-Class-Only-Protocols> 과 [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject) 를 참고 바랍니다.
+`AnyObject` 프로토콜은 `Any` 타입과 유사합니다. 모든 클래스는 암시적으로 `AnyObject` 를 준수합니다. 언어에 의해 정의되는 `Any` 와 달리 `AnyObject` 는 Swift 표준 라이브러리에 의해 정의됩니다. 더 자세한 내용은 <doc:Protocols#클래스-전용-프로토콜-Class-Only-Protocols> 과 [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject) 를 참고바랍니다.
 
 > Grammar of an Any type:
 >
@@ -541,11 +541,11 @@ print(type(of: z.f()))
 
 _타입 상속 절 (type inheritance clause)_ 은 명명된 타입이 상속하는 클래스와 명명된 타입이 준수하는 프로토콜을 지정하기 위해 사용됩니다. 타입 상속 절은 콜론 (`:`) 으로 시작하고 그 뒤에 타입 식별자의 리스트가 옵니다.
 
-클래스 타입은 단일 슈퍼클래스를 상속할 수 있고 여러개의 프로토콜을 준수할 수 있습니다. 클래스를 정의할 때 슈퍼클래스의 이름은 타입 식별자의 리스트에서 첫번째로 나타나야 하고 다음으로 준수하는 여러개의 프로토콜이 옵니다. 클래스가 다른 클래스를 상속하지 않으면 리스트는 대신 프로토콜로 시작할 수 있습니다. 클래스 상속에 대한 자세한 설명과 예시는 <doc:Inheritance> 을 참고 바랍니다.
+클래스 타입은 단일 슈퍼클래스를 상속할 수 있고 여러개의 프로토콜을 준수할 수 있습니다. 클래스를 정의할 때 슈퍼클래스의 이름은 타입 식별자의 리스트에서 첫번째로 나타나야 하고 다음으로 준수하는 여러개의 프로토콜이 옵니다. 클래스가 다른 클래스를 상속하지 않으면 리스트는 대신 프로토콜로 시작할 수 있습니다. 클래스 상속에 대한 자세한 설명과 예시는 <doc:Inheritance> 을 참고바랍니다.
 
 다른 명명된 타입은 프로토콜의 리스트에서 상속하거나 준수할 수 있습니다. 프로토콜 타입은 여러 다른 프로토콜을 상속할 수 있습니다. 프로토콜 타입은 다른 프로토콜을 상속할 때 다른 프로토콜의 요구사항을 모으고 현재 프로토콜에서 상속되는 모든 타입은 모든 요구사항을 준수해야 합니다.
 
-열거형 정의에 타입 상속 절은 프로토콜의 리스트이거나 케이스에 원시값 (raw values) 을 할당하는 열거형인 경우 해당 원시값의 타입을 지정하는 단일 명명된 타입일 수 있습니다. 타입 상속 절을 사용하여 원시값의 타입을 지정하는 열거형 정의의 예는 <doc:Enumerations#원시값-Raw-Values> 을 참고 바랍니다.
+열거형 정의에 타입 상속 절은 프로토콜의 리스트이거나 케이스에 원시값 (raw values) 을 할당하는 열거형인 경우 해당 원시값의 타입을 지정하는 단일 명명된 타입일 수 있습니다. 타입 상속 절을 사용하여 원시값의 타입을 지정하는 열거형 정의의 예는 <doc:Enumerations#원시값-Raw-Values> 을 참고바랍니다.
 
 > Grammar of a type inheritance clause:
 >

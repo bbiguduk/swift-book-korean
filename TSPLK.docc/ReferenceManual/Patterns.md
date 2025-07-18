@@ -107,7 +107,7 @@ let (a): Int = 2 // a: Int = 2
 
 _열거형 케이스 패턴 (enumeration case pattern)_ 은 존재하는 열거형 타입의 케이스와 일치합니다. 열거형 케이스 패턴은 `switch` 구문 케이스 라벨과 `if`, `while`, `guard`, 그리고 `for`-`in` 구문의 케이스 조건에서 나타납니다.
 
-일치 시키려는 열거형 케이스에 연관된 값이 있는 경우 해당 열거형 케이스 패턴은 각 연관된 값에 대한 하나의 요소를 포함하는 튜플 패턴을 지정해야 합니다. 연관된 값을 포함하는 열거형 케이스를 일치 시키기 위해 `switch` 구문을 사용하는 예시는 <doc:Enumerations#연관된-값-Associated-Values> 을 참고 바랍니다.
+일치 시키려는 열거형 케이스에 연관된 값이 있는 경우 해당 열거형 케이스 패턴은 각 연관된 값에 대한 하나의 요소를 포함하는 튜플 패턴을 지정해야 합니다. 연관된 값을 포함하는 열거형 케이스를 일치 시키기 위해 `switch` 구문을 사용하는 예시는 <doc:Enumerations#연관된-값-Associated-Values> 을 참고바랍니다.
 
 열거형 케이스 패턴은 옵셔널로 래핑된 케이스의 값과도 일치합니다. 이 간략한 구문으로 옵셔널 패턴을 생략할 수 있습니다. `Optional` 은 열거형으로 구현되므로 `.none` 과 `.some` 은 열거형 타입의 케이스로 동일한 switch 에 나타날 수 있습니다.
 
@@ -178,7 +178,7 @@ is <#type#>
 
 `as` 패턴은 런타임 시 해당 값의 타입이 `as` 패턴의 오른편에 지정한 타입과 일치하거나 해당 타입의 서브클래스가 일치하면 값으로 일치합니다. 일치가 성공하면 일치된 값의 타입은 `as` 패턴의 오른편에 지정한 _패턴 (pattern)_ 으로 캐스팅 됩니다.
 
-`is` 와 `as` 패턴으로 값을 일치 시키기 위해 `switch` 구문을 사용하는 예시는 <doc:TypeCasting#Any와-AnyObject에-대한-타입-캐스팅-Type-Casting-for-Any-and-AnyObject> 을 참고 바랍니다.
+`is` 와 `as` 패턴으로 값을 일치 시키기 위해 `switch` 구문을 사용하는 예시는 <doc:TypeCasting#Any와-AnyObject에-대한-타입-캐스팅-Type-Casting-for-Any-and-AnyObject> 을 참고바랍니다.
 
 > Grammar of a type casting pattern:
 >

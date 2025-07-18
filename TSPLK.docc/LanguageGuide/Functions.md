@@ -841,7 +841,7 @@ in-out 파라미터는 함수에 입력되고,
 함수가 끝난 후 원래 값 대신 수정된 값이 출력됩니다.
 In-out 파라미터의 동작 방식과
 관련된 컴파일러 최적화에 대한
-자세한 설명은 <doc:Declarations#In-Out-파라미터-In-Out-Parameters>를 참고 바랍니다.
+자세한 설명은 <doc:Declarations#In-Out-파라미터-In-Out-Parameters>를 참고바랍니다.
 
 in-out 파라미터에 전달할 수 있는 인수는 변수만 가능합니다.
 상수나 리터럴 값은 수정할 수 없기 때문에

@@ -27,7 +27,7 @@ Swift는 런타임에 복구 가능한 오류를
 > Note: Swift에서 오류 처리는 Cocoa와 Objective-C에
 > `NSError`를 사용하는 오류 처리 패턴과 상호 운용됩니다.
 > 이 클래스에 대한 자세한 내용은
-> [Swift에서 Cocoa 오류 처리 (Handling Cocoa Errors in Swift)](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift)를 참고 바랍니다.
+> [Swift에서 Cocoa 오류 처리 (Handling Cocoa Errors in Swift)](https://developer.apple.com/documentation/swift/cocoa_design_patterns/handling_cocoa_errors_in_swift)를 참고바랍니다.
 
 ## 오류 표현과 던지기 (Representing and Throwing Errors)
 
@@ -410,7 +410,7 @@ do {
 이 절은 모든 오류와 일치하고
 `error`라는 이름을 가진 지역 상수로 오류를 바인딩합니다.
 패턴 일치에 대한 자세한 내용은
-<doc:Patterns>을 참고 바랍니다.
+<doc:Patterns>을 참고바랍니다.
 
 <!--
   TODO: Call out the reasoning why we don't let you
@@ -745,7 +745,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   제너릭 파라미터에 의해 전파되는 오류의 경우입니다.
   특정 오류 타입을 전파하는 것과
   `rethrows`를 사용하는 것에 대한 비교는
-  <doc:Declarations:다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>를 참고 바랍니다.
+  <doc:Declarations:다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>를 참고바랍니다.
 
 예를 들어,
 평점을 요약하고
@@ -980,7 +980,7 @@ func processFile(filename: String) throws {
 오류 처리 코드가 포함되어 있지 않아도
 `defer` 구문을 사용할 수 있습니다.
 더 자세한 내용은
-<doc:ControlFlow#연기된-동작-Deferred-Actions>을 참고 바랍니다.
+<doc:ControlFlow#연기된-동작-Deferred-Actions>을 참고바랍니다.
 
 <!--
 This source file is part of the Swift.org open source project

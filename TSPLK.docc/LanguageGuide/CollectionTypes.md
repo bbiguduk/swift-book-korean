@@ -19,7 +19,7 @@ Swift의 배열, 집합, 딕셔너리는
 타입이 명확하다는 것을 의미합니다.
 
 > Note: Swift의 배열, 집합, 딕셔너리 타입은 *제너릭 컬렉션(generic collections)*으로 구현됩니다.
-> 제너릭 타입과 컬렉션에 대한 자세한 내용은 <doc:Generics>을 참고 바랍니다.
+> 제너릭 타입과 컬렉션에 대한 자세한 내용은 <doc:Generics>을 참고바랍니다.
 
 <!--
   TODO: should I mention the Collection protocol, to which both of these conform?
@@ -57,7 +57,7 @@ Swift의 배열, 집합, 딕셔너리는
 > Note: Swift의 `Array` 타입은 Foundation의 `NSArray` 클래스와 연결됩니다.
 >
 > Foundation과 Cocoa의 `Array` 사용에 대한 자세한 내용은
-> [Array와 NSArray 사이의 연결 (Bridging Between Array and NSArray)](https://developer.apple.com/documentation/swift/array#2846730)을 참고 바랍니다.
+> [Array와 NSArray 사이의 연결 (Bridging Between Array and NSArray)](https://developer.apple.com/documentation/swift/array#2846730)을 참고바랍니다.
 
 ### 배열 타입 축약 구문 (Array Type Shorthand Syntax)
 
@@ -573,7 +573,7 @@ for (index, value) in shoppingList.enumerated() {
   ```
 -->
 
-`for`-`in` 루프에 대한 자세한 내용은 <doc:ControlFlow#For-In-루프-For-In-Loops>을 참고 바랍니다.
+`for`-`in` 루프에 대한 자세한 내용은 <doc:ControlFlow#For-In-루프-For-In-Loops>을 참고바랍니다.
 
 ## 집합 (Sets)
 
@@ -585,7 +585,7 @@ for (index, value) in shoppingList.enumerated() {
 > Note: Swift의 `Set` 타입은 Foundation의 `NSSet` 클래스와 연결됩니다.
 >
 > Foundation과 Cocoa의 `Set`에 대해 더 자세한 내용은
-> [Set과 NSSet 사이의 연결 (Bridging Between Set and NSSet)](https://developer.apple.com/documentation/swift/set#2845530)을 참고 바랍니다.
+> [Set과 NSSet 사이의 연결 (Bridging Between Set and NSSet)](https://developer.apple.com/documentation/swift/set#2845530)을 참고바랍니다.
 
 <!--
   TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
@@ -609,8 +609,8 @@ Swift의 모든 기본 타입(`String`, `Int`, `Double`, `Bool`)은
 > Swift 표준 라이브러리의
 > `Hashable` 프로토콜을 준수해야 사용할 수 있습니다.
 > 필수인 `hash(into:)` 메서드를 구현하는 것에 대한 자세한 내용은
-> [`Hashable`](https://developer.apple.com/documentation/swift/hashable)을 참고 바랍니다.
-> 프로토콜 준수에 대한 자세한 내용은 <doc:Protocols>을 참고 바랍니다.
+> [`Hashable`](https://developer.apple.com/documentation/swift/hashable)을 참고바랍니다.
+> 프로토콜 준수에 대한 자세한 내용은 <doc:Protocols>을 참고바랍니다.
 
 ### 집합 타입 구문 (Set Type Syntax)
 
@@ -863,7 +863,7 @@ for genre in favoriteGenres {
   ```
 -->
 
-`for`-`in` 루프에 대해 자세한 내용은 <doc:ControlFlow#For-In-루프-For-In-Loops>를 참고 바랍니다.
+`for`-`in` 루프에 대해 자세한 내용은 <doc:ControlFlow#For-In-루프-For-In-Loops>를 참고바랍니다.
 
 Swift의 `Set` 타입은 정의된 순서를 가지고 있지 않습니다.
 특정 순서로 집합의 값을 반복하려면,
@@ -1034,7 +1034,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
 > Note: Swift의 `Dictionary` 타입은 Foundation의 `NSDictionary` 클래스와 연결됩니다.
 >
 > Foundation과 Cocoa에서 `Dictionary` 사용에 대한 자세한 내용은
-> [Dictionary와 NSDictionary의 연결 (Bridging Between Dictionary and NSDictionary)](https://developer.apple.com/documentation/swift/dictionary#2846239)을 참고 바랍니다.
+> [Dictionary와 NSDictionary의 연결 (Bridging Between Dictionary and NSDictionary)](https://developer.apple.com/documentation/swift/dictionary#2846239)을 참고바랍니다.
 
 ### 딕셔너리 타입 축약형 구문 (Dictionary Type Shorthand Syntax)
 
@@ -1402,7 +1402,7 @@ for (airportCode, airportName) in airports {
   ```
 -->
 
-`for`-`in` 루프에 대한 자세한 설명은 <doc:ControlFlow#For-In-루프-For-In-Loops>를 참고 바랍니다.
+`for`-`in` 루프에 대한 자세한 설명은 <doc:ControlFlow#For-In-루프-For-In-Loops>를 참고바랍니다.
 
 딕셔너리의 `keys`와 `values` 프로퍼티로
 딕셔너리의 키나 값에 반복 가능한 컬렉션을 가져올 수도 있습니다:

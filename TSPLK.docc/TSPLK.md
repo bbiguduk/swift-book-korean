@@ -121,9 +121,9 @@
 | Structed Concurrency         | 구조화된 동시성     |
 | Unstructed Concurrency       | 구조화되지 않은 동시성 |
 | Type Parameter               | 타입 파라미터      |
-| Opaque Type                  | 불투명한 타입      |
+| Opaque Type                  | 불투명 타입      |
 | Automatic Reference Counting | 자동 참조 카운팅    |
-| Strong Reference Cycle       | 강한 참조 사이클    |
+| Strong Reference Cycle       | 강한 순환 참조    |
 | Weak Reference               | 약한 참조        |
 | Unowned Reference            | 미소유 참조       |
 | Capture List                 | 캡처 리스트       |

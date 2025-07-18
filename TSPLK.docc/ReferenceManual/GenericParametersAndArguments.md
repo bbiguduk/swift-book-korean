@@ -4,7 +4,7 @@
 
 이 챕터에서 제너릭 타입, 함수, 그리고 이니셜라이저에 대한 파라미터와 인수를 설명합니다. 제너릭 타입, 함수, 서브스크립트, 또는 이니셜라이저를 선언할 때 제너릭 타입, 함수, 또는 이니셜라이저이 동작할 수 있는 타입 파라미터를 지정합니다. 이러한 타입 파라미터는 제너릭 타입의 인스턴스가 생성되거나 제너릭 함수 또는 이니셜라이저이 호출 될 때 실제 구체적인 타입 인수에 의해 대체되는 자리표시자 역할을 합니다.
 
-Swift 의 제너릭에 대한 개요는 <doc:Generics> 을 참고 바랍니다.
+Swift 의 제너릭에 대한 개요는 <doc:Generics> 을 참고바랍니다.
 
 ## 제너릭 파라미터 절 (Generic Parameter Clause)
 
@@ -68,7 +68,7 @@ extension Collection where Element: SomeProtocol {
 
 타입 파라미터에 다른 제약조건, 요구사항, 또는 둘 다 제공하여 제너릭 함수 또는 이니셜라이저를 오버로드 할 수 있습니다. 오버로드 된 제너릭 함수 또는 이니셜라이저를 호출할 때 컴파일러는 호출할 오버로드 된 함수 또는 이니셜라이저를 확인하기 위해 이 제약조건을 사용합니다.
 
-제너릭 `where` 절에 대한 자세한 정보와 제너릭 함수 선언의 예시를 보려면 <doc:Generics#제너릭-Where-절-Generic-Where-Clauses> 을 참고 바랍니다.
+제너릭 `where` 절에 대한 자세한 정보와 제너릭 함수 선언의 예시를 보려면 <doc:Generics#제너릭-Where-절-Generic-Where-Clauses> 을 참고바랍니다.
 
 > Grammar of a generic parameter clause:
 >

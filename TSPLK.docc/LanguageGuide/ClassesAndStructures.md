@@ -35,7 +35,7 @@ Swift에서 구조체와 클래스는 공통점이 많습니다.
 
 더 자세한 내용은
 <doc:Properties>, <doc:Methods>, <doc:Subscripts>, <doc:Initialization>,
-<doc:Extensions>, <doc:Protocols>을 참고 바랍니다.
+<doc:Extensions>, <doc:Protocols>을 참고바랍니다.
 
 클래스는 구조체에 없는 추가적인 기능도 지원합니다:
 
@@ -46,7 +46,7 @@ Swift에서 구조체와 클래스는 공통점이 많습니다.
 
 더 자세한 내용은
 <doc:Inheritance>, <doc:TypeCasting>, <doc:Deinitialization>,
-<doc:AutomaticReferenceCounting>을 참고 바랍니다.
+<doc:AutomaticReferenceCounting>을 참고바랍니다.
 
 클래스가 지원하는 추가 기능은
 더 높은 복잡성을 수반합니다.
@@ -56,10 +56,10 @@ Swift에서 구조체와 클래스는 공통점이 많습니다.
 실제 개발에서는 대부분의 커스텀 타입이
 구조체나 열거형으로 작성됩니다.
 더 자세한 비교는
-[구조체와 클래스 선택 (Choosing Between Structures and Classes)](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes)을 참고 바랍니다.
+[구조체와 클래스 선택 (Choosing Between Structures and Classes)](https://developer.apple.com/documentation/swift/choosing_between_structures_and_classes)을 참고바랍니다.
 
 > Note: 클래스와 액터(actor)는 많은 특성과 동작을 공유합니다.
-> 액터에 대한 자세한 내용은 <doc:Concurrency>을 참고 바랍니다.
+> 액터에 대한 자세한 내용은 <doc:Concurrency>을 참고바랍니다.
 
 ### 정의 문법 (Definition Syntax)
 
@@ -182,7 +182,7 @@ let someVideoMode = VideoMode()
 이렇게 하면 모든 프로퍼티가 기본 값으로 초기화되는
 클래스나 구조체의 새로운 인스턴스를 생성합니다.
 클래스와 구조체 초기화에 대한 자세한 내용은
-<doc:Initialization>를 참고 바랍니다.
+<doc:Initialization>를 참고바랍니다.
 
 <!--
   TODO: note that you can only use the default constructor if you provide default values
@@ -268,7 +268,7 @@ let vga = Resolution(width: 640, height: 480)
 -->
 
 구조체와 다르게, 클래스 인스턴스는 멤버와이즈 초기화를 제공하지 않습니다.
-초기화에 대한 자세한 설명은 <doc:Initialization>을 참고 바랍니다.
+초기화에 대한 자세한 설명은 <doc:Initialization>을 참고바랍니다.
 
 <!--
   - test: `classesDontHaveADefaultMemberwiseInitializer`
@@ -696,7 +696,7 @@ C의 포인터와 유사하지만,
 대신 Swift에서는 이러한 참조를 다른 상수나 변수를 선언하듯이 간단하게 정의할 수 있습니다.
 직접 포인터와 상호작용해야 하는 경우를 위해
 Swift 표준 라이브러리는 포인터 및 버퍼 타입을 제공합니다 ---
-자세한 내용은 [수동 메모리 관리 (Manual Memory Management)](https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management)를 참고 바랍니다.
+자세한 내용은 [수동 메모리 관리 (Manual Memory Management)](https://developer.apple.com/documentation/swift/swift_standard_library/manual_memory_management)를 참고바랍니다.
 
 <!--
   TODO: functions aren't "instances". This needs clarifying.

@@ -131,7 +131,7 @@ if environment == "development" {
 이 상수는 항상 값이 있음을 보장합니다.
 이 방법으로 초기 값을 설정할 때,
 Swift가 어떻게 코드를 검사하는지 자세한 내용은
-<doc:Declarations#상수-선언-Constant-Declaration>을 참고 바랍니다.
+<doc:Declarations#상수-선언-Constant-Declaration>을 참고바랍니다.
 
 여러개의 상수 또는 여러개의 변수를 선언할 때 콤마로 구분하여
 한줄로 선언이 가능합니다:
@@ -333,7 +333,7 @@ print(friendlyWelcome)
 `terminator`로 빈 문자열을 전달하면 됩니다 --- 예를 들어,
 `print(someValue, terminator: "")`처럼 사용합니다.
 파라미터 기본값에 대한 자세한 내용은
-<doc:Functions#파라미터-기본값-Default-Parameter-Values>을 참고 바랍니다.
+<doc:Functions#파라미터-기본값-Default-Parameter-Values>을 참고바랍니다.
 
 <!--
   - test: `printingWithoutNewline`
@@ -1605,7 +1605,7 @@ print(greeting)
 -->
 
 대체 값 제공하기 위한 `??` 사용에 대한 더 자세한 내용은
-<doc:BasicOperators#Nil-결합-연산자-Nil-Coalescing-Operator>를 참고 바랍니다.
+<doc:BasicOperators#Nil-결합-연산자-Nil-Coalescing-Operator>를 참고바랍니다.
 
 ### 강제 언래핑 (Force Unwrapping)
 
@@ -1642,7 +1642,7 @@ guard let number = convertedNumber else {
 
 데이터 요구사항을 강제하고
 실행 중에 가정을 확인하는 방법에 대한 자세한 내용은
-<doc:TheBasics#역설과-전제조건-Assertions-and-Preconditions>을 참고 바랍니다.
+<doc:TheBasics#역설과-전제조건-Assertions-and-Preconditions>을 참고바랍니다.
 
 ### 암시적으로 언래핑된 옵셔널 (Implicitly Unwrapped Optionals)
 

@@ -22,7 +22,7 @@ Swift에서 확장은 다음을 수행할 수 있습니다:
 Swift에서
 프로토콜을 확장하여 프로토콜 요구사항 구현을 제공하거나
 준수하는 타입의 기능을 추가할 수도 있습니다.
-더 자세한 내용은 <doc:Protocols#프로토콜-확장-Protocol-Extensions>을 참고 바랍니다.
+더 자세한 내용은 <doc:Protocols#프로토콜-확장-Protocol-Extensions>을 참고바랍니다.
 
 > Note: 확장은 타입에 새로운 기능을 추가할 수 있지만,
 > 기존 기능을 재정의할 수는 없습니다.
@@ -120,7 +120,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 -->
 
 이러한 방법으로 프로토콜 준수를 추가하는 것에 대한 자세한 설명은
-<doc:Protocols#확장으로-프로토콜-준수성-추가-Adding-Protocol-Conformance-with-an-Extension>를 참고 바랍니다.
+<doc:Protocols#확장으로-프로토콜-준수-추가-Adding-Protocol-Conformance-with-an-Extension>를 참고바랍니다.
 
 확장은 <doc:Generics#제너릭-타입-확장-Extending-a-Generic-Type>에 설명된대로
 기존 제너릭 타입을 확장하기 위해 사용할 수 있습니다.

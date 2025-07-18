@@ -653,7 +653,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 정의한 연산 프로퍼티의 경우,
 관찰자를 생성하는 대신에
 프로퍼티의 setter를 이용하여 값 변경을 관찰하고 응답해야 합니다.
-재정의 프로퍼티에 대한 자세한 내용은 <doc:Inheritance#재정의-Overriding>를 참고 바랍니다.
+재정의 프로퍼티에 대한 자세한 내용은 <doc:Inheritance#재정의-Overriding>를 참고바랍니다.
 
 <!--
   - test: `lazyPropertiesCanHaveObservers`
@@ -741,7 +741,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 >
 > 초기화 위임에 대한 자세한 내용은
 > <doc:Initialization#값-타입을-위한-이니셜라이저-위임-Initializer-Delegation-for-Value-Types>과
-> <doc:Initialization#클래스-타입의-이니셜라이저-위임-Initializer-Delegation-for-Class-Types>을 참고 바랍니다.
+> <doc:Initialization#클래스-타입의-이니셜라이저-위임-Initializer-Delegation-for-Class-Types>을 참고바랍니다.
 
 <!--
   - test: `observersDuringInitialization`
@@ -855,7 +855,7 @@ stepCounter.totalSteps = 896
 > 이것은 in-out 파라미터에 대한 복사-입력(copy-in) 및 복사-출력(copy-out) 메모리 모델 때문에 그렇습니다:
 > 함수가 끝날 때 값이 항상 프로퍼티로 다시 작성되기 때문에 관찰자가 호출되는 것입니다.
 > in-out 파라미터에 대한 자세한 내용은
-> <doc:Declarations#In-Out-파라미터-In-Out-Parameters>를 참고 바랍니다.
+> <doc:Declarations#In-Out-파라미터-In-Out-Parameters>를 참고바랍니다.
 
 <!--
   - test: `observersCalledAfterInout`
@@ -943,7 +943,7 @@ getter는 저장된 값을 반환합니다.
 > 다른곳에서 작성된 코드는
 > `wrappedValue`를 위한 getter와 setter를 사용하여 값에 접근하고
 > `number` 자체에는 직접 접근할 수 없습니다.
-> `private`에 대한 정보는 <doc:AccessControl>를 참고 바랍니다.
+> `private`에 대한 정보는 <doc:AccessControl>를 참고바랍니다.
 
 <!--
   In this example,
@@ -1186,7 +1186,7 @@ struct SmallNumber {
 아래 예시에서는
 이 이니셜라이저를 사용해 래핑된 값과 최대 값을 설정합니다.
 초기화와 이니셜라이저에 대한 자세한 내용은
-<doc:Initialization>를 참고 바랍니다.
+<doc:Initialization>를 참고바랍니다.
 
 프로퍼티에 래퍼를 적용할 때 초기 값을 지정하지 않으면,
 Swift는 래퍼를 설정하기 위해 `init()`을 사용합니다.

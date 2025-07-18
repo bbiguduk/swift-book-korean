@@ -429,7 +429,7 @@ print("Car: \(car.description)")
 상속된 프로퍼티에 프로퍼티 관찰자를 추가하기 위해 프로퍼티 재정의를 사용할 수 있습니다.
 이것은 기존에 구현된 프로퍼티가 어떻든 상관없이
 상속된 프로퍼티의 값이 변경될 때 알림을 받을 수 있습니다.
-자세한 내용은 <doc:Properties#프로퍼티-관찰자-Property-Observers>를 참고 바랍니다.
+자세한 내용은 <doc:Properties#프로퍼티-관찰자-Property-Observers>를 참고바랍니다.
 
 > Note: 상속된 저장 프로퍼티 상수나 상속된 읽기 전용 연산 프로퍼티에
 > 프로퍼티 관찰자를 추가할 수 없습니다.
@@ -510,7 +510,7 @@ print("AutomaticCar: \(automatic.description)")
 컴파일 시 오류가 발생합니다.
 확장한 클래스에 추가된 메서드, 프로퍼티, 서브스크립트는
 확장의 정의 내에서 final로 표시할 수도 있습니다.
-자세한 내용은 <doc:Extensions>을 참고 바랍니다.
+자세한 내용은 <doc:Extensions>을 참고바랍니다.
 
 <!--
   - test: `finalPreventsOverriding`

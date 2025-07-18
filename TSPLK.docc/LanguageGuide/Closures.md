@@ -334,7 +334,7 @@ reversedNames = names.sorted(by: >)
   ```
 -->
 
-연산자 메서드에 대한 자세한 내용은 <doc:AdvancedOperators#연산자-메서드-Operator-Methods>를 참고 바랍니다.
+연산자 메서드에 대한 자세한 내용은 <doc:AdvancedOperators#연산자-메서드-Operator-Methods>를 참고바랍니다.
 
 ## 후행 클로저 (Trailing Closures)
 
@@ -682,7 +682,7 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
 반환하는 함수에는 파라미터가 없으며,
 호출될 때마다 `Int` 값을 반환합니다.
 함수가 다른 함수를 반환하는 방법을 알아보려면
-<doc:Functions#반환-타입으로-함수-타입-Function-Types-as-Return-Types>을 참고 바랍니다.
+<doc:Functions#반환-타입으로-함수-타입-Function-Types-as-Return-Types>을 참고바랍니다.
 
 `makeIncrementer(forIncrement:)` 함수는 반환될 현재 증가분을 저장하기 위해
 `runningTotal`이라는 정수 변수를 정의합니다.
@@ -834,7 +834,7 @@ incrementByTen()
 > 클로저가 인스턴스나 인스턴스의 멤버를 참조하여 해당 인스턴스를 캡처하면
 > 클로저와 인스턴스 사이에 강한 참조 순환이 생성됩니다.
 > Swift는 *캡처 리스트*를 사용하여 이러한 강한 참조 순환을 끊습니다.
-> 자세한 내용은 <doc:AutomaticReferenceCounting#클로저에-대한-강한-참조-순환-Strong-Reference-Cycles-for-Closures>을 참고 바랍니다.
+> 자세한 내용은 <doc:AutomaticReferenceCounting#클로저에-대한-강한-참조-순환-Strong-Reference-Cycles-for-Closures>을 참고바랍니다.
 
 ## 클로저는 참조 타입 (Closures Are Reference Types)
 

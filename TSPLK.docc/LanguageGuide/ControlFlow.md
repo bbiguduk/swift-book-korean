@@ -92,7 +92,7 @@ for (animalName, legCount) in numberOfLegs {
 특히
 아이템을 딕셔너리에 삽입하는 순서는
 아이템이 반복되는 순서를 정의하지 않습니다.
-배열과 딕셔너리의 자세한 내용은 <doc:CollectionTypes>을 참고 바랍니다.
+배열과 딕셔너리의 자세한 내용은 <doc:CollectionTypes>을 참고바랍니다.
 
 <!--
   TODO: provide some advice on how to iterate over a Dictionary in order
@@ -194,7 +194,7 @@ print("\(base) to the power of \(power) is \(answer)")
 `0`분을 시작으로 `60`개의 눈금을 그려야 합니다.
 이럴 경우 반열림 범위 연산자(`..<`)를 사용하여
 가장 최소 값은 포함하지만 최대 값은 포함되지 않게 사용할 수 있습니다.
-범위에 대한 자세한 내용은 <doc:BasicOperators#범위-연산자-Range-Operators>를 참고 바랍니다.
+범위에 대한 자세한 내용은 <doc:BasicOperators#범위-연산자-Range-Operators>를 참고바랍니다.
 
 ```swift
 let minutes = 60
@@ -873,7 +873,7 @@ let weatherAdvice = if temperatureInCelsius > 100 {
 `.boiling` 오류를 발생시킵니다.
 `if` 표현식은 오류를 발생할 수 있지만,
 `try`를 전에 작성하지 않습니다.
-오류에 대한 자세한 내용은 <doc:ErrorHandling>을 참고 바랍니다.
+오류에 대한 자세한 내용은 <doc:ErrorHandling>을 참고바랍니다.
 
 위의 예시에서와 같이
 할당의 오른편으로
@@ -1013,7 +1013,7 @@ Swift의 `switch` 구문은
 > Note: Swift에서 `break`는 요구되지 않지만,
 > 특정 케이스를 무시하거나 일치하는 케이스의 실행이 완료되기 전에
 > 빠져나와야할 경우 `break` 구문을 사용할 수 있습니다.
-> 자세한 내용은 <doc:ControlFlow#Switch-구문에서-중단-Break-in-a-Switch-Statement>를 참고 바랍니다.
+> 자세한 내용은 <doc:ControlFlow#Switch-구문에서-중단-Break-in-a-Switch-Statement>를 참고바랍니다.
 
 각 케이스의 본문은 *반드시* 적어도 하나의 실행가능한 구문이 포함되어야 합니다.
 아래의 코드는 첫번째 케이스가 비어 있으므로 유효하지 않습니다:
@@ -1091,7 +1091,7 @@ default:
 읽기 쉽게 하기위해
 합성 케이스는 여러줄로 작성할 수도 있습니다.
 합성 케이스에 대한 자세한 내용은
-<doc:ControlFlow#합성-케이스-Compound-Cases>를 참고 바랍니다.
+<doc:ControlFlow#합성-케이스-Compound-Cases>를 참고바랍니다.
 
 > Note: 특정 `switch` 케이스 끝에서 명시적으로 다음 케이스로 떨어뜨리려면
 > <doc:ControlFlow#Fallthrough>에서 설명한대로
@@ -2111,7 +2111,7 @@ if score < 10 {
 지연된 코드가 실행되지 않습니다.
 그러나 오류가 발생한 후에는 지연된 코드가 실행됩니다;
 `defer`를 오류 처리와 함께 사용하는 방법에 대한 자세한 내용은
-<doc:ErrorHandling#정리-작업-지정-Specifying-Cleanup-Actions>을 참고 바랍니다.
+<doc:ErrorHandling#정리-작업-지정-Specifying-Cleanup-Actions>을 참고바랍니다.
 
 ## API 가용성 검사 (Checking API Availability)
 
@@ -2160,7 +2160,7 @@ macOS에서는 macOS 10.12 이상 버전에서만 실행됩니다.
 일반적인 형식에서
 가용성 조건은 플랫폼 이름 및 버전 목록을 포함합니다.
 `iOS`, `macOS`, `watchOS`, `tvOS`, `visionOS`와 같은 플랫폼 이름을 사용하고 ---
-자세한 내용은 <doc:Attributes#선언-속성-Declaration-Attributes>을 참고 바랍니다.
+자세한 내용은 <doc:Attributes#선언-속성-Declaration-Attributes>을 참고바랍니다.
 iOS 8 또는 macOS 10.10과 같은 메이저 버전 번호를 지정하는 것 외에
 iOS 11.2.6과 macOS 10.13.3과 같은 마이너 버전 번호로 지정할 수 있습니다.
 

@@ -185,7 +185,7 @@ guard <#condition#> else {
 * `continue`
 * `throw`
 
-제어 전송 구문은 아래 <doc:Statements#제어-전송-구문-Control-Transfer-Statements> 에서 설명되어 있습니다. Never 반환 타입이 있는 함수에 자세한 내용은 <doc:Declarations#반환되지-않는-함수-Functions-that-Never-Return> 를 참고 바랍니다.
+제어 전송 구문은 아래 <doc:Statements#제어-전송-구문-Control-Transfer-Statements> 에서 설명되어 있습니다. Never 반환 타입이 있는 함수에 자세한 내용은 <doc:Declarations#반환되지-않는-함수-Functions-that-Never-Return> 를 참고바랍니다.
 
 > Grammar of a guard statement:
 >
@@ -213,7 +213,7 @@ default:
 
 `switch` 구문의 _제어 표현식 (control expression)_ 은 평가된 다음에 각 케이스에 지정한 패턴과 비교됩니다. 일치하는 항목이 있으면 프로그램은 해당 케이스의 범위내에 _구문 (statements)_ 을 실행합니다. 각 케이스의 범위는 비어 있을 수 없습니다. 결과적으로 각 케이스 라벨의 콜론 (`:`) 다음에 적어도 하나의 구문이 포함되어야 합니다. 일치하는 케이스의 본문에서 코드를 실행하지 않으려면 단일 `break` 구문을 사용해야 합니다.
 
-코드가 분기할 수 있는 표현식의 값은 매우 유연합니다. 예를 들어 정수와 문자와 같은 스칼라 타입의 값을 제외하고 코드는 부동 소수점 숫자, 문자열, 튜플, 커스텀 클래스의 인스턴스, 그리고 옵셔널을 포함하는 모든 타입의 값으로 분기할 수 있습니다. _제어 표현식 (control expression)_ 의 값은 열거형의 케이스의 값과 일치하고 지정된 값 범위에 포함되는지 확인할 수도 있습니다. `switch` 구문에서 값의 이러한 여러가지 타입을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#Switch> 를 참고 바랍니다.
+코드가 분기할 수 있는 표현식의 값은 매우 유연합니다. 예를 들어 정수와 문자와 같은 스칼라 타입의 값을 제외하고 코드는 부동 소수점 숫자, 문자열, 튜플, 커스텀 클래스의 인스턴스, 그리고 옵셔널을 포함하는 모든 타입의 값으로 분기할 수 있습니다. _제어 표현식 (control expression)_ 의 값은 열거형의 케이스의 값과 일치하고 지정된 값 범위에 포함되는지 확인할 수도 있습니다. `switch` 구문에서 값의 이러한 여러가지 타입을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#Switch> 를 참고바랍니다.
 
 `switch` 케이스는 각 패턴 후에 선택적으로 `where` 절을 포함할 수 있습니다. _where 절 (where clause)_ 은 `where` 키워드 다음에 표현식을 붙여 도입되고 케이스에 패턴이 _제어 표현식 (control expression)_ 에 일치되는지 간주되기 전에 추가 조건을 제공하는데 사용됩니다. `where` 절이 있는 경우 연관된 케이스 내에 _구문 (statements)_ 은 _제어 표현식 (control expression)_ 의 값이 케이스의 패턴 중 하나와 일치하고 `where` 절의 표현식이 `true` 로 평가될 때만 실행됩니다. 예를 들어 _제어 표현식 (control expression)_ 은 `(1, 1)` 과 같이 동일한 값의 두 요소가 포함된 튜플인 경우에만 아래 예시의 케이스는 일치됩니다.
 
@@ -233,7 +233,7 @@ Swift 에서 제어 표현식의 타입에서 가능한 모든 값은 적어도 
 
 #### 향후 열거형 케이스 전환 (Switching Over Future Enumeration Cases)
 
-_비고정 열거형 (nonfrozen enumeration)_ 은 앱을 컴파일하고 출시한 후에도 나중에 새로운 열거형 케이스를 얻을 수 있는 특별한 종류의 열거형입니다. 비고정 열거형을 전환하려면 추가 고려사항이 필요합니다. 라이브러리 작성자가 비고정으로 열거형을 표시할 때 새로운 열거형 케이스를 추가할 권한이 있으며 해당 열거형과 상호작용하는 모든 코드는 다시 컴파일되지 않고 향후 케이스를 처리할 수 있습니다. 라이브러리 진화 모드에서 컴파일된 코드, Swift 표준 라이브러리의 코드, Apple 프레임워크용 Swift 오버레이, 그리고 C 그리고 Objective-C 코드는 비고정 열거형을 선언할 수 있습니다. 고정과 비고정 열거형에 대한 자세한 내용은 <doc:Attributes#frozen> 을 참고 바랍니다.
+_비고정 열거형 (nonfrozen enumeration)_ 은 앱을 컴파일하고 출시한 후에도 나중에 새로운 열거형 케이스를 얻을 수 있는 특별한 종류의 열거형입니다. 비고정 열거형을 전환하려면 추가 고려사항이 필요합니다. 라이브러리 작성자가 비고정으로 열거형을 표시할 때 새로운 열거형 케이스를 추가할 권한이 있으며 해당 열거형과 상호작용하는 모든 코드는 다시 컴파일되지 않고 향후 케이스를 처리할 수 있습니다. 라이브러리 진화 모드에서 컴파일된 코드, Swift 표준 라이브러리의 코드, Apple 프레임워크용 Swift 오버레이, 그리고 C 그리고 Objective-C 코드는 비고정 열거형을 선언할 수 있습니다. 고정과 비고정 열거형에 대한 자세한 내용은 <doc:Attributes#frozen> 을 참고바랍니다.
 
 비고정 열거형 값을 변경할 때 열거형의 모든 케이스가 해당 전환 케이스가 있더라도 기본 케이스를 포함해야 합니다.향후에 추가된 열거형 케이스에만 일치되는 기본 케이스를 나타내기 위해 기본 케이스에 `@unknown` 속성을 적용할 수 있습니다. Swift 는 컴파일 시에 모든 열거형 케이스와 일치하는 기본 케이스가 있다면 경고를 발생시킵니다. 향후 이 경고는 라이브러리 작성자가 해당 스위치 케이스가 없는 열거형에 새로운 케이스를 추가했음을 알려줍니다.
 
@@ -256,7 +256,7 @@ case .suppressed:
 
 #### 실행이 암시적으로 케이스를 통과하지 않음 (Execution Does Not Fall Through Cases Implicitly)
 
-일치한 케이스 내에 코드 실행이 완료되면 프로그램은 `switch` 구문을 종료합니다. 프로그램 실행이 계속되지 않거나 다음 케이스 또는 기본 케이스로 "이동 (fall through)" 되지 않습니다. 이 말은 한 케이스에서 다음 케이스로 계속해서 실행을 하려면 계속해서 실행되기 원하는 케이스에 간단하게 `fallthrough` 키워드로 구성된 `fallthrough` 구문을 명시적으로 포함해야 합니다. `fallthrough` 구문에 대한 자세한 내용은 아래의 <doc:Statements#Fallthrough-구문-Fallthrough-Statement> 을 참고 바랍니다.
+일치한 케이스 내에 코드 실행이 완료되면 프로그램은 `switch` 구문을 종료합니다. 프로그램 실행이 계속되지 않거나 다음 케이스 또는 기본 케이스로 "이동 (fall through)" 되지 않습니다. 이 말은 한 케이스에서 다음 케이스로 계속해서 실행을 하려면 계속해서 실행되기 원하는 케이스에 간단하게 `fallthrough` 키워드로 구성된 `fallthrough` 구문을 명시적으로 포함해야 합니다. `fallthrough` 구문에 대한 자세한 내용은 아래의 <doc:Statements#Fallthrough-구문-Fallthrough-Statement> 을 참고바랍니다.
 
 > Grammar of a switch statement:
 >
@@ -285,7 +285,7 @@ case .suppressed:
 
 라벨 구문의 범위는 구문 라벨 다음에 오는 전체 구문입니다. 라벨 구문을 중첩할 수 있지만 각 구문 라벨의 이름은 고유해야 합니다.
 
-구문 라벨을 어떻게 사용하는지 자세한 내용과 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
+구문 라벨을 어떻게 사용하는지 자세한 내용과 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고바랍니다.
 
 > Grammar of a labeled statement:
 >
@@ -324,7 +324,7 @@ break <#label name#>
 
 두 경우 모두 프로그램 제어는 루프나 `switch` 구문 다음 코드의 첫번째 줄로 전송됩니다.
 
-break 구문을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#중단-Break> 와 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
+break 구문을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#중단-Break> 와 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고바랍니다.
 
 > Grammar of a break statement:
 >
@@ -347,7 +347,7 @@ continue <#label name#>
 
 `for` 구문에서 증가 표현식은 루프의 본문이 실행된 후에 평가되므로 `continue` 구문 후에도 계속 계산됩니다.
 
-`continue` 구문 사용에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#계속-Continue> 과 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고 바랍니다.
+`continue` 구문 사용에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#계속-Continue> 과 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고바랍니다.
 
 > Grammar of a continue statement:
 >
@@ -359,7 +359,7 @@ continue <#label name#>
 
 `fallthrough` 구문은 케이스 블럭의 마지막 구문 뿐만 아니라 `switch` 구문 내 어디든 나타날 수 있지만 마지막 케이스 블럭에서는 사용될 수 없습니다. 또한 패턴에 값 바인딩 패턴이 포함된 케이스 블럭으로 제어를 전송할 수 없습니다.
 
-`switch` 구문에서 `fallthrough` 구문을 사용하는 방법에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#제어-변경-구문-Control-Transfer-Statements> 을 참고 바랍니다.
+`switch` 구문에서 `fallthrough` 구문을 사용하는 방법에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#제어-변경-구문-Control-Transfer-Statements> 을 참고바랍니다.
 
 > Grammar of a fallthrough statement:
 >
@@ -404,7 +404,7 @@ _표현식 (expression)_ 의 값은 `Error` 프로토콜을 준수하는 타입�
 발생하는 오류의 타입을 선언하면,
 *표현식* 의 값은 해당 타입의 인스턴스여야 합니다.
 
-`throw` 구문을 어떻게 사용하는지에 대한 예시는 <doc:ErrorHandling> 에 <doc:ErrorHandling#던지는-함수를-이용한-오류-전파-Propagating-Errors-Using-Throwing-Functions> 를 참고 바랍니다.
+`throw` 구문을 어떻게 사용하는지에 대한 예시는 <doc:ErrorHandling> 에 <doc:ErrorHandling#던지는-함수를-이용한-오류-전파-Propagating-Errors-Using-Throwing-Functions> 를 참고바랍니다.
 
 > Grammar of a throw statement:
 >
@@ -506,7 +506,7 @@ do throws(<#type#>) {
 `do` 본문은 지정된 *타입* 의 오류만 던질 수 있습니다.
 *타입*은
 `Error` 프로토콜을 준수하는 타입이거나,
-`Error` 프로토콜을 준수하는 불투명한 타입,
+`Error` 프로토콜을 준수하는 불투명 타입,
 또는 `any Error` 의 박스형 프로토콜이어야 합니다.
 `do` 구문은 오류의 타입을 지정하지 않으면,
 Swift 는 다음과 같이 오류 타입을 추론합니다:
@@ -523,7 +523,7 @@ Swift 는 다음과 같이 오류 타입을 추론합니다:
   Swift 는 `do` 구문은 `any Error` 를 던진다고 추론합니다.
 
 명확한 타입을 가지는 오류 동작의 자세한 내용은,
-<doc:오류-타입-지정-Specifying-the-Error-Type> 을 참고 바랍니다.
+<doc:오류-타입-지정-Specifying-the-Error-Type> 을 참고바랍니다.
 
 `do` 코드 블럭의 구문에서 오류가 발생하면 프로그렘 제어는 패턴이 오류와 일치하는 첫번째 `catch` 절로 전송됩니다. 일치하는 절이 없으면 오류를 주변 범위로 전파합니다. 오류를 최상위 수준에서 처리되지 않으면 프로그램 실행은 런타임 오류와 함께 멈춥니다.
 
@@ -531,9 +531,9 @@ Swift 는 다음과 같이 오류 타입을 추론합니다:
 
 여러 패턴을 가지는 `catch` 절은 패턴 중 하나가 일치하는 경우에 오류와 일치합니다. `catch` 절에 여러 패턴을 포함하는 경우 모든 패턴은 동일한 상수 또는 변수 바인딩이 포함되어야 하며 각 바인딩 된 변수 또는 상수는 모든 `catch` 절의 패턴에서 동일한 타입을 가져야 합니다.
 
-오류가 처리되도록 보장하려면 와일드카드 패턴 (`_`) 과 같이 모든 오류를 일치하는 패턴으로 `catch` 절을 사용해야 합니다. `catch` 절에 패턴을 지정하지 않으면 `catch` 절은 모든 오류와 일치하고 `error` 라는 이름의 지역 상수에 바인딩 됩니다. `catch` 절에서 사용할 수 있는 패턴에 대한 자세한 내용은 <doc:Patterns> 을 참고 바랍니다.
+오류가 처리되도록 보장하려면 와일드카드 패턴 (`_`) 과 같이 모든 오류를 일치하는 패턴으로 `catch` 절을 사용해야 합니다. `catch` 절에 패턴을 지정하지 않으면 `catch` 절은 모든 오류와 일치하고 `error` 라는 이름의 지역 상수에 바인딩 됩니다. `catch` 절에서 사용할 수 있는 패턴에 대한 자세한 내용은 <doc:Patterns> 을 참고바랍니다.
 
-여러 `catch` 절과 `do` 구문을 사용하는 방법에 대한 예시는 <doc:ErrorHandling#오류-처리-Handling-Errors> 를 참고 바랍니다.
+여러 `catch` 절과 `do` 구문을 사용하는 방법에 대한 예시는 <doc:ErrorHandling#오류-처리-Handling-Errors> 를 참고바랍니다.
 
 > Grammar of a do statement:
 >
@@ -665,7 +665,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 #sourceLocation()
 ```
 
-라인 제어 구문의 첫번째 형식은 라인 제어 구문 다음에 코드의 라인에서 시작하여 `#line`, `#file`, `#fileID`, 그리고 `#filePath` 리터럴 표현식의 값을 변경합니다. _라인 숫자 (line number)_ 는 `#line` 의 값을 변경하고 0 보다 큰 모든 정수 리터럴 입니다. _파일 경로 (file path)_ 는 `#file`, `#fileID`, 그리고 `#filePath` 의 값을 변경하고 문자열 리터럴 입니다. 지정한 문자열은 `#filePath` 의 값이 되고 문자열의 마지막 구성요소는 `#fileID` 의 값으로 사용됩니다. `#file`, `#fileID`, 그리고 `#filePath` 에 자세한 내용은 <doc:Expressions#리터럴-표현식-Literal-Expression> 을 참고 바랍니다.
+라인 제어 구문의 첫번째 형식은 라인 제어 구문 다음에 코드의 라인에서 시작하여 `#line`, `#file`, `#fileID`, 그리고 `#filePath` 리터럴 표현식의 값을 변경합니다. _라인 숫자 (line number)_ 는 `#line` 의 값을 변경하고 0 보다 큰 모든 정수 리터럴 입니다. _파일 경로 (file path)_ 는 `#file`, `#fileID`, 그리고 `#filePath` 의 값을 변경하고 문자열 리터럴 입니다. 지정한 문자열은 `#filePath` 의 값이 되고 문자열의 마지막 구성요소는 `#fileID` 의 값으로 사용됩니다. `#file`, `#fileID`, 그리고 `#filePath` 에 자세한 내용은 <doc:Expressions#리터럴-표현식-Literal-Expression> 을 참고바랍니다.
 
 라인 제어 구문의 두번째 형식 인 `#sourceLocation()` 은 소스 코드 위치를 기본 라인 숫자와 파일 경로로 초기화 합니다.
 

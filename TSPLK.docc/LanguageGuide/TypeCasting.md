@@ -10,7 +10,7 @@ Swift에서 타입 캐스팅은 `is`와 `as` 연산자로 구현합니다.
 이 두 연산자는 값의 타입을 확인하거나 값을 다른 타입으로 변환하는
 간단하고 효과적인 방법을 제공합니다.
 
-<doc:Protocols#프로토콜-준수에-대한-검사-Checking-for-Protocol-Conformance>에서 설명한대로
+<doc:Protocols#프로토콜-준수-여부-검사-Checking-for-Protocol-Conformance>에서 설명한대로
 타입 캐스팅을 사용하여 타입이 프로토콜을 준수하는지 확인할 수도 있습니다.
 
 ## 타입 캐스팅을 위한 클래스 계층 정의 (Defining a Class Hierarchy for Type Casting)

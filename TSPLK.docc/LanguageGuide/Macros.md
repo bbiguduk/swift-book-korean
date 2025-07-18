@@ -292,7 +292,7 @@ public macro OptionSet<RawType>() =
 매크로 역할의 종류와
 더 자세한 내용은
 <doc:Attributes>의
-<doc:Attributes#attached>와 <doc:Attributes#freestanding>을 참고 바랍니다.
+<doc:Attributes#attached>와 <doc:Attributes#freestanding>을 참고바랍니다.
 
 ## 매크로 확장 (Macro Expansion)
 
@@ -596,7 +596,7 @@ struct MyProjectMacros: CompilerPlugin {
 `expansion(of:in:)` 메서드인 하나의 요구사항을 가집니다.
 매크로 역할과 해당 SwiftSyntax 프로토콜의 목록은
 <doc:Attributes>의
-<doc:Attributes#attached>와 <doc:Attributes#freestanding>을 참고 바랍니다.
+<doc:Attributes#attached>와 <doc:Attributes#freestanding>을 참고바랍니다.
 
 `#fourCharacterCode` 매크로를 확장하기 위해,
 Swift는 이 매크로를 사용하는 코드에 대한 AST를

@@ -14,9 +14,9 @@ Swift 에서 접두사 표현식 (prefix expressions), 이진 표현식 (binary 
 
 _접두사 표현식 (Prefix expressions)_ 은 옵셔널 접두사 연산자 (prefix operator) 와 표현식을 결합합니다. 접두사 연산자는 그 뒤에 오는 표현식 인 하나의 인수를 가집니다.
 
-이 연산자의 동작에 대한 자세한 설명은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고 바랍니다.
+이 연산자의 동작에 대한 자세한 설명은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고바랍니다.
 
-Swift 표준 라이브러리에 의해 제공되는 연산자의 자세한 설명은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고 바랍니다.
+Swift 표준 라이브러리에 의해 제공되는 연산자의 자세한 설명은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고바랍니다.
 
 > Grammar of a prefix expression:
 >
@@ -31,7 +31,7 @@ _in-out 표현식 (in-out expression)_ 은 in-out 인수로 함수 호출 표현
 &<#expression#>
 ```
 
-in-out 파라미터에 대한 설명과 예시는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 를 참고 바랍니다.
+in-out 파라미터에 대한 설명과 예시는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 를 참고바랍니다.
 
 in-out 표현식은 <doc:Expressions#포인터-타입으로-암시적-변환-Implicit-Conversion-to-a-Pointer-Type> 에서 설명한 대로 포인터가 필요한 컨텍스트에서 비포인터 인수 (non-pointer argument) 를 제공할 때도 사용됩니다.
 
@@ -78,7 +78,7 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
 
 중위 연산자가 할당 연산자 이거나 `try` 표현식이 괄호로 묶여있지 않으면 `try` 표현식은 중위 연산자의 오른쪽에 나타날 수 없습니다.
 
-더 자세한 정보와 `try`, `try?`, 그리고 `try!` 사용법에 대한 예시는 <doc:ErrorHandling> 를 참고 바랍니다.
+더 자세한 정보와 `try`, `try?`, 그리고 `try!` 사용법에 대한 예시는 <doc:ErrorHandling> 를 참고바랍니다.
 
 > Grammar of a try expression:
 >
@@ -127,9 +127,9 @@ _중위 표현식 (Infix expressions)_ 은 좌항과 우항 인수를 가지는 
 <#left-hand argument#> <#operator#> <#right-hand argument#>
 ```
 
-이 연산자의 동작에 대한 자세한 설명은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고 바랍니다.
+이 연산자의 동작에 대한 자세한 설명은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고바랍니다.
 
-Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고 바랍니다.
+Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고바랍니다.
 
 > Note\
 > 구문 분석 시 중위 연산자로 구성된 표현식은 단순 리스트로 표현됩니다. 이 리스트는 연산자 우선순위를 적용하여 트리로 변환됩니다. 예를 들어 표현식 `2 + 3 * 5` 는 처음에는 5개의 항목 `2`, `+`, `3`, `*`, 그리고 `5` 의 단순 리스트로 이해됩니다. 이 프로세스는 트리 (2 + (3 \* 5)) 로 변환합니다.
@@ -173,7 +173,7 @@ _삼항 조건 연산자 (ternary conditional operator)_ 는 조건의 값을 �
 
 _조건_ 이 `true` 이면 조건부 연산자는 첫번째 표현식을 평가하고 해당 값을 반환합니다. 그렇지 않으면 두번째 표현식을 평가하고 그것의 값을 반환합니다. 사용하지 않은 표현식은 평가되지 않습니다.
 
-삼항 조건 연산자 사용에 대한 예시는 <doc:BasicOperators#삼항-조건-연산자-Ternary-Conditional-Operator> 를 참고 바랍니다.
+삼항 조건 연산자 사용에 대한 예시는 <doc:BasicOperators#삼항-조건-연산자-Ternary-Conditional-Operator> 를 참고바랍니다.
 
 > Grammar of a conditional operator:
 >
@@ -211,13 +211,13 @@ f(x as Any)
 // Prints "Function for Any"
 ```
 
-브릿징 (Bridging) 을 사용하면 새로운 인스턴스를 생성할 필요없이 `NSString` 과 같은 해당 Foundation 타입으로 `String` 과 같은 Swift 표준 라이브러리 타입의 표현식으로 사용할 수 있습니다. 브릿징에 대한 자세한 설명은 [Foundation 타입 동작 (Working with Foundation Types)](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types) 을 참고 바랍니다.
+브릿징 (Bridging) 을 사용하면 새로운 인스턴스를 생성할 필요없이 `NSString` 과 같은 해당 Foundation 타입으로 `String` 과 같은 Swift 표준 라이브러리 타입의 표현식으로 사용할 수 있습니다. 브릿징에 대한 자세한 설명은 [Foundation 타입 동작 (Working with Foundation Types)](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types) 을 참고바랍니다.
 
 `as?` 연산자는 지정한 _타입_ 으로 _표현식_ 의 조건부 캐스팅을 수행합니다. `as?` 연산자는 지정한 _타입_ 의 옵셔널로 반환합니다. 런타임에 캐스팅이 성공하면 _표현식_ 의 값은 옵셔널로 래핑되고 반환됩니다; 그렇지 않으면 반환된 값은 `nil` 입니다. 지정된 _타입_ 으로 캐스팅이 실패하거나 성공이 보장되면 컴파일 시 오류가 발생합니다.
 
 `as!` 연산자는 지정한 _타입_ 으로 _표현식_ 의 강제 캐스팅을 수행합니다. `as!` 연산자는 옵셔널 타입이 아닌 지정한 _타입_ 의 값을 반환합니다. 캐스팅이 실패하면 런타임 오류가 발생합니다. `x as! T` 의 동작은 `(x as? T)!` 의 동작과 동일합니다.
 
-타입 캐스팅에 대한 자세한 내용과 타입 캐스팅 연산자 사용에 대한 예시는 <doc:TypeCasting> 을 참고 바랍니다.
+타입 캐스팅에 대한 자세한 내용과 타입 캐스팅 연산자 사용에 대한 예시는 <doc:TypeCasting> 을 참고바랍니다.
 
 > Grammar of a type-casting operator:
 >
@@ -288,7 +288,7 @@ var emptyDictionary: [String: Double] = [:]
 
 _플레이그라운드 리터럴 (playground literal)_ 은 프로그램 편집기 내에서 색상, 파일, 또는 이미지의 상호 표현을 생성하기 위해 Xcode 에 의해 사용됩니다. Xcode 의 외부 플레인 텍스트에서 플레이그라운드 리터럴은 특수 리터럴 구문을 사용하여 표현됩니다.
 
-Xcode 에서 플레이그라운드 리터럴 사용에 대한 정보는 Xcode 도움에 [색상, 파일, 또는 이미지 리터럴 추가하기 (Add a color, file, or image literal)](https://help.apple.com/xcode/mac/current/#/dev4c60242fc) 을 참고 바랍니다.
+Xcode 에서 플레이그라운드 리터럴 사용에 대한 정보는 Xcode 도움에 [색상, 파일, 또는 이미지 리터럴 추가하기 (Add a color, file, or image literal)](https://help.apple.com/xcode/mac/current/#/dev4c60242fc) 을 참고바랍니다.
 
 > Grammar of a literal expression:
 >
@@ -486,11 +486,11 @@ myFunction { return $0 + $1 }
 myFunction { $0 + $1 }
 ```
 
-함수에 인수로 클로저를 전달하는 것에 대한 정보는 <doc:Expressions#함수-호출-표현식-Function-Call-Expression> 을 참고 바랍니다.
+함수에 인수로 클로저를 전달하는 것에 대한 정보는 <doc:Expressions#함수-호출-표현식-Function-Call-Expression> 을 참고바랍니다.
 
 클로저 표현식은 함수 호출의 일부로 클로저를 즉시 사용할 때와 같이 변수나 상수에 저장하지 않고 사용될 수 있습니다. 위 코드에서 `myFunction` 에 전달된 클로저 표현식은 이러한 종류의 즉각적인 사용의 예시입니다. 결과적으로 클로저 표현식은 탈출 (escaping) 인지 비탈출 (nonescaping) 인지 여부는 주변의 컨텍스트에 의해 결정됩니다. 클로저 표현식은 즉시 호출되거나 비탈출 함수 인수로 전달되면 비탈출 입니다. 그렇지 않으면 클로저 표현식은 탈출입니다.
 
-탈출 클로저에 대한 자세한 내용은 <doc:Closures#탈출-클로저-Escaping-Closures> 를 참고 바랍니다.
+탈출 클로저에 대한 자세한 내용은 <doc:Closures#탈출-클로저-Escaping-Closures> 를 참고바랍니다.
 
 #### **캡처 리스트 (Capture Lists)**
 
@@ -549,7 +549,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-클로저 표현식에 자세한 내용과 예시는 <doc:Closures#클로저-표현식-Closure-Expressions> 을 참고 바랍니다. 캡처 리스트에 자세한 내용과 예시는 <doc:AutomaticReferenceCounting#클로저에-대한-강한-참조-사이클-해결-Resolving-Strong-Reference-Cycles-for-Closures> 을 참고 바랍니다.
+클로저 표현식에 자세한 내용과 예시는 <doc:Closures#클로저-표현식-Closure-Expressions> 을 참고바랍니다. 캡처 리스트에 자세한 내용과 예시는 <doc:AutomaticReferenceCounting#클로저에-대한-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-for-Closures> 을 참고바랍니다.
 
 > Grammar of a closure expression:
 >
@@ -739,7 +739,7 @@ Swift 는 매크로를 구현하는 외부 프로세스를 시작하고
 Swift 는 생성된 모든 AST 노드를 수집하고
 AST 에서 적절한 위치에 배치하여 전체 확장을 형성합니다.
 
-Swift 에서 매크로의 개요는 <doc:Macros> 를 참고 바랍니다.
+Swift 에서 매크로의 개요는 <doc:Macros> 를 참고바랍니다.
 
 > Grammar of a macro-expansion expression:
 >
@@ -906,7 +906,7 @@ let taskKeyPath = \[Task][makeIndex()]
 let someTask = toDoList[keyPath: taskKeyPath]
 ```
 
-Objective-C API 와 함께 상혹작용하는 코드에서 키 경로를 사용하는 것에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고 바랍니다. 키-값 코딩과 키-값 관찰에 대한 자세한 내용은 [키-값 코딩 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 와 [키-값 관찰 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i) 을 참고 바랍니다.
+Objective-C API 와 함께 상혹작용하는 코드에서 키 경로를 사용하는 것에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고바랍니다. 키-값 코딩과 키-값 관찰에 대한 자세한 내용은 [키-값 코딩 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 와 [키-값 관찰 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i) 을 참고바랍니다.
 
 > Grammar of a key-path expression:
 >
@@ -961,7 +961,7 @@ let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (Str
 > Note\
 > _메서드 이름 (method name)_ 과 _프로퍼티 이름 (property name)_ 은 표현식이지만 절대 평가되지 않습니다.
 
-Objective-C API 와 상호작용하는 Swift 코드에서 선택기 사용에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고 바랍니다.
+Objective-C API 와 상호작용하는 Swift 코드에서 선택기 사용에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고바랍니다.
 
 > Grammar of a selector expression:
 >
@@ -1010,7 +1010,7 @@ print(keyPath == c.getSomeKeyPath())
 
 키 경로 문자열은 런타임이 아닌 컴파일 시에 생성되기 때문에 컴파일러는 프로퍼티가 존재하고 해당 프로퍼티가 Objective-C 런타임에 노출되는지 확인할 수 있습니다.
 
-Objective-C API 와 상호작용하는 Swift 코드에서 키 경로를 사용하는 것에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고 바랍니다. 키-값 코딩과 키-값 관찰에 대한 자세한 내용은 [키-값 코딩 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 와 [키-값 관찰 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i) 를 참고 바랍니다.
+Objective-C API 와 상호작용하는 Swift 코드에서 키 경로를 사용하는 것에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고바랍니다. 키-값 코딩과 키-값 관찰에 대한 자세한 내용은 [키-값 코딩 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 와 [키-값 관찰 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i) 를 참고바랍니다.
 
 > Note\
 > _프로퍼티 이름 (property name)_ 은 표현식이지만 절대 평가되지 않습니다.
@@ -1023,9 +1023,9 @@ Objective-C API 와 상호작용하는 Swift 코드에서 키 경로를 사용�
 
 _접미사 표현식 (Postfix expressions)_ 은 접미사 연산자 (postfix operator) 또는 다른 접미사 구문 (other postfix syntax) 을 표현식에 적용하여 형성됩니다. 구문적으로 모든 기본 표현식은 접미사 표현식 입니다.
 
-이러한 연산자의 동작에 대한 자세한 내용은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고 바랍니다.
+이러한 연산자의 동작에 대한 자세한 내용은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고바랍니다.
 
-Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고 바랍니다.
+Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고바랍니다.
 
 > Grammar of a postfix expression:
 >
@@ -1313,7 +1313,7 @@ _서브스크립트 표현식 (subscript expression)_ 은 해당 서브스크립
 
 서브스크립트 표현식의 값을 평가하기 위해 _표현식 (expression)_ 의 타입에 대한 서브스크립트 getter 는 서브스크립트 파라미터로 _인덱스 표현식 (index expressions)_ 을 전달하여 호출됩니다. 값을 설정하기 위해선 서브스크립트 setter 는 동일한 방식으로 호출됩니다.
 
-서브스크립트 선언에 대한 자세한 내용은 <doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration> 을 참고 바랍니다.
+서브스크립트 선언에 대한 자세한 내용은 <doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration> 을 참고바랍니다.
 
 > Grammar of a subscript expression:
 >

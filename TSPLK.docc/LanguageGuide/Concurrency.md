@@ -933,7 +933,7 @@ let result = await handle.value
 ```
 
 분리된 작업(detached tasks) 관리에 대한 자세한 내용은
-[`Task`](https://developer.apple.com/documentation/swift/task)를 참고 바랍니다.
+[`Task`](https://developer.apple.com/documentation/swift/task)를 참고바랍니다.
 
 <!--
   TODO Add some conceptual guidance about
@@ -1256,7 +1256,7 @@ Swift가 적용하는 의미론적 요구사항이 있습니다.
 -->
 
 의미론적 요구사항의 자세한 목록은
-[Sendable](https://developer.apple.com/documentation/swift/sendable) 프로토콜을 참고 바랍니다.
+[Sendable](https://developer.apple.com/documentation/swift/sendable) 프로토콜을 참고바랍니다.
 
 Sendable 프로퍼티만 가지는 구조체와
 Sendable 연관 값만 가지는 열거형과 같이

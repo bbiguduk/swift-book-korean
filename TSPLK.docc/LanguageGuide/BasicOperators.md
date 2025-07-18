@@ -181,7 +181,7 @@ Swift는 모든 숫자 타입에 대해 4개의 기본 *산술 연산자(arithme
 C와 Objective-C에서의 산술 연산자와 다르게
 Swift 산술 연산자는 기본적으로 값의 오버플로우를 허용하지 않습니다.
 Swift의 오버플로우 연산자(예: `a &+ b`)를 사용하여 값 오버플로우 동작을 선택적으로 활성화할 수 있습니다.
-자세한 내용은 <doc:AdvancedOperators#오버플로우-연산자-Overflow-Operators>를 참고 바랍니다.
+자세한 내용은 <doc:AdvancedOperators#오버플로우-연산자-Overflow-Operators>를 참고바랍니다.
 
 덧셈 연산자는 `String` 연결도 지원합니다:
 
@@ -366,7 +366,7 @@ a += 2
 > 예를 들어 `let b = a += 2`로 작성할 수 없습니다.
 
 Swift 표준 라이브러리에서 제공하는 연산자에 대한 내용은
-[연산자 선언(Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations)을 참고 바랍니다.
+[연산자 선언(Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations)을 참고바랍니다.
 
 ## 비교 연산자 (Comparison Operators)
 
@@ -381,7 +381,7 @@ Swift는 아래의 비교 연산자(comparison operators)를 제공합니다:
 
 > Note: Swift는 두 객체 참조가 동일한 객체 인스턴스를 참조하는지 판별하는
 > *식별 연산자(identity operators)*(`===`와 `!==`)를 제공합니다.
-> 자세한 내용은 <doc:ClassesAndStructures#식별-연산자-Identity-Operators>를 참고 바랍니다.
+> 자세한 내용은 <doc:ClassesAndStructures#식별-연산자-Identity-Operators>를 참고바랍니다.
 
 각 비교 연산자는 구문이 참인지 아닌지 판단하기 위해 `Bool` 값을 반환합니다:
 
@@ -447,7 +447,7 @@ if name == "world" {
   ```
 -->
 
-`if` 구문에 대한 자세한 내용은 <doc:ControlFlow>를 참고 바랍니다.
+`if` 구문에 대한 자세한 내용은 <doc:ControlFlow>를 참고바랍니다.
 
 같은 타입과 같은 갯수의 값을 가지고 있는 튜플은
 비교할 수 있습니다.
@@ -821,7 +821,7 @@ for index in 1...5 {
   ```
 -->
 
-`for`-`in` 루프에 대한 자세한 설명은 <doc:ControlFlow>을 참고 바랍니다.
+`for`-`in` 루프에 대한 자세한 설명은 <doc:ControlFlow>을 참고바랍니다.
 
 ### 반-열림 범위 연산자 (Half-Open Range Operator)
 
@@ -899,7 +899,7 @@ for i in 0..<count {
 `0..<count`는 반-열림 범위이기 때문에 오직 `3`
 (배열의 마지막 아이템의 인덱스)까지
 카운트 합니다.
-배열에 대한 자세한 설명은 <doc:CollectionTypes#배열-Arrays>을 참고 바랍니다.
+배열에 대한 자세한 설명은 <doc:CollectionTypes#배열-Arrays>을 참고바랍니다.
 
 ### 단-방향 범위 (One-Sided Ranges)
 
