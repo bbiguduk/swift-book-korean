@@ -1,14 +1,28 @@
-# 제네릭 \(Generics\)
+# 제네릭 (Generics)
 
-여러 타입에 대한 동작을 작성하고 해당 타입의 요구사항을 지정합니다.
+여러 타입에 대해 동작하는 코드를 작성하고 해당 타입의 요구사항을 지정합니다.
 
-_제네릭 코드 \(Generic code\)_ 는 정의한 요구사항에 따라 모든 타입에서 동작할 수 있는 유연하고 재사용 가능한 함수와 타입을 작성할 수 있습니다. 중복을 피하고 명확하고 추상적인 방식으로 의도를 표현하는 코드를 작성할 수 있습니다.
+*제네릭 코드(Generic code)*는 정의한 요구사항에 따라
+모든 타입에서 동작할 수 있는 유연하고 재사용 가능한 함수와 타입을 작성할 수 있습니다.
+중복을 피하고
+명확하고 추상적인 방식으로 의도를 표현하는 코드를 작성할 수 있습니다.
 
-제네릭은 Swift의 강력한 특징 중 하나이고 Swift 표준 라이브러리 대부분은 제네릭 코드로 되어 있습니다. 사실 모르고 있더라도 _Language Guide_ 전체에서 제네릭을 사용합니다. 예를 들어 Swift의 `Array` 와 `Dictionary` 타입은 둘다 제네릭 컬렉션 입니다. `Int` 값을 가진 배열, 또는 `String` 값을 가진 배열 또는 실제로 Swift에서 생성될 수 있는 다른 모든 타입에 대한 배열을 생성할 수 있습니다. 마찬가지로 모든 지정된 타입의 값을 저장하기 위한 딕셔너리를 생성할 수 있고 해당 타입에 대한 제한은 없습니다.
+제네릭은 Swift의 강력한 기능 중 하나이고,
+Swift 표준 라이브러리의 많은 부분이 제네릭 코드로 작성되어 있습니다.
+사실 모르고 있더라도
+*Language Guide* 전체에서 제네릭을 사용합니다.
+예를 들어 Swift의 `Array`와 `Dictionary` 타입은
+둘 다 제네릭 컬렉션 입니다.
+`Int` 값을 가진 배열이나
+`String` 값을 가진 배열
+또는 실제로 Swift에서 생성할 수 있는 다른 모든 타입에 대한 배열을 생성할 수 있습니다.
+마찬가지로 모든 지정된 타입의 값을 저장하기 위한 딕셔너리를 생성할 수 있고
+해당 타입에 대한 제한은 없습니다.
 
-## 제네릭이 해결하는 문제 \(The Problem That Generics Solve\)
+## 제네릭이 해결하는 문제 (The Problem That Generics Solve)
 
-다음은 두 `Int` 값을 바꾸는 `swapTwoInts(_:_:)` 라는 제네릭이 아닌 함수를 나타냅니다:
+다음은 두 `Int` 값을 바꾸는
+`swapTwoInts(_:_:)`라는 제네릭이 아닌 함수를 나타냅니다:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int) {
@@ -18,9 +32,24 @@ func swapTwoInts(_ a: inout Int, _ b: inout Int) {
 }
 ```
 
-이 함수는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 에서 설명한 대로 `a` 와 `b` 의 값을 바꾸기 위해 in-out 파라미터를 사용하여 만듭니다.
+<!--
+  - test: `whyGenerics`
 
-`swapTwoInts(_:_:)` 함수는 `b` 의 값을 `a` 로 그리고 `a` 의 값을 `b` 로 바꿉니다. 2개의 `Int` 변수의 값을 바꾸기 위해 이 함수를 호출할 수 있습니다:
+  ```swifttest
+  -> func swapTwoInts(_ a: inout Int, _ b: inout Int) {
+        let temporaryA = a
+        a = b
+        b = temporaryA
+     }
+  ```
+-->
+
+이 함수는 <doc:Functions#In-Out-파라미터-In-Out-Parameters>에서 설명한대로
+`a`와 `b`의 값을 바꾸기 위해 in-out 파라미터를 사용하여 만듭니다.
+
+`swapTwoInts(_:_:)` 함수는 `b`의 값을 `a`로
+그리고 `a`의 값을 `b`로 바꿉니다.
+두 개의 `Int` 변수의 값을 바꾸기 위해 이 함수를 호출할 수 있습니다:
 
 ```swift
 var someInt = 3
@@ -30,7 +59,23 @@ print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 // Prints "someInt is now 107, and anotherInt is now 3"
 ```
 
-`swapTwoInts(_:_:)` 함수는 유용하지만 `Int` 값만 사용이 가능합니다. 2개의 `String` 값 또는 2개의 `Double` 값을 바꾸길 원하면 아래의 `swapTwoStrings(_:_:)` 와 `swapTwoDoubles(_:_:)` 함수와 같이 더 많은 함수를 작성해야 합니다:
+<!--
+  - test: `whyGenerics`
+
+  ```swifttest
+  -> var someInt = 3
+  -> var anotherInt = 107
+  -> swapTwoInts(&someInt, &anotherInt)
+  -> print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+  <- someInt is now 107, and anotherInt is now 3
+  ```
+-->
+
+`swapTwoInts(_:_:)` 함수는 유용하지만 `Int` 값만 사용이 가능합니다.
+두 개의 `String` 값이나
+두 개의 `Double` 값을 바꾸길 원하면
+아래의 `swapTwoStrings(_:_:)`와 `swapTwoDoubles(_:_:)` 함수와 같이
+더 많은 함수를 작성해야 합니다:
 
 ```swift
 func swapTwoStrings(_ a: inout String, _ b: inout String) {
@@ -46,16 +91,49 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
 }
 ```
 
-`swapTwoInts(_:_:)`, `swapTwoStrings(_:_:)`, 그리고 `swapTwoDoubles(_:_:)` 함수의 본문이 동일하다는 것을 알 수 있습니다. 차이점은 받아들이는 값의 타입만 \(`Int`, `String`, 그리고 `Double`\) 다릅니다.
+<!--
+  - test: `whyGenerics`
 
-_모든 타입_ 의 2개의 값을 바꾸는 단일 함수로 작성하면 더 유용하고 더 유연합니다. 제네릭 코드는 이러한 함수를 작성할 수 있습니다 \(이 함수의 제네릭 버전은 아래에 정의됩니다\).
+  ```swifttest
+  -> func swapTwoStrings(_ a: inout String, _ b: inout String) {
+        let temporaryA = a
+        a = b
+        b = temporaryA
+     }
+  ---
+  -> func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
+        let temporaryA = a
+        a = b
+        b = temporaryA
+     }
+  ```
+-->
 
-> Note  
-> 이 3개의 함수는 `a` 와 `b` 의 타입이 모두 같아야 합니다. `a` 와 `b` 가 같은 타입이 아니면 바꾸는 것은 불가능합니다. Swift는 타입 안정성 언어이고 `String` 타입의 변수와 `Double` 타입의 변수가 서로 값을 바꾸도록 허락하지 않습니다. 이러한 시도는 컴파일 오류가 발생합니다.
+`swapTwoInts(_:_:)`, `swapTwoStrings(_:_:)`, `swapTwoDoubles(_:_:)` 함수의
+본문이 동일하다는 것을 알 수 있습니다.
+차이점은 받아들이는 값의 타입만 다릅니다
+(`Int`, `String`, `Double`).
 
-## 제네릭 함수 \(Generic Functions\)
+*모든* 타입의 두 값을 바꾸는 단일 함수로 작성하면
+더 유용하고 유연합니다.
+제네릭 코드는 이러한 함수를 작성할 수 있습니다.
+(이 함수의 제네릭 버전은 아래에 정의되어 있습니다.)
 
-_제네릭 함수 \(Generic functions\)_ 는 모든 타입과 함께 동작할 수 있습니다. 다음은 `swapTwoValues(_:_:)` 라는 위의 `swapTwoInts(_:_:)` 함수의 제네릭 버전입니다:
+> Note: 이 세 개의 함수는
+> `a`와 `b`의 타입이 모두 같아야 합니다.
+> `a`와 `b`가 같은 타입이 아니면
+> 바꾸는 것은 불가능합니다.
+> Swift는 타입 안정 언어이고
+> `String` 타입의 변수와
+> `Double` 타입의 변수가
+> 서로 값을 바꾸도록 허락하지 않습니다.
+> 이러한 시도는 컴파일 오류가 발생합니다.
+
+## 제네릭 함수 (Generic Functions)
+
+*제네릭 함수(Generic functions)*는 모든 타입과 함께 동작할 수 있습니다.
+다음은 `swapTwoValues(_:_:)`라는
+위의 `swapTwoInts(_:_:)` 함수의 제네릭 버전입니다:
 
 ```swift
 func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
@@ -65,20 +143,78 @@ func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
 }
 ```
 
-`swapTwoValues(_:_:)` 함수의 본문은 `swapTwoInts(_:_:)` 함수의 본문과 동일합니다. 그러나 `swapTwoValues(_:_:)` 의 첫번째 줄은 `swapTwoInts(_:_:)` 와 약간 다릅니다. 다음은 첫번째 줄 차이의 비교입니다:
+<!--
+  - test: `genericFunctions`
+
+  ```swifttest
+  -> func swapTwoValues<T>(_ a: inout T, _ b: inout T) {
+        let temporaryA = a
+        a = b
+        b = temporaryA
+     }
+  ```
+-->
+
+<!--
+  This could be done in one line using a tuple pattern: (a, b) = (b, a)
+  That's probably not as approachable here, and the novel syntax to avoid an
+  explicit placeholder variable might distract from the discussion of
+  generics.
+-->
+
+`swapTwoValues(_:_:)` 함수의 본문은
+`swapTwoInts(_:_:)` 함수의 본문과 동일합니다.
+그러나 `swapTwoValues(_:_:)`의 첫 번째 줄은
+`swapTwoInts(_:_:)`와 약간 다릅니다.
+다음은 첫 번째 줄이 어떻게 다른지 보여줍니다:
 
 ```swift
 func swapTwoInts(_ a: inout Int, _ b: inout Int)
 func swapTwoValues<T>(_ a: inout T, _ b: inout T)
 ```
 
-함수의 제네릭 버전은 `Int`, `String`, 또는 `Double` 와 같은 _실제_ 타입 이름 대신에 이 경우 `T` 라는 _임의의_ 타입 이름을 사용합니다. 이 임의의 타입 이름은 `T` 가 무엇이어야 하는지 아무 말도 하지 않지만 `T` 가 무엇을 나타내든 `a` 와 `b` 는 모두 같은 타입 `T` 여야 한다고 말합니다. `T` 의 실제 타입은 `swapTwoValues(_:_:)` 함수가 호출될 때마다 결정됩니다.
+<!--
+  - test: `genericFunctionsComparison`
 
-제네릭 함수와 제네릭이 아닌 함수 사이의 다른 차이점은 제네릭 함수의 이름 \(`swapTwoValues(_:_:)`\)에 바로 임의의 타입 이름 \(`T`\)이 꺾쇠 괄호 내 \(`<T>`\)에 위치한다는 것입니다. 이 괄호는 `T` 는 `swapTwoValues(_:_:)` 함수 정의 내에서 임의의 타입 이름이라고 Swift에게 말합니다. `T` 는 임의의 타입이므로 Swift는 `T` 라는 실제 타입을 찾지 않습니다.
+  ```swifttest
+  -> func swapTwoInts(_ a: inout Int, _ b: inout Int)
+  >> {
+  >>    let temporaryA = a
+  >>    a = b
+  >>    b = temporaryA
+  >> }
+  -> func swapTwoValues<T>(_ a: inout T, _ b: inout T)
+  >> {
+  >>    let temporaryA = a
+  >>    a = b
+  >>    b = temporaryA
+  >> }
+  ```
+-->
 
-`swapTwoValues(_:_:)` 함수는 이제 `swapTwoInts` 와 동일한 방식으로 호출될 수 있지만 두 값이 서로 동일한 타입이면 모든 타입의 두 값을 전달할 수 있다는 점이 다릅니다. `swapTwoValues(_:_:)` 가 호출될 때마다 `T` 로 사용한 타입은 함수에 전달된 값의 타입으로 부터 유추됩니다.
+함수의 제네릭 버전은
+`Int`, `String`, `Double`과 같은 *실제* 타입 이름 대신에
+이 경우 `T`라는 *임의의* 타입 이름을 사용합니다.
+이 임의의 타입 이름 `T`는 어떤 타입인지 나타내지 않지만
+`T`가 무슨 타입이든
+`a`와 `b`는 모두 같은 타입이어야 한다고 나타냅니다.
+`T`의 실제 타입은
+`swapTwoValues(_:_:)` 함수가 호출될 때마다 결정됩니다.
 
-아래의 2개의 예시에서 `T` 는 각각 `Int` 와 `String` 으로 추론됩니다:
+제네릭 함수와 제네릭이 아닌 함수 사이의 다른 차이점은
+제네릭 함수의 이름(`swapTwoValues(_:_:)`)에
+바로 임의의 타입 이름(`T`)이 꺾쇠 괄호 내(`<T>`)에 위치한다는 것입니다.
+이 괄호는 `T`는 `swapTwoValues(_:_:)` 함수 정의 내에서
+임의의 타입 이름이라고 Swift에게 말합니다.
+`T`는 임의의 타입이므로, Swift는 `T`라는 실제 타입을 찾지 않습니다.
+
+`swapTwoValues(_:_:)` 함수는 이제 `swapTwoInts`와 동일한 방식으로 호출할 수 있지만
+두 값이 서로 동일한 타입이면
+*모든* 타입의 두 값을 전달할 수 있다는 점이 다릅니다.
+`swapTwoValues(_:_:)`가 호출될 때마다
+`T`로 사용한 타입은 함수에 전달된 값의 타입으로 추론합니다.
+
+아래의 두 예시에서 `T`는 각각 `Int`와 `String`으로 추론됩니다:
 
 ```swift
 var someInt = 3
@@ -92,20 +228,63 @@ swapTwoValues(&someString, &anotherString)
 // someString is now "world", and anotherString is now "hello"
 ```
 
-> Note  
-> 위에 정의된 `swapTwoValues(_:_:)` 함수는 Swift 표준 라이브러리의 부분이고 앱에서 사용하기 위해 자동으로 만들어지는 `swap` 이라는 제네릭 함수에 의해 영감을 얻었습니다. 자체 코드에서 `swapTwoValues(_:_:)` 함수의 동작이 필요하다면 직접 구현한 함수보다 Swift에 존재하는 `swap(_:_:)` 함수를 사용할 수 있습니다.
+<!--
+  - test: `genericFunctions`
 
-## 타입 파라미터 \(Type Parameters\)
+  ```swifttest
+  -> var someInt = 3
+  -> var anotherInt = 107
+  -> swapTwoValues(&someInt, &anotherInt)
+  /> someInt is now \(someInt), and anotherInt is now \(anotherInt)
+  </ someInt is now 107, and anotherInt is now 3
+  ---
+  -> var someString = "hello"
+  -> var anotherString = "world"
+  -> swapTwoValues(&someString, &anotherString)
+  /> someString is now \"\(someString)\", and anotherString is now \"\(anotherString)\"
+  </ someString is now "world", and anotherString is now "hello"
+  ```
+-->
 
-위의 `swapTwoValues(_:_:)` 예시에서 임의의 타입 `T` 는 _타입 파라미터 \(type parameter\)_ 의 예입니다. 타입 파라미터는 임의의 타입을 지정하고 이름을 지정하며 꺾쇠 괄호 \(예: `<T>`\) 사이에 기록하고 함수의 이름 바로 뒤에 작성됩니다.
+> Note: 위에 정의된 `swapTwoValues(_:_:)` 함수는
+> Swift 표준 라이브러리에 포함된
+> `swap`이라는 제네릭 함수에 의해 영감을 받았습니다.
+> 자체 코드에서 `swapTwoValues(_:_:)` 함수의 동작이 필요하다면,
+> 직접 구현한 함수보다 Swift에 존재하는 `swap(_:_:)` 함수를 사용할 수 있습니다.
 
-타입 파라미터를 지정하면 함수의 파라미터 \(`swapTwoValues(_:_:)` 함수의 `a` 와 `b` 와 같이\) 타입을 정의하기 위해 사용하거나 함수의 반환 타입이나 함수의 본문 내에 타입 주석으로 사용할 수 있습니다. 각각의 경우 타입 파라미터는 함수가 호출될 때마다 _실제_ 타입으로 대체됩니다 \(위의 예 `swapTwoValues(_:_:)` 에서 `T` 는 첫번째 함수가 호출될 때 `Int` 로 대체되고 두번째 호출될 때 `String` 으로 대체됩니다\).
+## 타입 파라미터 (Type Parameters)
 
-콤마로 구분된 꺾쇠 괄호 안에 여러개 타입 파라미터를 작성하여 하나 이상의 타입 파라미터를 제공할 수 있습니다.
+위의 `swapTwoValues(_:_:)` 예시에서
+임의의 타입 `T`는 *타입 파라미터(type parameter)*의 예입니다.
+타입 파라미터는 임의의 타입을 지정하고 이름을 지정하며,
+함수 이름 바로 뒤에
+꺾쇠 괄호(예: `<T>`) 사이에 작성합니다.
 
-## 타입 파라미터 이름 \(Naming Type Parameters\)
+타입 파라미터를 지정하면
+함수의 파라미터 타입
+(`swapTwoValues(_:_:)` 함수의 `a`와 `b` 파라미터),
+함수의 반환 타입,
+함수의 본문 내에 타입 어노테이션 등에 사용할 수 있습니다.
+각각의 경우 타입 파라미터는
+함수가 호출될 때 *실제* 타입으로 대체됩니다.
+(위의 `swapTwoValues(_:_:)` 예시에서
+`T`는 첫 번째 함수가 호출될 때 `Int`로 대체되고,
+두 번째 호출될 때 `String`으로 대체됩니다.)
 
-대부분의 경우 타입 파라미터는 타입 파라미터와 제네릭 타입 간의 관계나 함수 간의 관계를 나타내기 위해 `Dictionary<Key, Value>` 에서 `Key` 와 `Value` 그리고 `Array<Element>` 에서 `Element` 와 같이 설명이 포함된 이름이 있습니다. 그러나 의미있는 관계가 없을 때는 위에서 `swapTwoValues(_:_:)` 함수에서 `T` 와 같이 `T`, `U`, 그리고 `V` 와 같은 단일 문자를 사용하여 이름을 지정하는 것이 일반적입니다.
+여러 타입 파라미터가 필요하다면
+꺾쇠 괄호 안에 타입 파라미터 이름을 콤마로 구분해
+나열할 수 있습니다.
+
+## 타입 파라미터 이름 (Naming Type Parameters)
+
+대부분의 경우 타입 파라미터는 타입 파라미터와
+제네릭 타입 간의 관계나 함수 간의 관계를 나타내기 위해
+`Dictionary<Key, Value>`에서 `Key`와 `Value`
+그리고 `Array<Element>`에서 `Element`와 같이
+설명이 포함된 이름을 사용합니다.
+그러나 의미있는 관계가 없을 때는
+위의 `swapTwoValues(_:_:)` 함수에서 `T`와 같이
+`T`, `U`, `V`와 같은 단일 문자를 사용하여 이름을 지정하는 것이 일반적입니다.
 
 > Note  
 > 값이 아니라 타입에 대한 임의의 표시라는 것을 나타내기 위해 항상 타입 파라미터가 주어질 때 대문자 이름 \(`T` 와 `MyTypeParameter` 와 같은\)으로 주어집니다.

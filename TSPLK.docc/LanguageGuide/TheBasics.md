@@ -530,7 +530,7 @@ Swift는 또한 현재 플랫폼의 네이티브 사이즈와 같은
 > `Int`를 더 선호합니다.
 > 정수값에 `Int`를 일관되게 사용하면
 > 코드 상호 운용성을 지원하고
-> <doc:TheBasics#타입-세이프티와-타입-추론-Type-Safety-and-Type-Inference>에 설명 한대로 다른 숫자 형식간에 변환 할 필요가 없습니다.
+> <doc:TheBasics#타입-세이프티와-타입-추론-Type-Safety-and-Type-Inference>에 설명한대로 다른 숫자 형식간에 변환 할 필요가 없습니다.
 
 ## 부동 소수점 숫자 (Floating-Point Numbers)
 

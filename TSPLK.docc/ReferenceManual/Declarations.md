@@ -665,7 +665,7 @@ f(7)      // Invalid, missing argument label
 
 특별한 이름을 가지는 메서드는 함수 호출 구문에 대해 구문 설탕 (syntactic sugar) 을 활성화 합니다. 이러한 메서드 중 하나로 타입을 정의하면 타입의 인스턴스는 함수 호출 구문에서 사용될 수 있습니다. 함수 호출은 해당 인스턴스에서 특별하게 명명된 메서드 중 하나로 호출됩니다.
 
-클래스, 구조체, 또는 열거형 타입은 <doc:Attributes#dynamicCallable> 에서 설명 한대로 `dynamicallyCall(withArguments:)` 메서드 또는 `dynamicallyCall(withKeywordArguments:)` 메서드를 정의하거나 아래에서 설명 한대로 call-as-function 메서드를 정의하여 함수 호출 구문을 제공할 수 있습니다. 타입이 call-as-function 메서드와 `dynamicCallable` 속성에 의해 사용되는 메서드 중 하나를 모두 정의하면 컴파일러는 두 메서드를 사용할 수 있는 환경에서 call-as-function 메서드를 더 선호합니다.
+클래스, 구조체, 또는 열거형 타입은 <doc:Attributes#dynamicCallable> 에서 설명한대로 `dynamicallyCall(withArguments:)` 메서드 또는 `dynamicallyCall(withKeywordArguments:)` 메서드를 정의하거나 아래에서 설명한대로 call-as-function 메서드를 정의하여 함수 호출 구문을 제공할 수 있습니다. 타입이 call-as-function 메서드와 `dynamicCallable` 속성에 의해 사용되는 메서드 중 하나를 모두 정의하면 컴파일러는 두 메서드를 사용할 수 있는 환경에서 call-as-function 메서드를 더 선호합니다.
 
 call-as-function 메서드의 이름은 `callAsFunction()` 또는 `callAsFunction(` 으로 시작하고 라벨이 있거나 없는 인수를 추가하는 이름이 있습니다 — 예를 들어 `callAsFunction(_:_:)` 와 `callAsFunction(something:)` 도 call-as-function 메서드 이름으로 유효합니다.
 
@@ -693,7 +693,7 @@ let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
 let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 ```
 
-`subscript(dynamicMemberLookup:)` 서브스크립트는 <doc:Attributes#dynamicMemberLookup> 에서 설명 한대로 멤버 조회를 위한 구문 설탕을 활성화 합니다.
+`subscript(dynamicMemberLookup:)` 서브스크립트는 <doc:Attributes#dynamicMemberLookup> 에서 설명한대로 멤버 조회를 위한 구문 설탕을 활성화 합니다.
 
 ### 함수와 메서드 던지기 (Throwing Functions and Methods)
 
@@ -795,7 +795,7 @@ Swift 는 함수 또는 메서드가 호출자에게 반환하지 않음을 나�
 
 [`Never`]: https://developer.apple.com/documentation/swift/never
 
-비반환 함수 또는 메서드는 <doc:Statements#Guard-구문-Guard-Statement> 에서 설명 한대로 guard 구문의 `else` 절을 끝낼 수 있습니다.
+비반환 함수 또는 메서드는 <doc:Statements#Guard-구문-Guard-Statement> 에서 설명한대로 guard 구문의 `else` 절을 끝낼 수 있습니다.
 
 비반환 메서드를 재정의할 수 있지만 새로운 메서드는 반환 타입과 비반환 동작을 유지해야 합니다.
 
@@ -835,7 +835,7 @@ _열거형 선언 (enumeration declaration)_ 은 프로그램에 명명된 열�
 
 구조체와 비슷하지만 클래스와 달리 열거형은 값 타입입니다; 열거형의 인스턴스는 변수 또는 상수에 할당될 때나 함수 호출에 인수로 전달될 때 복사됩니다. 값 타입에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 을 참고바랍니다.
 
-<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명 한대로 확장 선언으로 열거형 타입의 동작을 확장할 수 있습니다.
+<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명한대로 확장 선언으로 열거형 타입의 동작을 확장할 수 있습니다.
 
 ### 모든 타입의 케이스가 있는 열거형 (Enumerations with Cases of Any Type)
 
@@ -925,9 +925,9 @@ enum GamePlayMode: String {
 
 ### 열거형 케이스 접근 (Accessing Enumeration Cases)
 
-열거형 타입의 케이스를 참조하기 위해 `EnuerationType.enumerationCase` 와 같이 점 (`.`) 구문을 사용합니다. 열거형 타입이 컨텍스트에서 유추될 수 있으면 <doc:Enumerations#열거형-구문-Enumeration-Syntax> 과 <doc:Expressions#암시적-멤버-표현식-Implicit-Member-Expression> 에서 설명 한대로 점은 그대로 유지한 채 생략할 수 있습니다.
+열거형 타입의 케이스를 참조하기 위해 `EnuerationType.enumerationCase` 와 같이 점 (`.`) 구문을 사용합니다. 열거형 타입이 컨텍스트에서 유추될 수 있으면 <doc:Enumerations#열거형-구문-Enumeration-Syntax> 과 <doc:Expressions#암시적-멤버-표현식-Implicit-Member-Expression> 에서 설명한대로 점은 그대로 유지한 채 생략할 수 있습니다.
 
-열거형 케이스의 값을 검사하려면 <doc:Enumerations#스위치-구문에서-열거형-값-일치-Matching-Enumeration-Values-with-a-Switch-Statement> 에서 봤듯이 `switch` 구문을 사용합니다. 열거형 타입은 <doc:Patterns#열거형-케이스-패턴-Enumeration-Case-Pattern> 에서 설명 한대로 `switch` 구문의 케이스 블럭에서 열거형 케이스 패턴에 대해 일치합니다.
+열거형 케이스의 값을 검사하려면 <doc:Enumerations#스위치-구문에서-열거형-값-일치-Matching-Enumeration-Values-with-a-Switch-Statement> 에서 봤듯이 `switch` 구문을 사용합니다. 열거형 타입은 <doc:Patterns#열거형-케이스-패턴-Enumeration-Case-Pattern> 에서 설명한대로 `switch` 구문의 케이스 블럭에서 열거형 케이스 패턴에 대해 일치합니다.
 
 > Grammar of an enumeration declaration:
 >
@@ -968,17 +968,17 @@ struct <#structure name#>: <#adopted protocols#> {
 
 이전에 선언된 구조체의 인스턴스를 생성하는 방법은 세가지가 있습니다:
 
-* <doc:Initialization#이니셜라이저-Initializers> 에서 설명 한대로 구조체 내에 선언된 이니셜라이저 중 하나를 호출해야 합니다.
-* 선언된 이니셜라이저이 없는 경우 <doc:Initialization#구조체의-멤버별-이니셜라이저-Memberwise-Initializers-for-Structure-Types> 에서 설명 한대로 구조체의 멤버별 이니셜라이저를 호출합니다.
-* 선언된 이니셜라이저이 없고 구조체 선언의 모든 프로퍼티에 초기 값이 주어진 경우 <doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명 한대로 구조체의 기본 이니셜라이저를 호출합니다.
+* <doc:Initialization#이니셜라이저-Initializers> 에서 설명한대로 구조체 내에 선언된 이니셜라이저 중 하나를 호출해야 합니다.
+* 선언된 이니셜라이저이 없는 경우 <doc:Initialization#구조체의-멤버별-이니셜라이저-Memberwise-Initializers-for-Structure-Types> 에서 설명한대로 구조체의 멤버별 이니셜라이저를 호출합니다.
+* 선언된 이니셜라이저이 없고 구조체 선언의 모든 프로퍼티에 초기 값이 주어진 경우 <doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명한대로 구조체의 기본 이니셜라이저를 호출합니다.
 
 구조체에 선언된 프로퍼티 초기화 프로세스는 <doc:Initialization> 에 설명되어 있습니다.
 
-구조체 인스턴스의 프로퍼티는 <doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties> 에서 설명 한대로 점 (`.`) 구문을 사용하여 접근할 수 있습니다.
+구조체 인스턴스의 프로퍼티는 <doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties> 에서 설명한대로 점 (`.`) 구문을 사용하여 접근할 수 있습니다.
 
 구조체는 값 타입 입니다; 변수나 상수에 할당될 때나 함수 호출에 대해 인수로 전달될 때 구조체의 인스턴스는 복사됩니다. 값 타입에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 을 참고바랍니다.
 
-<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명 한대로 확장 선언으로 구조체 타입의 동작을 확장 할 수 있습니다.
+<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명한대로 확장 선언으로 구조체 타입의 동작을 확장 할 수 있습니다.
 
 > Grammar of a structure declaration:
 >
@@ -1003,24 +1003,24 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 
 클래스 타입은 _슈퍼클래스 (superclass)_ 로 하나의 부모 클래스만 상속할 수 있지만 프로토콜은 여러개 채택할 수 있습니다. _슈퍼클래스 (superclass)_ 는 _클래스 이름 (class name)_ 과 콜론 다음에 첫번째로 나타나고 다음으로 _채택된 프로토콜 (adopted protocols)_ 이 나타납니다. 제네릭 클래스 (generic class) 는 다른 제네릭과 제네릭이 아닌 클래스를 상속할 수 있지만 제네릭이 아닌 클래스 (nongeneric class) 는 다른 제네릭이 아닌 클래스만 상속할 수 있습니다. 콜론 뒤에 상위 제네릭 클래스의 이름을 작성할 때 제네릭 파라미터 절을 포함하는 제네릭 클래스의 전체 이름을 포함해야 합니다.
 
-<doc:Declarations#이니셜라이저-선언-Initializer-Declaration> 에서 설명 한대로 클래스는 지정된 이니셜라이저 (designated initializers) 과 편의 이니셜라이저 (convenience initializers) 을 가질 수 있습니다. 클래스의 지정된 이니셜라이저는 모든 클래스의 선언된 프로퍼티가 초기화 되어야 하고 슈퍼클래스의 지정된 이니셜라이저를 호출하기 전에 수행되어야 합니다.
+<doc:Declarations#이니셜라이저-선언-Initializer-Declaration> 에서 설명한대로 클래스는 지정된 이니셜라이저 (designated initializers) 과 편의 이니셜라이저 (convenience initializers) 을 가질 수 있습니다. 클래스의 지정된 이니셜라이저는 모든 클래스의 선언된 프로퍼티가 초기화 되어야 하고 슈퍼클래스의 지정된 이니셜라이저를 호출하기 전에 수행되어야 합니다.
 
 클래스는 슈퍼클래스의 프로퍼티, 메서드, 서브스크립트, 그리고 이니셜라이저를 재정의 할 수 있습니다. 프로퍼티, 메서드, 서브스크립트, 그리고 지정된 이니셜라이저 재정의는 `override` 선언 수식어로 표시되어야 합니다.
 
 서브클래스가 슈퍼클래스의 이니셜라이저 구현을 요구하려면 슈퍼클래스의 이니셜라이저를 `required` 선언 수식어로 표시해야 합니다. 해당 이니셜라이저의 서브클래스의 구현도 `required` 선언 수식어로 표시되어야 합니다.
 
-_슈퍼클래스 (superclass)_ 에 선언된 프로퍼티와 메서드가 현재 클래스에 의해 상속되더라도 _슈퍼클래스 (superclass)_ 에 선언된 지정된 이니셜라이저는 <doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance> 에서 설명 한대로 서브클래스가 조건이 충족될 때만 상속됩니다. Swift 클래스는 범용 기본 클래스는 상속하지 않습니다.
+_슈퍼클래스 (superclass)_ 에 선언된 프로퍼티와 메서드가 현재 클래스에 의해 상속되더라도 _슈퍼클래스 (superclass)_ 에 선언된 지정된 이니셜라이저는 <doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance> 에서 설명한대로 서브클래스가 조건이 충족될 때만 상속됩니다. Swift 클래스는 범용 기본 클래스는 상속하지 않습니다.
 
 이전에 선언된 클래스의 인스턴스를 생성하는 두가지 방법이 있습니다:
 
-* <doc:Initialization#이니셜라이저-Initializers> 에서 설명 한대로 클래스 내에 선언된 이니셜라이저 중 하나를 호출 합니다.
-* 선언된 이니셜라이저이 없고 클래스 선언에 모든 프로퍼티에 기본값이 주어진 경우 <doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명 한대로 클래스의 기본 이니셜라이저를 호출합니다.
+* <doc:Initialization#이니셜라이저-Initializers> 에서 설명한대로 클래스 내에 선언된 이니셜라이저 중 하나를 호출 합니다.
+* 선언된 이니셜라이저이 없고 클래스 선언에 모든 프로퍼티에 기본값이 주어진 경우 <doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명한대로 클래스의 기본 이니셜라이저를 호출합니다.
 
-<doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties> 에 설명 한대로 점 (`.`) 구문으로 클래스 인스턴스의 프로퍼티에 접근 할 수 있습니다.
+<doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties> 에 설명한대로 점 (`.`) 구문으로 클래스 인스턴스의 프로퍼티에 접근 할 수 있습니다.
 
 클래스는 참조 타입입니다; 클래스의 인스턴스는 변수나 상수에 할당되거나 함수 호출에 인수로 전달될 때 복사가 아닌 참조됩니다. 참조 타입에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 을 참고바랍니다.
 
-<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명 한대로 확장 선언으로 클래스 타입의 동작을 확장할 수 있습니다.
+<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명한대로 확장 선언으로 클래스 타입의 동작을 확장할 수 있습니다.
 
 > Grammar of a class declaration:
 >
@@ -1094,7 +1094,7 @@ protocol <#protocol name#>: <#inherited protocols#> {
 프로토콜 타입은 다른 프로토콜을 상속할 수 있습니다. 프로토콜 타입이 다른 프로토콜을 상속할 때 다른 프로토콜의 요구사항이 집계되고 현재 프로토콜에서 상속한 모든 타입은 모든 요구사항을 준수해야 합니다. 프로토콜 상속 사용법에 대한 예시는 <doc:Protocols#프로토콜-상속-Protocol-Inheritance> 을 참고바랍니다.
 
 > Note\
-> <doc:Types#프로토콜-합성-타입-Protocol-Composition-Type> 과 <doc:Protocols#프로토콜-합성-Protocol-Composition> 에서 설명 한대로 프로토콜 구성 타입을 사용하여 여러개 프로토콜의 준수성 요구사항을 집계할 수도 있습니다.
+> <doc:Types#프로토콜-합성-타입-Protocol-Composition-Type> 과 <doc:Protocols#프로토콜-합성-Protocol-Composition> 에서 설명한대로 프로토콜 구성 타입을 사용하여 여러개 프로토콜의 준수성 요구사항을 집계할 수도 있습니다.
 
 해당 타입에 확장 선언에서 프로토콜을 채택하기 위해 이전에 선언된 타입에 프로토콜 준수를 추가할 수 있습니다. 확장에서 채택된 프로토콜의 모든 요구사항을 구현해야 합니다. 타입이 이미 모든 요구사항을 구현한 경우 빈 확장 선언의 본문으로 남겨둘 수 있습니다.
 
@@ -1126,9 +1126,9 @@ protocol SomeProtocol: AnyObject {
 > Note\
 > `objc` 속성으로 표시된 프로토콜은 해당 프로토콜에 암시적으로 `AnyObject` 요구사항이 적용됩니다; 명시적으로 `AnyObject` 요구사항을 프로토콜에 표시할 필요가 없습니다.
 
-프로토콜은 명명된 타입 이므로 <doc:Protocols#프로토콜을-타입으로-사용-Protocols-as-Types> 에서 설명 한대로 다른 명명된 타입으로 코드의 동일한 위치에 나타날 수 있습니다. 그러나 프로토콜은 실제로 지정하는 요구사항에 대해 구현을 제공하지 않으므로 프로토콜의 인스턴스를 구성할 수 없습니다.
+프로토콜은 명명된 타입 이므로 <doc:Protocols#프로토콜을-타입으로-사용-Protocols-as-Types> 에서 설명한대로 다른 명명된 타입으로 코드의 동일한 위치에 나타날 수 있습니다. 그러나 프로토콜은 실제로 지정하는 요구사항에 대해 구현을 제공하지 않으므로 프로토콜의 인스턴스를 구성할 수 없습니다.
 
-<doc:Protocols#위임-Delegation> 에서 설명 한대로 프로토콜을 사용하여 클래스 또는 구조체의 위임이 구현해야 하는 메서드를 선언할 수 있습니다.
+<doc:Protocols#위임-Delegation> 에서 설명한대로 프로토콜을 사용하여 클래스 또는 구조체의 위임이 구현해야 하는 메서드를 선언할 수 있습니다.
 
 > Grammar of a protocol declaration:
 >
@@ -1241,7 +1241,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 
 _이니셜라이저 선언 (Initializer declaration)_ 은 프로그램에 클래스, 구조체, 또는 열거형에 대한 이니셜라이저를 도입합니다. 이니셜라이저 선언은 `init` 키워드를 사용하여 선언되고 두 개의 기본 형식을 가지고 있습니다.
 
-구조체, 열거형, 그리고 클래스 타입은 여러개의 이니셜라이저를 가질 수 있지만 클래스 이니셜라이저에 대한 규칙과 관련 동작은 다릅니다. 구조체와 열거형과 다르게 클래스는 두 종류의 이니셜라이저를 가집니다: <doc:Initialization> 에서 설명 한대로 지정된 이니셜라이저 (designated initializers) 과 편의 이니셜라이저 (convenience initializers) 이 있습니다.
+구조체, 열거형, 그리고 클래스 타입은 여러개의 이니셜라이저를 가질 수 있지만 클래스 이니셜라이저에 대한 규칙과 관련 동작은 다릅니다. 구조체와 열거형과 다르게 클래스는 두 종류의 이니셜라이저를 가집니다: <doc:Initialization> 에서 설명한대로 지정된 이니셜라이저 (designated initializers) 과 편의 이니셜라이저 (convenience initializers) 이 있습니다.
 
 다음 형식은 구조체, 열거형, 그리고 클래스의 지정된 이니셜라이저에 대한 이니셜라이저를 선언합니다:
 
@@ -1562,7 +1562,7 @@ _파라미터 (parameters)_ 또는 _반환 타입 (return type)_ 이 오버로�
 
 서브스크립트 파라미터는 두가지를 제외하고 함수 파라미터와 동일한 규칙을 따릅니다. 기본 적으로 서브스크립트에서 사용하는 파라미터는 함수, 메서드, 그리고 이니셜라이저과 다르게 인수 라벨을 가지지 않습니다. 그러나 함수, 메서드, 그리고 이니셜라이저에서 사용하는 동일한 구문을 사용하여 명시적으로 인수 라벨을 제공할 수 있습니다. 또한 서브스크립트는 in-out 파라미터를 가질 수 없습니다. 서브스크립트 파라미터는 <doc:Declarations#특별한-종류의-파라미터-Special-Kinds-of-Parameters> 에서 설명 한 구문을 사용하여 기본값을 가질 수 있습니다.
 
-<doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration> 에서 설명 한대로 프로토콜 선언의 컨텍스트에서 서브스크립트를 선언할 수도 있습니다.
+<doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration> 에서 설명한대로 프로토콜 선언의 컨텍스트에서 서브스크립트를 선언할 수도 있습니다.
 
 서브스크립트에 대한 자세한 내용과 서브스크립트 선언의 예시는 <doc:Subscripts> 를 참고바랍니다.
 
@@ -1796,7 +1796,7 @@ Swift 는 다섯 수준의 접근 제어를 제공합니다: open, public, inter
 
 위의 각 접근-수준 수식어는 괄호로 둘러싸인 `set` 키워드로 구성된 선택적으로 단일 인수를 허용합니다 ---
 예를 들어 `private(set)`.
-<doc:AccessControl#Getter-와-Setter-Getters-and-Setters> 에서 설명 한대로 변수 또는 서브스크립트에 대한 접근 수준보다 작거나 같은 변수 또는 서브스크립트의 setter 에 대한 접근 수준을 지정하려면 이 형식의 접근-수준 수식어를 사용합니다.
+<doc:AccessControl#Getter-와-Setter-Getters-and-Setters> 에서 설명한대로 변수 또는 서브스크립트에 대한 접근 수준보다 작거나 같은 변수 또는 서브스크립트의 setter 에 대한 접근 수준을 지정하려면 이 형식의 접근-수준 수식어를 사용합니다.
 
 > Grammar of a declaration modifier:
 >
