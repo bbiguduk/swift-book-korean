@@ -334,7 +334,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 
 타입 별칭이 없다면 `sum` 함수는 `T.Element` 대신에 `T.Iterator.Element` 로 연관된 타입을 참조해야 합니다.
 
-<doc:Declarations#프로토콜-연관된-타입-선언-Protocol-Associated-Type-Declaration> 을 참고바랍니다.
+<doc:Declarations#프로토콜-연관-타입-선언-Protocol-Associated-Type-Declaration> 을 참고바랍니다.
 
 > Grammar of a type alias declaration:
 >
@@ -1213,7 +1213,7 @@ subscript (<#parameters#>) -> <#return type#> { get set }
 
 ### 프로토콜 연관된 타입 선언 (Protocol Associated Type Declaration)
 
-프로토콜은 `associatedtype` 키워드를 사용하여 연관된 타입을 선언합니다. 연관된 타입은 프로토콜 선언의 일부분으로 사용되는 타입에 대한 별칭을 제공합니다. 연관된 타입은 제네릭 파라미터 절에서 타입 파라미터와 유사하지만 선언된 프로토콜에서 `Self` 와 연관됩니다. 해당 컨텍스트에서 `Self` 는 프로토콜을 준수하는 최종 타입을 참조합니다. 더 자세한 내용과 예시는 <doc:Generics#연관된-타입-Associated-Types> 을 참고바랍니다.
+프로토콜은 `associatedtype` 키워드를 사용하여 연관된 타입을 선언합니다. 연관된 타입은 프로토콜 선언의 일부분으로 사용되는 타입에 대한 별칭을 제공합니다. 연관된 타입은 제네릭 파라미터 절에서 타입 파라미터와 유사하지만 선언된 프로토콜에서 `Self` 와 연관됩니다. 해당 컨텍스트에서 `Self` 는 프로토콜을 준수하는 최종 타입을 참조합니다. 더 자세한 내용과 예시는 <doc:Generics#연관-타입-Associated-Types> 을 참고바랍니다.
 
 연관된 타입을 재선언 하지 않고 다른 프로토콜에서 상속된 연관된 타입에 제약사항을 추가하려면 프로토콜 선언에 제네릭 `where` 절을 사용합니다. 예를 들어 아래 `SubProtocol` 의 선언은 동일합니다:
 

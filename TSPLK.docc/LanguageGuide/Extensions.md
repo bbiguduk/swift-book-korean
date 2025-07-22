@@ -124,7 +124,7 @@ extension SomeType: SomeProtocol, AnotherProtocol {
 
 확장은 <doc:Generics#제네릭-타입-확장-Extending-a-Generic-Type>에 설명된대로
 기존 제네릭 타입을 확장하기 위해 사용할 수 있습니다.
-<doc:Generics#Where-절이-있는-제네릭-확장-Extensions-with-a-Generic-Where-Clause>에 설명된대로
+<doc:Generics#제네릭-Where-절이-있는-확장-Extensions-with-a-Generic-Where-Clause>에 설명된대로
 제네릭 타입을 확장하여 조건부로 기능을 추가할 수도 있습니다.
 
 > Note: 기존 타입에 새로운 기능을 추가하기 위해 확장을 정의한다면,

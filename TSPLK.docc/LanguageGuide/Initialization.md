@@ -885,7 +885,7 @@ Swift는 클래스의 모든 저장 프로퍼티가 초기 값을 가질 수 있
 
 모든 클래스는 최소 하나의 지정 이니셜라이저를 가지고 있어야 합니다.
 경우에 따라 이 요구사항은
-아래의 <doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance>에서 설명 하듯이
+아래의 <doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance>에서 설명했듯이
 상위 클래스의 지정 이니셜라이저를 하나 이상 상속받는 것으로 충족됩니다.
 
 *편의 이니셜라이저(Convenience initializers)*는 클래스의 보조 이니셜라이저입니다.
