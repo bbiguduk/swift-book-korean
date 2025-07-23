@@ -411,7 +411,13 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   ```
 -->
 
-이 함수를 `Square` 와 함께 호출하면 `Square` 를 반환하고 그렇지 않으면 `FlippedShape` 를 반환합니다. 이것은 단일 타입의 값을 반환해야 한다는 요구사항을 위반하고 `invalidFlip(_:)` 코드를 유효하지 않게 만듭니다. `invalidFlip(_:)` 을 고치기 위한 한가지 방법은 사각형의 특수한 경우를 `FlippedShape` 의 구현으로 옮기는 것입니다. 이렇게 하면 이 함수는 항상 `FlippedShape` 값을 반환할 수 있습니다:
+이 함수를 `Square`로 호출하면 `Square`를 반환하고,
+그렇지 않으면 `FlippedShape`를 반환합니다.
+이것은 단일 타입의 값을 반환해야 한다는 요구사항을 위반하고
+`invalidFlip(_:)` 코드는 유효하지 않습니다.
+`invalidFlip(_:)`을 고치기 위한 한 가지 방법은 사각형의 특수한 경우를
+`FlippedShape`의 구현 내부로 옮겨서
+함수가 항상 `FlippedShape` 값을 반환하도록 합니다:
 
 ```swift
 struct FlippedShape<T: Shape>: Shape {
@@ -426,7 +432,39 @@ struct FlippedShape<T: Shape>: Shape {
 }
 ```
 
-항상 단일 타입을 반환해야 한다고 해서 불투명 반환 타입에 제네릭 사용을 막지는 않습니다. 다음은 반환하는 값의 기본 타입에 타입 파라미터를 통합하는 함수의 예입니다:
+<!--
+  - test: `opaque-result-special-flip`
+
+  ```swifttest
+  >> protocol Shape { func draw() -> String }
+  >> struct Square: Shape {
+  >>     func draw() -> String { return "#" }  // stub implementation
+  >> }
+  -> struct FlippedShape<T: Shape>: Shape {
+         var shape: T
+         func draw() -> String {
+             if shape is Square {
+                return shape.draw()
+             }
+             let lines = shape.draw().split(separator: "\n")
+             return lines.reversed().joined(separator: "\n")
+         }
+     }
+  ```
+-->
+
+<!--
+  Another way to fix it is with type erasure.
+  Define a wrapper called AnyShape,
+  and wrap whatever shape you created inside invalidFlip(_:)
+  before returning it.
+  That example is long enough that it breaks the flow here.
+-->
+
+항상 단일 타입을 반환해야 한다고 해서
+불투명 반환 타입에 제네릭 사용을 막지는 않습니다.
+다음은 함수의 타입 파라미터가
+반환 값의 구체적인 타입에 포함되는 예입니다:
 
 ```swift
 func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
@@ -434,11 +472,34 @@ func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
 }
 ```
 
-이 경우에 반환값의 기본 타입은 `T` 에 따라 달라집니다: 전달되는 모양이 무엇이든 `repeat(shape:count:)` 는 해당 모양의 배열을 생성하고 반환합니다. 그럼에도 불구하고 반환값은 항상 동일한 기본 타입 인 `[T]` 를 가지므로 불투명한 반환 타입을 가진 함수는 단일 타입의 값만 가져야 한다는 요구사항을 따릅니다.
+<!--
+  - test: `opaque-result`
 
-## 박스형 프로토콜 타입 (Boxed Protocol Types)
+  ```swifttest
+  -> func `repeat`<T: Shape>(shape: T, count: Int) -> some Collection {
+         return Array<T>(repeating: shape, count: count)
+     }
+  ```
+-->
 
-박스형 프로토콜 타입 (Boxed protocol type) 은 "프로토콜을 준수하는 _T_ 타입이 존재합니다." 라는 문구와 같이 _존재 타입 (existential type)_ 이라고도 불립니다. 프로토콜의 이름 앞에 `any` 를 적어 박스형 프로토콜 타입을 만듭니다. 예를 들면 다음과 같습니다:
+이 경우에
+반환 값의 구체적인 타입은
+`T`에 따라 달라집니다:
+전달되는 도형이 무엇이든
+`repeat(shape:count:)`는 해당 도형의 배열을 생성하고 반환합니다.
+그럼에도 불구하고
+반환 값의 구체적인 타입은 `[T]`를 가지므로
+불투명 반환 타입을 가지는 함수는 단일 타입의 값만 가져야 한다는
+요구사항을 충족합니다.
+
+## 박싱 프로토콜 타입 (Boxed Protocol Types)
+
+박싱 프로토콜 타입(Boxed protocol type)은
+"프로토콜을 준수하는 *T* 타입이 존재합니다."라는 문구와 같이
+*존재적 타입(existential type)*이라고도 합니다.
+박싱 프로토콜을 만들려면
+프로토콜의 이름 앞에 `any`를 붙입니다.
+예를 들면 다음과 같습니다:
 
 ```swift
 struct VerticalShapes: Shape {
@@ -448,28 +509,108 @@ struct VerticalShapes: Shape {
     }
 }
 
-
 let largeTriangle = Triangle(size: 5)
 let largeSquare = Square(size: 5)
 let vertical = VerticalShapes(shapes: [largeTriangle, largeSquare])
 print(vertical.draw())
 ```
 
-위의 예시에서 `VerticalShapes` 는 박스형 `Shape` 요소의 배열인 `[any Shape]` 로 `shapes` 의 타입을 선언합니다. 배열에 각 요소는 다른 타입이 올 수 있고 각 타입은 `Shape` 프로토콜을 준수해야 합니다. 이런 런타임 유연성을 제공하기위해 Swift 는 필요할 때 간접 참조 수준을 추가합니다 - 이런 간접 참조를 _박스 (box)_ 라고 부르며, 성능 비용 (performance cost) 을 가지고 있습니다.
+<!--
+  - test: `boxed-protocol-types`
 
-`VerticalShapes` 타입에는 `Shape` 프로토콜에 의해 요구되는 메서드, 프로퍼티, 그리고 서브스크립트를 사용할 수 있습니다. 예를 들어, `VerticalShapes` 에 `draw()` 메서드는 배열의 각 요소의 `draw()` 메서드를 호출합니다. `Shape` 는 `draw()` 메서드를 요구하므로 이 메서드는 사용 가능합니다. 반대로, `Shape` 에 의해 요구되지 않은 삼각형 (triangle) 에 `size` 프로퍼티, 또는 다른 프로퍼티 또는 메서드를 접근하려고 하면 오류가 발생합니다.
+  ```swifttest
+   >> protocol Shape {
+   >>    func draw() -> String
+   >> }
+   >> struct Triangle: Shape {
+   >>    var size: Int
+   >>    func draw() -> String {
+   >>        var result: [String] = []
+   >>        for length in 1...size {
+   >>            result.append(String(repeating: "*", count: length))
+   >>        }
+   >>        return result.joined(separator: "\n")
+   >>    }
+   >> }
+   >> struct Square: Shape {
+   >>     var size: Int
+   >>     func draw() -> String {
+   >>         let line = String(repeating: "*", count: size)
+   >>         let result = Array<String>(repeating: line, count: size)
+   >>         return result.joined(separator: "\n")
+   >>     }
+   >
+   -> struct VerticalShapes: Shape {
+          var shapes: [any Shape]
+          func draw() -> String {
+              return shapes.map { $0.draw() }.joined(separator: "\n\n")
+          }
+      }
+   ->
+   -> let largeTriangle = Triangle(size: 5)
+   -> let largeSquare = Square(size: 5)
+   -> let vertical = VerticalShapes(shapes: [largeTriangle, largeSquare])
+   -> print(vertical.draw())
+   << *
+   << **
+   << ***
+   << ****
+   << *****
+   <<-
+   << *****
+   << *****
+   << *****
+   << *****
+   << *****
+  ```
+-->
 
-`shapes` 를 사용할 수 있는 세가지 타입이 있습니다:
+위의 예시에서
+`VerticalShapes`는 `[any Shape]`로 `shapes`의 타입을 선언합니다 ---
+박싱된 `Shape` 요소의 배열입니다.
+배열에 각 요소는 다른 타입이 올 수 있고,
+각 타입은 `Shape` 프로토콜을 준수해야 합니다.
+이런 런타임 유연성을 제공하기위해
+Swift는 필요할 때 간접 계층을 추가합니다 ---
+이런 간접 계층을 *박스(box)*라고 부르며,
+성능 비용(performance cost)이 발생할 수 있습니다.
 
-- `struct VerticalShapes<S: Shape>` 와 `var shapes: [S]` 을 작성해 제네릭을 사용하여, 특정 모양 타입의 요소로 배열을 만들고, 특정 타입의 식별자가 배열로 상호작용하도록 노출됩니다.
+`VerticalShapes` 타입에는
+`Shape` 프로토콜이 요구하는
+메서드, 프로퍼티, 서브스크립트를 사용할 수 있습니다.
+예를 들어, `VerticalShapes`의 `draw()` 메서드는
+배열의 각 요소에서 `draw()` 메서드를 호출합니다.
+`Shape`는 `draw()` 메서드를 요구하므로
+이 메서드는 사용 가능합니다.
+반대로
+`Shape`에 의해 요구되지 않은 삼각형(triangle)의 `size` 프로퍼티 또는
+다른 프로퍼티나 메서드를 접근하려고 하면 오류가 발생합니다.
 
-- `var shapes: [some Shape]` 을 작성해 투명한 타입을 사용하여, 특정 모양 타입의 요소로 배열을 만들고, 특정 타입의 식별자는 숨깁니다.
+`shapes`를 사용할 수 있는 세 가지 타입이 있습니다:
 
-- `var shapes: [any Shape]` 을 작성해 박스형 프로토콜 타입을 사용하여, 다른 타입의 요소로 저장할 수 있는 배열을 만들고, 이런 타입의 식별자는 숨깁니다. 
+- `struct VerticalShapes<S: Shape>`와 `var shapes: [S]`을 작성하여
+  제네릭을 사용하면,
+  배열의 모든 요소가 동일한 도형 타입이 되고,
+  그 타입의 식별자는
+  외부 코드에 노출됩니다.
 
-이 경우 박스형 프로토콜 타입은 `VerticalShapes` 의 호출자가 다른 종류의 모양을 혼합할 수 있는 유일한 접근 방식입니다.
+- `var shapes: [some Shape]`을 작성하여
+  불투명 타입을 사용하면,
+  배열의 모든 요소가 동일한 도형 타입이 되고
+  그 타입의 식별자는 숨겨집니다.
 
-박스형 값 (boxed value) 의 타입을 알고 있는 경우에 `as` 변환을 사용할 수 있습니다. 예를 들어:
+- `var shapes: [any Shape]`을 작성하여 
+  박싱 프로토콜 타입을 사용하면,
+  배열에 서로 다른 타입의 요소를 저장할 수 있고,
+  각 타입의 식별자는 숨겨집니다.
+
+이 경우
+박싱 프로토콜 타입은
+`VerticalShapes`의 호출자가 다른 종류의 도형을 혼합할 수 있는 유일한 접근 방식입니다.
+
+박싱된 값(boxed value)의 타입을 알고 있는 경우에
+`as` 변환을 사용할 수 있습니다.
+예를 들어:
 
 ```swift
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
@@ -478,13 +619,27 @@ if let downcastTriangle = vertical.shapes[0] as? Triangle {
 // Prints "5"
 ```
 
-더 자세한 내용은 [다운 캐스팅 (Downcasting)](type-casting.md#다운-캐스팅-downcasting) 을 참고바랍니다.
+더 자세한 내용은 <doc:TypeCasting#다운-캐스팅-Downcasting>을 참고바랍니다.
 
-## 불투명 타입과 박스형 프로토콜 타입의 차이점 \(Differences Between Opaque Types and Boxed Protocol Types\)
+## 불투명 타입과 박싱 프로토콜 타입의 차이점 (Differences Between Opaque Types and Boxed Protocol Types)
 
-불투명 타입을 반환하는 것은 함수의 반환 타입으로 박스형 프로토콜 타입을 사용하는 것과 매우 유사하지만 이 두 종류의 반환 타입은 타입 정체성을 유지하는지 여부가 다릅니다. 불투명 타입은 하나의 특정 타입을 참조하지만 함수 호출자는 어떤 타입인지 볼 수 없습니다. 박스형 프로토콜 타입은 프로토콜을 준수하는 모든 타입을 참조할 수 있습니다. 일반적으로 박스형 프로토콜 타입은 저장하는 값의 기본 타입에 대해 더 많은 유연성을 제공하고 불투명 타입을 사용하면 이러한 기본 타입에 대해 더 강력한 보증을 할 수 있습니다.
+불투명 타입을 반환하는 것은
+함수의 반환 타입으로 박스형 프로토콜 타입을 사용하는 것과 매우 유사하지만,
+이 두 종류의 반환 타입은
+타입 정체성을 유지하는지 여부에서 차이가 있습니다.
+불투명 타입은 하나의 특정 타입을 참조하지만,
+함수를 호출하는 쪽에서는 그 타입을 알 수 없습니다;
+박싱 프로토콜 타입은 프로토콜을 준수하는 모든 타입을 참조할 수 있습니다.
+일반적으로
+박싱 프로토콜 타입은
+저장하는 값의 타입에 대해 더 많은 유연성을 제공하고
+불투명 타입을 사용하면
+이러한 타입에 대해 더 강력한 보장을 할 수 있습니다.
 
-예를 들어 다음은 불투명한 반환 타입 대신에 반환 타입으로 박스형 프로토콜 타입을 사용하는 `flip(_:)` 의 버전입니다:
+예를 들어
+다음은 불투명 반환 타입 대신에
+반환 타입으로 박싱 프로토콜 타입을 사용하는
+`flip(_:)`의 버전입니다:
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
@@ -492,7 +647,42 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 }
 ```
 
-`protoFlip(_:)` 의 버전은 `flip(_:)` 과 같은 본문을 가지고 항상 같은 타입의 값을 반환합니다. `flip(_:)` 과 다르게 `protoFlip(_:)` 이 반환하는 값은 항상 같은 타입을 가질 필요가 없으며 `Shape` 프로토콜을 준수하기만 하면 됩니다. 달리 말하면 `protoFlip(_:)` 은 `flip(_:)` 이 만든 것보다 더 느슨한 API 계약을 만듭니다. 이것은 여러 타입의 값을 반환하는 유연성을 보유합니다:
+<!--
+  - test: `opaque-result-existential-error`
+
+  ```swifttest
+  >> protocol Shape {
+  >>     func draw() -> String
+  >> }
+  >> struct Triangle: Shape {
+  >>     var size: Int
+  >>     func draw() -> String { return "#" }  // stub implementation
+  >> }
+  >> struct Square: Shape {
+  >>     var size: Int
+  >>     func draw() -> String { return "#" }  // stub implementation
+  >> }
+  >> struct FlippedShape<T: Shape>: Shape {
+  >>     var shape: T
+  >>     func draw() -> String { return "#" } // stub implementation
+  >> }
+  -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
+        return FlippedShape(shape: shape)
+     }
+  ```
+-->
+
+`protoFlip(_:)`의 버전은
+`flip(_:)`과 동일한 본문을 가지고,
+항상 동일한 타입의 값을 반환합니다.
+`flip(_:)`과 다르게
+`protoFlip(_:)`이 반환하는 값은
+항상 동일한 타입을 가질 필요가 없으며 ---
+`Shape` 프로토콜을 준수하기만 하면 됩니다.
+다르게 말하면
+`protoFlip(_:)`은 `flip(_:)`이 만든 것보다
+더 느슨한 API 계약을 가집니다.
+이것은 여러 타입의 값을 반환하는 유연성을 보유합니다:
 
 ```swift
 func protoFlip<T: Shape>(_ shape: T) -> Shape {
@@ -504,7 +694,38 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 }
 ```
 
-개정된 코드의 버전은 전달되는 모양에 따라 `Shape` 인스턴스 또는 `FlippedShape` 인스턴스를 반환합니다. 이 함수에 의해 반환된 2개의 뒤집힌 모양은 완전히 다른 타입을 가집니다. 이 함수의 다른 유효한 버전은 같은 모양의 여러 인스턴스를 뒤집을 때 다른 타입의 값을 반환할 수 있습니다. `protoFlip(_:)` 의 구체적이지 않은 반환 타입은 타입 정보에 의존하는 많은 작업이 반환된 값에서 사용할 수 없음을 의미합니다. 예를 들어 이 함수에 의해 반환된 결과를 비교하는 `==` 연산자를 작성할 수 없습니다.
+<!--
+  - test: `opaque-result-existential-error`
+
+  ```swifttest
+  -> func protoFlip<T: Shape>(_ shape: T) -> Shape {
+        if shape is Square {
+           return shape
+        }
+
+        return FlippedShape(shape: shape)
+     }
+  !$ error: invalid redeclaration of 'protoFlip'
+  !! func protoFlip<T: Shape>(_ shape: T) -> Shape {
+  !!      ^
+  !$ note: 'protoFlip' previously declared here
+  !! func protoFlip<T: Shape>(_ shape: T) -> Shape {
+  !!      ^
+  ```
+-->
+
+개정된 코드의 버전은
+전달되는 도형에 따라
+`Shape` 인스턴스나 `FlippedShape` 인스턴스를 반환합니다.
+이 함수에 의해 반환된 두 개의 뒤집힌 모양은
+완전히 다른 타입을 가집니다.
+이 함수의 다른 유효한 버전은 같은 도형을 여러 번 뒤집을 때도
+다른 타입의 값을 반환할 수 있습니다.
+`protoFlip(_:)`의 구체적이지 않은 반환 타입은
+타입 정보에 의존하는 많은 작업이
+반환된 값에서 사용할 수 없음을 의미합니다.
+예를 들어 이 함수에 의해 반환된 결과를 비교하는
+`==` 연산자를 사용할 수 없습니다.
 
 ```swift
 let protoFlippedTriangle = protoFlip(smallTriangle)
@@ -512,13 +733,57 @@ let sameThing = protoFlip(smallTriangle)
 protoFlippedTriangle == sameThing  // Error
 ```
 
-예시의 마지막 라인에서 몇가지 이유로 오류가 발생합니다. 즉각적인 문제는 `Shape` 는 프로토콜 요구사항의 부분으로 `==` 연산자를 포함하지 않습니다. 이것을 추가하려고 하면 다음 문제는 `==` 연산자는 좌항과 우항 인수의 타입을 알아야 합니다. 이러한 종류의 연산자는 일반적으로 프로토콜을 채택하는 구체적인 타입과 일치하는 `Self` 타입의 인수를 사용하지만 프로토콜에 `Self` 요구사항을 추가하면 프로토콜을 타입으로 사용할 때 발생하는 타입 삭제가 허용되지 않습니다.
+<!--
+  - test: `opaque-result-existential-error`
 
-함수의 반환 타입으로 박스형 프로토콜 타입을 사용하면 프로토콜을 준수하는 모든 타입을 유연하게 반환할 수 있습니다. 그러나 이러한 유연성의 대가는 반환된 값에 대해 일부 작업을 수행할 수 없습니다. 이 예시는 박스형 프로토콜 타입을 사용하여 보존되지 않는 특정 타입 정보에 따라 `==` 연산자를 사용할 수 없는 것을 보여줍니다.
+  ```swifttest
+  >> let smallTriangle = Triangle(size: 3)
+  -> let protoFlippedTriangle = protoFlip(smallTriangle)
+  -> let sameThing = protoFlip(smallTriangle)
+  -> protoFlippedTriangle == sameThing  // Error
+  !$ error: binary operator '==' cannot be applied to two 'any Shape' operands
+  !! protoFlippedTriangle == sameThing  // Error
+  !! ~~~~~~~~~~~~~~~~~~~~ ^  ~~~~~~~~~
+  ```
+-->
 
-이 접근 방식의 다른 문제는 모양 변형이 중첩되지 않습니다. 삼각형을 뒤집은 결과는 `Shape` 타입의 값이고 `protoFlip(_:)` 함수는 `Shape` 프로토콜을 준수하는 일부 타입의 인수를 가집니다. 그러나 박스형 프로토콜 타입의 값은 `protoFlip(_:)` 에 의해 반환된 값은 `Shape` 를 준수하지 않으므로 프로토콜을 준수하지 않습니다. 여러 변형을 적용하는 `protoFlip(protoFlip(smallTriangle))` 같은 코드는 뒤집힌 모양이 `protoFlip(_:)` 에 대해 유효하지 않은 인수입니다.
+예시의 마지막 라인에서 몇 가지 이유로 오류가 발생합니다.
+즉각적인 문제는 `Shape`는 프로토콜 요구사항으로
+`==` 연산자를 포함하지 않습니다.
+이것을 추가하려고 하면 다음 문제는
+`==` 연산자는
+좌변과 우변 인수의 타입을 알아야 합니다.
+이러한 종류의 연산자는 일반적으로 프로토콜을 채택하는 구체적인 타입과 일치하는
+`Self` 타입의 인수를 사용하지만
+프로토콜에 `Self` 요구사항을 추가하면
+프로토콜을 타입으로 사용할 때
+발생하는 타입 삭제가 허용되지 않습니다.
 
-반대로 불투명 타입은 기본 타입의 정체성을 보존합니다. Swift는 연관된 타입을 유추할 수 있으므로 박스형 프로토콜 타입을 반환값으로 사용할 수 없는 위치에 불투명한 반환값을 사용할 수 있습니다. 예를 들어 다음은 <doc:Generics> 의 `Container` 프로토콜의 버전입니다:
+함수의 반환 타입으로 박싱 프로토콜 타입을 사용하면
+프로토콜을 준수하는 모든 타입을 유연하게 반환할 수 있습니다.
+그러나 이러한 유연성의 대가는
+반환된 값에 대해 일부 작업을 수행할 수 없습니다.
+이 예시는 박싱 프로토콜 타입을 사용하여 보존되지 않는
+구체적인 타입 정보에 따라
+`==` 연산자를 사용할 수 없는 것을 보여줍니다.
+
+이 접근 방식의 다른 문제는 도형 변환이 중첩되지 않습니다.
+삼각형을 뒤집은 결과는 `Shape` 타입의 값이고
+`protoFlip(_:)` 함수는
+`Shape` 프로토콜을 준수하는 타입을 인수로 가집니다.
+그러나 박싱 프로토콜 타입의 값은
+`protoFlip(_:)`에 의해 반환된 값은 `Shape`를 준수하지 않으므로 프로토콜을 준수하지 않습니다.
+여러 변환을 적용하는
+`protoFlip(protoFlip(smallTriangle))`같은 코드는
+뒤집힌 도형이 `protoFlip(_:)`에 대해 유효하지 않은 인수입니다.
+
+반대로
+불투명 타입은 기본 타입의 정체성을 보존합니다.
+Swift는 연관 타입을 추론할 수 있으므로,
+박싱 프로토콜 타입을 반환 값으로 사용할 수 없는 위치에
+불투명 반환 값을 사용할 수 있습니다.
+예를 들어
+다음은 <doc:Generics>의 `Container` 프로토콜의 버전입니다:
 
 ```swift
 protocol Container {
@@ -529,7 +794,24 @@ protocol Container {
 extension Array: Container { }
 ```
 
-프로토콜은 연관된 타입을 가지고 있으므로 함수의 반환 타입으로 `Container` 를 사용할 수 없습니다. 또한 제네릭 타입이 필요한지 추론하기 위해 함수 본문의 외부에 충분한 정보가 없으므로 제네릭 반환 타입의 제약조건으로 사용할 수 없습니다.
+<!--
+  - test: `opaque-result, opaque-result-existential-error`
+
+  ```swifttest
+  -> protocol Container {
+         associatedtype Item
+         var count: Int { get }
+         subscript(i: Int) -> Item { get }
+     }
+  -> extension Array: Container { }
+  ```
+-->
+
+프로토콜은 연관 타입을 가지고 있으므로
+함수의 반환 타입으로 `Container`를 사용할 수 없습니다.
+또한 제네릭 타입이 필요한지 추론하기 위해
+함수 본문의 외부에 충분한 정보가 없으므로
+제네릭 반환 타입의 제약조건을 사용할 수 없습니다.
 
 ```swift
 // Error: Protocol with associated types can't be used as a return type.
@@ -544,10 +826,32 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
 ```
 
 <!--
-Using the opaque type some Container as a return type expresses the desired API contract — the function returns a container, but declines to specify the container’s type:
+  - test: `opaque-result-existential-error`
+
+  ```swifttest
+  // Error: Protocol with associated types can't be used as a return type.
+  -> func makeProtocolContainer<T>(item: T) -> Container {
+         return [item]
+     }
+  ---
+  // Error: Not enough information to infer C.
+  -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
+         return [item]
+     }
+  !$ error: use of protocol 'Container' as a type must be written 'any Container'
+  !! func makeProtocolContainer<T>(item: T) -> Container {
+  !!                                           ^~~~~~~~~
+  !! any Container
+  !$ error: cannot convert return expression of type '[T]' to return type 'C'
+  !! return [item]
+  !! ^~~~~~
+  !! as! C
+  ```
 -->
 
-반환 타입으로 불투명 타입 `some Container` 을 사용하면 함수는 컨테이너를 반환하지만 컨테이너의 타입 지정을 거부하므로 원하는 API가 표현됩니다:
+반환 타입으로 불투명 타입 `some Container`을 사용하면 함수가 컨테이너를 반환한다고
+API를 표현할 수 있고,
+컨테이너의 타입을 명시하지 않을 수 있습니다:
 
 ```swift
 func makeOpaqueContainer<T>(item: T) -> some Container {
@@ -559,5 +863,70 @@ print(type(of: twelve))
 // Prints "Int"
 ```
 
-`twelve` 의 타입은 `Int` 로 유추되며 이것은 불투명 타입이 타입 추론이 동작한다는 것을 보여줍니다. `makeOpaqueContainer(item:)` 의 구현에서 불투명한 컨테이너의 기본 타입은 `[T]` 입니다. 이 경우에 `T` 는 `Int` 이므로 반환값은 정수의 배열이고 `Item` 연관된 타입은 `Int` 로 유추됩니다. `Container` 에서 서브스크립트는 `twelve` 의 타입도 `Int` 로 유추된다는 의미의 `Item` 을 반환합니다.
+<!--
+  - test: `opaque-result`
 
+  ```swifttest
+  -> func makeOpaqueContainer<T>(item: T) -> some Container {
+         return [item]
+     }
+  -> let opaqueContainer = makeOpaqueContainer(item: 12)
+  -> let twelve = opaqueContainer[0]
+  -> print(type(of: twelve))
+  <- Int
+  ```
+-->
+
+`twelve`의 타입은 `Int`로 추론되며
+이것은 불투명 타입이 타입 추론이 동작한다는 것을 보여줍니다.
+`makeOpaqueContainer(item:)`의 구현에서
+불투명 컨테이너의 타입은 `[T]`입니다.
+이 경우에 `T`는 `Int`이므로
+반환 값은 정수의 배열이고
+연관 타입 `Item`은 `Int`로 추론됩니다.
+`Container`의 서브스크립트는
+`twelve`의 타입도 `Int`로 추론된다는 의미의 `Item`을 반환합니다.
+
+<!--
+  TODO: Expansion for the future
+
+  You can combine the flexibility of returning a value of protocol type
+  with the API-boundary enforcement of opaque types
+  by using type erasure
+  like the Swift standard library uses in the
+  `AnySequence <//apple_ref/fake/AnySequence`_ type.
+
+  protocol P { func f() -> Int }
+
+  struct AnyP: P {
+      var p: P
+      func f() -> Int { return p.f() }
+  }
+
+  struct P1 {
+      func f() -> Int { return 100 }
+  }
+  struct P2 {
+      func f() -> Int { return 200 }
+  }
+
+  func opaque(x: Int) -> some P {
+      let result: P
+      if x > 100 {
+          result = P1()
+      }  else {
+          result = P2()
+      }
+      return AnyP(p: result)
+  }
+-->
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
