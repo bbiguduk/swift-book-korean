@@ -845,10 +845,18 @@ class Course {
   ```
 -->
 
-`Department`는 학과에서 제공하는
-강좌에 강한 참조를 유지합니다.
+`Department`는 학과에서 제공하는 각 강좌에
+강한 참조를 유지합니다.
 ARC 소유권 모델에서 학과는 강좌를 소유하고 있습니다.
-`Course`는 학과에 대한 것과 객체를 소유하지 않은 학생이 수강해야 하는 다음 과정에 대한 2개의 미소유 참조를 가지고 있습니다. 모든 과정은 과의 부분이므로 `department` 프로퍼티는 옵셔널이 아닙니다. 그러나 일부 과정은 후속 과정이 없기 때문에 `nextCourse` 프로퍼티는 옵셔널 입니다.
+`Course`는 두 개의 미소유 참조를 가지고 있으며,
+하나는 학과에 대한 것이고,
+다른 하나는 학생이 수강해야 될 강좌입니다;
+`Course`는 이 두 객체를 소유하지 않습니다.
+모든 강좌는 학과에 속하므로
+`department` 프로퍼티는 옵셔널이 아닙니다.
+그러나
+일부 강좌는 후속 과정이 없기 때문에
+`nextCourse` 프로퍼티는 옵셔널 입니다.
 
 다음은 이러한 클래스를 사용하는 예시입니다:
 
@@ -864,18 +872,80 @@ intermediate.nextCourse = advanced
 department.courses = [intro, intermediate, advanced]
 ```
 
-위의 코드는 과와 그 과의 3개의 과정을 생성합니다. 소개와 중급 과정 모두 `nextCourse` 프로퍼티에 저장된 다음 과정을 제안하며 이는 학생이 과정을 완료한 후 수강해야 하는 과정에 대한 미소유 옵셔널 참조를 유지합니다.
+<!--
+  - test: `unowned-optional-references`
+
+  ```swifttest
+  -> let department = Department(name: "Horticulture")
+  ---
+  -> let intro = Course(name: "Survey of Plants", in: department)
+  -> let intermediate = Course(name: "Growing Common Herbs", in: department)
+  -> let advanced = Course(name: "Caring for Tropical Plants", in: department)
+  ---
+  -> intro.nextCourse = intermediate
+  -> intermediate.nextCourse = advanced
+  -> department.courses = [intro, intermediate, advanced]
+  ```
+-->
+
+위의 코드는 학과와 그 학과의 세 개의 강좌를 생성합니다.
+입문과 중급 과목 모두 `nextCourse` 프로퍼티에 저장된
+다음 과목을 제안하며
+이는 학생이 과목을 완료한 후 수강해야 하는 과목에 대한
+미소유 옵셔널 참조를 유지합니다.
 
 ![Unowned Optional Reference](unownedOptionalReference)
 
-미소유 옵셔널 참조는 래핑하는 클래스의 인스턴스에 강하게 유지하지 않으므로 ARC가 인스턴스를 할당 해제하는 것을 방지하지 않습니다. 미소유 옵셔널 참조가 `nil` 이 될 수 있다는 점을 제외하고 미소유 참조는 ARC에서 수행하는 것과 동일하게 동작합니다.
+미소유 옵셔널 참조는
+참조하는 클래스 인스턴스를 강하게 유지하지 않으므로,
+ARC가 해당 인스턴스를 해제하는 것을 제한하지 않습니다.
+ARC에서 미소유 참조와 동일하게 동작하지만,
+미소유 옵셔널 참조는 `nil`이 될 수 있다는 점이 다릅니다.
 
-옵셔널이 아닌 미소유 참조와 같이 `nextCourse` 가 항상 할당 해제되지 않은 과정을 참조하도록 해야합니다. 예를 들어 `department.courses` 에서 과정을 삭제할 때 다른 과정에 있을 수 있는 모든 참조를 삭제해야 합니다.
+미소유 참조와 마찬가지로
+`nextCourse`가 항상 해제되지 않은 강좌를 참조하도록
+직접 관리해야 합니다.
+예를 들어
+`department.courses`에서 강좌를 삭제할 때
+다른 강좌가 해당 강좌를 참조하고 있다면
+그 참조도 삭제해야 합니다.
 
-> Note   
-> 옵셔널 값의 기본 타입은 Swift 표준 라이브러리에 열거형 인 `Optional` 입니다. 그러나 옵셔널은 값 타입에 `unowned` 를 표기할 수 없는 규칙에 대해 예외입니다.
+> Note: 옵셔널 값의 타입은 `Optional`이며,
+> Swift 표준 라이브러리의 열거형입니다.
+> 그러나 옵셔널은 값 타입에 `unowned`를 표시할 수 없는
+> 규칙에 대해 예외입니다.
 >
-> 클래스를 래핑한 옵셔널은 참조 카운팅을 사용하지 않으므로 강한 참조를 옵셔널로 유지할 필요가 없습니다.
+> 클래스를 감싸는 옵셔널은
+> 참조 카운팅을 사용하지 않으므로,
+> 옵셔널에 대해 강한 참조를 유지할 필요가 없습니다.
+
+<!--
+  - test: `unowned-can-be-optional`
+
+  ```swifttest
+  >> class C { var x = 100 }
+  >> class D {
+  >>     unowned var a: C
+  >>     unowned var b: C?
+  >>     init(value: C) {
+  >>         self.a = value
+  >>         self.b = value
+  >>     }
+  >> }
+  >> var c = C() as C?
+  >> let d = D(value: c! )
+  >> print(d.a.x, d.b?.x as Any)
+  << 100 Optional(100)
+  ---
+  >> c = nil
+  // Now that the C instance is deallocated, access to d.a is an error.
+  // We manually nil out d.b, which is safe because d.b is an Optional and the
+  // enum stays in memory regardless of ARC deallocating the C instance.
+  >> d.b = nil
+  >> print(d.b?.x as Any)
+  << nil
+  ```
+-->
 
 ### 미소유 참조와 암묵적 언래핑된 옵셔널 프로퍼티 \(Unowned References and Implicitly Unwrapped Optional Properties\)
 
