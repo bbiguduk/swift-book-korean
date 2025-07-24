@@ -47,11 +47,17 @@ ARC는 인스턴스의 참조가 하나라도 존재하는 한
 인스턴스를 해제하지 않습니다.
 
 이것을 가능하게 하려면,
-프로퍼티, 상수, 또는 변수에 클래스 인스턴스를 할당할 때마다 해당 프로퍼티, 상수, 또는 변수는 인스턴스에 _강한 참조 \(strong reference\)_ 를 만듭니다. 참조는 해당 인스턴스를 유지하고 강한 참조가 남아있는 한 할당 해제를 허용하지 않기 때문에 "강한" 참조라고 합니다.
+프로퍼티, 상수, 변수에 클래스 인스턴스를 할당할 때마다
+해당 프로퍼티, 상수, 변수는 인스턴스에 *강한 참조(strong reference)*를 만듭니다.
+이 참조를 "강한" 참조라고 하며
+해당 인스턴스를 단단히 붙잡고 있어서
+강한 참조가 남아있는 한 해제되지 않도록 합니다.
 
-## ARC 동작 \(ARC in Action\)
+## ARC 동작 (ARC in Action)
 
-다음은 어떻게 자동 참조 카운팅이 동작하는지에 대한 예시입니다. 이 예시는 `name` 이라는 저장된 상수 프로퍼티를 정의하는 `Person` 이라는 간단한 클래스로 시작합니다:
+다음은 어떻게 Automatic Reference Counting이 동작하는지 보여주는 예시입니다.
+이 예시는 `Person` 이라는 간단한 클래스로 시작하고,
+`name`이라는 저장 상수 프로퍼티를 정의합니다:
 
 ```swift
 class Person {
@@ -66,9 +72,34 @@ class Person {
 }
 ```
 
-`Person` 클래스는 인스턴스의 `name` 프로퍼티에 설정하고 초기화가 진행 중임을 나타내는 메세지를 출력하는 이니셜라이저를 가집니다. `Person` 클래스는 클래스의 인스턴스가 할당 해제될 때 메시지를 출력하는 디이니셜라이저도 가지고 있습니다.
+<!--
+  - test: `howARCWorks`
 
-다음 코드는 뒤따르는 코드에 새로운 `Person` 인스턴스에 여러개 참조를 설정하기 위해 사용되는 `Person?` 타입의 3개의 변수를 정의합니다. 이 변수는 `Person` 이 아닌 `Person?` 인 옵셔널 타입 이므로 `nil` 의 값으로 자동으로 초기화 되고 현재는 `Person` 인스턴스를 참조하지 않습니다.
+  ```swifttest
+  -> class Person {
+        let name: String
+        init(name: String) {
+           self.name = name
+           print("\(name) is being initialized")
+        }
+        deinit {
+           print("\(name) is being deinitialized")
+        }
+     }
+  ```
+-->
+
+`Person` 클래스는 인스턴스의 `name` 프로퍼티를 설정하고
+메세지를 출력하는 이니셜라이저를 가지고 있습니다.
+`Person` 클래스는 클래스의 인스턴스가 해제될 때 메시지를 출력하는
+디이니셜라이저도 가지고 있습니다.
+
+다음 코드에서는 `Person?` 타입의 세 개의 변수를 정의하고,
+이것은 다음 코드에서
+새로운 `Person` 인스턴스에 여러 참조를 설정하기 위해 사용됩니다.
+이 변수는 `Person`이 아닌 `Person?`인 옵셔널 타입 이므로,
+`nil`로 자동으로 초기화되고
+현재는 `Person` 인스턴스를 참조하지 않습니다.
 
 ```swift
 var reference1: Person?
@@ -76,49 +107,121 @@ var reference2: Person?
 var reference3: Person?
 ```
 
-이제 새로운 `Person` 인스턴스를 생성하고 이 3개의 변수중 하나에 할당합니다:
+<!--
+  - test: `howARCWorks`
+
+  ```swifttest
+  -> var reference1: Person?
+  -> var reference2: Person?
+  -> var reference3: Person?
+  ```
+-->
+
+이제 새로운 `Person` 인스턴스를 생성하고
+이 세 개의 변수 중 하나에 할당합니다:
 
 ```swift
 reference1 = Person(name: "John Appleseed")
 // Prints "John Appleseed is being initialized"
 ```
 
-`"John Appleseed is being initialized"` 메세지는 `Person` 클래스의 이니셜라이저를 호출할 때 출력됩니다. 이것은 초기화가 발생했음을 확인합니다.
+<!--
+  - test: `howARCWorks`
 
-새로운 `Person` 인스턴스는 `reference1` 변수에 할당되기 때문에 `reference1` 에서 새로운 `Person` 인스턴스에 대한 강한 참조가 있습니다. 하나의 강한 참조가 있기 때문에 ARC는 이 `Person` 을 메모리에 유지하고 할당 해제하지 않습니다.
+  ```swifttest
+  -> reference1 = Person(name: "John Appleseed")
+  <- John Appleseed is being initialized
+  ```
+-->
 
-동일한 `Person` 인스턴스를 2개 이상의 변수에 할당하면 해당 인스턴스에 대한 2개 이상의 강한 참조가 설정됩니다:
+`Person` 클래스의 이니셜라이저를 호출하면
+`"John Appleseed is being initialized"` 메세지가 출력됩니다.
+이것은 초기화가 발생했음을 의미합니다.
+
+새로운 `Person` 인스턴스는 `reference1` 변수에 할당되기 때문에
+이제 `reference1`에서 새로운 `Person` 인스턴스에 대한 강한 참조가 생깁니다.
+하나의 강한 참조가 있기 때문에
+ARC는 이 `Person`을 메모리에 유지하고 해제하지 않습니다.
+
+동일한 `Person` 인스턴스를 두 변수에 할당하면,
+해당 인스턴스에 대한 강한 참조가 두 개 더 설정됩니다:
 
 ```swift
 reference2 = reference1
 reference3 = reference1
 ```
 
-이제 이 단일 `Person` 인스턴스에 _3개_ 의 강한 참조가 있습니다.
+<!--
+  - test: `howARCWorks`
 
-기존의 참조를 포함하여 2개의 변수에 `nil` 을 할당하여 강한 참조 중 2개를 중단하면 하나의 강한 참조만 남고 `Person` 인스턴스는 할당 해제되지 않습니다:
+  ```swifttest
+  -> reference2 = reference1
+  -> reference3 = reference1
+  ```
+-->
+
+이제 이 단일 `Person` 인스턴스에 *세 개*의 강한 참조가 있습니다.
+
+기존의 참조를 포함하여 두 개의 변수에 `nil`을 할당하여
+강한 참조를 중단하면
+하나의 강한 참조만 남고
+`Person` 인스턴스는 해제되지 않습니다:
 
 ```swift
 reference1 = nil
 reference2 = nil
 ```
 
-ARC는 세번째와 마지막 강한 참조를 중단할 때까지 `Person` 인스턴스를 할당 해제하지 않습니다. 이 때부터 `Person` 인스턴스를 더이상 사용하지 않는 것이 명백합니다:
+<!--
+  - test: `howARCWorks`
+
+  ```swifttest
+  -> reference1 = nil
+  -> reference2 = nil
+  ```
+-->
+
+ARC는 마지막 강한 참조를 중단할 때까지
+`Person` 인스턴스를 해제하지 않고,
+마지막 강한 참조가 중단되면 `Person` 인스턴스를 더 이상 사용하지 않는 것이 명백해집니다:
 
 ```swift
 reference3 = nil
 // Prints "John Appleseed is being deinitialized"
 ```
 
-## 클래스 인스턴스 사이의 강한 순환 참조 \(Strong Reference Cycles Between Class Instances\)
+<!--
+  - test: `howARCWorks`
 
-위의 예시에서 ARC는 새로운 `Person` 인스턴스를 생성하고 더이상 필요치 않을 때 `Person` 인스턴스를 할당 해제하기 위해 참조의 수를 추적할 수 있습니다.
+  ```swifttest
+  -> reference3 = nil
+  <- John Appleseed is being deinitialized
+  ```
+-->
 
-그러나 클래스의 인스턴스가 강한 참조가 없는 지점에 도달하지 않는 코드를 작성할 수 있습니다. 이는 두 클래스 인스턴스가 서로에 대한 강한 참조를 유지하여 각 인스턴스가 다른 인스턴스를 유지하는 경우 발생할 수 있습니다. 이것은 _강한 순환 참조 \(strong reference cycle\)_ 이라고 합니다.
+## 클래스 인스턴스 간의 강한 순환 참조 (Strong Reference Cycles Between Class Instances)
 
-클래스 간의 일부 관계를 강한 참조 대신 약한 \(weak\) 또는 미소유 \(unowned\) 참조로 정의하여 강한 순환 참조을 해결합니다. 이 프로세스는 <doc:AutomaticReferenceCounting#클래스-인스턴스-간의-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-Between-Class-Instances> 에서 설명되어 있습니다. 그러나 강한 순환 참조을 어떻게 해결하는지 배우기 전에 어떻게 사이클이 발생하는지 이해하는 것이 유용합니다.
+위의 예시에서
+ARC는 새로 생성한 `Person` 인스턴스의 참조 개수를 추적하고,
+더 이상 필요하지 않을 때 `Person` 인스턴스를 해제할 수 있습니다.
 
-다음은 실수로 강한 순환 참조을 생성하는 예입니다. 이 예시는 아파트와 거주자의 블럭을 모델링 하는 `Person` 과 `Apartment` 라는 2개의 클래스를 정의합니다:
+그러나 클래스 인스턴스가 *절대* 강한 참조가 0이 될 수 없는
+코드를 작성할 수 있습니다.
+이는 두 클래스 인스턴스가 서로에 대한 강한 참조를 유지하면
+각 인스턴스가 서로를 계속 살아 있게 만듭니다.
+이것을 *강한 순환 참조(strong reference cycle)*라고 합니다.
+
+강한 순환 참조를 해결하려면
+클래스 간의 관계를
+강한 참조 대신 약한 참조(weak)나 미소유 참조(unowned)로 정의해야 합니다.
+이 프로세스는
+<doc:AutomaticReferenceCounting#클래스-인스턴스-간의-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-Between-Class-Instances>에 설명되어 있습니다.
+그러나 강한 순환 참조을 어떻게 해결하는지 배우기 전에
+어떻게 순환이 발생하는지 이해하는 것이 좋습니다.
+
+다음은 실수로 강한 순환 참조을 생성하는 예시입니다.
+이 예시는 `Person`과 `Apartment`라는 두 개의 클래스를 정의하고,
+아파트와 거주자를 모델링합니다:
 
 ```swift
 class Person {
@@ -136,76 +239,215 @@ class Apartment {
 }
 ```
 
-모든 `Person` 인스턴스는 `String` 타입의 `name` 프로퍼티와 초기 값이 `nil` 인 옵셔널 `apartment` 프로퍼티를 가지고 있습니다. 사람이 항상 아파트를 가지고 있지 않기 때문에 `apartment` 프로퍼티는 옵셔널입니다.
+<!--
+  - test: `referenceCycles`
 
-유사하게 모든 `Apartment` 인스턴스는 `String` 타입의 `unit` 프로퍼티와 초기 값이 `nil` 인 옵셔널 `tenant` 프로퍼티를 가지고 있습니다. 아파트는 항상 세입자를 보유하는 것이 아니므로 `tenant` 프로퍼티는 옵셔널입니다.
+  ```swifttest
+  -> class Person {
+        let name: String
+        init(name: String) { self.name = name }
+        var apartment: Apartment?
+        deinit { print("\(name) is being deinitialized") }
+     }
+  ---
+  -> class Apartment {
+        let unit: String
+        init(unit: String) { self.unit = unit }
+        var tenant: Person?
+        deinit { print("Apartment \(unit) is being deinitialized") }
+     }
+  ```
+-->
 
-이 클래스 모두 클래스의 인스턴스가 초기화 해제 됨을 출력하는 디이니셜라이저를 정의합니다. 이것을 사용하면 `Person` 과 `Apartment` 의 인스턴스가 예상대로 초기화 해제되었는지 확인할 수 있습니다.
+모든 `Person` 인스턴스는 `String` 타입의 `name` 프로퍼티와
+초기 값이 `nil`인 옵셔널 `apartment` 프로퍼티를 가지고 있습니다.
+`apartment` 프로퍼티는 사람이 항상 아파트를 가지고 있지 않기 때문에 옵셔널입니다.
 
-다음 코드는 아래에서 특정 `Apartment` 와 `Person` 인스턴스를 설정할 `john` 과 `unit4A` 라는 옵셔널 타입의 2개의 변수를 정의합니다. 이 변수 모두 옵셔널 이므로 초기 값으로 `nil` 을 가집니다:
+유사하게 모든 `Apartment` 인스턴스는 `String` 타입의 `unit` 프로퍼티와
+초기 값이 `nil`인 옵셔널 `tenant` 프로퍼티를 가지고 있습니다.
+`tenant` 프로퍼티는 아파트가 항상 세입자를 보유하는 것이 아니므로 옵셔널입니다.
+
+이 클래스 모두 디이니셜라이저를 정의하고,
+클래스의 인스턴스가 해제될 때 메세지를 출력합니다.
+이것을 통해 `Person`과 `Apartment`의 인스턴스가 해제되는지
+확인할 수 있습니다.
+
+다음 코드는 `Apartment`와 `Person` 인스턴스를 설정할
+`john`과 `unit4A`라는
+옵셔널 타입의 두 개의 변수를 정의합니다.
+이 변수 모두 옵셔널이므로 초기 값으로 `nil`을 가집니다:
 
 ```swift
 var john: Person?
 var unit4A: Apartment?
 ```
 
-이제 특정 `Person` 인스턴스와 `Apartment` 인스턴스를 생성할 수 있고 이 새로운 인스턴스를 `john` 과 `unit4A` 변수에 할당할 수 있습니다:
+<!--
+  - test: `referenceCycles`
+
+  ```swifttest
+  -> var john: Person?
+  -> var unit4A: Apartment?
+  ```
+-->
+
+이제 `Person` 인스턴스와 `Apartment` 인스턴스를 생성할 수 있고,
+이 인스턴스를 `john`과 `unit4A` 변수에 할당할 수 있습니다:
 
 ```swift
 john = Person(name: "John Appleseed")
 unit4A = Apartment(unit: "4A")
 ```
 
-다음은 강한 참조가 이 두 인스턴스를 생성하고 할당하여 어떻게 보이는지 나타냅니다. `john` 변수는 이제 새로운 `Person` 인스턴스에 대한 강한 참조를 가지고 있고 `unit4A` 변수는 새로운 `Apartment` 인스턴스에 대한 강한 참조를 가지고 있습니다:
+<!--
+  - test: `referenceCycles`
+
+  ```swifttest
+  -> john = Person(name: "John Appleseed")
+  -> unit4A = Apartment(unit: "4A")
+  ```
+-->
+
+다음은 강한 참조가 이 두 인스턴스를 생성하고 할당한 후에 어떻게 되는지 보여줍니다.
+`john` 변수는 이제 `Person` 인스턴스에 대해 강한 참조를 가지고 있고,
+`unit4A` 변수는 `Apartment` 인스턴스에 대한 강한 참조를 가지고 있습니다:
 
 ![Reference Cycle 01](referenceCycle01)
 
-이제 사람은 아파트를 가지고 아파트는 소유자를 가지도록 두 인스턴스를 함께 연결할 수 있습니다. 느낌표 \(`!`\)는 `john` 과 `unit4A` 옵셔널 변수 내에 저장된 인스턴스를 언래핑 하고 접근하기 위해 사용되므로 해당 인스턴스의 프로퍼티를 설정할 수 있습니다:
+이제 사람은 아파트를 가지고 아파트는 소유자를 가지도록
+두 인스턴스를 함께 연결할 수 있습니다.
+느낌표(`!`)는 `john`과 `unit4A` 옵셔널 변수에 저장된 인스턴스를
+언래핑하고 접근하기 위해 사용되므로
+해당 인스턴스의 프로퍼티를 설정할 수 있습니다:
 
 ```swift
 john!.apartment = unit4A
 unit4A!.tenant = john
 ```
 
+<!--
+  - test: `referenceCycles`
+
+  ```swifttest
+  -> john!.apartment = unit4A
+  -> unit4A!.tenant = john
+  ```
+-->
+
 다음은 두 인스턴스를 함께 연결한 후에 강한 참조가 어떻게 되는지 보여줍니다:
 
 ![Reference Cycle 02](referenceCycle02)
 
-불행히도 이 두 인스턴스 연결은 서로간의 강한 순환 참조을 생성합니다. `Person` 인스턴스는 이제 `Apartment` 인스턴스에 대한 강한 참조를 가지고 `Apartment` 인스턴스는 `Person` 인스턴스에 대한 강한 참조를 가집니다. 따라서 `john` 과 `unit4A` 변수에 의해 가진 강한 참조를 중단할 때 참조 카운트는 0으로 떨어지지 않고 인스턴스는 ARC에 의해 할당 해제되지 않습니다:
+불행히도 이 두 인스턴스 연결은
+서로 간의 강한 순환 참조를 생성합니다.
+`Person` 인스턴스는 이제 `Apartment` 인스턴스에 대한 강한 참조를 가지고,
+`Apartment` 인스턴스는 `Person` 인스턴스에 대한 강한 참조를 가집니다.
+따라서 `john`과 `unit4A` 변수의
+강한 참조를 중단해도
+참조 카운트는 0으로 떨어지지 않고
+인스턴스는 ARC에 의해 해제되지 않습니다:
 
 ```swift
 john = nil
 unit4A = nil
 ```
 
-두 변수를 `nil` 로 설정할 때 디이니셜라이저는 호출되지 않습니다. 강한 순환 참조은 `Person` 과 `Apartment` 인스턴스가 할당 해제되는 것을 방지하여 앱에서 메모리 누수를 유발합니다.
+<!--
+  - test: `referenceCycles`
 
-다음은 `john` 과 `unit4A` 변수를 `nil` 로 설정한 후에 강한 참조를 나타냅니다:
+  ```swifttest
+  -> john = nil
+  -> unit4A = nil
+  ```
+-->
+
+두 변수를 `nil`로 설정해도
+디이니셜라이저는 호출되지 않습니다.
+강한 순환 참조는 `Person`과 `Apartment` 인스턴스가
+해제되는 것을 방지하여 앱에서 메모리 누수를 유발합니다.
+
+다음은 `john`과 `unit4A` 변수를 `nil`로
+설정한 후에 강한 참조를 나타냅니다:
 
 ![Reference Cycle 03](referenceCycle03)
 
-`Person` 과 `Apartment` 인스턴스 간의 강한 참조는 남아있고 중단될 수 없습니다.
+`Person`과 `Apartment` 인스턴스 간의
+강한 참조는 남아있고 중단할 수 없습니다.
 
-## 클래스 인스턴스 간의 강한 순환 참조 해결 \(Resolving Strong Reference Cycles Between Class Instances\)
+## 클래스 인스턴스 간의 강한 순환 참조 해결 (Resolving Strong Reference Cycles Between Class Instances)
 
-Swift는 클래스 타입의 프로퍼티와 작업할 때 강한 순환 참조을 해결하기 위해 2가지 방법을 제공합니다: 약한 참조 \(weak references\)와 미소유 참조 \(unowned references\).
+Swift는 클래스 타입의 프로퍼티에서
+강한 순환 참조를 해결하기 위해 두 가지 방법을 제공합니다:
+약한 참조(weak references)와 미소유 참조(unowned references)입니다.
 
-약한 참조와 미소유 참조를 사용하면 참조 사이클의 한 인스턴스가 강한 유지 없이 다른 인스턴스를 참조할 수 있습니다. 그런 다음 인스턴스는 강한 순환 참조을 만들지 않고도 서로를 참조할 수 있습니다.
+약한 참조와 미소유 참조를 사용하면
+순환 참조의 한 인스턴스가 다른 인스턴스를 강하게 참조하지 *않고* 참조할 수 있습니다.
+이렇게 하면 인스턴스는 강한 순환 참조를 만들지 않고도 서로를 참조할 수 있습니다.
 
-다른 인스턴스의 수명이 더 짧은 경우 즉, 다른 인스턴스가 먼저 할당 해제될 수 있을 때 약한 참조를 사용합니다. 위의 `Apartment` 예시에서 아파트는 어느 시점에 소유자가 없을 수 있는 것이 적절하므로 이러한 경우 약한 참조는 참조 사이클을 끊는 적절한 방법입니다. 반대로 다른 인스턴스의 수명이 동일하거나 더 긴 경우 미소유 참조를 사용합니다.
+다른 인스턴스의 생명주기가 더 짧은 경우 ---
+즉, 다른 인스턴스가 먼저 해제될 수 있을 때 약한 참조를 사용합니다.
+위의 `Apartment` 예시에서
+아파트는 어느 시점에
+세입자가 없을 수 있으므로
+이러한 경우 약한 참조는 참조 사이클을 끊는 적절한 방법입니다.
+반대로 다른 인스턴스의 생명주기가 동일하거나
+더 긴 경우 미소유 참조를 사용합니다.
 
-### 약한 참조 \(Weak References\)
+<!--
+  QUESTION: how do I answer the question
+  "which of the two properties in the reference cycle
+  should be marked as weak or unowned?"
+-->
 
-_약한 참조 \(weak reference\)_ 는 참조하는 인스턴스를 강하게 유지하지 않는 참조이므로 ARC가 참조된 인스턴스를 처리하는 것을 중지하지 않습니다. 이러한 동작은 참조가 강한 순환 참조의 일부가 되는 것을 방지합니다. 프로퍼티 또는 변수 선언 전에 `weak` 키워드를 위치시켜 약한 참조를 나타냅니다.
+### 약한 참조 (Weak References)
 
-약한 참조는 참조하는 인스턴스를 강하게 유지하지 않기 때문에 약한 참조가 참조하는 동안 해당 인스턴스가 할당 해제될 수 있습니다. 따라서 ARC는 참조하는 인스턴스가 할당 해제되면 `nil` 로 약한 참조를 자동으로 설정합니다. 그리고 약한 참조는 런타임에 값을 `nil` 로 변경하는 것을 허락해야 하므로 항상 옵셔널 타입의 상수가 아닌 변수로 선언됩니다.
+*약한 참조(weak reference)*는 참조하는 인스턴스를
+강하게 유지하지 않는 참조이므로
+ARC가 참조된 인스턴스를 해제하는 것을 중지하지 않습니다.
+이러한 동작은 참조가 강한 순환 참조가 되는 것을 방지합니다.
+약한 참조는 프로퍼티나 변수 선언 전에
+`weak` 키워드를 위치시켜 나타냅니다.
 
-다른 옵셔널 값과 같이 약한 참조에 값의 존재를 확인할 수 있고 더이상 존재하지 않는 유효하지 않은 인스턴스에 참조하는 것으로 끝나지 않습니다.
+약한 참조는 참조하는 인스턴스를 강하게 유지하지 않기 때문에
+약한 참조가 참조하는 동안
+해당 인스턴스가 해제될 수 있습니다.
+따라서 ARC는 참조하는 인스턴스가 해제되면
+`nil`로 약한 참조를 자동으로 설정합니다.
+그리고 약한 참조는
+런타임에 값을 `nil`로 변경하는 것을 허락해야 하므로
+항상 옵셔널 타입의 상수가 아닌 변수로 선언됩니다.
 
-> Note   
-> 프로퍼티 관찰자는 ARC가 약한 참조를 `nil` 로 설정할 때 호출되지 않습니다.
+다른 옵셔널 값과 같이
+약한 참조의 값 존재를 확인할 수 있고
+더 이상 존재하지 않는 유효하지 않은
+인스턴스에 대해 참조하는 일은 없습니다.
 
-아래의 예시는 위의 `Person` 과 `Apartment` 예시와 동일하지만 한가지 중요한 차이점이 있습니다. 이번에는 `Apartment` 타입의 `tenant` 프로퍼티는 약한 참조로 선언됩니다:
+> Note: 프로퍼티 관찰자는
+> ARC가 약한 참조를 `nil`로 설정할 때 호출되지 않습니다.
+
+<!--
+  - test: `weak-reference-doesnt-trigger-didset`
+
+  ```swifttest
+  -> class C {
+         weak var w: C? { didSet { print("did set") } }
+     }
+  -> var c1 = C()
+  -> do {
+  ->     let c2 = C()
+  ->     assert(c1.w == nil)
+  ->     c1.w = c2
+  << did set
+  ->     assert(c1.w != nil)
+  -> } // ARC deallocates c2; didSet doesn't fire.
+  -> assert(c1.w == nil)
+  ```
+-->
+
+아래의 예시는 위의 `Person`과 `Apartment` 예시와 동일하지만,
+한 가지 중요한 차이점이 있습니다.
+이번에는 `Apartment` 타입의 `tenant` 프로퍼티가
+약한 참조로 선언됩니다:
 
 ```swift
 class Person {
@@ -223,7 +465,28 @@ class Apartment {
 }
 ```
 
-두 변수 \(`john` 과 `unit4A`\)에서의 강한 참조와 두 인스턴스 간의 연결은 이전과 같이 생성됩니다:
+<!--
+  - test: `weakReferences`
+
+  ```swifttest
+  -> class Person {
+        let name: String
+        init(name: String) { self.name = name }
+        var apartment: Apartment?
+        deinit { print("\(name) is being deinitialized") }
+     }
+  ---
+  -> class Apartment {
+        let unit: String
+        init(unit: String) { self.unit = unit }
+        weak var tenant: Person?
+        deinit { print("Apartment \(unit) is being deinitialized") }
+     }
+  ```
+-->
+
+두 변수(`john`과 `unit4A`)에서의 강한 참조와
+두 인스턴스 간의 연결은 이전과 같이 생성됩니다:
 
 ```swift
 var john: Person?
@@ -236,53 +499,146 @@ john!.apartment = unit4A
 unit4A!.tenant = john
 ```
 
-다음은 두 인스턴스를 함께 연결한 참조를 나타냅니다:
+<!--
+  - test: `weakReferences`
+
+  ```swifttest
+  -> var john: Person?
+  -> var unit4A: Apartment?
+  ---
+  -> john = Person(name: "John Appleseed")
+  -> unit4A = Apartment(unit: "4A")
+  ---
+  -> john!.apartment = unit4A
+  -> unit4A!.tenant = john
+  ```
+-->
+
+다음은 두 인스턴스를 연결되면 어떻게 참조되는지 보여줍니다:
 
 ![Weak Reference 01](weakReference01)
 
-`Person` 인스턴스는 `Apartment` 인스턴스에 대해 아직 강한 참조를 가지고 있지만 `Apartment` 인스턴스는 이제 `Person` 인스턴스에 대해 _약한_ 참조를 가지고 있습니다. 이것은 `john` 변수에 `nil` 을 설정하여 강한 참조를 끊으면 `Person` 인스턴스에 대해 더이상 강한 참조가 아님을 의미합니다:
+`Person` 인스턴스는 `Apartment` 인스턴스에 대해 여전히 강한 참조를 가지고 있지만
+`Apartment` 인스턴스는 이제 `Person` 인스턴스에 대해 *약한* 참조를 가지고 있습니다.
+이것은 `john` 변수에 `nil`을 설정하여
+강한 참조를 끊으면
+`Person` 인스턴스에 대해 더 이상 강한 참조가 아님을 의미합니다:
 
 ```swift
 john = nil
 // Prints "John Appleseed is being deinitialized"
 ```
 
-더이상 `Person` 인스턴스에 대해 강한 참조를 가지지 않기 때문에 할당 해제되고 `tenant` 프로퍼티는 `nil` 로 설정됩니다:
+<!--
+  - test: `weakReferences`
+
+  ```swifttest
+  -> john = nil
+  <- John Appleseed is being deinitialized
+  ```
+-->
+
+더 이상 `Person` 인스턴스에 대해 강한 참조를 가지지 않기 때문에,
+해제되고
+`tenant` 프로퍼티는 `nil`로 설정됩니다:
 
 ![Weak Reference 02](weakReference02)
 
-`Apartment` 인스턴스에 대한 유일한 강한 참조는 `unit4A` 변수에서 가져온 것입니다. 강한 참조를 끊으면 `Apartment` 인스턴스에 대한 강한 참조는 더이상 없습니다:
+`Apartment` 인스턴스에 대한 유일한 강한 참조는
+`unit4A` 변수에서 가져온 것입니다.
+*해당* 강한 참조를 끊으면,
+`Apartment` 인스턴스에 대한 강한 참조는 더 이상 없습니다:
 
 ```swift
 unit4A = nil
 // Prints "Apartment 4A is being deinitialized"
 ```
 
-`Apartment` 인스턴스에 대한 강한 참조가 더이상 없으므로 할당 해제됩니다:
+<!--
+  - test: `weakReferences`
+
+  ```swifttest
+  -> unit4A = nil
+  <- Apartment 4A is being deinitialized
+  ```
+-->
+
+ 더 이상 `Apartment` 인스턴스에 대한 강한 참조를 가지지 않기 때문에,
+ 이것 또한 해제됩니다:
 
 ![Weak Reference 03](weakReference03)
 
-> Note   
-> 가비지 컬렉션을 사용하는 시스템에서는 메모리 압력이 가비지 컬렉션을 트리거 할 때만 강한 참조가 없는 객체가 할당 해제되기 때문에 간단한 캐싱 메커니즘을 구현하는데 약한 포인터가 사용되는 경우가 있습니다. 그러나 ARC를 사용하면 마지막 강한 참조가 제거되자마자 값이 할당 해제되어 약한 참조는 이러한 목적에 적합하지 않습니다.
+> Note: 가비지 컬렉션을 사용하는 시스템에서는
+> 메모리 압력이 가비지 컬렉션을 트리거 할 때만
+> 강한 참조가 없는 객체가 할당 해제되기 때문에
+> 간단한 캐싱 메커니즘을 구현하는데 약한 포인터가 사용되는 경우가 있습니다.
+> 그러나 ARC를 사용하면
+> 마지막 강한 참조가 제거되자마자
+> 값이 해제되어 약한 참조는 이러한 용도에 적합하지 않습니다.
 
-### 미소유 참조 \(Unowned References\)
+### 미소유 참조 (Unowned References)
 
-약한 참조와 마찬가지로 _미소유 참조 \(unowned reference\)_ 는 참조하는 인스턴스를 강하게 유지하지 않습니다. 그러나 약한 참조와 다르게 미소유 참조는 다른 인스턴스의 수명이 같거나 더 긴 경우에 사용됩니다. 프로퍼티 또는 변수 선언 전에 `unowned` 키워드를 위치시켜 미소유 참조를 나타냅니다.
+약한 참조와 마찬가지로
+*미소유 참조(unowned reference)*도
+참조하는 인스턴스를 강하게 유지하지 않습니다.
+그러나 약한 참조와 다르게
+미소유 참조는 다른 인스턴스의
+생명주기가 같거나 더 긴 경우에 사용합니다.
+미소유 참조는 프로퍼티나 변수 선언 전에
+`unowned` 키워드를 위치시켜 나타냅니다.
 
-약한 참조와 달리 미소유 참조는 항상 값을 갖도록 예상됩니다. 결과적으로 미소유로 만들어진 값은 옵셔널로 만들어 지지 않고 ARC는 미소유 참조의 값을 `nil` 로 설정하지 않습니다.
+약한 참조와 달리
+미소유 참조는 항상 값을 가지고 있는 것으로 예상합니다.
+결과적으로
+미소유로 만들어진 값은 옵셔널이 아니며,
+ARC는 미소유 참조의 값을 `nil`로 설정하지 않습니다.
 
-> IMPORTANT   
-> 참조가 _항상_ 할당 해제되지 않은 인스턴스를 참조한다고 확신하는 경우에만 미소유 참조를 사용합니다.
+<!--
+  Everything that unowned can do, weak can do slower and more awkwardly
+  (but still correctly).
+  Unowned is interesting because it's faster and easier (no optionals) ---
+  in the cases where it's actually correct for your data.
+-->
+
+> Important: 미소유 참조는 참조 대상 인스턴스가 해제되지 않았다는 것을
+> *항상* 확신하는 경우에만 사용합니다.
 >
-> 인스턴스가 할당 해제된 후에 미소유 참조의 값에 접근하려고 하면 런타임 오류가 발생합니다.
+> 인스턴스가 해제된 후에
+> 미소유 참조의 값에 접근하려고 하면
+> 런타임 오류가 발생합니다.
 
-다음 예시는 은행 고객과 고객에 대한 가능한 신용카드를 모델링하는 `Customer` 와 `CreditCard` 인 2개의 클래스를 정의합니다. 이 두 클래스는 프로퍼티로 다른 클래스의 인스턴스를 각각 저장합니다. 이 관계는 강한 순환 참조을 생성할 가능성이 있습니다.
+<!--
+  One way to satisfy that requirement is to
+  always access objects that have unmanaged properties through their owner
+  instead of keeping a reference to them directly,
+  because those direct references could outlive the owner.
+  However... this strategy really only works when the unowned reference
+  is a backpointer from an object up to its owner.
+-->
 
-`Customer` 와 `CreditCard` 간의 관계는 위의 약한 참조 예시에서 본 `Apartment` 와 `Person` 간의 관계와 약간 다릅니다. 이 데이터 모델은 고객은 신용카드를 가지고 있거나 가지고 있지 않을 수 있지만 신용카드는 _항상_ 고객과 연관되어 있습니다. `CreditCard` 인스턴스는 참조하는 `Customer` 보다 오래 지속되지 않습니다. 이것을 표현하기 위해 `Customer` 클래스는 옵셔널 `card` 프로퍼티를 가지지만 `CreditCard` 클래스는 미소유와 옵셔널이 아닌 `customer` 프로퍼티를 가집니다.
+다음 예시는 은행 고객과 고객의 신용카드를 모델링하는
+`Customer`와 `CreditCard`인 두 개의 클래스를 정의합니다.
+이 두 클래스는 프로퍼티로 서로의 인스턴스를 각각 저장하고,
+강한 순환 참조가 발생할 가능성이 있습니다.
 
-또한 새로운 `CreditCard` 인스턴스는 커스텀 `CreditCard` 이니셜라이저에 `number` 값과 `customer` 인스턴스를 전달해서만 생성될 수 있습니다. 이렇게 하면 `CreditCard` 인스턴스가 생성될 때 `CreditCard` 인스턴스에 항상 연관된 `customer` 인스턴스를 가지고 있습니다.
+`Customer`와 `CreditCard` 간의 관계는
+위의 약한 참조 예시에서 본
+`Apartment`와 `Person` 간의 관계와 약간 다릅니다.
+이 데이터 모델에서 고객은 신용카드를 가지고 있거나 가지고 있지 않을 수 있지만
+신용카드는 *항상* 고객과 연관되어 있습니다.
+`CreditCard` 인스턴스는 참조하는 `Customer`보다 오래 지속되지 않습니다.
+이것을 표현하기 위해 `Customer` 클래스는 옵셔널 `card` 프로퍼티를 가지지만
+`CreditCard` 클래스는 미소유(옵셔널 아님) `customer` 프로퍼티를 가집니다.
 
-신용카드는 항상 고객을 가지고 있으므로 강한 순환 참조을 피하기 위해 `customer` 프로퍼티에 미소유 참조로 정의합니다:
+또한 새로운 `CreditCard` 인스턴스는
+커스텀 `CreditCard` 이니셜라이저에
+`number` 값과 `customer` 인스턴스를 *전달해야만* 생성할 수 있습니다.
+이렇게 하면 `CreditCard` 인스턴스가 생성될 때
+`CreditCard` 인스턴스에 항상 연관된 `customer` 인스턴스를 가지고 있습니다.
+
+신용카드는 항상 고객이 있으므로
+강한 순환 참조를 피하기 위해
+`customer` 프로퍼티에 미소유 참조로 정의합니다:
 
 ```swift
 class Customer {
@@ -305,33 +661,88 @@ class CreditCard {
 }
 ```
 
-> Note   
-> `CreditCard` 클래스의 `number` 프로퍼티는 `Int` 가 아닌 `UInt64` 타입으로 정의되어 `number` 프로퍼티의 용량이 32 비트와 64 비트 시스템 모두에 16 자리 카드번호를 저장할 수 있을만큼 충분히 크도록 합니다.
+<!--
+  - test: `unownedReferences`
 
-다음 코드는 특정 고객에 대한 참조를 저장하는데 사용되는 `john` 이라는 옵셔널 `Customer` 변수를 정의합니다. 이 변수는 옵셔널이므로 `nil` 의 초기 값을 가집니다:
+  ```swifttest
+  -> class Customer {
+        let name: String
+        var card: CreditCard?
+        init(name: String) {
+           self.name = name
+        }
+        deinit { print("\(name) is being deinitialized") }
+     }
+  ---
+  -> class CreditCard {
+        let number: UInt64
+        unowned let customer: Customer
+        init(number: UInt64, customer: Customer) {
+           self.number = number
+           self.customer = customer
+        }
+        deinit { print("Card #\(number) is being deinitialized") }
+     }
+  ```
+-->
+
+> Note: `CreditCard` 클래스의 `number` 프로퍼티는
+> `Int`가 아닌 `UInt64` 타입으로 정의되어
+> `number` 프로퍼티의 용량이
+> 32비트와 64비트 시스템 모두에 16자리 카드번호를 저장할 수 있을만큼 충분히 크도록 합니다.
+
+다음 코드는 `john`이라는 옵셔널 `Customer` 변수를 정의하고,
+구체적인 고객에 대한 참조를 저장하는데 사용합니다.
+이 변수는 옵셔널이므로 `nil`의 초기 값을 가집니다:
 
 ```swift
 var john: Customer?
 ```
 
-이제 `Customer` 인스턴스를 생성할 수 있고 해당 고객의 `card` 프로퍼티로 새로운 `CreditCard` 인스턴스를 초기화 하고 할당하기 위해 사용할 수 있습니다:
+<!--
+  - test: `unownedReferences`
+
+  ```swifttest
+  -> var john: Customer?
+  ```
+-->
+
+이제 `Customer` 인스턴스를 생성할 수 있고
+해당 고객의 `card` 프로퍼티로
+새로운 `CreditCard` 인스턴스를 초기화하고 할당할 수 있습니다:
 
 ```swift
 john = Customer(name: "John Appleseed")
 john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 ```
 
-다음은 두 인스턴스가 연결된 참조를 나타냅니다:
+<!--
+  - test: `unownedReferences`
+
+  ```swifttest
+  -> john = Customer(name: "John Appleseed")
+  -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+  ```
+-->
+
+다음은 두 인스턴스가 연결되어 어떻게 참조하는지 보여줍니다:
 
 ![Unowned Reference 01](unownedReference01)
 
-`Customer` 인스턴스는 이제 `CreditCard` 인스턴스에 대한 강한 참조를 가지고 있고 `CreditCard` 인스턴스는 `Customer` 인스턴스에 대해 미소유 참조를 가지고 있습니다.
+`Customer` 인스턴스는 이제 `CreditCard` 인스턴스에 대한 강한 참조를 가지고 있고
+`CreditCard` 인스턴스는 `Customer` 인스턴스에 대해 미소유 참조를 가지고 있습니다.
 
-`john` 변수에 의해 강한 참조를 끊을 때 미소유 `customer` 참조 때문에 `Customer` 인스턴스에 대해 더이상 강한 참조를 가지지 않습니다:
+미소유 `customer` 참조 때문에,
+`john` 변수의 강한 참조를 끊으면
+`Customer` 인스턴스에 대해 더 이상 강한 참조를 가지지 않습니다:
 
 ![Unowned Reference 02](unownedReference02)
 
-더이상 `Customer` 인스턴스에 대해 강한 참조가 아니므로 할당 해제됩니다. 후에 `CreditCard` 인스턴스에 대해 더이상 강한 참조가 아니므로 이것도 할당 해제됩니다:
+더 이상 `Customer` 인스턴스에 대해 강한 참조가 아니므로
+해제됩니다.
+그 다음에
+더 이상 `CreditCard` 인스턴스에 대해 강한 참조가 아니므로
+이것도 해제됩니다:
 
 ```swift
 john = nil
@@ -339,18 +750,52 @@ john = nil
 // Prints "Card #1234567890123456 is being deinitialized"
 ```
 
-위의 마지막 코드는 `john` 변수를 `nil` 로 설정한 후에 `Customer` 인스턴스와 `CreditCard` 인스턴스 모두 "deinitialized" 메서지를 출력하는 디이니셜라이저를 보여줍니다.
+<!--
+  - test: `unownedReferences`
 
-> Note   
-> 위의 예시는 _안전한_ 미소유 참조를 어떻게 사용해야 하는지 보여줍니다. Swift는 성능상의 이유 등으로 런타임 안전 검사를 비활성화 하는 경우에 대해 _안전하지 않은_ 미소유 참조 \(unsafe unowned references\)를 제공합니다. 모든 안전하지 않은 작업과 마찬가지로 해당 코드의 안정성을 검사하는 것에 책임을 져야 합니다.
+  ```swifttest
+  -> john = nil
+  <- John Appleseed is being deinitialized
+  <- Card #1234567890123456 is being deinitialized
+  ```
+-->
+
+위의 마지막 코드는
+`john` 변수를 `nil`로 설정한 후에
+`Customer` 인스턴스와 `CreditCard` 인스턴스 모두
+"deinitialized"를 출력하는 디이니셜라이저를 보여줍니다.
+
+> Note: 위의 예시는 *안전한* 미소유 참조를 어떻게 사용하는지 보여줍니다.
+> Swift는 런타임 안전 검사가 필요하지 않을 때
+> 사용하는 *안전하지 않은* 미소유 참조(unsafe unowned references)를 제공합니다 ---
+> 예를 들어 성능상의 이유가 한 예입니다.
+> 모든 안전하지 않은 작업과 마찬가지로
+> 해당 코드의 안정성은 개발자가 직접 책임져야 합니다.
 >
-> `unowned(unsafe)` 로 작성하여 안전하지 않은 미소유 참조를 나타냅니다. 참조하는 인스턴스가 할당 해제된 후에 안전하지 않은 미소유 참조에 접근하려고 하면 프로그램은 안전하지 않은 작업으로 인스턴스가 사용한 메모리 위치에 접근하려고 합니다.
+> 안전하지 않은 미소유 참조는 `unowned(unsafe)`로 표시합니다.
+> 참조하는 인스턴스가 해제된 후에
+> 안전하지 않은 미소유 참조에 접근하려고 하면
+> 프로그램은 인스턴스가 사용한
+> 메모리 위치에 접근하고,
+> 이것은 안전하지 않은 작업입니다.
 
-### 미소유 옵셔널 참조 \(Unowned Optional References\)
+<!--
+  <rdar://problem/28805121> TSPL: ARC - Add discussion of "unowned" with different lifetimes
+  Try expanding the example above so each customer has an array of credit cards.
+-->
 
-클래스에 옵셔널 참조를 미소유로 표기할 수 있습니다. ARC 소유권 모델 측면에서 미소유 옵셔널 참조 \(unowned optional reference\)와 약한 참조는 모두 같은 컨텍스트에서 사용될 수 있습니다. 차이점은 미소유 옵셔널 참조를 사용할 때 유효한 객체를 참조하거나 `nil` 로 설정되어 있는지 확인해야 합니다.
+### 미소유 옵셔널 참조 (Unowned Optional References)
 
-다음은 학교의 특정 과에 제공하는 과정을 추적하는 예시입니다:
+클래스에 대한 옵셔널 참조도 미소유로 표기할 수 있습니다.
+ARC 소유권 모델 측면에서
+미소유 옵셔널 참조(unowned optional reference)와 약한 참조는
+모두 같은 컨텍스트에서 사용할 수 있습니다.
+차이점은 미소유 옵셔널 참조를 사용할 때,
+유효한 객체를 참조하거나
+`nil`로 설정해야 합니다.
+
+다음은 학교의 학과에서 제공하는
+강좌를 모델링하는 예시입니다:
 
 ```swift
 class Department {
@@ -374,7 +819,36 @@ class Course {
 }
 ```
 
-`Department` 는 과에서 제공하는 각 과정에 강한 참조를 유지합니다. ARC 소유권 모델에서 과는 과정을 소유하고 있습니다. `Course` 는 과에 대한 것과 객체를 소유하지 않은 학생이 수강해야 하는 다음 과정에 대한 2개의 미소유 참조를 가지고 있습니다. 모든 과정은 과의 부분이므로 `department` 프로퍼티는 옵셔널이 아닙니다. 그러나 일부 과정은 후속 과정이 없기 때문에 `nextCourse` 프로퍼티는 옵셔널 입니다.
+<!--
+  - test: `unowned-optional-references`
+
+  ```swifttest
+  -> class Department {
+         var name: String
+         var courses: [Course]
+         init(name: String) {
+             self.name = name
+             self.courses = []
+         }
+     }
+  ---
+  -> class Course {
+         var name: String
+         unowned var department: Department
+         unowned var nextCourse: Course?
+         init(name: String, in department: Department) {
+             self.name = name
+             self.department = department
+             self.nextCourse = nil
+         }
+     }
+  ```
+-->
+
+`Department`는 학과에서 제공하는
+강좌에 강한 참조를 유지합니다.
+ARC 소유권 모델에서 학과는 강좌를 소유하고 있습니다.
+`Course`는 학과에 대한 것과 객체를 소유하지 않은 학생이 수강해야 하는 다음 과정에 대한 2개의 미소유 참조를 가지고 있습니다. 모든 과정은 과의 부분이므로 `department` 프로퍼티는 옵셔널이 아닙니다. 그러나 일부 과정은 후속 과정이 없기 때문에 `nextCourse` 프로퍼티는 옵셔널 입니다.
 
 다음은 이러한 클래스를 사용하는 예시입니다:
 

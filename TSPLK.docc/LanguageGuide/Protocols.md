@@ -883,7 +883,7 @@ class DiceGame {
 강한 순환 참조를 방지하기 위해,
 위임자(delegate)는 약한 참조로 선언됩니다.
 약한 참조에 대한 자세한 내용은
-<doc:AutomaticReferenceCounting#클래스-인스턴스-사이의-강한-순환-참조-Strong-Reference-Cycles-Between-Class-Instances>를 참고바랍니다.
+<doc:AutomaticReferenceCounting#클래스-인스턴스-간의-강한-순환-참조-Strong-Reference-Cycles-Between-Class-Instances>를 참고바랍니다.
 프로토콜을 클래스 전용 프로토콜로 표시하면
 `DiceGame` 클래스는
 위임자가 약한 참조로 사용되어야 한다고 선언할 수 있습니다.
