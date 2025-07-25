@@ -549,7 +549,7 @@ myFunction { [unowned self] in print(self.title) }  // unowned capture
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-클로저 표현식에 자세한 내용과 예시는 <doc:Closures#클로저-표현식-Closure-Expressions> 을 참고바랍니다. 캡처 리스트에 자세한 내용과 예시는 <doc:AutomaticReferenceCounting#클로저에-대한-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-for-Closures> 을 참고바랍니다.
+클로저 표현식에 자세한 내용과 예시는 <doc:Closures#클로저-표현식-Closure-Expressions> 을 참고바랍니다. 캡처 리스트에 자세한 내용과 예시는 <doc:AutomaticReferenceCounting#클로저의-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-for-Closures> 을 참고바랍니다.
 
 > Grammar of a closure expression:
 >

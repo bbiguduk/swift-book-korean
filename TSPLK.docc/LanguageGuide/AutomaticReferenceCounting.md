@@ -216,10 +216,10 @@ ARC는 새로 생성한 `Person` 인스턴스의 참조 개수를 추적하고,
 강한 참조 대신 약한 참조(weak)나 미소유 참조(unowned)로 정의해야 합니다.
 이 프로세스는
 <doc:AutomaticReferenceCounting#클래스-인스턴스-간의-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-Between-Class-Instances>에 설명되어 있습니다.
-그러나 강한 순환 참조을 어떻게 해결하는지 배우기 전에
+그러나 강한 순환 참조를 어떻게 해결하는지 배우기 전에
 어떻게 순환이 발생하는지 이해하는 것이 좋습니다.
 
-다음은 실수로 강한 순환 참조을 생성하는 예시입니다.
+다음은 실수로 강한 순환 참조를 생성하는 예시입니다.
 이 예시는 `Person`과 `Apartment`라는 두 개의 클래스를 정의하고,
 아파트와 거주자를 모델링합니다:
 
@@ -389,7 +389,7 @@ Swift는 클래스 타입의 프로퍼티에서
 위의 `Apartment` 예시에서
 아파트는 어느 시점에
 세입자가 없을 수 있으므로
-이러한 경우 약한 참조는 참조 사이클을 끊는 적절한 방법입니다.
+이러한 경우 약한 참조는 순환 참조를 끊는 적절한 방법입니다.
 반대로 다른 인스턴스의 생명주기가 동일하거나
 더 긴 경우 미소유 참조를 사용합니다.
 
@@ -947,19 +947,40 @@ ARC에서 미소유 참조와 동일하게 동작하지만,
   ```
 -->
 
-### 미소유 참조와 암묵적 언래핑된 옵셔널 프로퍼티 \(Unowned References and Implicitly Unwrapped Optional Properties\)
+### 미소유 참조와 암시적 언래핑 옵셔널 프로퍼티 (Unowned References and Implicitly Unwrapped Optional Properties)
 
-위에서 약한 참조와 미소유 참조에 대한 예시는 강한 순환 참조을 중단해야 하는 일반적인 2가지 시나리오를 다룹니다.
+위의 약한 참조와 미소유 참조에 대한 예시는
+강한 순환 참조를 중단해야 하는
+대표적인 두 가지 상황을 다룹니다.
 
-`Person` 과 `Apartment` 예시는 둘 다 `nil` 이 될 수 있는 프로퍼티가 강한 순환 참조을 유발할 수 있는 가능성이 있는 상황을 보여줍니다. 이 시나리오는 약한 참조로 해결하는 것이 가장 좋습니다.
+`Person`과 `Apartment` 예시는
+두 프로퍼티가 `nil`이 될 수 있는 상황에서
+강한 순환 참조가 발생할 수 있는 상황을 보여줍니다.
+이 상황은 약한 참조로 해결하는 것이 가장 좋습니다.
 
-`Customer` 와 `CreditCard` 예시는 `nil` 이 허용되는 하나의 프로퍼티와 `nil` 일 수 없는 프로퍼티가 강한 순환 참조을 유발할 수 있는 가능성이 있는 상황을 보여줍니다. 이 시나리오는 미소유 참조로 해결하는 것이 가장 좋습니다.
+`Customer`와 `CreditCard` 예시는
+하나의 프로퍼티는 `nil`이 허용되고
+다른 프로퍼티는 `nil`일 수 없는 상황에서
+강한 순환 참조가 발생할 수 있는 상황을 보여줍니다.
+이 상황은 미소유 참조로 해결하는 것이 가장 좋습니다.
 
-그러나 두 프로퍼티 모두 항상 값이 있고 초기화가 완료되면 `nil` 이 되어서는 안되는 세번째 시나리오가 있습니다. 이 시나리오에서는 한 클래스의 미소유 프로퍼티를 다른 클래스에 암시적으로 언래핑된 옵셔널 프로퍼티와 결합하는 것이 유용합니다.
+그러나 세 번째 상황도 존재하며,
+이 상황은 두 프로퍼티 *모두* 항상 값이 있어야 하고,
+초기화가 완료된 후 `nil`이 되어서는 안되는 경우입니다.
+이 상황에서는 한 클래스에는 미소유 프로퍼티를
+다른 클래스에는 암시적 언래핑 옵셔널 프로퍼티를 사용하는 것이 유용합니다.
 
-이렇게 하면 참조 사이클을 피하면서 초기화가 완료되면 두 프로퍼티 모두에 옵셔널 언래핑 없이 직접적으로 접근할 수 있습니다. 이 섹션에서는 이러한 관계를 어떻게 설정하는지 보여줍니다.
+이렇게 하면 두 프로퍼티는 초기화가 완료된 후
+바로 접근이 가능하고(옵셔널 언래핑 없이),
+순환 참조도 피할 수 있습니다.
+여기서는 이러한 관계를 어떻게 설정하는지 보여줍니다.
 
-아래의 예시는 프로퍼티로 다른 클래스의 인스턴스를 각 저장하는 `Country` 와 `City` 인 2개의 클래스를 정의합니다. 이 데이터 모델에서 모든 국가는 항상 수도를 가지고 있고 모든 도시는 항상 국가에 속해 있어야 합니다. 이것을 표현하기 위해 `Country` 클래스는 `capitalCity` 프로퍼티를 가지고 있고 `City` 클래스는 `country` 프로퍼티를 가지고 있습니다:
+아래의 예시는 `Country`와 `City`인 두 개의 클래스를 정의하고,
+각 클래스는 서로의 인스턴스를 프로퍼티로 저장합니다.
+이 데이터 모델에서 모든 국가는 항상 수도를 가지고 있고,
+모든 도시는 항상 국가에 속해 있어야 합니다.
+이것을 표현하기 위해 `Country` 클래스는 `capitalCity` 프로퍼티를 가지고 있고,
+`City` 클래스는 `country` 프로퍼티를 가지고 있습니다:
 
 ```swift
 class Country {
@@ -981,15 +1002,61 @@ class City {
 }
 ```
 
-두 클래스 간의 상호 종속성을 설정하기 위해 `City` 에 대한 이니셜라이저는 `Country` 인스턴스를 가지고 있고 `country` 프로퍼티에 저장합니다.
+<!--
+  - test: `implicitlyUnwrappedOptionals`
 
-`City` 에 대한 이니셜라이저는 `Country` 에 대한 이니셜라이저 내에서 호출됩니다. 그러나 `Country` 에 대한 이니셜라이저는 <doc:Initialization#2단계-초기화-Two-Phase-Initialization> 에서 설명했듯이 새로운 `Country` 인스턴스가 완벽히 초기화 될 때까지 `City` 이니셜라이저에 `self` 를 전달할 수 없습니다.
+  ```swifttest
+  -> class Country {
+        let name: String
+        var capitalCity: City!
+        init(name: String, capitalName: String) {
+           self.name = name
+           self.capitalCity = City(name: capitalName, country: self)
+        }
+     }
+  ---
+  -> class City {
+        let name: String
+        unowned let country: Country
+        init(name: String, country: Country) {
+           self.name = name
+           self.country = country
+        }
+     }
+  ```
+-->
 
-이 요구사항을 처리하려면 `Country` 의 `capitalCity` 프로퍼티를 타입 설명의 끝에 느낌표 \(`City!`\)로 표시되는 암시적 언래핑된 옵셔널 프로퍼티로 선언합니다. `capitalCity` 프로퍼티는 다른 옵셔널과 같이 `nil` 의 기본값을 가지지만 <doc:TheBasics#암시적으로-언래핑된-옵셔널-Implicitly-Unwrapped-Optionals> 에서 설명했듯이 언래핑 할 필요없이 값에 접근할 수 있다는 의미입니다.
+두 클래스 간의 상호 의존성을 설정하기 위해
+`City`의 이니셜라이저는 `Country` 인스턴스를 가지고 있고,
+`country` 프로퍼티에 저장합니다.
 
-`capitalCity` 는 기본 `nil` 값을 가지므로 새로운 `Country` 인스턴스는 `Country` 인스턴스가 이니셜라이저 내에서 `name` 프로퍼티를 설정하는 즉시 새로운 `Country`인스턴스는 완벽히 초기화 된 것으로 간주합니다. 이것은 `Country` 이니셜라이저는 `name` 프로퍼티가 설정되는 즉시 암시적 `self` 프로퍼티를 참조하고 전달할 수 있다는 의미입니다. 따라서 `Country` 이니셜라이저는 `capitalCity` 프로퍼티를 설정할 때 `City` 이니셜라이저에 대한 하나의 파라미터로 `self` 를 전달할 수 있습니다.
+`City`의 이니셜라이저는 `Country`의 이니셜라이저 내에서 호출됩니다.
+그러나 `Country`의 이니셜라이저는
+<doc:Initialization#2단계-초기화-Two-Phase-Initialization>에서 설명했듯이
+새로운 `Country` 인스턴스가 완전히 초기화될 때까지 `City` 이니셜라이저에 `self`를 전달할 수 없습니다.
 
-이 모든 것은 강한 순환 참조을 만들지 않고 단일 구문으로 `Country` 와 `City` 인스턴스를 생성하고 `capitalCity` 프로퍼티는 옵셔널 값을 언래핑 하기위해 느낌표를 사용할 필요없이 직접 접근할 수 있다는 의미입니다:
+이 요구사항을 처리하려면
+`Country`의 `capitalCity` 프로퍼티를
+암시적 언래핑 옵셔널 프로퍼티로 선언하며,
+이것은 타입 뒤에 느낌표(`City!`)로 표시합니다.
+`capitalCity` 프로퍼티는 다른 옵셔널과 같이
+`nil`의 기본 값을 가지지만
+<doc:TheBasics#암시적-언래핑-옵셔널-Implicitly-Unwrapped-Optionals>에서 설명했듯이
+언래핑할 필요없이 값에 접근할 수 있다는 의미입니다.
+
+`capitalCity`는 기본적으로 `nil`을 가지므로
+새로운 `Country` 인스턴스는 `Country` 인스턴스가 이니셜라이저 내에서 `name` 프로퍼티를 설정해야
+완전히 초기화 된 것으로 간주됩니다.
+이것은 `Country` 이니셜라이저는 `name` 프로퍼티가 설정되면 암시적 `self` 프로퍼티를
+참조하고 전달할 수 있다는 의미입니다.
+따라서 `Country` 이니셜라이저는 `capitalCity` 프로퍼티를 설정할 때
+`City` 이니셜라이저의 파라미터로
+`self`를 전달할 수 있습니다.
+
+이것으로 인해 `Country` 와 `City` 인스턴스를
+강한 순환 참조 없이 단일 구문으로 생성할 수 있고,
+`capitalCity` 프로퍼티에 느낌표를 사용할 필요없이
+직접 접근할 수 있습니다:
 
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
@@ -997,19 +1064,55 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 // Prints "Canada's capital city is called Ottawa"
 ```
 
-위의 예시에서 암시적 언래핑된 옵셔널의 사용은 모든 2단계 클래스 이니셜라이저 요구사항을 충족한다는 의미입니다. `capitalCity` 프로퍼티는 초기화가 완료되면 옵셔널이 아닌 값처럼 사용되고 접근할 수 있지만 강한 순환 참조은 피할 수 있습니다.
+<!--
+  - test: `implicitlyUnwrappedOptionals`
 
-## 클로저에 대한 강한 순환 참조 \(Strong Reference Cycles for Closures\)
+  ```swifttest
+  -> var country = Country(name: "Canada", capitalName: "Ottawa")
+  -> print("\(country.name)'s capital city is called \(country.capitalCity.name)")
+  <- Canada's capital city is called Ottawa
+  ```
+-->
 
-위에서 두 클래스 인스턴스 프로퍼티가 서로 강한 참조를 유지할 때 강한 순환 참조이 어떻게 생성될 수 있는지 보았습니다. 또한 강한 순환 참조을 끊기 위해 약한 참조와 미소유 참조를 어떻게 사용해야 하는지 보았습니다.
+위의 예시에서 암시적 언래핑 옵셔널의 사용은
+모든 2단계 클래스 이니셜라이저 요구사항을 충족한다는 의미입니다.
+`capitalCity` 프로퍼티는 초기화가 완료되면
+옵셔널이 아닌 값처럼 사용되고 접근할 수 있지만
+강한 순환 참조도 피할 수 있습니다.
 
-강한 순환 참조은 클래스 인스턴스의 프로퍼티에 클로저를 할당하고 해당 클로저의 본문에 인스턴스를 캡처하는 경우에도 발생할 수 있습니다. 이 캡처는 클로저의 본문은 `self.someProperty` 와 같이 인스턴스의 프로퍼티에 접근하거나 클로저는 `self.someMethod()` 와 같이 인스턴스의 메서드를 호출하기 때문에 발생할 수 있습니다. 두 경우 모두 이러한 접근은 클로저가 `self` 를 "캡처" 하여 강한 순환 참조을 생성합니다.
+## 클로저의 강한 순환 참조 (Strong Reference Cycles for Closures)
 
-이 강한 순환 참조은 클래스와 같이 클로저는 _참조 타입 \(reference types\)_ 이기 때문에 발생합니다. 프로퍼티에 클로저를 할당하면 해당 클로저에 _참조_ 를 할당하는 것입니다. 본질적으로 두 강한 참조는 서로 유지되므로 위에서와 같은 문제입니다. 그러나 두 클래스 인스턴스가 아니라 이번에는 서로 유지하는 클래스 인스턴스와 클로저입니다.
+위에서 두 클래스 인스턴스 프로퍼티가 서로 강한 참조를 유지할 때
+강한 순환 참조가 어떻게 생성될 수 있는지 보았습니다.
+또한 강한 순환 참조를 끊기 위해 약한 참조와 미소유 참조를 어떻게 사용해야 하는지 보았습니다.
 
-Swift는 _클로저 캡처 리스트 \(closure capture list\)_ 로 알려진 이 문제를 위해 해결책을 제공합니다. 그러나 클로저 캡처 리스트로 강한 순환 참조을 끊는 방법에 대해 배우기 전에 이러한 사이클이 어떻게 야기되는지 이해하는 것이 더 유용합니다.
+강한 순환 참조는 클래스 인스턴스의 프로퍼티에 클로저를 할당하고,
+해당 클로저의 본문에서 인스턴스를 캡처하는
+경우에도 발생할 수 있습니다.
+이 캡처는 클로저의 본문에서 `self.someProperty`와 같은
+인스턴스의 프로퍼티에 접근하거나
+클로저에서 `self.someMethod()`와 같은
+인스턴스의 메서드를 호출하기 때문에 발생할 수 있습니다.
+두 경우 모두 클로저가 `self`를 "캡처"하여
+강한 순환 참조를 생성합니다.
 
-아래의 예시는 `self` 를 참조하는 클로저를 사용할 때 강한 순환 참조이 어떻게 생성될 수 있는지 보여줍니다. 이 예시는 HTML 문서 내에 개별 요소에 대한 간단한 모델을 제공하는 `HTMLElement` 라는 클래스를 정의합니다:
+이 강한 순환 참조는 클래스와 같이 클로저는 *참조 타입(reference types)*이기 때문에 발생합니다.
+프로퍼티에 클로저를 할당하면
+해당 클로저의 *참조*를 할당하는 것입니다.
+본질적으로 두 강한 참조는 서로 유지되므로
+위에서와 같은 문제가 발생합니다.
+그러나 두 클래스 인스턴스가 아니라
+이번에는 클래스 인스턴스와 클로저가 서로를 참조합니다.
+
+Swift는 이런 문제를 해결하기 위해
+*클로저 캡처 목록(closure capture list)*을 제공합니다.
+그러나 클로저 캡처 리스트로 강한 순환 참조를 끊는 방법에 대해 배우기 전에
+이러한 순환이 어떻게 발생하는지 이해하는 것이 더 유용합니다.
+
+아래의 예시는 `self`를 참조하는 클로저를 사용할 때
+강한 순환 참조가 어떻게 생성될 수 있는지 보여줍니다.
+이 예시는 HTML 문서의 개별 요소에 대한 간단한 모델을 제공하는
+`HTMLElement`라는 클래스를 정의합니다:
 
 ```swift
 class HTMLElement {
@@ -1037,15 +1140,67 @@ class HTMLElement {
 }
 ```
 
-`HTMLElement` 클래스는 제목 요소에 대한 `"h1"`, 단락 요소에 대한 `"p"`, 또는 개행 요소에 대한 `"br"` 과 같이 요소의 이름을 나타내는 `name` 프로퍼티를 정의합니다. `HTMLElement` 는 HTML 요소 내에 렌더링 될 텍스트를 나타내는 문자열을 설정할 수 있는 옵셔널 `text` 프로퍼티도 정의합니다.
+<!--
+  - test: `strongReferenceCyclesForClosures`
 
-이 간단한 두 프로퍼티 외에도 `HTMLElement` 클래스는 `asHTML` 이라는 지연 프로퍼티 \(lazy property\)를 정의합니다. 이 프로퍼티는 `name` 과 `text` 를 HTML 문자열 조각으로 결합하는 클로저를 참조합니다. `asHTML` 프로퍼티는 `() -> String` 또는 "파라미터가 없고 `String` 값을 반환하는 함수" 타입입니다.
+  ```swifttest
+  -> class HTMLElement {
+  ---
+        let name: String
+        let text: String?
+  ---
+        lazy var asHTML: () -> String = {
+           if let text = self.text {
+              return "<\(self.name)>\(text)</\(self.name)>"
+           } else {
+              return "<\(self.name) />"
+           }
+        }
+  ---
+        init(name: String, text: String? = nil) {
+           self.name = name
+           self.text = text
+        }
+  ---
+        deinit {
+           print("\(name) is being deinitialized")
+        }
+  ---
+     }
+  ```
+-->
 
-기본적으로 `asHTML` 프로퍼티는 HTML 태그의 문자열 표현을 반환하는 클로저가 할당됩니다. 이 태그는 존재하면 옵셔널 `text` 값을 포함하고 `text` 가 존재하지 않으면 텍스트 콘텐츠는 없습니다. 단락 요소에 대해 클로저는 `text` 프로퍼티가 `"some text"` 또는 `nil` 인지에 따라 `"<p>some text</p>"` 또는 `"<p />"` 을 반환합니다.
+`HTMLElement` 클래스는 요소의 이름을 나타내는
+`name` 프로퍼티를 정의하며,
+이 프로퍼티는 제목 요소를 나타내는 `"h1"`,
+단락 요소를 나타내는 `"p"`,
+개행 요소를 나타내는 `"br"` 등을 나타냅니다.
+`HTMLElement`는 옵셔널 `text` 프로퍼티도 정의하며,
+이 프로퍼티는 HTML 요소 내의 렌더링될 텍스트를 나타내는
+문자열을 설정할 수 있습니다.
 
-`asHTML` 프로퍼티는 인스턴스 메서드와 비슷하게 이름이 지어지고 사용됩니다. 그러나 `asHTML` 은 인스턴스 메서드가 아니라 클로저 프로퍼티 이기 때문에 특정 HTML 요소에 대해 HTML 렌더링을 변경하기 원하면 커스텀 클로저로 `asHTML` 프로퍼티의 기본값을 대체할 수 있습니다.
+이 간단한 두 프로퍼티 외에도
+`HTMLElement` 클래스는 `asHTML`이라는 지연 프로퍼티(lazy property)를 정의합니다.
+이 프로퍼티는 `name`과 `text`를 HTML 문자열로
+결합하는 클로저를 참조합니다.
+`asHTML` 프로퍼티는 `() -> String` 타입
+또는 "파라미터를 가지지 않고, `String` 값을 반환하는 함수" 타입입니다.
 
-예를 들어 `asHTML` 프로퍼티는 빈 HTML 태그를 반환하는 표현을 방지하기 위해 `text` 프로퍼티가 `nil` 이면 일부 텍스트를 기본값으로 하는 클로저로 설정할 수 있습니다:
+기본적으로 `asHTML` 프로퍼티는 HTML 태그 문자열을 반환하는
+클로저가 할당됩니다.
+이 태그는 옵셔널 `text` 값이 있으면 포함하고,
+`text`가 않으면 텍스트 없이 태그만 포함합니다.
+단락 요소에 대해 클로저는 `text` 프로퍼티가 `"some text"`나 `nil`인지에 따라
+`"<p>some text</p>"`나 `"<p />"`을 반환합니다.
+
+`asHTML` 프로퍼티는 인스턴스 메서드와 비슷하게 이름이 지어지고 사용됩니다.
+그러나 `asHTML`은 인스턴스 메서드가 아니라 클로저 프로퍼티이기 때문에,
+특정 HTML 요소에 대해 HTML 렌더링을 변경하기 원하면
+커스텀 클로저로 `asHTML` 프로퍼티의 값을 변경할 수 있습니다.
+
+예를 들어 `asHTML` 프로퍼티는
+빈 HTML 태그를 반환하지 않도록
+`text` 프로퍼티가 `nil`이면 일부 텍스트를 기본 값으로 하는 클로저로 설정할 수 있습니다:
 
 ```swift
 let heading = HTMLElement(name: "h1")
@@ -1056,6 +1211,20 @@ heading.asHTML = {
 print(heading.asHTML())
 // Prints "<h1>some default text</h1>"
 ```
+
+<!--
+  - test: `strongReferenceCyclesForClosures`
+
+  ```swifttest
+  -> let heading = HTMLElement(name: "h1")
+  -> let defaultText = "some default text"
+  -> heading.asHTML = {
+        return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
+     }
+  -> print(heading.asHTML())
+  <- <h1>some default text</h1>
+  ```
+-->
 
 > Note   
 > `asHTML` 프로퍼티는 요소가 실제로 일부 HTML 출력 타겟에 대한 문자열 값으로 렌더링 되어야 하는 경우에만 필요하므로 지연 프로퍼티로 선언됩니다. `asHTML` 이 지연 프로퍼티라는 사실은 초기화가 완료되고 `self` 가 존재할 때까지 접근할 수 없으므로 기본 클로저 내에서 `self` 를 참조할 수 있다는 의미입니다.
@@ -1129,7 +1298,7 @@ lazy var someClosure = {
 > Note   
 > 캡처된 참조가 `nil` 이 되지 않으면 약한 참조보다 미소유 참조로 항상 캡처되어야 합니다.
 
-미소유 참조는 위의 <doc:AutomaticReferenceCounting#클로저에-대한-강한-순환-참조-Strong-Reference-Cycles-for-Closures> 에서 `HTMLElement` 예시에서 강한 순환 참조을 해결하기 위해 사용할 적절한 캡처 방법입니다. 다음은 사이클을 피하기 위해 `HTMLElement` 클래스를 어떻게 작성하는지 보여줍니다:
+미소유 참조는 위의 <doc:AutomaticReferenceCounting#클로저의-강한-순환-참조-Strong-Reference-Cycles-for-Closures> 에서 `HTMLElement` 예시에서 강한 순환 참조을 해결하기 위해 사용할 적절한 캡처 방법입니다. 다음은 순환을 피하기 위해 `HTMLElement` 클래스를 어떻게 작성하는지 보여줍니다:
 
 ```swift
 class HTMLElement {

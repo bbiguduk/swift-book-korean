@@ -1644,7 +1644,7 @@ guard let number = convertedNumber else {
 실행 중에 가정을 확인하는 방법에 대한 자세한 내용은
 <doc:TheBasics#역설과-전제조건-Assertions-and-Preconditions>을 참고바랍니다.
 
-### 암시적으로 언래핑된 옵셔널 (Implicitly Unwrapped Optionals)
+### 암시적 언래핑 옵셔널 (Implicitly Unwrapped Optionals)
 
 위에서 설명한대로,
 옵셔널은 상수나 변수가 "값이 없음"을 허용합니다.
@@ -1658,28 +1658,28 @@ guard let number = convertedNumber else {
 접근할 때마다 옵셔널의 값을 확인하고
 언래핑 할 필요가 없습니다.
 
-이러한 옵셔널은 *암시적으로 언래핑 된 옵셔널(implicitly unwrapped optionals)*이라고 합니다.
+이러한 옵셔널은 *암시적 언래핑 옵셔널(implicitly unwrapped optionals)*이라고 합니다.
 옵셔널을 만들기 위해 타입뒤에 물음표(`String?`)를 작성하는 대신에
-느낌표(`String!`)로 암시적으로 언래핑 된 옵셔널을 작성합니다.
+느낌표(`String!`)로 암시적 언래핑 옵셔널을 작성합니다.
 사용할 때 옵셔널 이름의 뒤에 느낌표를 위치시키는 것보다
 선언할 때 옵셔널 타입 뒤에 느낌표를 위치시키는 것이 더 좋습니다.
 
-암시적으로 언래핑 된 옵셔널은
+암시적 언래핑 옵셔널은
 옵셔널의 값이 처음 정의된 직후에 존재하는 것으로 확인되고
 그 이후 모든 시점에 존재한다고 가정할 수 있는 경우에 유용합니다.
-Swift에서 암시적으로 언래핑 된 옵셔널은
-<doc:AutomaticReferenceCounting#미소유-참조와-암묵적-언래핑된-옵셔널-프로퍼티-Unowned-References-and-Implicitly-Unwrapped-Optional-Properties>에서 설명한 대로 클래스 초기화 중에 주로 사용합니다.
+Swift에서 암시적 언래핑 옵셔널은
+<doc:AutomaticReferenceCounting#미소유-참조와-암시적-언래핑-옵셔널-프로퍼티-Unowned-References-and-Implicitly-Unwrapped-Optional-Properties>에서 설명한 대로 클래스 초기화 중에 주로 사용합니다.
 
 나중에 변수가 `nil`이 될 가능성이 있다면
-암시적으로 언래핑된 옵셔널을 사용하면 안됩니다.
+암시적 언래핑 옵셔널을 사용하면 안됩니다.
 변수를 사용하는 동안
 `nil` 값을 확인해야 한다면 일반적인 옵셔널 타입을 사용해야 합니다.
 
-암시적으로 언래핑 된 옵셔널은 내부적으로 옵셔널이지만,
+암시적 언래핑 옵셔널은 내부적으로 옵셔널이지만,
 옵셔널에 접근할 때마다 옵셔널 값을 언래핑할 필요없이
 옵셔널이 아닌 값처럼 사용할 수 있습니다.
-다음 예시는 명시적 `String`로서 랩핑된 값에 접근할 때
-옵셔널 문자열과 암시적으로 언래핑 된 옵셔널 문자열의
+다음 예시는 명시적 `String`로서 값에 접근할 때
+옵셔널 문자열과 암시적 언래핑 옵셔널 문자열의
 동작 차이를 보여줍니다:
 
 ```swift
@@ -1702,15 +1702,15 @@ let implicitString: String = assumedString // Unwrapped automatically
   ```
 -->
 
-암시적으로 언래핑 된 옵셔널은
+암시적 언래핑 옵셔널은
 필요할 경우 옵셔널을 강제로 언래핑할 수 있도록 허용한다고 생각할 수 있습니다.
-암시적으로 언래핑 된 옵셔널을 사용할 때,
+암시적 언래핑 옵셔널을 사용할 때,
 Swift는 처음에 기존의 옵셔널 값으로 사용하려고 합니다;
-사용이 불가능할 경우, Swift는 값을 강제로 언래핑 합니다.
+사용이 불가능할 경우, Swift는 값을 강제로 언래핑합니다.
 위의 코드에서
 옵셔널 값 `assumedString`은
 `implicitString`이 명시적으로 옵셔널이 아닌 `String` 타입이기 때문에
-`implicitString`에 값을 할당하기 전에 강제로 언래핑 됩니다.
+`implicitString`에 값을 할당하기 전에 강제로 언래핑됩니다.
 아래의 코드에서
 `optionalString`은 명시적 타입이 없으므로
 일반 옵셔널로 취급합니다.
@@ -1731,12 +1731,12 @@ let optionalString = assumedString
   ```
 -->
 
-암시적으로 언래핑 된 옵셔널이 `nil`이고 래핑된 값에 접근하려고 하면
+암시적 언래핑 옵셔널이 `nil`이고 값에 접근하려고 하면
 런타임 오류가 발생합니다.
 결과는 값을 포함하지 않는 일반적인 옵셔널을
 강제 언래핑을 하기위해 느낌표를 작성한 것과 같습니다.
 
-암시적으로 언래핑 된 옵셔널은
+암시적 언래핑 옵셔널은
 일반 옵셔널과 같은 방법으로 `nil` 체크를 할 수 있습니다:
 
 ```swift
@@ -1757,7 +1757,7 @@ if assumedString != nil {
   ```
 -->
 
-옵셔널 바인딩과 함께 암시적으로 언래핑 된 옵셔널은
+옵셔널 바인딩과 함께 암시적 언래핑 옵셔널은
 단일 구문으로 해당 값을 확인하고 언래핑할 수 있습니다.
 
 ```swift

@@ -834,7 +834,7 @@ incrementByTen()
 > 클로저가 인스턴스나 인스턴스의 멤버를 참조하여 해당 인스턴스를 캡처하면
 > 클로저와 인스턴스 사이에 강한 참조 순환이 생성됩니다.
 > Swift는 *캡처 리스트*를 사용하여 이러한 강한 참조 순환을 끊습니다.
-> 자세한 내용은 <doc:AutomaticReferenceCounting#클로저에-대한-강한-참조-순환-Strong-Reference-Cycles-for-Closures>을 참고바랍니다.
+> 자세한 내용은 <doc:AutomaticReferenceCounting#클로저의-강한-참조-순환-Strong-Reference-Cycles-for-Closures>을 참고바랍니다.
 
 ## 클로저는 참조 타입 (Closures Are Reference Types)
 
