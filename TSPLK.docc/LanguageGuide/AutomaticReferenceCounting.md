@@ -1105,7 +1105,7 @@ print("\(country.name)'s capital city is called \(country.capitalCity.name)")
 이번에는 클래스 인스턴스와 클로저가 서로를 참조합니다.
 
 Swift는 이런 문제를 해결하기 위해
-*클로저 캡처 목록(closure capture list)*을 제공합니다.
+*클로저 캡처 리스트(closure capture list)*을 제공합니다.
 그러나 클로저 캡처 리스트로 강한 순환 참조를 끊는 방법에 대해 배우기 전에
 이러한 순환이 어떻게 발생하는지 이해하는 것이 더 유용합니다.
 
@@ -1226,12 +1226,21 @@ print(heading.asHTML())
   ```
 -->
 
-> Note   
-> `asHTML` 프로퍼티는 요소가 실제로 일부 HTML 출력 타겟에 대한 문자열 값으로 렌더링 되어야 하는 경우에만 필요하므로 지연 프로퍼티로 선언됩니다. `asHTML` 이 지연 프로퍼티라는 사실은 초기화가 완료되고 `self` 가 존재할 때까지 접근할 수 없으므로 기본 클로저 내에서 `self` 를 참조할 수 있다는 의미입니다.
+> Note: `asHTML` 프로퍼티는 지연 프로퍼티로 선언되어 있으며,
+> 이것은 요소가 실제로 HTML 출력 타겟에 대한 문자열 값으로
+> 렌더링되어야 하는 경우에만 필요하기 때문입니다.
+> `asHTML`이 지연 프로퍼티라는 사실은
+> 초기화가 완료되고
+> `self`가 존재할 때까지 접근할 수 없으므로
+> 기본 클로저 내에서 `self`를 참조할 수 있다는 의미입니다.
 
-`HTMLElement` 클래스는 `name` 인수와 필요하면 `text` 인수를 사용하여 새로운 요소를 초기화 하는 단일 이니셜라이저를 제공합니다. 이 클래스는 `HTMLElement` 인스턴스가 할당 해제될 때 메세지를 출력하는 디이니셜라이저도 정의합니다.
+`HTMLElement` 클래스는 단일 이니셜라이저를 제공하고,
+이것은 새로운 요소를 초기화하기 위해
+`name` 인자와 필요하면 `text` 인자를 가집니다.
+이 클래스는 디이니셜라이저도 정의하고,
+이것은 `HTMLElement` 인스턴스가 해제될 때 메세지를 출력합니다.
 
-다음은 어떻게 `HTMLElement` 클래스가 새로운 인스턴스를 생성하고 출력하기 위해 사용되는지 보여줍니다:
+다음은 `HTMLElement` 클래스가 새로운 인스턴스를 생성하고 출력하는 방법을 보여줍니다:
 
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
@@ -1239,38 +1248,85 @@ print(paragraph!.asHTML())
 // Prints "<p>hello, world</p>"
 ```
 
-> Note   
-> 위의 `paragraph` 변수는 강한 순환 참조의 존재를 보여주기 위해 아래에서 `nil` 로 설정할 수 있으므로 _옵셔널_ `HTMLElement` 로 정의됩니다.
+<!--
+  - test: `strongReferenceCyclesForClosures`
 
-안타깝게도 위에서 작성한 `HTMLElement` 클래스는 `HTMLElement` 인스턴스와 기본 `asHTML` 값으로 사용된 클로저 간에 강한 순환 참조을 생성합니다. 사이클은 다음과 같습니다:
+  ```swifttest
+  -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+  -> print(paragraph!.asHTML())
+  <- <p>hello, world</p>
+  ```
+-->
+
+> Note: 위의 `paragraph` 변수는 *옵셔널* `HTMLElement`로 정의되어 있고,
+> 이것은 강한 순환 참조의 존재를 보여주기 위해
+> 아래에서 `nil`로 설정할 수 있기 때문입니다.
+
+안타깝게도 위에서 작성한 `HTMLElement` 클래스는
+`HTMLElement` 인스턴스와 기본 `asHTML` 값에 사용된 클로저 간에
+강한 순환 참조를 생성합니다.
+다음은 어떻게 순환이 발생했는지 보여줍니다:
 
 ![Closure Reference Cycle 01](closureReferenceCycle01)
 
-인스턴스의 `asHTML` 프로퍼티는 클로저에 대해 강한 참조를 유지합니다. 그러나 클로저는 본문 내에서 `self.name` 과 `self.text` 를 참조하는 방법 처럼 `self` 를 참조하기 때문에 클로저는 `HTMLElement` 인스턴스에 다시 강한 참조를 유지한다는 의미로 `self` 를 _캡처_ 합니다. 둘 사이에 강한 순환 참조이 생성됩니다 \(자세한 내용은 <doc:Closures#캡처값-Capturing-Values> 을 참고 바랍니다\).
+인스턴스의 `asHTML` 프로퍼티는 클로저에 대해 강한 참조를 유지합니다.
+그러나 클로저는 본문 내에서 `self`를 참조하기 때문에
+(`self.name`과 `self.text`를 참조하는 방법 처럼),
+클로저는 `self`를 *캡처*하고,
+이것은 `HTMLElement` 인스턴스에 다시 강한 참조를 유지한다는 의미입니다.
+이로 인해 둘 사이에 강한 순환 참조가 생성됩니다.
+(클로저에서 값을 캡처하는 것에 대한
+자세한 내용은 <doc:Closures#캡처값-Capturing-Values>을 참고 바랍니다.)
 
-> Note   
-> 클로저는 여러번 `self` 를 참조하지만 `HTMLElement` 인스턴스에 대해 하나의 강한 참조만 캡처합니다.
+> Note: 클로저가 여러 번 `self`를 참조하지만,
+> `HTMLElement` 인스턴스에 대한 강한 참조는 한 번만 캡처됩니다.
 
-`paragraph` 변수를 `nil` 로 설정하고 `HTMLElement` 인스턴스에 대한 강한 참조를 끊으면 강한 순환 참조은 `HTMLElement` 인스턴스와 해당 클로저를 할당 해제하지 않습니다:
+`paragraph` 변수를 `nil`로 설정하고
+`HTMLElement` 인스턴스에 대한 강한 참조를 끊으면
+강한 순환 참조 때문에
+`HTMLElement` 인스턴스와 해당 클로저 모두 해제되지 않습니다:
 
 ```swift
 paragraph = nil
 ```
 
-`HTMLElement` 디이니셜라이저에 메세지는 출력되지 않으며 `HTMLElement` 인스턴스는 할당 해제 되지 않음을 보여줍니다.
+<!--
+  - test: `strongReferenceCyclesForClosures`
 
-## 클로저에 대한 강한 순환 참조 해결 \(Resolving Strong Reference Cycles for Closures\)
+  ```swifttest
+  -> paragraph = nil
+  ```
+-->
 
-클로저의 정의의 부분으로 _캡처 리스트 \(capture list\)_ 를 정의하여 클로저와 클래스 인스턴스 간의 강한 순환 참조을 해결합니다. 캡처 리스트은 클로저의 본문 내에서 하나 이상의 참조 타입을 캡처할 때 사용할 규칙을 정의합니다. 두 클래스 간의 강한 순환 참조과 마찬가지로 캡처된 각 참조를 강한 참조가 아닌 약한 참조 또는 미소유 참조로 선언합니다. 약한 참조 또는 미소유 참조의 적절한 선택은 코드의 다른 부분 간의 관계에 따라 다릅니다.
+`HTMLElement` 디이니셜라이저에 메세지는 출력되지 않으며,
+`HTMLElement` 인스턴스는 해제되지 않음을 보여줍니다.
 
-> Note   
-> Swift는 클로저 내에서 `self` 의 멤버를 참조할 때마다 `someProperty` 또는 `someMethod()` 가 아닌 `self.someProperty` 또는 `self.someMethod()` 로 작성해야 합니다. 이것은 실수로 `self` 를 캡처할 수 있는 것을 기억하는데 도움이 됩니다.
+## 클로저의 강한 순환 참조 해결 (Resolving Strong Reference Cycles for Closures)
 
-### 캡처 리스트 정의 \(Defining a Capture List\)
+클로저와 클래스 인스턴스 간의 강한 순환 참조는
+클로저 정의에 *캡처 리스트(capture list)*를 정의하여 해결합니다.
+캡처 리스트는 클로저의 본문 내에서
+하나 이상의 참조 타입을 캡처할 때 사용할 규칙을 정의합니다.
+두 클래스 간의 강한 순환 참조와 마찬가지로
+캡처된 각 참조를 강한 참조가 아닌
+약한 참조나 미소유 참조로 선언합니다.
+약한 참조나 미소유 참조의 적절한 선택은
+코드의 다른 부분 간의 관계에 따라 다릅니다.
 
-캡처 리스트에서 각 항목은 `self` 처럼 클래스 인스턴스 또는 `delegate = self.delegate` 와 같은 어떤 값을 초기화된 변수에 대한 참조가 있는 `weak` 또는 `unowned` 키워드와 쌍을 이룹니다. 이 쌍은 콤마로 구분하여 대괄호 내에 작성됩니다.
+> Note: Swift는 클로저 내에서 `self`의 멤버를 참조할 때마다
+> `someProperty`나 `someMethod()`가 아닌
+> `self.someProperty`나 `self.someMethod()`로 작성해야 합니다.
+> 이것은 실수로 `self`를 캡처할 수 있다는 것을 기억하는데 도움이 됩니다.
 
-캡처 리스트은 클로저의 파라미터 리스트 전에 위치하고 반환 타입이 있다면 반환 타입은 파라미터 리스트 다음에 위치합니다:
+### 캡처 리스트 정의 (Defining a Capture List)
+
+캡처 리스트에서 각 항목은 `weak`나 `unowned` 키워드와
+클래스 인스턴스(예: `self`)
+또는 어떤 값으로 초기화된 변수(예: `delegate = self.delegate`)의 쌍으로 정의합니다.
+여러 쌍은 대괄호 내에 콤마로 구분하여 작성합니다.
+
+클로저에 파라미터 목록과 반환 타입이 있다면,
+캡처 리스트를 클로저의 파라미터 목록과 반환 타입 앞에 위치시킵니다:
 
 ```swift
 lazy var someClosure = {
@@ -1280,7 +1336,26 @@ lazy var someClosure = {
 }
 ```
 
-클로저는 컨텍스트로 부터 유추할 수 있기 때문에 파라미터 리스트 또는 반환 타입을 지정하지 않으면 캡처 리스트는 클로저의 가장 처음에 위치하고 이어서 `in` 키워드가 옵니다:
+<!--
+  - test: `strongReferenceCyclesForClosures`
+
+  ```swifttest
+  >> class SomeClass {
+  >> var delegate: AnyObject?
+     lazy var someClosure = {
+           [unowned self, weak delegate = self.delegate]
+           (index: Int, stringToProcess: String) -> String in
+        // closure body goes here
+  >>    return "foo"
+     }
+  >> }
+  ```
+-->
+
+클로저가 파라미터 목록이나 반환 타입을 지정하지 않고
+문맥에서 추론될 수 있다면,
+캡처 리스트를 클로저의 가장 처음에 작성하고
+이어서 `in` 키워드를 작성합니다:
 
 ```swift
 lazy var someClosure = {
@@ -1289,16 +1364,45 @@ lazy var someClosure = {
 }
 ```
 
-### 약한 참조와 미소유 참조 \(Weak and Unowned References\)
+<!--
+  - test: `strongReferenceCyclesForClosures`
 
-클로저와 캡처한 인스턴스가 항상 서로를 참조하고 항상 같은 시간에 할당 해제될 때 클로저의 캡처를 미소유 참조로 정의합니다.
+  ```swifttest
+  >> class AnotherClass {
+  >> var delegate: AnyObject?
+     lazy var someClosure = {
+           [unowned self, weak delegate = self.delegate] in
+        // closure body goes here
+  >>    return "foo"
+     }
+  >> }
+  ```
+-->
 
-반대로 캡처된 참조가 향후에 `nil` 이 될 때 약한 참조로 캡처를 정의합니다. 약한 참조는 항상 옵셔널 타입이고 참조하는 인스턴스가 할당 해제되면 자동으로 `nil` 이 됩니다. 이를 사용하여 클로저의 본문 내에서 존재하는지 확인할 수 있습니다.
+### 약한 참조와 미소유 참조 (Weak and Unowned References)
 
-> Note   
-> 캡처된 참조가 `nil` 이 되지 않으면 약한 참조보다 미소유 참조로 항상 캡처되어야 합니다.
+클로저와 캡처한 인스턴스가 항상 서로를 참조하고
+항상 같은 시간에 해제될 때
+클로저의 캡처를 미소유 참조로 정의합니다.
 
-미소유 참조는 위의 <doc:AutomaticReferenceCounting#클로저의-강한-순환-참조-Strong-Reference-Cycles-for-Closures> 에서 `HTMLElement` 예시에서 강한 순환 참조을 해결하기 위해 사용할 적절한 캡처 방법입니다. 다음은 순환을 피하기 위해 `HTMLElement` 클래스를 어떻게 작성하는지 보여줍니다:
+반대로 캡처된 참조가 향후에 `nil`이 될 수 있다면
+약한 참조로 정의합니다.
+약한 참조는 항상 옵셔널 타입이고,
+참조하는 인스턴스가 해제되면 자동으로 `nil`이 됩니다.
+이를 사용하여 클로저의 본문 내에서 해당 참조가 존재하는지 확인할 수 있습니다.
+
+<!--
+  <rdar://problem/28812110> Reframe discussion of weak/unowned closure capture in terms of object graph
+-->
+
+> Note: 캡처된 참조가 `nil`이 되지 않으면,
+> 약한 참조보다
+> 미소유 참조로 항상 캡처해야 합니다.
+
+미소유 참조는
+위의 <doc:AutomaticReferenceCounting#클로저의-강한-순환-참조-Strong-Reference-Cycles-for-Closures>에서
+`HTMLElement` 예시의 강한 순환 참조를 해결하는데 적절한 캡처 방법입니다.
+다음은 순환을 피하기 위해 `HTMLElement` 클래스를 어떻게 작성하는지 보여줍니다:
 
 ```swift
 class HTMLElement {
@@ -1327,7 +1431,41 @@ class HTMLElement {
 }
 ```
 
-`HTMLElement` 의 구현은 `asHTML` 클로저 내에서 캡처 리스트의 추가를 제외하면 이전 구현과 동일합니다. 이러한 경우에 캡처 리스트은 "강한 참조가 아닌 미소유 참조로 `self` 를 캡처합니다" 라는 의미의 `[unowned self]` 입니다.
+<!--
+  - test: `unownedReferencesForClosures`
+
+  ```swifttest
+  -> class HTMLElement {
+  ---
+        let name: String
+        let text: String?
+  ---
+        lazy var asHTML: () -> String = {
+              [unowned self] in
+           if let text = self.text {
+              return "<\(self.name)>\(text)</\(self.name)>"
+           } else {
+              return "<\(self.name) />"
+           }
+        }
+  ---
+        init(name: String, text: String? = nil) {
+           self.name = name
+           self.text = text
+        }
+  ---
+        deinit {
+           print("\(name) is being deinitialized")
+        }
+  ---
+     }
+  ```
+-->
+
+`HTMLElement`의 이전 구현과 동일하지만,
+`asHTML` 클로저 내에 캡처 리스트를 추가합니다.
+이러한 경우에 캡처 리스트는 `[unowned self]`이고,
+이것은 "강한 참조가 아닌 미소유 참조로 `self`를 캡처합니다"라는 의미입니다.
 
 이전과 같이 `HTMLElement` 인스턴스를 생성하고 출력할 수 있습니다:
 
@@ -1337,16 +1475,49 @@ print(paragraph!.asHTML())
 // Prints "<p>hello, world</p>"
 ```
 
+<!--
+  - test: `unownedReferencesForClosures`
+
+  ```swifttest
+  -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+  -> print(paragraph!.asHTML())
+  <- <p>hello, world</p>
+  ```
+-->
+
 다음은 캡처 리스트가 참조에서 어떻게 보이는지 나타냅니다:
 
 ![Closure Reference Cycle 02](closureReferenceCycle02)
 
-이번에는 클로저에 의해 `self` 의 캡처는 미소유 참조이고 캡처한 `HTMLElement` 인스턴스를 강하게 유지하지 않습니다. `paragraph` 변수를 `nil` 로 강한 참조를 설정하면 아래 예시에서 디이니셜라이저 메세지를 출력하는 것을 확인했듯이 `HTMLElement` 인스턴스는 할당 해제 됩니다.
+이번에는 클로저가 `self`를 미소유 참조로 캡처하므로,
+`HTMLElement` 인스턴스를 강하게 유지하지 않습니다.
+`paragraph` 변수의 강한 참조를 `nil`로 설정하면,
+`HTMLElement` 인스턴스는 해제되고,
+디이니셜라이저 메세지를 출력합니다.
 
 ```swift
 paragraph = nil
 // Prints "p is being deinitialized"
 ```
 
-더 자세한 내용은 <doc:Expressions#캡처-리스트-Capture-Lists> 을 참고바랍니다.
+<!--
+  - test: `unownedReferencesForClosures`
 
+  ```swifttest
+  -> paragraph = nil
+  <- p is being deinitialized
+  ```
+-->
+
+캡처 리스트에 대한 더 자세한 내용은
+<doc:Expressions#캡처-리스트-Capture-Lists>를 참고바랍니다.
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
