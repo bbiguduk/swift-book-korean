@@ -1,95 +1,176 @@
 # 접근 제어 (Access Control)
 
-선언, 파일, 그리고 모듈에 의해 코드의 노출을 관리합니다.
+선언, 파일, 모듈로 코드의 가시성을 관리합니다.
 
-_접근 제어 \(Access control\)_ 는 다른 소스 파일과 모듈에서 코드 접근에 대해 제한합니다. 이 기능은 코드의 구현 세부를 숨기고 해당 코드에 접근하고 사용될 수 있는 기본 인터페이스를 지정할 수 있습니다.
+*접근 제어(Access control)*는 다른 소스 파일과 모듈의
+코드 접근을 제한합니다.
+이 기능은 코드의 세부 구현을 숨기고,
+해당 코드에 접근하고 사용할 수 있는 기본 인터페이스를 지정할 수 있습니다.
 
-특정 접근 수준을 개별 타입 \(클래스, 구조체, 그리고 열거형\) 뿐만 아니라 해당 타입에 속하는 프로퍼티, 메서드, 이니셜라이저과 서브스크립트에 할당할 수 있습니다. 프로토콜은 전역 상수, 변수, 그리고 함수와 마찬가지로 특정 컨텍스트로 제한될 수 있습니다.
+구체적인 접근 수준을 개별 타입
+(클래스, 구조체, 열거형)뿐만 아니라,
+해당 타입에 속하는 프로퍼티, 메서드, 이니셜라이저, 서브스크립트에도 지정할 수 있습니다.
+프로토콜은 특정 컨텍스트로 제한할 수 있으며,
+전역 상수, 변수, 함수도 마찬가지입니다.
 
-다양한 수준의 접근 제어를 제공하는 것 외에도 Swift는 일반적인 시나리오에 대한 기본 접근 수준을 제공하여 명시적으로 접근 제어 수준을 지정할 필요성을 줄여줍니다. 실제로 단일 앱을 작성한다면 접근 제어 수준을 전혀 지정할 필요가 없습니다.
+다양한 수준의 접근 제어를 제공하는 것 외에도,
+Swift는 일반적인 상황에 대한 기본 접근 수준을 제공하여
+명시적으로 접근 제어 수준을 지정할 필요성을 줄여줍니다.
+실제로 단일 앱을 작성한다면,
+접근 제어 수준을 지정할 필요가 없습니다.
 
-> Note   
-> 프로퍼티, 타입, 함수 등에 접근 제어를 적용할 수 있는 코드의 다양한 측면은 간결성을 위해 아래 섹션에서 "엔티티" 라고 합니다.
+> Note: 접근 제어를 적용할 수 있는 코드의 다양한 요소
+> (프로퍼티, 타입, 함수 등)는
+> 간결성을 위해 아래에서 "엔티티"라고 합니다.
 
-## 모듈, 소스 파일, 그리고 패키지 (Modules, Source Files, and Packages)
+## 모듈, 소스 파일, 패키지 (Modules, Source Files, and Packages)
 
-Swift 의 접근 제어 모델은
-모듈, 소스 파일, 그리고 패키지의 개념을 기초로 합니다.
+Swift의 접근 제어 모델은
+모듈, 소스 파일, 패키지의 개념을 기초로 합니다.
 
-*모듈 (module)* 은 코드 배포의 단일 단위입니다 ---
-단일 단위로 빌드되고 Swift 의 `import` 키워드로 다른 모듈에서 가져올 수 있는
-프레임워크 (framework) 또는 애플리케이션 (application) 이 모듈에 해당합니다.
+*모듈(module)*은 코드 배포의 단일 단위입니다 ---
+단일 단위로 빌드되고 Swift의 `import` 키워드로 다른 모듈에서 가져올 수 있는
+프레임워크(framework)나 애플리케이션(application)이 모듈에 해당합니다.
 
-Xcode 에서 각 빌드 타겟 (앱 번들 또는 프레임워크) 은
-Swift 에서 별도의 모듈로 처리됩니다.
-여러 애플리케이션에서 해당 코드를 캡슐화하고 재사용하기위해
-앱의 코드의 여러측면을 독립형 프레임워크로 그룹화하면
-프레임워크 내에 정의한 모든 것은 앱 내에서 가져오고 사용되거나
-다른 프레임워크 내에서 사용될 때
-별도의 모듈에 속하게 됩니다.
+Xcode에서 각 빌드 타겟(앱 번들이나 프레임워크)은
+Swift에서 개별 모듈로 취급합니다.
+앱의 코드를 별도의 프레임워크로 분리하여 ---
+여러 애플리케이션에서 재사용하도록 구성했다면 ---
+해당 프레임워크 내의 모든 정의는
+앱이나 다른 프레임워크에서 사용할 때
+별도의 모듈로 간주됩니다.
 
-*소스 파일 (source file)* 은 모듈 내 하나의 Swift 소스 코드 파일입니다
-(앱 또는 프레임워크 내에 단일 파일).
-별도의 소스 파일로 각각의 타입을 정의하는 것이 일반적이지만,
-하나의 소스 파일에 여러 타입, 함수, 등을 포함할 수 있습니다.
+*소스 파일(source file)*은 모듈 내 하나의 Swift 소스 코드 파일입니다
+(앱이나 프레임워크 내에 단일 파일).
+일반적으로 타입마다 별도의 소스 파일에 정의하지만,
+하나의 소스 파일에 여러 타입, 함수 등을 정의할 수도 있습니다.
 
-*패키지 (package)* 는 하나의 단위로 개발한 모듈의 그룹입니다.
-패키지를 구성하는 모듈을 Swift 소스코드의 부분이 아닌,
-사용 중인 빌드 시스템 구성의 부분으로 정의합니다.
-예를 들어, 코드를 빌드하기위해 Swift Package Manager 를 사용한다면,
-[PackageDescription][] 모듈의 API 를 사용하여
-`Package.swift` 파일에 패키지를 정의하고,
-Xcode 를 사용하면, Package Access Identifier 빌드 설정에서
+*패키지(package)*는 하나의 단위로 개발되는 모듈의 집합입니다.
+패키지를 구성하는 모듈을
+Swift 소스 코드에서 정의하지 않고,
+사용 중인 빌드 시스템 구성에서 정의합니다.
+예를 들어, Swift Package Manager를 사용한다면,
+`Package.swift` 파일에 [PackageDescription][] 모듈의 API를 사용하여
+패키지를 정의하고,
+Xcode를 사용하면, Package Access Identifier 빌드 설정에서
 패키지 이름을 지정합니다.
 
 [PackageDescription]: https://developer.apple.com/documentation/packagedescription
 
-## 접근 수준 \(Access Levels\)
+## 접근 수준 (Access Levels)
 
-Swift는 코드 내에서 엔티티에 대해 5개의 다른 _접근 수준 \(access levels\)_ 을 제공합니다. 이 접근 수준은 엔티티가 정의된 소스파일과 관련되며 소스 파일이 속한 모듈과 관련됩니다.
+Swift는 코드 내에서 엔티티에 대해 여섯 가지 *접근 수준(access levels)*을 제공합니다.
+이 접근 수준은 엔티티가 정의된 소스파일과 관련되며
+그 소스 파일이 속한 모듈과
+그 모듈이 속한 패키지를 기준으로 결정됩니다.
 
-* _Open 접근_ 과 _public 접근_ 은 정의한 모듈의 모든 소스 파일과 정의한 모듈을 가져오고 \(import\) 다른 모듈의 소스 파일에서 엔티티를 사용할 수 있습니다. 일반적으로 프레임워크를 공개 인터페이스로 지정할 때 open 또는 public 접근을 사용합니다. open과 public 접근 간의 차이점은 아래에 설명되어 있습니다.
-* _Internal 접근_ 은 정의한 모듈의 모든 소스 파일 내에서 사용할 수 있지만 해당 모듈 외부의 소스 파일에서는 사용할 수 없습니다. 일반적으로 앱 또는 프레임워크의 내부 구조체를 정의할 때 internal 접근을 사용합니다.
-* _File-private 접근_ 은 자체 정의한 소스 파일로 엔티티의 사용을 제한합니다. 세부 내용은 파일 전체에서 사용되고 기능의 특정 부분의 구현 세부정보를 가리기 위해 file-private 접근을 사용합니다.
-* _Private 접근_ 은 둘러싸인 선언과 같은 파일에 있는 해당 선언의 확장으로 엔티티의 사용을 제한합니다. 세부 내용은 단일 선언 내에서만 사용되고 기능의 특정 부분의 구현 세부정보를 가리기 위해 private 접근을 사용합니다. 
+- *open 접근*과 *public 접근*은
+  정의된 모듈의 모든 소스 파일에서 해당 엔티티를 사용할 수 있으며,
+  정의한 모듈을 가져오고(import) 다른 모듈의 소스 파일에서도 엔티티를 사용할 수 있습니다.
+  open 접근이나 public 접근은 일반적으로 프레임워크를 공개 인터페이스로 지정할 때 사용합니다.
+  open 접근과 public 접근의 차이점은 아래에 설명되어 있습니다.
+- *package 접근*은
+  정의된 패키지 내의 모든 소스 파일에서
+  해당 엔티티를 사용할 수 있도록 허용하지만,
+  해당 패키지 외부의 소스 파일에서는 사용할 수 없습니다.
+  package 접근은 여러 모듈로 구성된 앱이나 프레임워크에서
+  주로 사용합니다.
+- *internal 접근*은
+  정의된 모듈의 모든 소스 파일에서 해당 엔티티를 사용할 수 있지만,
+  해당 모듈 외부의 소스 파일에서는 사용할 수 없습니다.
+  internal 접근은 일반적으로
+  앱이나 프레임워크의 내부 구조체를 정의할 때 사용합니다.
+- *file-private 접근*은
+  정의된 소스 파일 내에서만 엔티티의 사용을 허용합니다.
+  file-private 접근은 특정 기능의 세부 구현이
+  파일 전체에서 사용되지만
+  외부에 노출되지 않도록 하려는 경우에 사용합니다.
+- *private 접근*은
+  해당 엔티티를 둘러싸는 선언 내부와
+  같은 파일에 있는 해당 선언의 확장에서만 사용을 허용합니다.
+  private 접근은 특정 기능의 세부 구현이
+  단일 선언 내에서만 사용되고
+  외부에 노출되지 않도록 하려는 경우에 사용합니다.
 
-Open 접근은 가장 높은 \(가장 적은 제약\) 접근 수준이며 private 접근은 가장 적은 \(가장 높은 제약\) 접근 수준입니다.
+open 접근은 가장 높은(가장 적은 제약) 접근 수준이며
+private 접근은 가장 낮은(가장 높은 제약) 접근 수준입니다.
 
-Open 접근은 클래스와 클래스 멤버에만 적용되고 아래의 <doc:AccessControl#서브-클래싱-Subclassing> 에서 설명했듯이 모듈 외부의 코드를 서브클래스와 재정의할 수 있다는 점에서 public 접근과 다릅니다. 명시적으로 클래스를 개방형으로 표기하면 해당 클래스를 슈퍼클래스로 사용하는 다른 모듈의 코드가 미치는 영향을 고려하고 이에 따라 클래스 코드를 설계했음을 나타냅니다.
+open 접근은 클래스와 클래스 멤버에만 적용되고
+아래의 <doc:AccessControl#서브-클래싱-Subclassing>에서 설명했듯이
+외부 모듈에서 하위 클래스와 재정의를 허용한다는 점에서
+public 접근과 다릅니다.
+명시적으로 클래스를 open으로 표기하면
+다른 모듈이 해당 클래스를
+상위 클래스로 사용할 수 있음을 고려하고
+그에 따라 클래스 코드를 설계했음을 나타냅니다.
 
-### 접근 수준의 기본 원칙 \(Guiding Principle of Access Levels\)
+### 접근 수준의 기본 원칙 (Guiding Principle of Access Levels)
 
-Swift에서 접근 수준은 전반적인 기본 원칙을 따릅니다: _엔티티는 더 낮은 \(더 제한적\) 접근 수준을 가진 다른 엔티티로 정의할 수 없습니다._
+Swift에서 접근 수준은 전반적인 기본 원칙을 따릅니다:
+*엔티티는 더 낮은(더 제한적) 접근 수준을 가진
+다른 엔티티를 기반으로 정의될 수 없습니다.*
 
 예를 들어:
 
-* public 변수는 internal, file-private, 또는 private 타입으로 정의될 수 없습니다. public 변수는 어디서나 사용될 수 있지만 이 타입은 그렇지 못하기 때문입니다.
-* 함수는 주변 코드에서 구성 타입을 사용할 수 없는 상황에서 함수를 사용할 수 있기 때문에 파라미터 타입과 반환 타입보다 더 높은 접근 수준을 가질 수 없습니다.
+- public 변수는 internal, file-private, private 타입으로 정의될 수 없습니다.
+  해당 타입은 public 변수가 사용되는 모든 곳에서 접근 가능하지 않을 수 있기 때문입니다.
+- 함수는 파라미터 타입과 반환 타입보다 더 높은 접근 수준을 가질 수 없습니다.
+  해당 타입이 호출하는 코드에서
+  접근 가능하지 않을 수 있기 때문입니다.
 
-언어의 여러 측면에 대한 이 기본 원칙의 구체적인 의미는 아래에 자세히 설명되어 있습니다.
+이 기본 원칙이 언어의 여러 측면에 어떤 영향을 미치는지는
+아래에 자세히 설명되어 있습니다.
 
-### 기본 접근 수준 \(Default Access Levels\)
+### 기본 접근 수준 (Default Access Levels)
 
-이 챕터의 뒷부분에서 설명하는 몇가지 특정 예외를 포함하여 코드의 모든 엔티티는 명시적으로 접근 수준을 지정하지 않으면 internal의 기본 접근 수준을 가집니다. 따라서 많은 경우에 코드에서 명시적으로 접근 수준을 지정할 필요가 없습니다.
+코드의 모든 엔티티
+(이 챕터의 후반부에서 설명하는 몇 가지 예외를 제외하고)는
+명시적으로 접근 수준을 지정하지 않으면
+기본적으로 internal 접근 수준을 가집니다.
+이로 인해 많은 경우에
+코드에서 명시적으로 접근 수준을 지정할 필요가 없습니다.
 
-### 단일 타겟 앱에 대한 접근 수준 \(Access Levels for Single-Target Apps\)
+### 단일 타겟 앱에 대한 접근 수준 (Access Levels for Single-Target Apps)
 
-간단한 단일 타겟 앱을 작성할 때 앱의 코드는 일반적으로 앱 내에 자체적으로 포함되며 앱의 모듈 외부에서 사용할 수 있도록 만들 필요가 없습니다. internal의 기본 접근 수준은 이 요구사항과 일치합니다. 따라서 커스텀 접근 수준을 지정할 필요가 없습니다. 그러나 앱의 모듈 내에서 다른 코드에서 구현 세부정보를 가리기 위해 file private 또는 private로 코드의 어떤 부분을 표기하고 싶을 수 있습니다.
+간단한 단일 타겟 앱을 작성할 경우,
+앱의 코드는 일반적으로 앱 내에 자체적으로 포함되며
+앱의 모듈 외부에서 사용할 수 있도록 만들 필요가 없습니다.
+internal 접근 수준은 이 요구사항과 일치합니다.
+따라서 커스텀 접근 수준을 지정할 필요가 없습니다.
+그러나 앱 모듈 내의 다른 코드에서 세부 구현을 숨기기 위해
+file private이나 private로 코드의 어떤 부분을 표기할 수 있습니다.
 
-### 프레임워크에 대한 접근 수준 \(Access Levels for Frameworks\)
+### 프레임워크에 대한 접근 수준 (Access Levels for Frameworks)
 
-프레임워크를 개발할 때 프레임워크를 가져오는 앱과 같은 다른 모듈에서 보고 접근할 수 있게 하기 위해 해당 프레임워크에 대한 공용 인터페이스를 open 또는 public으로 표시합니다. 이 공용 인터페이스는 프레임워크 용 애플리케이션 프로그래밍 인터페이스 또는 API 입니다.
+프레임워크를 개발할 때는
+프레임워크를 가져오는 앱과 같은
+다른 모듈에서 보고 접근할 수 있게 하기 위해
+해당 프레임워크에 대한 공용 인터페이스를 open이나 public으로 표시합니다.
+이 공용 인터페이스는 프레임워크의
+애플리케이션 프로그래밍 인터페이스 또는 API입니다.
 
-> Note   
-> 프레임워크의 내부 구현 세부정보는 여전히 internal의 기본 접근 수준을 사용할 수 있거나 프레임워크의 내부 코드의 다른 부분에서 가리기 위해 private 또는 file private로 표기될 수 있습니다. 프레임워크 API의 부분이 되길 원한다면 엔티티를 open 또는 public으로 표시해야 합니다.
+> Note: 프레임워크의 내부 세부 구현은 여전히
+> internal 접근 수준을 사용할 수 있으며,
+> 프레임워크의 내부 코드를 숨기기 위해
+> private이나 file private로 표기할 수 있습니다.
+> 프레임워크 API의 부분이 되길 원한다면
+> 엔티티를 open이나 public으로 표시해야 합니다.
 
-### 유닛 테스트 타겟에 대한 접근 수준 \(Access Levels for Unit Test Targets\)
+### 유닛 테스트 타겟에 대한 접근 수준 (Access Levels for Unit Test Targets)
 
-유닛 테스트 타겟과 함께 앱을 작성할 때 앱의 코드는 테스트를 위해 해당 모듈에서 사용할 수 있어야 합니다. 기본적으로 open 또는 public으로 표기된 엔티티만 다른 모듈에서 접근할 수 있습니다. 그러나 모듈에 대한 가져오기 선언을 `@testable` 속성으로 표시하고 테스트를 활성화하여 해당 모듈을 컴파일 하면 유닛 테스트 타겟은 모든 내부 엔티티에 접근할 수 있습니다.
+유닛 테스트 타겟이 있는 앱을 작성하는 경우에는
+앱의 코드는 테스트 모듈에서 사용할 수 있어야 합니다.
+기본적으로 open이나 public으로 표기된 엔티티만
+다른 모듈에서 접근할 수 있습니다.
+그러나 모듈에 대한 가져오기 선언을 `@testable` 속성으로 표시하고
+테스트를 활성화하여 해당 모듈을 컴파일하면
+유닛 테스트 타겟은 모든 internal 엔티티에 접근할 수 있습니다.
 
-## 접근 제어 구문 \(Access Control Syntax\)
+## 접근 제어 문법 (Access Control Syntax)
 
-엔티티의 선언의 시작에 `open`, `public`, `internal`, `fileprivate`, 또는 `private` 수식어 중 하나를 위치시켜 엔티티에 대한 접근 수준을 정의합니다.
+엔티티의 선언 앞에
+`open`, `public`, `internal`, `fileprivate`, `private` 수식어 중 하나를
+위치시켜 엔티티에 대한 접근 수준을 정의합니다.
 
 ```swift
 open class SomeOpenClass {}
@@ -105,21 +186,69 @@ fileprivate func someFilePrivateFunction() {}
 private func somePrivateFunction() {}
 ```
 
-달리 지정하지 않는 한 <doc:AccessControl#기본-접근-수준-Default-Access-Levels> 은 internal 입니다. `SomeInternalClass` 와 `someInternalConstant` 는 명시적으로 접근 수준 수식어 없이 작성될 수 있으며 여전히 internal의 접근 수준을 가진다는 의미입니다:
+<!--
+  - test: `accessControlSyntax`
+
+  ```swifttest
+  -> open class SomeOpenClass {}
+  -> public class SomePublicClass {}
+  -> internal class SomeInternalClass {}
+  -> fileprivate class SomeFilePrivateClass {}
+  -> private class SomePrivateClass {}
+  ---
+  -> open var someOpenVariable = 0
+  -> public var somePublicVariable = 0
+  -> internal let someInternalConstant = 0
+  -> fileprivate func someFilePrivateFunction() {}
+  -> private func somePrivateFunction() {}
+  ```
+-->
+
+지정하지 않으면 <doc:AccessControl#기본-접근-수준-Default-Access-Levels>에서 설명한대로
+internal입니다.
+`SomeInternalClass`와 `someInternalConstant`는
+명시적으로 접근 수준 수식어 없이 작성될 수 있으며,
+internal의 접근 수준을 가진다는 의미입니다:
 
 ```swift
 class SomeInternalClass {}              // implicitly internal
 let someInternalConstant = 0            // implicitly internal
 ```
 
-## 커스텀 타입 \(Custom Types\)
+<!--
+  - test: `accessControlDefaulted`
 
-커스텀 타입에 대해 명시적으로 접근 수준을 지정하고 싶다면 타입을 정의할 때 지정합니다. 그러면 새로운 타입은 접근 수준이 허용하는 범위내에서 사용될 수 있습니다. 예를 들어 file-private 클래스를 정의하면 해당 클래스는 file-private 클래스가 정의된 소스 파일에 프로퍼티의 타입 또는 함수의 파라미터 또는 반환 타입으로만 사용될 수 있습니다.
+  ```swifttest
+  -> class SomeInternalClass {}              // implicitly internal
+  -> let someInternalConstant = 0            // implicitly internal
+  ```
+-->
 
-타입의 접근 제어 수준은 해당 타입의 _멤버_ \(프로퍼티, 메서드, 이니셜라이저, 그리고 서브스크립트\)의 기본 접근 수준에도 영향을 줍니다. 타입의 접근 수준을 private 또는 file private로 정의한다면 멤버의 기본 접근 수준 또한 private 또는 file private가 됩니다. 타입의 접근 수준을 internal 또는 public 또는 명시적으로 접근 수준을 지정하지 않아 internal의 기본 접근 수준으로 정의하면 타입의 멤버의 기본 접근 수준은 internal이 됩니다.
+## 커스텀 타입 (Custom Types)
 
-> IMPORTANT   
-> Public 타입은 기본적으로 public 멤버가 아닌 internal 멤버를 가집니다. 타입 멤버를 public으로 하려면 명시적으로 표시해야 합니다. 이 요구사항은 타입에 대한 공용 API는 공개되도록 하고 실수로 타입의 내부 작업을 공개 API로 표시되지 않도록 합니다.
+커스텀 타입에 대해 명시적으로 접근 수준을 지정하고 싶다면
+타입을 정의할 때 지정합니다.
+그러면 새로운 타입은 접근 수준이 허용하는 범위내에서 사용할 수 있습니다.
+예를 들어 file-private 클래스를 정의하면
+해당 클래스는 file-private 클래스가 정의된 소스 파일 내에서만
+프로퍼티 타입,
+함수 파라미터, 반환 타입으로 사용될 수 있습니다.
+
+타입의 접근 제어 수준은 해당 타입의 *멤버*
+(프로퍼티, 메서드, 이니셜라이저, 서브스크립트)의
+기본 접근 수준에도 영향을 줍니다.
+타입의 접근 수준을 private이나 file private로 정의하면,
+멤버의 기본 접근 수준 또한 private이나 file private가 됩니다.
+타입의 접근 수준을 internal이나 public
+(또는 명시적으로 접근 수준을 지정하지 않아
+internal의 기본 접근 수준)으로
+정의하면 타입의 멤버의 기본 접근 수준은 internal이 됩니다.
+
+> Important: public 타입은 기본적으로 public 멤버가 아닌 internal 멤버를 가집니다.
+> 타입 멤버를 public으로 하려면 명시적으로 표시해야 합니다.
+> 이 요구사항은 타입에 대한 공용 API는
+> 공개되도록 하고
+> 실수로 타입의 내부 작업을 공개 API로 표시되지 않도록 합니다.
 
 ```swift
 public class SomePublicClass {                   // explicitly public class
@@ -145,18 +274,128 @@ private class SomePrivateClass {                 // explicitly private class
 }
 ```
 
-### 튜플 타입 \(Tuple Types\)
+<!--
+  - test: `accessControl, accessControlWrong`
 
-튜플 타입에 대한 접근 수준은 해당 튜플에서 사용되는 모든 타입에 가장 제한적인 접근 수준입니다. 예를 들어 하나는 internal 접근이고 하나는 private 접근인 2개의 다른 타입의 튜플을 구성하는 경우 해당 복합 튜플 타입에 대한 접근 수준은 private 입니다.
+  ```swifttest
+  -> public class SomePublicClass {                  // explicitly public class
+        public var somePublicProperty = 0            // explicitly public class member
+        var someInternalProperty = 0                 // implicitly internal class member
+        fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
+        private func somePrivateMethod() {}          // explicitly private class member
+     }
+  ---
+  -> class SomeInternalClass {                       // implicitly internal class
+        var someInternalProperty = 0                 // implicitly internal class member
+        fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
+        private func somePrivateMethod() {}          // explicitly private class member
+     }
+  ---
+  -> fileprivate class SomeFilePrivateClass {        // explicitly file-private class
+        func someFilePrivateMethod() {}              // implicitly file-private class member
+        private func somePrivateMethod() {}          // explicitly private class member
+     }
+  ---
+  -> private class SomePrivateClass {                // explicitly private class
+        func somePrivateMethod() {}                  // implicitly private class member
+     }
+  ```
+-->
 
-> Note   
-> 튜플 타입은 클래스, 구조체, 열거형, 그리고 함수와 같이 독립형 정의가 없습니다. 튜플 타입의 접근 수준은 튜플 타입을 구성하는 타입에서 자동으로 결정되고 명시적으로 지정할 수 없습니다.
+### 튜플 타입 (Tuple Types)
 
-### 함수 타입 \(Function Types\)
+튜플 타입에 대한 접근 수준은
+튜플을 구성하는 타입 중 가장 제한적인 접근 수준으로 결정됩니다.
+예를 들어 하나는 internal 접근이고 하나는 private 접근인
+두 개의 다른 타입의 튜플을 구성하는 경우
+해당 복합 튜플 타입에 대한 접근 수준은 private입니다.
 
-함수 타입에 대한 접근 수준은 함수의 파라미터 타입과 반환 타입 중 가장 제한적인 접근 수준으로 계산됩니다. 함수의 계산된 접근 수준이 컨텍스트 기본값과 일치하지 않는다면 함수의 정의의 부분으로 접근 수준을 명시적으로 지정해야 합니다.
+<!--
+  - test: `tupleTypes_Module1, tupleTypes_Module1_PublicAndInternal, tupleTypes_Module1_Private`
 
-아래의 예시는 함수 자체에 대해 지정된 접근 수준 수식어가 없는 `someFunction()` 이라는 전역 함수를 정의합니다. 이 함수는 "internal"의 기본 접근 수준을 가지리라 생각되지만 여기서는 그렇지 않습니다. 실제로 `someFunction()` 은 아래와 같이 작성되면 컴파일되지 않습니다:
+  ```swifttest
+  -> public struct PublicStruct {}
+  -> internal struct InternalStruct {}
+  -> fileprivate struct FilePrivateStruct {}
+  -> public func returnPublicTuple() -> (PublicStruct, PublicStruct) {
+        return (PublicStruct(), PublicStruct())
+     }
+  -> func returnInternalTuple() -> (PublicStruct, InternalStruct) {
+        return (PublicStruct(), InternalStruct())
+     }
+  -> fileprivate func returnFilePrivateTuple() -> (PublicStruct, FilePrivateStruct) {
+        return (PublicStruct(), FilePrivateStruct())
+     }
+  ```
+-->
+
+<!--
+  - test: `tupleTypes_Module1_PublicAndInternal`
+
+  ```swifttest
+  // tuples with (at least) internal members can be accessed within their own module
+  -> let publicTuple = returnPublicTuple()
+  -> let internalTuple = returnInternalTuple()
+  ```
+-->
+
+<!--
+  - test: `tupleTypes_Module1_Private`
+
+  ```swifttest
+  // a tuple with one or more private members can't be accessed from outside of its source file
+  -> let privateTuple = returnFilePrivateTuple()
+  !$ error: cannot find 'returnFilePrivateTuple' in scope
+  !! let privateTuple = returnFilePrivateTuple()
+  !!                    ^~~~~~~~~~~~~~~~~~~~~~
+  ```
+-->
+
+<!--
+  - test: `tupleTypes_Module2_Public`
+
+  ```swifttest
+  // a public tuple with all-public members can be used in another module
+  -> import tupleTypes_Module1
+  -> let publicTuple = returnPublicTuple()
+  ```
+-->
+
+<!--
+  - test: `tupleTypes_Module2_InternalAndPrivate`
+
+  ```swifttest
+  // tuples with internal or private members can't be used outside of their own module
+  -> import tupleTypes_Module1
+  -> let internalTuple = returnInternalTuple()
+  -> let privateTuple = returnFilePrivateTuple()
+  !$ error: cannot find 'returnInternalTuple' in scope
+  !! let internalTuple = returnInternalTuple()
+  !!                     ^~~~~~~~~~~~~~~~~~~
+  !$ error: cannot find 'returnFilePrivateTuple' in scope
+  !! let privateTuple = returnFilePrivateTuple()
+  !!                    ^~~~~~~~~~~~~~~~~~~~~~
+  ```
+-->
+
+> Note: 튜플 타입은 클래스, 구조체, 열거형, 함수와 같이
+> 독립적으로 정의되지 않습니다.
+> 튜플 타입의 접근 수준은
+> 튜플 타입을 구성하는 타입에 따라 자동으로 결정되고
+> 명시적으로 지정할 수 없습니다.
+
+### 함수 타입 (Function Types)
+
+함수 타입에 대한 접근 수준은
+함수의 파라미터 타입과 반환 타입 중 가장 제한적인 접근 수준으로 결정됩니다.
+함수의 접근 수준이 컨텍스트 기본 접근 수준과 일치하지 않는다면
+함수 선언 시 접근 수준을 명시적으로 지정해야 합니다.
+
+아래의 예시는 `someFunction()`이라는 전역 함수를 정의하고,
+함수에 접근 수준을 지정하지 않습니다.
+이 함수는 "internal"의 기본 접근 수준을 가진다고 생각되지만,
+여기서는 그렇지 않습니다.
+실제로 `someFunction()`은 아래와 같이 작성되면 컴파일되지 않습니다:
 
 ```swift
 func someFunction() -> (SomeInternalClass, SomePrivateClass) {
@@ -164,9 +403,30 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 }
 ```
 
-함수의 반환 타입은 위에 <doc:AccessControl#커스텀-타입-Custom-Types> 에서 정의된 두 개의 커스텀 클래스로 구성된 튜플 타입입니다. 이 클래스 중 하나는 internal로 다른 하나는 private로 정의됩니다. 따라서 복합 튜플 타입의 전체 접근 수준은 private 입니다 \(튜플의 구성 타입의 최소 접근 수준\).
+<!--
+  - test: `accessControlWrong`
 
-함수의 반환 타입은 private 이므로 함수 선언이 유효하려면 `private` 수식어와 함께 함수의 전체 접근 수준을 표시해야 합니다:
+  ```swifttest
+  -> func someFunction() -> (SomeInternalClass, SomePrivateClass) {
+        // function implementation goes here
+  >>    return (SomeInternalClass(), SomePrivateClass())
+     }
+  !! /tmp/swifttest.swift:19:6: error: function must be declared private or fileprivate because its result uses a private type
+  !! func someFunction() -> (SomeInternalClass, SomePrivateClass) {
+  !! ^
+  ```
+-->
+
+함수의 반환 타입은
+위에 <doc:AccessControl#커스텀-타입-Custom-Types>에서 정의한 두 개의 커스텀 클래스로 구성된 튜플 타입입니다.
+이 클래스 중 하나는 internal로
+다른 하나는 private로 정의됩니다.
+따라서 튜플 타입의 전체 접근 수준은 private입니다
+(튜플의 구성 타입의 최소 접근 수준).
+
+함수의 반환 타입은 private이므로,
+함수 선언이 유효하려면
+`private` 수식어와 함께 함수의 전체 접근 수준을 표시해야 합니다:
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
@@ -174,13 +434,33 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 }
 ```
 
-함수의 public 또는 internal 인 사용자가 함수의 반환 타입에 사용된 private 클래스에 적절한 접근을 할 수 없으므로 `someFunction()` 의 정의를 `public` 또는 `internal` 수식어나 internal의 기본 설정을 사용하여 표시하면 유효하지 않습니다.
+<!--
+  - test: `accessControl`
 
-### 열거형 타입 \(Enumeration Types\)
+  ```swifttest
+  -> private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
+        // function implementation goes here
+  >>    return (SomeInternalClass(), SomePrivateClass())
+     }
+  ```
+-->
 
-열거형의 개별 케이스는 열거형과 같은 접근 수준을 자동으로 받습니다. 개별 열거형 케이스에 대해 다른 접근 수준을 지정할 수 없습니다.
+`someFunction()` 함수가
+public이나 internal인 경우에는
+함수의 반환 타입에 접근할 수 없기 때문에
+함수 정의에 `public`이나 `internal` 수식어로 표시하거나
+기본 접근 제어 수준을 사용하는 것은 유효하지 않습니다.
 
-아래의 예시에서 `CompassPoint` 열거형은 public의 명시적 접근 수준을 갖습니다. 따라서 `north`, `south`, `east`, 그리고 `west` 열거형 케이스 또한 public의 접근 수준을 가집니다:
+### 열거형 타입 (Enumeration Types)
+
+열거형의 개별 케이스는
+열거형과 같은 접근 수준을 자동으로 받습니다.
+각 케이스에 대해 다른 접근 수준을 지정할 수 없습니다.
+
+아래의 예시에서
+`CompassPoint` 열거형은 public의 명시적 접근 수준을 갖습니다.
+따라서 `north`, `south`, `east`, `west` 열거형 케이스도
+public의 접근 수준을 가집니다:
 
 ```swift
 public enum CompassPoint {
@@ -191,19 +471,211 @@ public enum CompassPoint {
 }
 ```
 
-#### 원시값과 연관된 값 \(Raw Values and Associated Values\)
+<!--
+  - test: `enumerationCases`
 
-열거형 정의의 모든 원시값 또는 연관된 값에 사용되는 타입은 열거형의 접근 수준보다 높은 접근 수준을 가져야 합니다. 예를 들어 internal 접근 수준의 열거형의 원시값 타입으로 private 타입을 사용할 수 없습니다.
+  ```swifttest
+  -> public enum CompassPoint {
+        case north
+        case south
+        case east
+        case west
+     }
+  ```
+-->
 
-### 중첩된 타입 \(Nested Types\)
+<!--
+  - test: `enumerationCases_Module1`
 
-중첩된 타입의 접근 수준은 포함한 타입이 public이 아닌 경우 포함한 타입과 동일합니다. public 타입 내에 정의된 중첩된 타입은 자동으로 internal의 접근 수준을 가집니다. Public 타입 내에 중첩된 타입이 공개되려면 명시적으로 public으로 중첩된 타입을 선언해야 합니다.
+  ```swifttest
+  -> public enum CompassPoint {
+        case north
+        case south
+        case east
+        case west
+     }
+  ```
+-->
 
-## 서브 클래싱 \(Subclassing\)
+<!--
+  - test: `enumerationCases_Module2`
 
-현재 접근 컨텍스트에서 접근할 수 있고 서브클래스와 동일한 모듈에 정의된 모든 클래스를 서브클래스로 지정할 수 있습니다. 다른 모듈에 정의된 모든 open 클래스도 서브클래스로 지정할 수 있습니다. 서브클래스는 슈퍼클래스의 접근 수준보다 높은 접근 수준을 가질 수 없습니다. 예를 들어 internal 슈퍼클래스에 public 서브클래스를 작성할 수 없습니다.
+  ```swifttest
+  -> import enumerationCases_Module1
+  -> let north = CompassPoint.north
+  ```
+-->
 
-또한 같은 모듈에 정의된 클래스의 경우 특정 접근 컨텍스트에 표시되는 모든 클래스 멤버 \(메서드, 프로퍼티, 이니셜라이저 또는 서브스크립트\)를 재정의 할 수 있습니다. 다른 모듈에 정의된 클래스의 경우 모든 open 클래스 멤버를 재정의 할 수 있습니다.
+#### 원시 값과 연관 값 (Raw Values and Associated Values)
+
+열거형 정의의 모든 원시 값이나 연관 값에 사용되는 타입은
+열거형의 접근 수준보다 높은 접근 수준을 가져야 합니다.
+예를 들어
+internal 접근 수준을 가진 열거형에
+private 타입을 원시 값으로 사용할 수 없습니다.
+
+### 중첩 타입 (Nested Types)
+
+중첩 타입의 접근 수준은 해당 타입이 포함된 타입이 public일 경우를 제외하고
+타입과 동일합니다.
+public 타입 내에 정의된 중첩 타입은
+자동으로 internal 접근 수준을 가집니다.
+public 타입 내에 중첩 타입을 공개하려면,
+명시적으로 public 접근 수준으로 중첩 타입을 선언해야 합니다.
+
+<!--
+  - test: `nestedTypes_Module1, nestedTypes_Module1_PublicAndInternal, nestedTypes_Module1_Private`
+
+  ```swifttest
+  -> public struct PublicStruct {
+        public enum PublicEnumInsidePublicStruct { case a, b }
+        internal enum InternalEnumInsidePublicStruct { case a, b }
+        private enum PrivateEnumInsidePublicStruct { case a, b }
+        enum AutomaticEnumInsidePublicStruct { case a, b }
+     }
+  -> internal struct InternalStruct {
+        internal enum InternalEnumInsideInternalStruct { case a, b }
+        private enum PrivateEnumInsideInternalStruct { case a, b }
+        enum AutomaticEnumInsideInternalStruct { case a, b }
+     }
+  -> private struct FilePrivateStruct {
+        enum AutomaticEnumInsideFilePrivateStruct { case a, b }
+        private enum PrivateEnumInsideFilePrivateStruct { case a, b }
+     }
+  -> private struct PrivateStruct {
+        enum AutomaticEnumInsidePrivateStruct { case a, b }
+        private enum PrivateEnumInsidePrivateStruct { case a, b }
+     }
+  ```
+-->
+
+<!--
+  - test: `nestedTypes_Module1_PublicAndInternal`
+
+  ```swifttest
+  // these are all expected to succeed within the same module
+  -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
+  -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
+  -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
+  ---
+  -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
+  -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
+  ```
+-->
+
+<!--
+  - test: `nestedTypes_Module1_Private`
+
+  ```swifttest
+  // these are all expected to fail, because they're private to the other file
+  -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
+  ---
+  -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
+  ---
+  -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+  -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
+  ---
+  !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
+  !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
+  !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: 'PrivateEnumInsidePublicStruct' declared here
+  !! private enum PrivateEnumInsidePublicStruct { case a, b }
+  !! ^
+  !$ error: 'PrivateEnumInsideInternalStruct' is inaccessible due to 'private' protection level
+  !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
+  !!                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: 'PrivateEnumInsideInternalStruct' declared here
+  !! private enum PrivateEnumInsideInternalStruct { case a, b }
+  !! ^
+  !$ error: cannot find 'PrivateStruct' in scope
+  !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+  !!                                  ^~~~~~~~~~~~~
+  !$ error: cannot find 'PrivateStruct' in scope
+  !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
+  !!                                    ^~~~~~~~~~~~~
+  ```
+-->
+
+<!--
+  - test: `nestedTypes_Module2_Public`
+
+  ```swifttest
+  // this is the only expected to succeed within the second module
+  -> import nestedTypes_Module1
+  -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
+  ```
+-->
+
+<!--
+  - test: `nestedTypes_Module2_InternalAndPrivate`
+
+  ```swifttest
+  // these are all expected to fail, because they're private or internal to the other module
+  -> import nestedTypes_Module1
+  -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
+  -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
+  -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
+  ---
+  -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
+  -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
+  -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
+  ---
+  -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+  -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
+  ---
+  !$ error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
+  !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
+  !!                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: 'InternalEnumInsidePublicStruct' declared here
+  !! internal enum InternalEnumInsidePublicStruct {
+  !!               ^
+  !$ error: 'AutomaticEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
+  !! let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
+  !!                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: 'AutomaticEnumInsidePublicStruct' declared here
+  !! internal enum AutomaticEnumInsidePublicStruct {
+  !!               ^
+  !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
+  !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
+  !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: 'PrivateEnumInsidePublicStruct' declared here
+  !! private enum PrivateEnumInsidePublicStruct {
+  !!              ^
+  !$ error: cannot find 'InternalStruct' in scope
+  !! let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
+  !!                                    ^~~~~~~~~~~~~~
+  !$ error: cannot find 'InternalStruct' in scope
+  !! let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
+  !!                                     ^~~~~~~~~~~~~~
+  !$ error: cannot find 'InternalStruct' in scope
+  !! let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
+  !!                                   ^~~~~~~~~~~~~~
+  !$ error: cannot find 'PrivateStruct' in scope
+  !! let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
+  !!                                  ^~~~~~~~~~~~~
+  !$ error: cannot find 'PrivateStruct' in scope
+  !! let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
+  !!                                    ^~~~~~~~~~~~~
+  ```
+-->
+
+## 하위 클래스 (Subclassing)
+
+현재 접근 컨텍스트에서 접근 가능한 클래스이며,
+동일한 모듈에 정의된 클래스는
+하위 클래스로 지정할 수 있습니다.
+다른 모듈에 정의된
+open 클래스도 하위 클래스로 지정할 수 있습니다.
+하위 클래스는 상위 클래스의 접근 수준보다 높은 접근 수준을 가질 수 없습니다 ---
+예를 들어 internal 상위 클래스의 public 하위 클래스를 선언할 수 없습니다.
+
+또한
+같은 모듈에 정의된 클래스의 경우
+특정 접근 컨텍스트에 표시되는 모든 클래스 멤버
+(메서드, 프로퍼티, 이니셜라이저, 서브스크립트)를
+재정의할 수 있습니다.
+다른 모듈에 정의된 클래스의 경우
+모든 open 클래스 멤버를 재정의할 수 있습니다.
 
 재정의는 상속된 클래스 멤버를 슈퍼클래스 버전보다 더 쉽게 접근할 수 있도록 만들 수 있습니다. 아래의 예시에서 클래스 `A` 는 `someMethod()` 라는 file-private 메서드를 가진 public 클래스 입니다. 클래스 `B` 는 "internal"로 줄어든 접근 수준을 가진 `A` 의 서브클래스입니다. 그럼에도 불구하고 클래스 `B` 는 `someMethod()` 의 기존 구현보다 _높은_ "internal" 의 접근 수준을 가진 `someMethod()` 의 재정의를 제공합니다:
 
