@@ -31,7 +31,7 @@ Swift의 클로저 표현식은 명확한 스타일을 가지고 있으며,
 일반적인 상황에서 간결하고 복잡하지 않은 문법을 유도하는 여러 최적화를 제공합니다.
 이러한 최적화에는 다음이 포함됩니다:
 
-- 컨텍스트에서 파라미터와 반환 값 타입 유추
+- 컨텍스트에서 파라미터와 반환값 타입 유추
 - 단일 표현식 클로저의 암시적 반환
 - 축약된 인수 이름
 - 후행 클로저 구문
@@ -264,7 +264,7 @@ reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
 ### 축약 인수 이름 (Shorthand Argument Names)
 
 Swift는 인라인 클로저에
-`$0`, `$1`, `$2` 등 클로저의 인수 값으로 참조하는데 사용할 수 있는
+`$0`, `$1`, `$2` 등 클로저의 인수값으로 참조하는데 사용할 수 있는
 자동으로 축약 인수 이름(shorthand argument names)을 제공합니다.
 
 클로저 표현식에 이런 축약 인수 이름을 사용한다면,
@@ -524,7 +524,7 @@ let strings = numbers.map { (number) -> String in
 > 옵셔널 값을 반환하기 때문입니다.
 > 위의 예시에서 `digitNames` 딕셔너리에
 > `number % 10`은 항상 유효한 서브스크립트 키를 보장하므로
-> 느낌표는 서브스크립트의 옵셔널 반환 값에 저장된 `String` 값을
+> 느낌표는 서브스크립트의 옵셔널 반환값에 저장된 `String` 값을
 > 강제로 언래핑 하는데 사용됩니다.
 
 `digitNames` 딕셔너리에서 반환된 문자열이
@@ -690,7 +690,7 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
 
 `makeIncrementer(forIncrement:)` 함수는 `forIncrement`라는 인수 레이블과 `amount`라는 파라미터 이름을 가지는
 하나의 `Int` 파라미터를 가집니다.
-이 파라미터에 전달된 인수 값은
+이 파라미터에 전달된 인수값은
 반환된 증가 함수가 호출될 때마다
 `runningTotal`을 얼마나 증가시켜야 하는지 지정합니다.
 `makeIncrementer` 함수는 실제 증가를 수행하는

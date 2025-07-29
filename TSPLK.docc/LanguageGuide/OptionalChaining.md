@@ -26,14 +26,14 @@
 옵셔널 체이닝은 `nil` 값에 대해 호출될 수 있다는 사실을 반영하기 위해
 접근하는 프로퍼티, 메서드, 서브스크립트가 옵셔널 값이 아닌 값을 반환하더라도
 항상 옵셔널 값으로 반환합니다.
-옵셔널 반환 값으로
+옵셔널 반환값으로
 옵셔널 체이닝 호출이 성공
 (반환된 옵셔널 체이닝에 값이 포함됨)했는지,
 실패
 (반환된 옵셔널 값은 `nil`)했는지 확인할 수 있습니다.
 
 특히 옵셔널 체이닝 호출의 결과는
-예상되는 반환 값과 동일한 타입이지만 옵셔널로 래핑됩니다.
+예상되는 반환값과 동일한 타입이지만 옵셔널로 래핑됩니다.
 일반적으로 `Int`로 반환하는 프로퍼티는 옵셔널 체이닝을 통해 접근하면
 `Int?`를 반환합니다.
 
@@ -67,7 +67,7 @@ class Residence {
   ```
 -->
 
-`Residence` 인스턴스는 기본 값이 `1`인
+`Residence` 인스턴스는 기본값이 `1`인
 `numberOfRooms`라는 `Int` 프로퍼티를 가지고 있습니다.
 `Person` 인스턴스는 `Residence?` 타입의 옵셔널 `residence` 프로퍼티를 가지고 있습니다.
 
@@ -482,10 +482,10 @@ john.residence?.address = createAddress()
 
 옵셔널 체이닝을 사용하면 옵셔널 값에 대해 메서드를 호출하고
 그 호출이 성공했는지 확인할 수 있습니다.
-해당 메서드가 반환 값을 정의하지 않아도 사용할 수 있습니다.
+해당 메서드가 반환값을 정의하지 않아도 사용할 수 있습니다.
 
 `Residence` 클래스에 `printNumberOfRooms()` 메서드는
-`numberOfRooms`의 현재 값을 출력합니다.
+`numberOfRooms`의 현재값을 출력합니다.
 메서드는 다음과 같습니다:
 
 ```swift
@@ -511,12 +511,12 @@ func printNumberOfRooms() {
 이것은 `()`의 값이나 빈 튜플을 반환한다는 의미입니다.
 
 옵셔널 체이닝을 사용하여 이 메서드를 호출하면,
-반환 값은 옵셔널 타입이기 때문에
+반환값은 옵셔널 타입이기 때문에
 메서드의 반환 타입은 `Void`가 아닌 `Void?`입니다.
-메서드가 반환 값을 정의하지 않았어도
+메서드가 반환값을 정의하지 않았어도
 `printNumberOfRooms()` 메서드 호출이 가능한지
 `if` 구문을 사용하여 확인할 수 있습니다.
-`printNumberOfRooms` 호출의 반환 값을 `nil`과 비교하여
+`printNumberOfRooms` 호출의 반환값을 `nil`과 비교하여
 메서드 호출이 성공했는지 확인합니다:
 
 ```swift
@@ -671,7 +671,7 @@ if let firstRoomName = john.residence?[0].name {
 
 서브스크립트가 Swift의 `Dictionary` 타입의 키 서브스크립트와 같이
 옵셔널 타입의 값을 반환하는 경우
-옵셔널 반환 값을 연결하기 위해
+옵셔널 반환값을 연결하기 위해
 서브스크립트의 닫는 대괄호 *다음*에 물음표를 추가합니다:
 
 ```swift
@@ -765,7 +765,7 @@ if let johnsStreet = john.residence?.address?.street {
 위의 예시에서는
 `street` 프로퍼티의 값을 가져려고 합니다.
 이 프로퍼티의 타입은 `String?`입니다.
-따라서 `john.residence?.address?.street`의 반환 값은
+따라서 `john.residence?.address?.street`의 반환값은
 두 단계 옵셔널 체이닝이 프로퍼티의 옵셔널 타입에 적용되었지만
 `String?`입니다.
 
@@ -815,7 +815,7 @@ if let johnsStreet = john.residence?.address?.street {
 이전 예시는 어떻게 옵셔널 체이닝을 통해
 옵셔널 타입의 프로퍼티의 값을 가져오는지 보여줍니다.
 옵셔널 체이닝은 옵셔널 타입의 값을 반환하는 메서드를 호출하고
-필요하다면 메서드의 반환 값을 연결해서도 사용할 수 있습니다.
+필요하다면 메서드의 반환값을 연결해서도 사용할 수 있습니다.
 
 아래의 예시는 옵셔널 체이닝을 통해 `Address` 클래스의 `buildingIdentifier()` 메서드를 호출합니다.
 이 메서드는 `String?` 타입의 값을 반환합니다.
@@ -840,7 +840,7 @@ if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
   ```
 -->
 
-메서드의 반환 값에서 더 옵셔널 체이닝을 수행하려면,
+메서드의 반환값에서 더 옵셔널 체이닝을 수행하려면,
 메서드의 소괄호 *다음*에 옵셔널 체이닝 물음표를 위치시키면 됩니다:
 
 ```swift
@@ -874,7 +874,7 @@ if let beginsWithThe =
 > Note: 위의 예시에서
 > 연결하려는 옵셔널 값이
 > `buildingIdentifier()` 메서드 자체가 아닌
-> `buildingIdentifier()` 메서드의 반환 값이므로
+> `buildingIdentifier()` 메서드의 반환값이므로
 > 소괄호 *다음*에 옵셔널 체이닝 물음표를 위치시킵니다.
 
 <!--

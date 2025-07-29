@@ -626,7 +626,7 @@ private `fourCharacterCode(for:)` 함수를 호출합니다.
 문자열 리터럴을 사용합니다.
 매크로 구현에서 반환하는 모든 SwiftSyntax 타입은
 `StringLiteralConvertible`을 준수하므로,
-모든 종류의 매크로를 구현할 때 이 접근 방식을 사용할 수 있습니다.
+모든 종류의 매크로를 구현할 때 이 접근방식을 사용할 수 있습니다.
 
 <!-- TODO contrast the `\(raw:)` and non-raw version.  -->
 

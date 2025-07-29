@@ -120,9 +120,9 @@ someInts = []
 ### 기본값 배열 생성 (Creating an Array with a Default Value)
 
 Swift의 `Array` 타입은
-같은 기본 값으로 설정하고
+같은 기본값으로 설정하고
 크기를 고정하여 배열을 생성하는 초기화도 제공합니다.
-적절한 타입(파라미터 명 `repeating`)의 기본 값과
+적절한 타입(파라미터 명 `repeating`)의 기본값과
 새로운 배열에 반복될 값의 횟수(파라미터 명 `count`)를
 초기화에 전달합니다:
 
@@ -591,17 +591,17 @@ for (index, value) in shoppingList.enumerated() {
   TODO: Add note about performance characteristics of contains on sets as opposed to arrays?
 -->
 
-### 집합 타입을 위한 해시 값 (Hash Values for Set Types)
+### 집합 타입을 위한 해시값 (Hash Values for Set Types)
 
 집합(set)에 저장하기 위해 타입은 반드시 *hashable*해야 합니다 ---
-즉, *해시 값(hash value)*을 계산할 수 있는 방법을 타입은 제공해야 합니다.
-해시 값은 `Int` 값으로 동일하게 비교되는 모든 객체에 대해 동일하며,
+즉, *해시값(hash value)*을 계산할 수 있는 방법을 타입은 제공해야 합니다.
+해시값은 `Int` 값으로 동일하게 비교되는 모든 객체에 대해 동일하며,
 `a == b`이면,
-`a`의 해시 값은 `b`의 해시 값과 같아야 합니다.
+`a`의 해시값은 `b`의 해시값과 같아야 합니다.
 
 Swift의 모든 기본 타입(`String`, `Int`, `Double`, `Bool`)은
 기본적으로 hashable이고, 집합의 값 타입이나 딕셔너리의 키 타입으로 사용할 수 있습니다.
-연관된 값이 없는 열거형(Enumeration) 케이스 값
+연관값이 없는 열거형(Enumeration) 케이스 값
 (<doc:Enumerations>에서 설명한대로)은
 기본적으로 hashable입니다.
 
@@ -1069,7 +1069,7 @@ var namesOfIntegers = [Int: String]()
   ```
 -->
 
-이 예시에서 정수 값을 사람이 읽을 수 있는 이름을 저장하는
+이 예시에서 정수값을 사람이 읽을 수 있는 이름을 저장하는
 `[Int: String]` 타입의 빈 딕셔너리를 생성합니다.
 키는 `Int` 타입이고 값은 `String` 타입 입니다.
 

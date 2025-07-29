@@ -40,7 +40,7 @@ Swift의 `String` 타입은 빠르고, 최신 문자열 구현입니다.
 문자열 리터럴은 쌍따옴표(`"`)로 둘러싸인
 문자의 연속입니다.
 
-상수나 변수의 초기 값으로 문자열 리터럴을 사용합니다:
+상수나 변수의 초기값으로 문자열 리터럴을 사용합니다:
 
 ```swift
 let someString = "Some string literal value"
@@ -444,7 +444,7 @@ constantString += " and another Highlander"
   ```
 -->
 
-> Note: 이 접근 방식은 Objective-C와 Cocoa의 문자열 변형과 다릅니다.
+> Note: 이 접근방식은 Objective-C와 Cocoa의 문자열 변형과 다릅니다.
 > 여기서 두 클래스(`NSString` 및 `NSMutableString`) 중에서 선택하여
 > 문자열 변형이 가능한지 여부를 나타냅니다.
 

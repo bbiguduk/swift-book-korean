@@ -534,7 +534,7 @@ struct LevelTracker {
 `advance(to:)` 메서드는 `currentLevel`을 설정가능한지 아닌지를
 나타내기 위해 Boolean 값을 반환합니다.
 `advance(to:)` 메서드를 호출하여
-반환 값을 무시하는
+반환값을 무시하는
 경우도 있기 때문에,
 이 함수는 `@discardableResult` 속성으로 표시됩니다.
 더 자세한 내용은
@@ -583,7 +583,7 @@ class Player {
 다음 레벨로 이동하기 위해 플레이어의 진행 상태를 업데이트 합니다.
 (이전 줄에서 `LevelTracker.unlock(_:)`을 호출하여
 해당 레벨을 잠금 해제하기 때문에
-`advance(to:)`의 Boolean 반환 값은 무시됩니다.)
+`advance(to:)`의 Boolean 반환값은 무시됩니다.)
 
 새로운 플레이어를 위한 `Player` 클래스의 인스턴스를 생성할 수 있고
 플레이어가 레벨1을 완료하면 어떤 일이 생기는지 알 수 있습니다:

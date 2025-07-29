@@ -137,7 +137,7 @@ class VideoMode {
 이 구조체는 `width`와 `height`라 불리는 저장 프로퍼티를 가지고 있습니다.
 저장 프로퍼티는 구조체나 클래스의 일부로
 함께 저장되는 상수나 변수입니다.
-이 두 프로퍼티는 정수 값 `0`으로 초기 값이 설정되므로
+이 두 프로퍼티는 정수값 `0`으로 초기값이 설정되므로
 `Int` 타입으로 추론됩니다.
 
 위 예시는 비디오 화면에 대한 특정 비디오 모드를 나타내는
@@ -150,7 +150,7 @@ class VideoMode {
 재생 프레임 속도는 `0.0`으로
 `name`은 옵셔널 `String` 값으로 초기화 되어
 새로운 `VideoMode` 인스턴스를 초기화합니다.
-`name` 프로퍼티는 옵셔널 타입이므로 기본 값은 자동으로 `nil`이며,
+`name` 프로퍼티는 옵셔널 타입이므로 기본값은 자동으로 `nil`이며,
 "`name` 값 없음"입니다.
 
 ### 구조체와 클래스 인스턴스 (Structure and Class Instances)
@@ -179,7 +179,7 @@ let someVideoMode = VideoMode()
 구조체와 클래스 모두 새로운 인스턴스를 생성하기위해 이니셜라이저를 사용합니다.
 이니셜라이저의 가장 단순한 형태는 `Resolution()`나 `VideoMode()`와 같이
 클래스나 구조체 타입 이름 뒤에 빈 소괄호를 붙여 사용하는 것입니다.
-이렇게 하면 모든 프로퍼티가 기본 값으로 초기화되는
+이렇게 하면 모든 프로퍼티가 기본값으로 초기화되는
 클래스나 구조체의 새로운 인스턴스를 생성합니다.
 클래스와 구조체 초기화에 대한 자세한 내용은
 <doc:Initialization>를 참고바랍니다.
@@ -211,7 +211,7 @@ print("The width of someResolution is \(someResolution.width)")
 
 이 예시에서
 `someResolution.width`는 `someResolution` 인스턴스의 `width` 프로퍼티를 참조하고
-기본 값 `0`을 반환합니다.
+기본값 `0`을 반환합니다.
 
 `VideoMode` 인스턴스의 `resolution` 프로퍼티에 `width` 프로퍼티와 같이
 프로퍼티 안의 하위 프로퍼티에 접근할 수 있습니다:
@@ -252,7 +252,7 @@ print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 
 모든 구조체는 새로운 구조체 인스턴스의 멤버 프로퍼티를 초기화 할 때 사용할 수 있는
 자동으로 생성되는 *멤버와이즈 이니셜라이저(memberwise intializer)*를 가집니다.
-새로운 인스턴스의 프로퍼티 초기 값은
+새로운 인스턴스의 프로퍼티 초기값은
 이름으로 멤버와이즈 초기화에 전달할 수 있습니다:
 
 ```swift
@@ -339,7 +339,7 @@ var cinema = hd
 너비와 높이를 초기화하는 `Resolution` 인스턴스를 생성합니다.
 
 그리고 나서 `cinema`라는 변수를 선언하고
-`hd`의 현재 값을 설정합니다.
+`hd`의 현재값을 설정합니다.
 `Resolution`은 구조체이므로,
 기존 인스턴스의 *복사본*이 만들어지고
 이 복사본이 `cinema`에 할당됩니다.
@@ -380,7 +380,7 @@ print("cinema is now \(cinema.width) pixels wide")
 -->
 
 그러나 기존 `hd` 인스턴스의 `width` 프로퍼티는
-`1920`의 기존 값을 그대로 가지고 있습니다:
+`1920`의 기존값을 그대로 가지고 있습니다:
 
 ```swift
 print("hd is still \(hd.width) pixels wide")
@@ -396,7 +396,7 @@ print("hd is still \(hd.width) pixels wide")
   ```
 -->
 
-`cinema`에 `hd`의 현재 값이 주어졌을 때,
+`cinema`에 `hd`의 현재값이 주어졌을 때,
 `hd`에 저장된 *값*은 새로운 `cinema` 인스턴스에 복사됩니다.
 그 결과 두 인스턴스는 동일한 숫자 값을 가지지만,
 서로 완전히 독립적인 인스턴스 입니다.

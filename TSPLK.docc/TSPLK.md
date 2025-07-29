@@ -102,7 +102,7 @@
 | Computed Property            | 연산 프로퍼티     |
 | Property Observer            | 프로퍼티 관찰자     |
 | Property Wrapper             | 프로퍼티 래퍼      |
-| Projected Value              | 투영된 값        |
+| Projected Value              | 투영값        |
 | Type Property                | 타입 프로퍼티      |
 | Instance Method              | 인스턴스 메서드     |
 | Type Method                  | 타입 메서드       |

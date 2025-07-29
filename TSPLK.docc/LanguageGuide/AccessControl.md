@@ -506,13 +506,13 @@ public enum CompassPoint {
   ```
 -->
 
-#### 원시 값과 연관 값 (Raw Values and Associated Values)
+#### 원시값과 연관값 (Raw Values and Associated Values)
 
-열거형 정의의 모든 원시 값이나 연관 값에 사용되는 타입은
+열거형 정의의 모든 원시값이나 연관값에 사용되는 타입은
 열거형의 접근 수준보다 높은 접근 수준을 가져야 합니다.
 예를 들어
 internal 접근 수준을 가진 열거형에
-private 타입을 원시 값으로 사용할 수 없습니다.
+private 타입을 원시값으로 사용할 수 없습니다.
 
 ### 중첩 타입 (Nested Types)
 
@@ -852,7 +852,7 @@ struct TrackedString {
 -->
 
 `TrackedString` 구조체는 `value`라는 문자열 저장 프로퍼티를 정의하고,
-빈 문자열인 `""`의 초기 값을 가집니다.
+빈 문자열인 `""`의 초기값을 가집니다.
 이 구조체는 `numberOfEdits`라는 정수 저장 프로퍼티도 정의하고,
 `value`가 몇 번이나 수정되는지 추적하는데 사용합니다.
 이 추적은
@@ -919,7 +919,7 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 -->
 
 다른 소스 파일에서
-`numberOfEdits` 프로퍼티의 현재 값은 조회할 수 있지만
+`numberOfEdits` 프로퍼티의 현재값은 조회할 수 있지만
 다른 소스 파일에서 프로퍼티를 *수정*할 수 없습니다.
 이 제한은 `TrackedString` 편집 추적 기능의
 세부 구현을 보호하는 동시에
@@ -1033,7 +1033,7 @@ public struct TrackedString {
 ### 기본 이니셜라이저 (Default Initializers)
 
 <doc:Initialization#기본-이니셜라이저-Default-Initializers>에서 설명했듯이,
-Swift는 모든 프로퍼티에 기본 값을 제공하고
+Swift는 모든 프로퍼티에 기본값을 제공하고
 커스텀 이니셜라이저를 제공하지 않는
 구조체나 기본 클래스에 대해
 인수없는 *기본 이니셜라이저(default initializer)*를 자동으로 제공합니다.

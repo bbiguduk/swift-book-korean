@@ -721,19 +721,19 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
   ```
 -->
 
-`userDefinedColorName` 변수는 기본 값이 `nil` 인
+`userDefinedColorName` 변수는 기본값이 `nil` 인
 옵셔널 `String`으로 정의됩니다.
 `userDefinedColorName`은 옵셔널 타입이기 때문에
 값을 선택하기 위해 nil-병합 연산자를 사용할 수 있습니다.
 위의 예시에서 연산자는
-`colorNameToUse`라는 `String` 변수의 초기 값을 결정하는데 사용됩니다.
+`colorNameToUse`라는 `String` 변수의 초기값을 결정하는데 사용됩니다.
 `userDefinedColorName`이 `nil`이기 때문에,
 표현식 `userDefinedColorName ?? defaultColorName`은
 `defaultColorName`나 `"red"`의 값을 반환합니다.
 
 `userDefinedColorName`에 `nil`이 아닌 값을 대입하고
 nil-병합 연산자로 검사를 다시 수행하면
-기본 값 대신에 `userDefinedColorName`에 래핑된 값을 사용합니다:
+기본값 대신에 `userDefinedColorName`에 래핑된 값을 사용합니다:
 
 ```swift
 userDefinedColorName = "green"

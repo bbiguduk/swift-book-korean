@@ -16,7 +16,7 @@ ARC는 인스턴스가 더 이상 필요치 않을 때
 앱의 메모리를 관리하기 위해 ARC를 어떻게 사용하는지 보여줍니다.
 Swift에서 ARC를 사용하는 것은
 Objective-C에서 ARC 사용에 대한
-[ARC 전환 릴리즈 노트 (Transitioning to ARC Release Notes)](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html)에서 설명한 접근 방식과 매우 유사합니다.
+[ARC 전환 릴리즈 노트 (Transitioning to ARC Release Notes)](https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html)에서 설명한 접근방식과 매우 유사합니다.
 
 참조 카운팅은 클래스의 인스턴스에만 적용됩니다.
 구조체와 열거형은 참조 타입이 아니고 값 타입이고
@@ -260,11 +260,11 @@ class Apartment {
 -->
 
 모든 `Person` 인스턴스는 `String` 타입의 `name` 프로퍼티와
-초기 값이 `nil`인 옵셔널 `apartment` 프로퍼티를 가지고 있습니다.
+초기값이 `nil`인 옵셔널 `apartment` 프로퍼티를 가지고 있습니다.
 `apartment` 프로퍼티는 사람이 항상 아파트를 가지고 있지 않기 때문에 옵셔널입니다.
 
 유사하게 모든 `Apartment` 인스턴스는 `String` 타입의 `unit` 프로퍼티와
-초기 값이 `nil`인 옵셔널 `tenant` 프로퍼티를 가지고 있습니다.
+초기값이 `nil`인 옵셔널 `tenant` 프로퍼티를 가지고 있습니다.
 `tenant` 프로퍼티는 아파트가 항상 세입자를 보유하는 것이 아니므로 옵셔널입니다.
 
 이 클래스 모두 디이니셜라이저를 정의하고,
@@ -275,7 +275,7 @@ class Apartment {
 다음 코드는 `Apartment`와 `Person` 인스턴스를 설정할
 `john`과 `unit4A`라는
 옵셔널 타입의 두 개의 변수를 정의합니다.
-이 변수 모두 옵셔널이므로 초기 값으로 `nil`을 가집니다:
+이 변수 모두 옵셔널이므로 초기값으로 `nil`을 가집니다:
 
 ```swift
 var john: Person?
@@ -693,7 +693,7 @@ class CreditCard {
 
 다음 코드는 `john`이라는 옵셔널 `Customer` 변수를 정의하고,
 구체적인 고객에 대한 참조를 저장하는데 사용합니다.
-이 변수는 옵셔널이므로 `nil`의 초기 값을 가집니다:
+이 변수는 옵셔널이므로 `nil`의 초기값을 가집니다:
 
 ```swift
 var john: Customer?
@@ -1040,7 +1040,7 @@ class City {
 암시적 언래핑 옵셔널 프로퍼티로 선언하며,
 이것은 타입 뒤에 느낌표(`City!`)로 표시합니다.
 `capitalCity` 프로퍼티는 다른 옵셔널과 같이
-`nil`의 기본 값을 가지지만
+`nil`의 기본값을 가지지만
 <doc:TheBasics#암시적-언래핑-옵셔널-Implicitly-Unwrapped-Optionals>에서 설명했듯이
 언래핑할 필요없이 값에 접근할 수 있다는 의미입니다.
 
@@ -1200,7 +1200,7 @@ class HTMLElement {
 
 예를 들어 `asHTML` 프로퍼티는
 빈 HTML 태그를 반환하지 않도록
-`text` 프로퍼티가 `nil`이면 일부 텍스트를 기본 값으로 하는 클로저로 설정할 수 있습니다:
+`text` 프로퍼티가 `nil`이면 일부 텍스트를 기본값으로 하는 클로저로 설정할 수 있습니다:
 
 ```swift
 let heading = HTMLElement(name: "h1")

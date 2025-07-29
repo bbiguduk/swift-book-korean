@@ -32,7 +32,7 @@ Swift는 재정의에 일치하는 슈퍼클래스 정의가 있는지 확인하
 
 아래 예시는 `Vehicle`이라는 기본 클래스를 정의합니다.
 이 기본 클래스는 `currentSpeed`라는 저장 프로퍼티를 가지며,
-기본 값은 `0.0`입니다 (프로퍼티 타입을 `Double`로 추론합니다).
+기본값은 `0.0`입니다 (프로퍼티 타입을 `Double`로 추론합니다).
 `currentSpeed` 프로퍼티는
 읽기 전용 연산 프로퍼티인 `description`에서 사용되며,
 이 프로퍼티는 차량의 문자열 설명을 반환합니다.
@@ -158,7 +158,7 @@ class Bicycle: Vehicle {
 
 상속한 특성 외에도
 `Bicycle` 클래스는 `hasBasket`이라는 새로운 저장 프로퍼티를 정의하며,
-기본 값은 `false`입니다
+기본값은 `false`입니다
 (프로퍼티를 `Bool` 타입으로 유추됩니다).
 
 기본적으로 생성한 새로운 `Bicycle` 인스턴스는 바구니를 가지고 있지 않습니다.
@@ -220,7 +220,7 @@ class Tandem: Bicycle {
 
 `Tandem`은 `Bicycle`의 모든 프로퍼티와 메서드를 상속받고,
 `Bicycle`은 다시 `Vehicle`의 모든 프로퍼티와 메서드를 상속받습니다.
-`Tandem` 서브클래스는 기본 값 `0`인
+`Tandem` 서브클래스는 기본값 `0`인
 `currentNumberOfPassengers`라는 새로운 저장 프로퍼티도 추가합니다.
 
 `Tandem`의 인스턴스를 생성하면,
@@ -367,7 +367,7 @@ train.makeNoise()
 
 다음의 예시는 `Vehicle`의 서브클래스인
 `Car`라는 새로운 클래스를 정의합니다.
-`Car` 클래스는 기본 정수 값이 `1`인
+`Car` 클래스는 기본 정수값이 `1`인
 `gear`라는 새로운 저장 프로퍼티를 가집니다.
 `Car` 클래스는 현재 기어를 포함한 설명을 제공하기 위해
 `Vehicle`로부터 상속받은 `description` 프로퍼티를 재정의합니다:

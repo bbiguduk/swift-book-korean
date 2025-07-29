@@ -67,8 +67,8 @@
 *상수 저장 프로퍼티(constant stored properties)*(`let` 키워드 사용)로 쓸 수 있습니다.
 
 <doc:Initialization#기본-프로퍼티-값-Default-Property-Values>에서 설명한 대로
-저장 프로퍼티에는 정의할 때 기본 값을 제공할 수 있습니다.
-초기화 중에 저장 프로퍼티에 초기 값을 설정하고 수정할 수도 있습니다.
+저장 프로퍼티에는 정의할 때 기본값을 제공할 수 있습니다.
+초기화 중에 저장 프로퍼티에 초기값을 설정하고 수정할 수도 있습니다.
 <doc:Initialization#초기화-중-상수-프로퍼티-값-할당-Assigning-Constant-Properties-During-Initialization>에서 설명한 대로
 상수 저장 프로퍼티에도 마찬가지 입니다.
 
@@ -164,12 +164,12 @@ rangeOfFourItems.firstValue = 6
 -->
 
 *지연 저장 프로퍼티(lazy stored property)*는 처음 사용될 때까지
-초기 값이 계산되지 않는 프로퍼티입니다.
+초기값이 계산되지 않는 프로퍼티입니다.
 지연 저장 프로퍼티는
 선언 앞에 `lazy` 수식어를 붙여 나타냅니다.
 
 > Note: 인스턴스 초기화가 완료된 후에
-> 초기 값을 가져올 수도 있기 때문에
+> 초기값을 가져올 수도 있기 때문에
 > 지연 프로퍼티는 `var` 키워드를 사용해 변수로 선언해야 합니다.
 > 상수 프로퍼티는 초기화가 완료되기 *전에* 값을 가지고 있어야 하므로,
 > 지연 프로퍼티로 선언할 수 없습니다.
@@ -188,8 +188,8 @@ rangeOfFourItems.firstValue = 6
 
 지연 프로퍼티는 인스턴스의 초기화가 완료될 때까지
 알 수 없는 외부 요인에 따라
-초기 값이 결정될 경우에 유용합니다.
-지연 프로퍼티는 초기 값 설정이 복잡하거나
+초기값이 결정될 경우에 유용합니다.
+지연 프로퍼티는 초기값 설정이 복잡하거나
 계산 비용이 많이 들 때,
 실제로 필요해질 때까지 초기화를 미루고 싶을 때에도 유용합니다.
 
@@ -315,7 +315,7 @@ Objective-C에 익숙하다면,
 Swift는 하나의 프로퍼티 선언으로 이러한 개념을 통합합니다.
 Swift의 프로퍼티는 대응되는 인스턴스 변수를 가지지 않으며,
 프로퍼티의 백업 저장소는 직접적으로 접근할 수 없습니다.
-이 접근 방식은 다양한 상황에서 값에 접근하는 것에 대한 혼동을 피할 수 있으며,
+이 접근방식은 다양한 상황에서 값에 접근하는 것에 대한 혼동을 피할 수 있으며,
 프로퍼티 선언을 하나의 명확한 구문으로 단순화합니다.
 이름, 타입, 메모리 관리 특성을 포함하는 ---
 프로퍼티에 대한 모든 정보는 ---
@@ -420,7 +420,7 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 `square` 변수의 `center` 프로퍼티는 점 표기법(`square.center`)으로 접근되고,
 `center`에 대한 getter를 호출하여
 현재 프로퍼티 값을 가져옵니다.
-기존 값을 반환하는 대신,
+기존값을 반환하는 대신,
 getter는 실질적으로 사각형의 중심을 나타내는 새로운 `Point`를 계산하고 반환합니다.
 위에서 볼 수 있듯이 getter는 `(5, 5)`의 중심점을 반환합니다.
 
@@ -624,7 +624,7 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 ## 프로퍼티 관찰자 (Property Observers)
 
 프로퍼티 관찰자(Property observers)는 프로퍼티의 값이 변경되는지 관찰하고 응답합니다.
-프로퍼티 관찰자는 프로퍼티의 현재 값이 새로운 값과 같더라도
+프로퍼티 관찰자는 프로퍼티의 현재값이 새로운 값과 같더라도
 프로퍼티의 값이 설정될 때 호출됩니다.
 
 <!--
@@ -836,7 +836,7 @@ stepCounter.totalSteps = 896
 
 `totalSteps`의 `willSet`과 `didSet` 관찰자는
 새로운 값이 프로퍼티에 할당될 때마다 호출됩니다.
-새로운 값이 현재 값과 같더라도 항상 호출됩니다.
+새로운 값이 현재값과 같더라도 항상 호출됩니다.
 
 이 예시의 `willSet` 관찰자는
 새로운 값을 위한 `newTotalSteps`의 사용자 파라미터 명을 사용합니다.
@@ -1040,12 +1040,12 @@ print(rectangle.height)
 
 `height`와 `width` 프로퍼티는
 `TwelveOrLess.number`를 0으로 설정하는
-`TwelveOrLess` 정의에서 초기 값을 얻습니다.
+`TwelveOrLess` 정의에서 초기값을 얻습니다.
 `TwelveOrLess`의 setter는 10을 유효한 값으로 간주하기 때문에,
 `rectangle.height`에 10을 저장하는 것은 성공적으로 저장합니다.
 그러나 24는 `TwelveOrLess`에서 허용하는 값보다 크기 때문에,
 24를 저장하려고 하면 `rectangle.height`는
-대신 12로 설정되며, 이는 허용된 최대 값입니다.
+대신 12로 설정되며, 이는 허용된 최대값입니다.
 
 프로퍼티에 래퍼를 적용하면,
 컴파일러는 래퍼를 위한 저장소를 제공하는 코드와
@@ -1099,20 +1099,20 @@ struct SmallRectangle {
 `height`와 `width`의 getter와 setter는
 각각 `wrappedValue` 프로퍼티에 접근합니다.
 
-### 래핑된 프로퍼티에 초기 값 설정 (Setting Initial Values for Wrapped Properties)
+### 래핑된 프로퍼티에 초기값 설정 (Setting Initial Values for Wrapped Properties)
 
 위 예시의 코드는
-`TwelveOrLess` 정의 안에서 `number`에 초기 값을 부여함으로써,
-래핑된 프로퍼티의 초기 값을 설정합니다.
+`TwelveOrLess` 정의 안에서 `number`에 초기값을 부여함으로써,
+래핑된 프로퍼티의 초기값을 설정합니다.
 이 프로퍼티 래퍼를 사용한 코드는
 `TwelveOrLess`로 래핑된
-프로퍼티에 다른 초기 값을 지정할 수 없습니다 ---
+프로퍼티에 다른 초기값을 지정할 수 없습니다 ---
 예를 들어
 `SmallRectangle` 정의에
-`height`나 `width` 초기 값을 지정할 수 없습니다.
-초기 값 설정을 지원하거나 다른 커스터마이징을 지원하려면,
+`height`나 `width` 초기값을 지정할 수 없습니다.
+초기값 설정을 지원하거나 다른 커스터마이징을 지원하려면,
 프로퍼티 래퍼에 이니셜라이저를 추가해야 합니다.
-다음은 래핑된 값과 최대 값을 설정하는 초기화를 정의하는
+다음은 래핑된 값과 최대값을 설정하는 초기화를 정의하는
 `SmallNumber`라는 확장된 `TwelveOrLess`를 나타냅니다:
 
 ```swift
@@ -1184,11 +1184,11 @@ struct SmallNumber {
 `SmallNumber`의 정의는 세 가지 이니셜라이저이 포함되어 있으며 ---
 `init()`, `init(wrappedValue:)`, `init(wrappedValue:maximum:)` 가 포함되어 있으며 ---
 아래 예시에서는
-이 이니셜라이저를 사용해 래핑된 값과 최대 값을 설정합니다.
+이 이니셜라이저를 사용해 래핑된 값과 최대값을 설정합니다.
 초기화와 이니셜라이저에 대한 자세한 내용은
 <doc:Initialization>를 참고바랍니다.
 
-프로퍼티에 래퍼를 적용할 때 초기 값을 지정하지 않으면,
+프로퍼티에 래퍼를 적용할 때 초기값을 지정하지 않으면,
 Swift는 래퍼를 설정하기 위해 `init()`을 사용합니다.
 예를 들어:
 
@@ -1243,15 +1243,15 @@ print(zeroRectangle.height, zeroRectangle.width)
 `height`와 `width`를 래핑하는 `SmallNumber` 인스턴스는
 `SmallNumber()`를 호출하여 생성됩니다.
 초기화 내부의 코드는
-기본 값인 0과 12를 사용하여
-초기 래핑 값과 초기 최대 값을 설정합니다.
+기본값인 0과 12를 사용하여
+초기 래핑 값과 초기 최대값을 설정합니다.
 이 방식은 이전에 `SmallRectangle`에서 `TwelveOrLess`를 사용했던 예전처럼,
-프로퍼티 래퍼가 모든 초기 값을 제공합니다.
+프로퍼티 래퍼가 모든 초기값을 제공합니다.
 예시와 다르게
-`SmallNumber`이 초기 값을
+`SmallNumber`이 초기값을
 프로퍼티 선언 시 직접 작성할 수 있다는 점에서 다릅니다.
 
-프로퍼티에 초기 값을 지정하면,
+프로퍼티에 초기값을 지정하면,
 Swift는 래퍼를 설정하기 위해 `init(wrappedValue:)`를 사용합니다.
 예를 들어:
 
@@ -1303,16 +1303,16 @@ print(unitRectangle.height, unitRectangle.width)
   ```
 -->
 
-프로퍼티에 `= 1`과 같이 초기 값을 작성하면,
+프로퍼티에 `= 1`과 같이 초기값을 작성하면,
 이는 `init(wrappedValue:)` 초기화 호출로 변환됩니다.
 `height`와 `width`를 래핑하는 `SmallNumber` 인스턴스는
 `SmallNumber(wrappedValue: 1)`을 호출하여 생성됩니다.
 이 이니셜라이저는 여기서 지정된 래핑 값을 사용하고,
-최대 값은 기본 값인 12를 사용합니다.
+최대값은 기본값인 12를 사용합니다.
 
 사용자 지정 속성 뒤에 소괄호로 인수를 작성하면,
 Swift는 해당 인수를 받는 이니셜라이저를 사용하여 래퍼를 설정합니다.
-예를 들어 초기 값과 최대 값을 제공하면,
+예를 들어 초기값과 최대값을 제공하면,
 Swift는 `init(wrappedValue:maximum:)` 이니셜라이저를 사용합니다:
 
 ```swift
@@ -1390,7 +1390,7 @@ print(narrowRectangle.height, narrowRectangle.width)
 해당 인수가 이니셜라이저에 전달됩니다.
 
 프로퍼티 래퍼 인수를 포함하면,
-할당을 사용하여 초기 값을 지정할 수도 있습니다.
+할당을 사용하여 초기값을 지정할 수도 있습니다.
 Swift는 할당을 `wrappedValue` 인수처럼 처리하고
 저장한 인수를 수용하는 이니셜라이저를 사용합니다.
 예를 들어:
@@ -1431,21 +1431,21 @@ print(mixedRectangle.height)
 
 `height`를 래핑하는 `SmallNumber` 인스턴스는
 `SmallNumber(wrappedValue: 1)`을 호출하여 생성되며,
-이때 최대 값은 기본 값인 12가 사용됩니다.
+이때 최대값은 기본값인 12가 사용됩니다.
 `width`를 래핑하는 인스턴스는
 `SmallNumber(wrappedValue: 2, maximum: 9)`를 호출하여 생성됩니다.
 
 ### 프로퍼티 래퍼에서 값 투영 (Projecting a Value From a Property Wrapper)
 
 래핑된 값 외에도
-프로퍼티 래퍼는 *투영된 값(projected value)*을 정의하여
+프로퍼티 래퍼는 *투영값(projected value)*을 정의하여
 추가적인 기능을 제공할 수 있습니다 ---
 예를 들어 데이터베이스 접근을 관리하는 프로퍼티 래퍼는
-투영된 값으로 `flushDatabaseConnection()` 메서드를 노출할 수 있습니다.
-투영된 값의 이름은 앞에 달러 표시(`$`)가 붙는 것을 제외하면
+투영값으로 `flushDatabaseConnection()` 메서드를 노출할 수 있습니다.
+투영값의 이름은 앞에 달러 표시(`$`)가 붙는 것을 제외하면
 래핑된 값과 동일합니다.
 코드에서 `$`로 시작하는 프로퍼티를 정의할 수 없기 때문에
-투영된 값은 정의한 프로퍼티와 충돌하지 않습니다.
+투영값은 정의한 프로퍼티와 충돌하지 않습니다.
 
 위의 `SmallNumber` 예시에서
 프로퍼티에 너무 큰 수를 설정하려고 하면,
@@ -1534,29 +1534,29 @@ print(someStructure.$someNumber)
   ```
 -->
 
-`someStructure.$someNumber`처럼 작성하면 해당 래퍼의 투영된 값에 접근할 수 있습니다.
+`someStructure.$someNumber`처럼 작성하면 해당 래퍼의 투영값에 접근할 수 있습니다.
 4와 같은 작은 숫자를 저장한 후에,
 `someStructure.$someValue`의 값은 `false`입니다.
 그러나
 55와 같은 큰 숫자를 저장하려고 한 경우에는
-투영된 값은 `true`입니다.
+투영값은 `true`입니다.
 
-프로퍼티 래퍼는 어떤 타입이든 투영된 값으로 반환할 수 있습니다.
+프로퍼티 래퍼는 어떤 타입이든 투영값으로 반환할 수 있습니다.
 이 예시에서
 프로퍼티 래퍼는 숫자가 변경되었는지에 대한 ---
 정보만 노출합니다 ---
-그래서 투영된 값으로 Boolean 값을 노출합니다.
+그래서 투영값으로 Boolean 값을 노출합니다.
 더 많은 정보를 제공해야 하는 래퍼의 경우
 다른 타입의 인스턴스를 반환하거나,
-`self`를 투영된 값으로 반환하여
+`self`를 투영값으로 반환하여
 래퍼 인스턴스 전체를 노출할 수 있습니다.
 
-타입 내부의 코드에서 투영된 값에 접근할 때,
+타입 내부의 코드에서 투영값에 접근할 때,
 프로퍼티 getter나 인스턴스 메서드와
 다른 프로퍼티를 접근할 때처럼
 프로퍼티 이름 앞에 `self.`을 생략할 수 있습니다.
 다음 예시의 코드는 `$height`와 `$width`로 `height`와 `width` 래퍼의
-투영된 값을 참조합니다:
+투영값을 참조합니다:
 
 ```swift
 enum Size {
@@ -1626,7 +1626,7 @@ struct SizedRectangle {
 래퍼는 프로퍼티의 값이
 12를 초과하지 않도록 막고,
 값이 변경되었다는 사실을 기록하기 위해
-투영된 값을 `true`로 설정합니다.
+투영값을 `true`로 설정합니다.
 `resize(to:)` 메서드의 마지막에 있는
 반환 구문은 프로퍼티 래퍼가 `height`나 `width`를 변경했는지
 판단하기 위해
@@ -1765,7 +1765,7 @@ func someFunction() {
 항상 변수 프로퍼티로 선언됩니다.
 
 > Note: 저장 인스턴스 프로퍼티와 다르게
-> 저장 타입 프로퍼티에는 반드시 기본 값을 제공해야 합니다.
+> 저장 타입 프로퍼티에는 반드시 기본값을 제공해야 합니다.
 > 이는 타입 자체에는 저장 타입 프로퍼티를 초기화할 수 있는
 > 이니셜라이저이 존재하지 않기 때문입니다.
 >
@@ -1963,7 +1963,7 @@ struct AudioChannel {
 -->
 
 `AudioChannel` 구조체는 해당 기능을 제공하기 위해 두 개의 저장 타입 프로퍼티를 정의합니다.
-첫 번째 `thresholdLevel`은 오디오 레벨이 가질 수 있는 최대 값을 정의합니다.
+첫 번째 `thresholdLevel`은 오디오 레벨이 가질 수 있는 최대값을 정의합니다.
 모든 `AudioChannel` 인스턴스에 대해 `10`으로 고정된 상수 값입니다.
 오디오 신호가 `10`의 값보다 높게 오면,
 아래에서 설명된 기준 값으로 변경합니다.
@@ -1971,8 +1971,8 @@ struct AudioChannel {
 두 번째 타입 프로퍼티는
 `maxInputLevelForAllChannels`라는 변수 저장 프로퍼티입니다.
 이 프로퍼티는 *모든* `AudioChannel` 인스턴스 중에서
-최대 입력 값을 추적합니다.
-초기 값은 `0`부터 시작합니다.
+최대 입력값을 추적합니다.
+초기값은 `0`부터 시작합니다.
 
 `AudioChannel` 구조체는
 채널의 현재 오디오 레벨을 `0`에서 `10`으로 표현하는
@@ -2037,7 +2037,7 @@ print(AudioChannel.maxInputLevelForAllChannels)
 
 *오른쪽* 채널의 `currentLevel`을 `11`로 설정하면,
 오른쪽 채널의 `currentLevel` 프로퍼티가
-`10`의 최대 값으로 변경된 것을 볼 수 있고,
+`10`의 최대값으로 변경된 것을 볼 수 있고,
 `maxInputLevelForAllChannels` 타입 프로퍼티가 `10`으로 업데이트 된 것을 볼 수 있습니다:
 
 ```swift

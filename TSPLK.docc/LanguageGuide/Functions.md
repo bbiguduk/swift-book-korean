@@ -1,6 +1,6 @@
 # 함수 (Functions)
 
-함수를 정의하고 호출하며, 인수에 레이블을 지정하고 반환 값을 사용합니다.
+함수를 정의하고 호출하며, 인수에 레이블을 지정하고 반환값을 사용합니다.
 
 *함수(Functions)*는 특정 작업을 수행하는 독립적인 코드 블럭입니다.
 무슨 동작을 하는지 함수에 특정 이름을 부여할 수 있으며,
@@ -26,7 +26,7 @@ Swift에서는 함수 타입을 다른 타입처럼 사용할 수 있으므로,
 
 함수를 정의할 때,
 *파라미터(parameter)*라고 알고 있는
-선택적으로 하나 이상의 이름이 지정된 값과 타입이 있는 입력 값을 정의할 수 있습니다.
+선택적으로 하나 이상의 이름이 지정된 값과 타입이 있는 입력값을 정의할 수 있습니다.
 또한 *반환 타입(return type)*이라고 알고 있는
 작업이 완료 되었을 때 반환할 값의 타입을
 선택적으로 정의할 수 있습니다.
@@ -35,7 +35,7 @@ Swift에서는 함수 타입을 다른 타입처럼 사용할 수 있으므로,
 *함수 이름*을 가지고 있습니다.
 함수를 사용하려면, 함수의 이름으로 "호출"하고
 함수의 파라미터 타입과 일치하는
-입력 값(*인수(argument)*)을 전달해야 합니다.
+입력값(*인수(argument)*)을 전달해야 합니다.
 함수의 인수는 항상 함수의 파라미터 순서와
 동일하게 제공해야 합니다.
 
@@ -72,7 +72,7 @@ func greet(person: String) -> String {
 뒤에 반환 타입의 이름을 붙여 함수의 반환 타입을 나타냅니다.
 
 함수 정의는 함수가 수행하는 작업,
-받아야 할 입력 값,
+받아야 할 입력값,
 완료 후 반환하는 값을 설명합니다.
 이러한 정의를 통해 코드의 다른 위치에서도
 함수를 명확하게 호출할 수 있습니다.
@@ -99,12 +99,12 @@ print(greet(person: "Brian"))
 `person` 인수 레이블 뒤에 `String` 값을 전달하여
 `greet(person:)` 함수를 호출합니다.
 함수는 `String` 값을 반환하므로,
-`greet(person:)`은 위에서와 같이 반환 값의 문자열을 출력하기 위해
+`greet(person:)`은 위에서와 같이 반환값의 문자열을 출력하기 위해
 `print(_:separator:terminator:)` 함수 안에서 호출할 수 있습니다.
 
 > Note: `print(_:separator:terminator:)` 함수는
 > 첫 번째 인수가 레이블을 가지고 있지 않고,
-> 다른 인수는 기본 값을 가지고 있으므로 생략할 수 있습니다.
+> 다른 인수는 기본값을 가지고 있으므로 생략할 수 있습니다.
 > 이러한 함수 구문의 변형은 아래
 > <doc:Functions#함수-인수-레이블과-파라미터-이름-Function-Argument-Labels-and-Parameter-Names>과
 > <doc:Functions#파라미터-기본값-Default-Parameter-Values>에서 자세히 설명합니다.
@@ -112,11 +112,11 @@ print(greet(person: "Brian"))
 `greet(person:)` 함수의 본문은
 `greeting`이라는 `String` 타입의 새로운 상수를 정의하고,
 간단한 인사말 메세지 설정합니다.
-이 인사말은 `return` 키워드를 사용하여 함수의 반환 값으로 전달됩니다.
+이 인사말은 `return` 키워드를 사용하여 함수의 반환값으로 전달됩니다.
 `return greeting`이라는 코드 줄에서
-함수는 실행을 완료하고 `greeting`의 현재 값을 반환합니다.
+함수는 실행을 완료하고 `greeting`의 현재값을 반환합니다.
 
-다른 입력 값으로 `greet(person:)` 함수를 여러 번 호출할 수 있습니다.
+다른 입력값으로 `greet(person:)` 함수를 여러 번 호출할 수 있습니다.
 위의 예시에서 `"Anna"`와 `"Brian"`의 입력값으로 호출할 경우
 어떤 일이 생기는지 보여줍니다.
 이 함수는 각 경우에 맞춰 인사말을 반환합니다.
@@ -144,9 +144,9 @@ print(greetAgain(person: "Anna"))
   ```
 -->
 
-## 함수 파라미터와 반환 값 (Function Parameters and Return Values)
+## 함수 파라미터와 반환값 (Function Parameters and Return Values)
 
-함수 파라미터와 반환 값(Function parameters and return values)은 Swift에서 매우 유연합니다.
+함수 파라미터와 반환값(Function parameters and return values)은 Swift에서 매우 유연합니다.
 이름이 지정되지 않은 단일 파라미터가 있는 간단한 유틸리티 함수에서
 파라미터 이름과 다른 파라미터 옵션이 있는 복잡한 함수에 이르기까지 모든 것을 정의할 수 있습니다.
 
@@ -218,8 +218,8 @@ print(greet(person: "Tim", alreadyGreeted: true))
   ```
 -->
 
-`person`이라는 레이블을 가진 `String` 타입의 인수 값과
-`alreadyGreeted`이라는 레이블을 가진 `Bool` 타입의 인수 값을
+`person`이라는 레이블을 가진 `String` 타입의 인수값과
+`alreadyGreeted`이라는 레이블을 가진 `Bool` 타입의 인수값을
 소괄호 안에 콤마로 구분하여
 `greet(person:alreadyGreeted:)` 함수로 전달하여 호출합니다.
 이전 섹션에서 본
@@ -228,7 +228,7 @@ print(greet(person: "Tim", alreadyGreeted: true))
 `greet(person:alreadyGreeted:)` 함수는 두 개의 인수를 가지지만
 `greet(person:)` 함수는 오직 하나의 인수를 가집니다.
 
-### 반환 값 없는 함수 (Functions Without Return Values)
+### 반환값 없는 함수 (Functions Without Return Values)
 
 함수는 반환 타입 정의를 요구하지 않습니다.
 다음은 반환하지 않고 `String` 타입의 값을 출력하는
@@ -254,17 +254,17 @@ greet(person: "Dave")
   ```
 -->
 
-반환 값이 필요하지 않기 때문에,
+반환값이 필요하지 않기 때문에,
 함수의 정의는 반환 화살표(`->`)나
 반환 타입을 포함하지 않습니다.
 
-> Note: 엄밀히 말하면, `greet(person:)` 함수는 반환 값을 정의하지 않았지만,
-> 여전히 반환 값이 있습니다.
+> Note: 엄밀히 말하면, `greet(person:)` 함수는 반환값을 정의하지 않았지만,
+> 여전히 반환값이 있습니다.
 > 반환 타입이 정의되지 않은 함수는 `Void` 타입의 특별한 값을 반환합니다.
 > 이것은 `()`로 쓰여진
 > 빈 튜플입니다.
 
-함수의 반환 값은 호출될 때 무시될 수 있습니다:
+함수의 반환값은 호출될 때 무시될 수 있습니다:
 
 ```swift
 func printAndCount(string: String) -> Int {
@@ -310,7 +310,7 @@ printWithoutCounting(string: "hello, world")
 첫 번째 함수 `printAndCount(string:)`은
 문자열을 출력하고, 문자 갯수를 `Int`로 반환합니다.
 두 번째 함수 `printWithoutCounting(string:)`은
-첫 번째 함수를 호출하지만 반환 값을 무시합니다.
+첫 번째 함수를 호출하지만 반환값을 무시합니다.
 두 번째 함수가 호출될 때,
 첫 번째 함수에 의해 메세지는 출력되지만
 반환된 값을 사용하지 않습니다.
@@ -332,10 +332,10 @@ like array.removeFirst(...) ---
 otherwise, using `_ = foo()` at the call site is better.
 -->
 
-### 여러 개의 반환 값이 있는 함수 (Functions with Multiple Return Values)
+### 여러 개의 반환값이 있는 함수 (Functions with Multiple Return Values)
 
 튜플 타입을 함수의 반환 타입으로 사용하면
-여러 값을 하나의 복합 반환 값으로 반환할 수 있습니다.
+여러 값을 하나의 복합 반환값으로 반환할 수 있습니다.
 
 아래 예시는 `Int` 값의 배열에서 가장 작은 값과 가장 큰 값을 찾는
 `minMax(array:)` 함수를 정의합니다:
@@ -375,7 +375,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 -->
 
 `minMax(array:)` 함수는 두 개의 `Int` 값을 포함한 튜플을 반환합니다.
-이 값들은 함수의 반환 값을 조회할 때 이름으로 접근할 수 있도록
+이 값들은 함수의 반환값을 조회할 때 이름으로 접근할 수 있도록
 `min`과 `max`로 레이블되어 있습니다.
 
 `minMax(array:)` 함수의 본문은 배열의 첫 번째 정수의 값을
@@ -542,10 +542,10 @@ print(anotherGreeting(for: "Dave"))
 <doc:Properties#짧은-Getter-선언-Shorthand-Getter-Declaration>에서 살펴보겠지만,
 프로퍼티 getter 또한 암시적 반환을 사용할 수 있습니다.
 
-> Note: 암시적 반환 값으로 작성하는 코드는
+> Note: 암시적 반환값으로 작성하는 코드는
 > 반드시 어떤 값을 반환해야 합니다.
 > 예를 들어
-> 암시적 반환 값으로
+> 암시적 반환값으로
 > `print(13)`을 사용할 수 없습니다.
 > 그러나 `fatalError("Oh no!")`와 같이
 > Swift가 암시적 반환이 일어나지 않는 것을
@@ -694,11 +694,11 @@ someFunction(1, secondParameterName: 2)
 파라미터가 인수 레이블을 가지고 있다면,
 함수를 호출할 때 인수는 *반드시* 레이블을 지정해야 합니다.
 
-### 파라미터 기본 값 (Default Parameter Values)
+### 파라미터 기본값 (Default Parameter Values)
 
 파라미터의 타입 뒤에 파라미터 값을 할당하여
-함수의 파라미터에 *기본 값(default value)*을 정의할 수 있습니다.
-기본 값이 정의되어 있다면, 함수를 호출할 때 파라미터를 생략할 수 있습니다.
+함수의 파라미터에 *기본값(default value)*을 정의할 수 있습니다.
+기본값이 정의되어 있다면, 함수를 호출할 때 파라미터를 생략할 수 있습니다.
 
 ```swift
 func someFunction(parameterWithoutDefault: Int, parameterWithDefault: Int = 12) {
@@ -722,13 +722,13 @@ someFunction(parameterWithoutDefault: 4) // parameterWithDefault is 12
   ```
 -->
 
-기본 값이 없는 파라미터는
+기본값이 없는 파라미터는
 가본 값이 있는 파라미터보다
 함수 파라미터 목록의 앞 쪽에 배치합니다.
-기본 값이 없는 파라미터는
+기본값이 없는 파라미터는
 일반적으로 함수의 의미에서 더 중요합니다 ---
 이를 먼저 작성하면
-기본 값이 있는 파라미터가 생략되더라도
+기본값이 있는 파라미터가 생략되더라도
 동일한 함수가 호출되고 있음을 쉽게 인식할 수 있습니다.
 
 ### 가변 파라미터 (Variadic Parameters)
@@ -850,7 +850,7 @@ in-out 파라미터에 변수를 인수로 전달할 때는
 변수 이름 앞에 앰퍼샌드(`&`)를 붙여서
 해당 변수가 함수에 의해 수정될 수 있음을 나타냅니다.
 
-> Note: in-out 파라미터는 기본 값을 가질 수 없고,
+> Note: in-out 파라미터는 기본값을 가질 수 없고,
 > 가변 파라미터는 `inout`으로 표기할 수 없습니다.
 
 다음 예시는 `a`와 `b`라 하는 두 개의 in-out 정수 파라미터를 가지는
@@ -968,7 +968,7 @@ func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
 "함수는 모두 `Int` 타입인 두 개의 파라미터를 가지며,
 `Int` 타입을 반환합니다."
 
-다음의 예시는 파라미터나 반환 값이 없는 함수 입니다:
+다음의 예시는 파라미터나 반환값이 없는 함수 입니다:
 
 ```swift
 func printHelloWorld() {
@@ -1111,7 +1111,7 @@ printMathResult(addTwoInts, 3, 5)
 첫 번째 파라미터는 `mathFunction`이라 불리는 `(Int, Int) -> Int` 타입입니다.
 이 첫 번째 파라미터의 인수로 해당 타입의 함수를 전달할 수 있습니다.
 두 번째 세 번째 파라미터는 `a`와 `b`라 불리고 둘 다 `Int` 타입입니다.
-이들은 제공된 수학 함수의 두 개의 입력 값으로 사용됩니다.
+이들은 제공된 수학 함수의 두 개의 입력값으로 사용됩니다.
 
 `printMathResult(_:_:_:)` 호출할 때,
 `addTwoInts(_:_:)` 함수와 정수 `3`과 `5`가 전달됩니다.
@@ -1131,8 +1131,8 @@ printMathResult(addTwoInts, 3, 5)
 전체 함수 타입을 작성하여 이를 수행합니다.
 
 다음 예시는 `stepForward(_:)`와 `stepBackward(_:)`라 불리는 간단한 두 개의 함수를 정의합니다.
-`stepForward(_:)` 함수는 입력 값에 1을 더해 반환하고,
-`stepBackward(_:)` 함수는 입력 값에 1을 빼고 반환합니다.
+`stepForward(_:)` 함수는 입력값에 1을 더해 반환하고,
+`stepBackward(_:)` 함수는 입력값에 1을 빼고 반환합니다.
 두 함수 모두 `(Int) -> Int` 타입입니다:
 
 ```swift
@@ -1201,7 +1201,7 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 
 위의 예시는 `currentValue`라는 변수를 점차적으로 0에 가깝게 이동하기 위해
 양수 또는 음수 단계가 필요한지 판단합니다.
-`currentValue`는 `3`의 초기 값을 가지며,
+`currentValue`는 `3`의 초기값을 가지며,
 이것은 `currentValue > 0`이 `true`를 반환한다는 의미이며,
 `chooseStepFunction(backward:)`가 `stepBackward(_:)` 함수를 반환하도록 합니다.
 반환된 함수의 참조는 `moveNearerToZero`라는 상수에 저장됩니다.
