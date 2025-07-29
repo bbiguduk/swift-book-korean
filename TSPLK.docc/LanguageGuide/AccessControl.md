@@ -671,13 +671,18 @@ open 클래스도 하위 클래스로 지정할 수 있습니다.
 
 또한
 같은 모듈에 정의된 클래스의 경우
-특정 접근 컨텍스트에 표시되는 모든 클래스 멤버
+해당 접근 컨텍스트에 표시되는 모든 클래스 멤버
 (메서드, 프로퍼티, 이니셜라이저, 서브스크립트)를
 재정의할 수 있습니다.
 다른 모듈에 정의된 클래스의 경우
 모든 open 클래스 멤버를 재정의할 수 있습니다.
 
-재정의는 상속된 클래스 멤버를 슈퍼클래스 버전보다 더 쉽게 접근할 수 있도록 만들 수 있습니다. 아래의 예시에서 클래스 `A` 는 `someMethod()` 라는 file-private 메서드를 가진 public 클래스 입니다. 클래스 `B` 는 "internal"로 줄어든 접근 수준을 가진 `A` 의 서브클래스입니다. 그럼에도 불구하고 클래스 `B` 는 `someMethod()` 의 기존 구현보다 _높은_ "internal" 의 접근 수준을 가진 `someMethod()` 의 재정의를 제공합니다:
+재정의는 상속된 클래스 멤버의 접근 수준보다 더 높은 접근 수준으로 설정할 수 있습니다.
+아래의 예시에서 클래스 `A`는 public 클래스이고, `someMethod()`라는 file-private 메서드를 가집니다.
+클래스 `B`는 `A`를 상속하고 "internal"의 접근 수준을 가집니다.
+그럼에도 불구하고 클래스 `B`는 `someMethod()`를 기존 구현보다
+*높은* 접근 수준인 "internal"의 접근 수준을 가진
+`someMethod()`의 재정의를 제공합니다:
 
 ```swift
 public class A {
@@ -689,7 +694,26 @@ internal class B: A {
 }
 ```
 
-슈퍼클래스의 멤버에 대한 호출이 허용된 접근 수준 컨텍스트 내에서 발생하는 한 서브클래스 멤버보다 더 낮은 접근 권한을 가진 슈퍼클래스 멤버 호출하는 것도 유효합니다 \(슈퍼클래스의 file-private 멤버 호출에 대한 같은 소스 파일 내나 슈퍼클래스의 internal 멤버 호출에 대한 같은 모듈 내\):
+<!--
+  - test: `subclassingNoCall`
+
+  ```swifttest
+  -> public class A {
+        fileprivate func someMethod() {}
+     }
+  ---
+  -> internal class B: A {
+        override internal func someMethod() {}
+     }
+  ```
+-->
+
+상위 클래스의 멤버에 대한 호출이
+허용된 접근 수준 컨텍스트 내에서 발생하는 한
+하위 클래스 멤버보다 더 낮은 접근 권한을 가진
+상위 클래스 멤버를 호출하는 것도 유효합니다
+(상위 클래스의 fileprivate 멤버 호출의 경우 같은 소스 파일 내
+또는 상위 클래스의 internal 멤버 호출의 경우 같은 모듈 내):
 
 ```swift
 public class A {
@@ -703,28 +727,103 @@ internal class B: A {
 }
 ```
 
-슈퍼클래스 `A` 와 서브클래스 `B` 는 같은 소스 파일에 정의되었으므로 `B` 에 대해 `super.someMethod()` 호출하기 위해 `someMethod()` 의 구현은 유효합니다.
+<!--
+  - test: `subclassingWithCall`
 
-## 상수, 변수, 프로퍼티, 그리고 서브스크립트 \(Constants, Variables, Properties, and Subscripts\)
+  ```swifttest
+  -> public class A {
+        fileprivate func someMethod() {}
+     }
+  ---
+  -> internal class B: A {
+        override internal func someMethod() {
+           super.someMethod()
+        }
+     }
+  ```
+-->
 
-상수, 변수, 또는 프로퍼티는 타입보다 더 공개할 수 없습니다. 예를 들어 private 타입으로 public 프로퍼티를 작성하는 것은 유효하지 않습니다. 유사하게 서브스크립트는 인덱스 타입 또는 반환 타입 보다 더 공개될 수 없습니다.
+상위 클래스 `A`와 하위 클래스 `B`는 같은 소스 파일에 정의되었으므로,
+`B`의 `someMethod()`에서
+`super.someMethod()`를 호출하는 것은 유효합니다.
 
-상수, 변수, 프로퍼티, 또는 서브스크립트가 private 타입에 사용되는 경우 상수, 변수, 프로퍼티, 또는 서브스크립트 또한 `private` 로 표시되어야 합니다:
+## 상수, 변수, 프로퍼티, 서브스크립트 (Constants, Variables, Properties, and Subscripts)
+
+상수, 변수, 프로퍼티는 타입보다 더 높은 접근 수준을 가질 수 없습니다.
+예를 들어 private 타입에 public 프로퍼티를 작성하는 것은 유효하지 않습니다.
+유사하게 서브스크립트는 인덱스 타입이나 반환 타입보다 더 높은 접근 수준을 가질 수 없습니다.
+
+상수, 변수, 프로퍼티, 서브스크립트가 private 타입에 사용되는 경우,
+상수, 변수, 프로퍼티, 서브스크립트도 `private`로 표시되어야 합니다:
 
 ```swift
 private var privateInstance = SomePrivateClass()
 ```
 
-### Getter 와 Setter \(Getters and Setters\)
+<!--
+  - test: `accessControl`
 
-상수, 변수, 프로퍼티, 그리고 서브스크립트에 대한 getter와 setter는 자동으로 속해있는 상수, 변수, 프로퍼티, 또는 서브스크립트와 같은 접근 수준을 받습니다.
+  ```swifttest
+  -> private var privateInstance = SomePrivateClass()
+  ```
+-->
 
-해당 변수, 프로퍼티, 또는 서브스크립트에 읽기-쓰기 범위를 제한하기 위해 getter 보다 _더 낮은_ 접근 수준으로 setter를 제공할 수 있습니다. `var` 또는 `subscript` 전에 `fileprivate(set)`, `private(set)`, 또는 `internal(set)` 을 작성하여 더 낮은 접근 수준을 할당합니다.
+<!--
+  - test: `useOfPrivateTypeRequiresPrivateModifier`
 
-> Note   
-> 이 규칙은 저장 프로퍼티 뿐만 아니라 연산 프로퍼티에도 적용됩니다. 저장 프로퍼티에 대해 명시적으로 getter와 setter를 작성하지 않아도 Swift는 저장 프로퍼티의 저장소에 대한 접근을 제공하기 위해 여전히 암시적으로 getter와 setter를 합성합니다. 연산 프로퍼티의 명시적 setter와 같은 방식으로 합성된 setter의 접근 수준을 변경하기 위해 `fileprivate(set)`, `private(set)`, 그리고 `internal(set)` 을 사용합니다.
+  ```swifttest
+  -> class Scope {  // Need to be in a scope to meaningfully use private (vs fileprivate)
+  -> private class SomePrivateClass {}
+  -> let privateConstant = SomePrivateClass()
+  !! /tmp/swifttest.swift:3:5: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
+  !! let privateConstant = SomePrivateClass()
+  !! ^
+  -> var privateVariable = SomePrivateClass()
+  !! /tmp/swifttest.swift:4:5: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
+  !! var privateVariable = SomePrivateClass()
+  !! ^
+  -> class C {
+        var privateProperty = SomePrivateClass()
+        subscript(index: Int) -> SomePrivateClass {
+           return SomePrivateClass()
+        }
+     }
+  -> }  // End surrounding scope
+  !! /tmp/swifttest.swift:6:8: error: property must be declared private because its type 'Scope.SomePrivateClass' uses a private type
+  !! var privateProperty = SomePrivateClass()
+  !! ^
+  !! /tmp/swifttest.swift:7:4: error: subscript must be declared private because its element type uses a private type
+  !! subscript(index: Int) -> SomePrivateClass {
+  !! ^                        ~~~~~~~~~~~~~~~~
+  !! /tmp/swifttest.swift:2:15: note: type declared here
+  !! private class SomePrivateClass {}
+  !! ^
+  ```
+-->
 
-아래 예시는 문자열 프로퍼티가 몇번 수정되는지 추적하는 `TrackedString` 이라는 구조체를 정의합니다:
+### Getter와 Setter (Getters and Setters)
+
+상수, 변수, 프로퍼티, 서브스크립트에 대한 getter와 setter는
+자동으로 속해있는 상수, 변수, 프로퍼티, 서브스크립트와
+같은 접근 수준을 받습니다.
+
+해당 변수, 프로퍼티, 서브스크립트의 읽기-쓰기 범위를 제한하기 위해
+getter보다 *더 낮은* 접근 수준으로 setter를 제공할 수 있습니다.
+setter의 접근 수준을 낮추려면
+`var`나 `subscript` 선언 앞에
+`fileprivate(set)`, `private(set)`, `internal(set)`을 작성합니다.
+
+> Note: 이 규칙은 저장 프로퍼티 뿐만 아니라 연산 프로퍼티에도 적용됩니다.
+> 저장 프로퍼티에 대해 명시적으로 getter와 setter를 작성하지 않아도,
+> Swift는 저장 프로퍼티의 저장소에 대한 접근을 제공하기 위해
+> getter와 setter를 자동으로 생성합니다.
+> 연산 프로퍼티의
+> 명시적 setter와 같은 방식으로 자동 생성된 setter의
+> 접근 수준을 변경하기 위해
+> `fileprivate(set)`, `private(set)`, `internal(set)`을 사용합니다.
+
+아래 예시는 `TrackedString` 이라는 구조체를 정의하고,
+문자열 프로퍼티가 몇 번 수정되는지 추적합니다:
 
 ```swift
 struct TrackedString {
@@ -737,11 +836,65 @@ struct TrackedString {
 }
 ```
 
-`TrackedString` 구조체는 빈 문자열 인 `""` 의 초기 값을 가진 `value` 라는 저장된 문자열 프로퍼티를 정의합니다. 이 구조체는 또한 `value` 가 몇번이나 수정되는지 추적하는데 사용되는 `numberOfEdits` 라는 저장된 정수 프로퍼티도 정의합니다. 이 수정 추적은 `value` 프로퍼티에 새로운 값이 설정될 때마다 `numberOfEdits` 를 증가시키는 `value` 프로퍼티에 `didSet` 프로퍼티 관찰자로 구현됩니다.
+<!--
+  - test: `reducedSetterScope, reducedSetterScope_error`
 
-`TrackedString` 구조체와 `value` 프로퍼티는 명시적으로 접근 수준 수식어를 제공하지 않으므로 internal의 기본 접근 수준을 받습니다. 그러나 `numberOfEdits` 에 대한 접근 수준은 프로퍼티의 getter는 여전히 internal의 기본 접근 수준을 가지지만 프로퍼티는 `TrackedString` 구조체의 부분의 코드 내에서만 설정 가능함을 나타내기 위해 `private(set)` 수식어로 표기됩니다. 이렇게 하면 `TrackedString` 이 내부적으로 `numberOfEdits` 프로퍼티를 수정할 수 있지만 구조체의 정의 외부에서 사용될 때는 읽기전용 프로퍼티로 표시할 수 있습니다.
+  ```swifttest
+  -> struct TrackedString {
+        private(set) var numberOfEdits = 0
+        var value: String = "" {
+           didSet {
+              numberOfEdits += 1
+           }
+        }
+     }
+  ```
+-->
 
-`TrackedString` 인스턴스를 생성하고 문자열 값을 몇 번 수정하면 `numberOfEdits` 프로퍼티 값이 수정된 수와 일치하게 업데이트 됨을 확인할 수 있습니다:
+`TrackedString` 구조체는 `value`라는 문자열 저장 프로퍼티를 정의하고,
+빈 문자열인 `""`의 초기 값을 가집니다.
+이 구조체는 `numberOfEdits`라는 정수 저장 프로퍼티도 정의하고,
+`value`가 몇 번이나 수정되는지 추적하는데 사용합니다.
+이 추적은
+`value` 프로퍼티의 `didSet` 프로퍼티 관찰자로 구현되고,
+`value` 프로퍼티에 새로운 값이 설정될 때마다 `numberOfEdits`가 증가합니다.
+
+`TrackedString` 구조체와 `value` 프로퍼티는
+명시적으로 접근 수준 수식어를 제공하지 않으므로,
+internal의 기본 접근 수준을 받습니다.
+그러나 `numberOfEdits`에 대한 접근 수준은
+`private(set)` 수식어로 표기되고,
+이것은
+프로퍼티의 getter는 여전히 internal의 기본 접근 수준을 가지지만
+프로퍼티는 `TrackedString` 구조체의 코드 내에서만
+설정 가능함을 나타냅니다.
+이렇게 하면 `TrackedString`이 내부적으로 `numberOfEdits` 프로퍼티를 수정할 수 있지만
+구조체의 정의 외부에서 사용될 때는
+읽기 전용 프로퍼티로 표시할 수 있습니다.
+
+<!--
+  - test: `reducedSetterScope_error`
+
+  ```swifttest
+  -> extension TrackedString {
+         mutating func f() { numberOfEdits += 1 }
+     }
+  // check that we can't set its value with from the same file
+  -> var s = TrackedString()
+  -> let resultA: Void = { s.numberOfEdits += 1 }()
+  !! /tmp/swifttest.swift:13:39: error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+  !! let resultA: Void = { s.numberOfEdits += 1 }()
+  !!                       ~~~~~~~~~~~~~~~ ^
+  ```
+-->
+
+<!--
+  The assertion above must be compiled because of a REPL bug
+  <rdar://problem/54089342> REPL fails to enforce private(set) on struct property
+-->
+
+`TrackedString` 인스턴스를 생성하고 문자열 값을 몇 번 수정하면
+`numberOfEdits` 프로퍼티 값이 수정된 수와 일치하게 업데이트 되는 것을 확인할 수 있습니다:
 
 ```swift
 var stringToEdit = TrackedString()
@@ -752,9 +905,35 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 // Prints "The number of edits is 3"
 ```
 
-다른 소스 파일에서 `numberOfEdits` 프로퍼티의 현재값을 조회할 수 있지만 다른 소스 파일에서 프로퍼티를 _수정_ 할 수 없습니다. 이 제한은 `TrackedString` 편집 추적 기능의 구현 세부사항을 보호하는 동시에 해당 기능의 측면에 대한 편리한 접근을 제공합니다.
+<!--
+  - test: `reducedSetterScope`
 
-필요한 경우 getter와 setter 모두에 명시적으로 접근 수준을 할당할 수 있습니다. 아래 예시는 public의 명시적 접근 수준으로 정의된 `TrackedString` 구조체 버전을 보여줍니다. 따라서 구조체의 멤버 \(`numberOfEdits` 프로퍼티 포함\)는 기본적으로 internal 접근 수준을 가집니다. `public` 과 `private(set)` 접근 수준 수식어를 결합하여 구조체의 `numberOfEdits` 프로퍼티 getter를 public으로 setter를 private로 만들 수 있습니다:
+  ```swifttest
+  -> var stringToEdit = TrackedString()
+  -> stringToEdit.value = "This string will be tracked."
+  -> stringToEdit.value += " This edit will increment numberOfEdits."
+  -> stringToEdit.value += " So will this one."
+  -> print("The number of edits is \(stringToEdit.numberOfEdits)")
+  <- The number of edits is 3
+  ```
+-->
+
+다른 소스 파일에서
+`numberOfEdits` 프로퍼티의 현재 값은 조회할 수 있지만
+다른 소스 파일에서 프로퍼티를 *수정*할 수 없습니다.
+이 제한은 `TrackedString` 편집 추적 기능의
+세부 구현을 보호하는 동시에
+해당 기능 측면에서 편리한 접근을 제공합니다.
+
+필요한 경우 getter와 setter 모두에
+명시적으로 접근 수준을 할당할 수 있습니다.
+아래 예시는 `TrackedString` 구조체의 한 버전이고,
+해당 구조체는 public의 명시적 접근 수준으로 정의되어 있습니다.
+따라서 구조체의 멤버(`numberOfEdits` 프로퍼티 포함)는
+기본적으로 internal 접근 수준을 가집니다.
+`numberOfEdits` 프로퍼티 getter를 public으로
+setter를 private로 만들 수 있으며,
+이것은 `public`과 `private(set)` 접근 수준 수식어를 함께 사용하면 됩니다:
 
 ```swift
 public struct TrackedString {
@@ -768,71 +947,477 @@ public struct TrackedString {
 }
 ```
 
-## 이니셜라이저 \(Initializers\)
+<!--
+  - test: `reducedSetterScopePublic`
 
-커스텀 이니셜라이저는 초기화 하는 타입보다 더 낮거나 같은 접근 수준으로 할당할 수 있습니다. 유일한 예외는 <doc:Initialization#필수-이니셜라이저-Required-Initializers> 입니다. 필수 이니셜라이저는 자신이 속한 클래스와 동일한 접근 수준을 가져야 합니다.
+  ```swifttest
+  -> public struct TrackedString {
+        public private(set) var numberOfEdits = 0
+        public var value: String = "" {
+           didSet {
+              numberOfEdits += 1
+           }
+        }
+        public init() {}
+     }
+  ```
+-->
 
-함수와 메서드 파라미터와 마찬가지로 이니셜라이저의 파라미터의 타입은 이니셜라이저의 자체 접근 수준보다 더 낮을 수 없습니다.
+<!--
+  - test: `reducedSetterScopePublic_Module1_Allowed, reducedSetterScopePublic_Module1_NotAllowed`
 
-### 기본 이니셜라이저 \(Default Initializers\)
+  ```swifttest
+  -> public struct TrackedString {
+        public private(set) var numberOfEdits = 0
+        public var value: String = "" {
+           didSet {
+              numberOfEdits += 1
+           }
+        }
+        public init() {}
+     }
+  ```
+-->
 
-<doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명했듯이 Swift는 모든 프로퍼티에 기본값을 제공하고 하나 이상의 이니셜라이저 자체를 제공하지 않는 구조체 또는 기본 클래스에 대해 인수없는 _기본 이니셜라이저 \(default initializer\)_ 을 자동으로 제공합니다.
+<!--
+  - test: `reducedSetterScopePublic_Module1_Allowed`
 
-기본 이니셜라이저는 타입이 `public` 으로 정의되지 않는한 초기화하는 타입과 같은 접근 수준을 가집니다. `public` 으로 정의된 타입의 경우 기본 이니셜라이저는 internal로 간주합니다. 다른 모듈에서 사용할 때 인수가 없는 이니셜라이저를 public 타입으로 초기화 하려면 명시적으로 타입을 정의하는 부분으로 public으로 인수가 없는 이니셜라이저를 제공해야 합니다.
+  ```swifttest
+  // check that we can retrieve its value with the public getter from another file in the same module
+  -> var stringToEdit_Module1B = TrackedString()
+  -> let resultB = stringToEdit_Module1B.numberOfEdits
+  ```
+-->
 
-### 구조체 타입에 대한 기본 멤버별 이니셜라이저 \(Default Memberwise Initializers for Structure Types\)
+<!--
+  - test: `reducedSetterScopePublic_Module1_NotAllowed`
 
-구조체의 모든 저장 프로퍼티가 private라면 구조체 타입의 기본 멤버별 이니셜라이저는 private라고 간주합니다. 마찬가지로 구조체의 모든 저장 프로퍼티가 file private라면 이니셜라이저는 file private 입니다. 그렇지 않으면 이니셜라이저는 internal의 접근 수준을 가집니다.
+  ```swifttest
+  // check that we can't set its value from another file in the same module
+  -> var stringToEdit_Module1C = TrackedString()
+  -> let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
+  !$ error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+  !! let resultC: Void = { stringToEdit_Module1C.numberOfEdits += 1 }()
+  !!                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+  ```
+-->
 
-위의 기본 이니셜라이저과 마찬가지로 다른 모듈에서 사용될 때 멤버별 이니셜라이저으로 초기화 하는 public 구조체 타입은 타입의 정의의 부분으로 public 멤버별 이니셜라이저를 자체적으로 제공해야 합니다.
+<!--
+  - test: `reducedSetterScopePublic_Module2`
 
-## 프로토콜 \(Protocols\)
+  ```swifttest
+  // check that we can retrieve its value with the public getter from a different module
+  -> import reducedSetterScopePublic_Module1_Allowed
+  -> var stringToEdit_Module2 = TrackedString()
+  -> let result2Read = stringToEdit_Module2.numberOfEdits
+  // check that we can't change its value from another module
+  -> let result2Write: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
+  !$ error: left side of mutating operator isn't mutable: 'numberOfEdits' setter is inaccessible
+  !! let result2Write: Void = { stringToEdit_Module2.numberOfEdits += 1 }()
+  !!                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+  ```
+-->
 
-프로토콜 타입에 명시적으로 접근 수준을 할당하려면 프로토콜을 정의하는 지점에서 지정하면 됩니다. 이를 통해 특정 접근 컨텍스트 내에서만 채택될 수 있는 프로토콜을 생성할 수 있습니다.
+## 이니셜라이저 (Initializers)
 
-프로토콜 정의 내의 각 요구사항의 접근 수준은 자동으로 프로토콜과 같은 접근 수준으로 설정됩니다. 프로토콜 요구사항을 지원하는 프로토콜과 다른 접근 수준으로 설정할 수 없습니다. 이렇게 하면 모든 프로토콜의 요구사항은 프로토콜을 채택하는 모든 타입에서 볼 수 있습니다.
+커스텀 이니셜라이저는 초기화하는 타입보다
+더 낮거나 같은 접근 수준으로 할당할 수 있습니다.
+유일한 예외상황은 필수 이니셜라이저입니다
+(<doc:Initialization#필수-이니셜라이저-Required-Initializers>에서 설명됨).
+필수 이니셜라이저는 자신이 속한 클래스와 동일한 접근 수준을 가져야 합니다.
 
-> Note   
-> public 프로토콜을 정의한다면 프로토콜의 요구사항은 구현될 때 public 접근 수준을 요구합니다. 이 동작은 public 타입 정의가 타입의 멤버에 대한 internal의 접근 수준을 의미하는 다른 타입과 다릅니다.
+함수나 메서드 파라미터와 마찬가지로
+이니셜라이저의 파라미터의 타입은
+이니셜라이저의 자체 접근 수준보다 더 낮을 수 없습니다.
 
-### 프로토콜 상속 \(Protocol Inheritance\)
+### 기본 이니셜라이저 (Default Initializers)
 
-기존 프로토콜에서 상속하는 새로운 프로토콜을 정의한다면 새로운 프로토콜은 상속된 프로토콜과 최대 동일한 접근 수준을 가질 수 있습니다. 예를 들어 internal 프로토콜에서 상속되는 public 프로토콜을 작성할 수 없습니다.
+<doc:Initialization#기본-이니셜라이저-Default-Initializers>에서 설명했듯이,
+Swift는 모든 프로퍼티에 기본 값을 제공하고
+커스텀 이니셜라이저를 제공하지 않는
+구조체나 기본 클래스에 대해
+인수없는 *기본 이니셜라이저(default initializer)*를 자동으로 제공합니다.
 
-### 프로토콜 준수 \(Protocol Conformance\)
+기본 이니셜라이저는 타입이 `public`으로 정의되지 않는 한
+초기화하는 타입과 같은 접근 수준을 가집니다.
+`public`으로 정의된 타입의 경우,
+기본 이니셜라이저는 internal로 간주합니다.
+다른 모듈에서 사용할 때
+인수가 없는 이니셜라이저를 public 타입으로 초기화하려면
+명시적으로 타입의 정의에서
+public으로 인수가 없는 이니셜라이저를 제공해야 합니다.
 
-타입은 타입 자체보다 더 낮은 접근 수준으로 프로토콜을 준수할 수 있습니다. 예를 들어 다른 모듈에서 사용될 수 있지만 internal 프로토콜에 대한 준수성은 internal 프로토콜의 정의 모듈 내에서만 사용할 수 있는 public 타입을 정의할 수 있습니다.
+### 구조체의 기본 멤버 이니셜라이저 (Default Memberwise Initializers for Structure Types)
 
-타입이 특정 프로토콜을 준수하는 컨텍스트는 타입의 접근 수준과 프로토콜의 접근 수준의 최소입니다. 예를 들어 타입이 public 이지만 준수하는 프로토콜이 internal 인 경우 프로토콜에 대한 타입의 준수성도 internal 입니다.
+구조체의 모든 저장 프로퍼티가 private라면,
+구조체의 기본 멤버 이니셜라이저는 private라고 간주합니다.
+마찬가지로 구조체의 모든 저장 프로퍼티가 fileprivate라면,
+이니셜라이저는 fileprivate입니다.
+그렇지 않으면 이니셜라이저는 internal의 접근 수준을 가집니다.
 
-프로토콜을 준수하기 위해 타입을 작성하거나 확장할 때 각 프로토콜 요구사항의 타입의 구현이 해당 프로토콜에 대한 타입의 준수성과 최소한 같은 접근 수준을 가지고 있는지 확인해야 합니다. 예를 들어 public 타입이 internal 프로토콜을 준수하는 경우 각 프로토콜 요구사항의 타입의 구현은 적어도 internal 이어야 합니다.
+위의 기본 이니셜라이저와 마찬가지로
+다른 모듈에서 사용될 때
+멤버 이니셜라이저로 초기화 하는 public 구조체는
+타입의 정의에 public 멤버 이니셜라이저를 자체적으로 제공해야 합니다.
 
-> Note   
-> Objective-C처럼 Swift에서 프로토콜 준수성은 전역입니다 — 같은 프로그램 내에서 타입이 두가지 다른 방식으로 프로토콜을 준수하는 것은 불가능 합니다.
+## 프로토콜 (Protocols)
 
-## 확장 \(Extensions\)
+프로토콜 타입에 명시적으로 접근 수준을 할당하려면,
+프로토콜을 정의하는 지점에서 지정하면 됩니다.
+이를 통해 해당 접근 컨텍스트 내에서만
+채택할 수 있는 프로토콜을 생성할 수 있습니다.
 
-클래스, 구조체, 또는 열거형을 사용할 수 있는 모든 접근 컨텍스트에서 클래스, 구조체, 또는 열거형을 확장할 수 있습니다. 확장에 추가된 모든 타입 멤버는 확장된 기존 타입에 선언된 타입 멤버와 같은 기본 접근 수준을 가집니다. public 또는 internal 타입으로 확장하면 추가한 모든 새로운 타입 멤버는 internal의 기본 접근 수준을 가집니다. file-private로 확장하면 추가한 모든 새로운 타입 멤버는 file private의 기본 접근 수준을 가집니다. private로 확장하면 추가한 모든 새로운 타입 멤버는 private의 기본 접근 수준을 가집니다.
+프로토콜 정의 내의 각 요구사항의 접근 수준은
+자동으로 프로토콜과 같은 접근 수준으로 설정됩니다.
+프로토콜 요구사항에 대해
+별도로 다른 접근 수준을 설정할 수 없습니다.
+이렇게 하면 모든 프로토콜의 요구사항은
+프로토콜을 채택하는 모든 타입에서 볼 수 있습니다.
 
-또는 확장 내에서 정의된 모든 멤버에 대해 새로운 기본 접근 수준을 설정하기 위해 예를 들어 `private` 와 같이 명시적으로 접근 수준 수식어를 확장에 표기할 수 있습니다. 이 새로운 기본 접근 수준은 확장 내에서 개별 타입 멤버를 재정의 할 수 있습니다.
+<!--
+  - test: `protocolRequirementsCannotBeDifferentThanTheProtocol`
 
-확장을 사용하여 프로토콜 준수성을 추가하는 경우 확장에 대한 명시적 접근 수준 수식어를 제공할 수 없습니다. 대신에 프로토콜의 자체 접근 수준은 확장 내에서 각 프로토콜 요구사항 구현에 대해 기본 접근 수준을 제공하기 위해 사용됩니다.
+  ```swifttest
+  -> public protocol PublicProtocol {
+        public var publicProperty: Int { get }
+        internal var internalProperty: Int { get }
+        fileprivate var filePrivateProperty: Int { get }
+        private var privateProperty: Int { get }
+     }
+  !$ error: 'public' modifier cannot be used in protocols
+  !! public var publicProperty: Int { get }
+  !! ^~~~~~~
+  !!-
+  !$ note: protocol requirements implicitly have the same access as the protocol itself
+  !! public var publicProperty: Int { get }
+  !! ^
+  !$ error: 'internal' modifier cannot be used in protocols
+  !! internal var internalProperty: Int { get }
+  !! ^~~~~~~~~
+  !!-
+  !$ note: protocol requirements implicitly have the same access as the protocol itself
+  !! internal var internalProperty: Int { get }
+  !! ^
+  !$ error: 'fileprivate' modifier cannot be used in protocols
+  !! fileprivate var filePrivateProperty: Int { get }
+  !! ^~~~~~~~~~~~
+  !!-
+  !$ note: protocol requirements implicitly have the same access as the protocol itself
+  !! fileprivate var filePrivateProperty: Int { get }
+  !! ^
+  !$ error: 'private' modifier cannot be used in protocols
+  !! private var privateProperty: Int { get }
+  !! ^~~~~~~~
+  !!-
+  !$ note: protocol requirements implicitly have the same access as the protocol itself
+  !! private var privateProperty: Int { get }
+  !! ^
+  ```
+-->
 
-### 확장에서 Private 멤버 \(Private Members in Extensions\)
+> Note: public 프로토콜을 정의한다면,
+> 프로토콜의 요구사항을 구현할 때
+> public 접근 수준을 요구합니다.
+> 이것은 public 타입의
+> 멤버는 기본적으로 internal의 접근 수준을 가지는
+> 다른 타입과 다릅니다.
 
-확장하는 클래스, 구조체, 또는 열거형과 같은 파일에 있는 확장은 확장 안에 코드가 기존 타입의 선언의 부분으로 작성된 것처럼 동작합니다. 결과적으로 다음을 수행할 수 있습니다:
+<!--
+  - test: `protocols_Module1, protocols_Module1_PublicAndInternal, protocols_Module1_Private`
 
-* 기존 선언에서 private 멤버를 선언하고 같은 파일의 확장에서 해당 멤버를 접근합니다.
-* 한 확장에서 private 멤버를 선언하고 같은 파일의 다른 확장에서 해당 멤버를 접근합니다.
-* 확장에서 private 멤버를 선언하고 같은 파일의 기존 선언에서 해당 멤버를 접근합니다.
+  ```swifttest
+  -> public protocol PublicProtocol {
+        var publicProperty: Int { get }
+        func publicMethod()
+     }
+  -> internal protocol InternalProtocol {
+        var internalProperty: Int { get }
+        func internalMethod()
+     }
+  -> fileprivate protocol FilePrivateProtocol {
+        var filePrivateProperty: Int { get }
+        func filePrivateMethod()
+     }
+  -> private protocol PrivateProtocol {
+        var privateProperty: Int { get }
+        func privateMethod()
+     }
+  ```
+-->
 
-이 동작은 타입이 private 엔티티가 있는지 여부에 관계없이 같은 방법으로 확장을 사용하여 코드를 구성할 수 있다는 의미입니다. 예를 들어 다음과 같은 간단한 프로토콜이 있습니다:
+<!--
+  - test: `protocols_Module1_PublicAndInternal`
+
+  ```swifttest
+  // these should all be allowed without problem
+  -> public class PublicClassConformingToPublicProtocol: PublicProtocol {
+        public var publicProperty = 0
+        public func publicMethod() {}
+     }
+  -> internal class InternalClassConformingToPublicProtocol: PublicProtocol {
+        var publicProperty = 0
+        func publicMethod() {}
+     }
+  -> private class PrivateClassConformingToPublicProtocol: PublicProtocol {
+        var publicProperty = 0
+        func publicMethod() {}
+     }
+  ---
+  -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
+        var internalProperty = 0
+        func internalMethod() {}
+     }
+  -> internal class InternalClassConformingToInternalProtocol: InternalProtocol {
+        var internalProperty = 0
+        func internalMethod() {}
+     }
+  -> private class PrivateClassConformingToInternalProtocol: InternalProtocol {
+        var internalProperty = 0
+        func internalMethod() {}
+     }
+  ```
+-->
+
+<!--
+  - test: `protocols_Module1_Private`
+
+  ```swifttest
+  // these will fail, because FilePrivateProtocol isn't visible outside of its file
+  -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+        var filePrivateProperty = 0
+        func filePrivateMethod() {}
+     }
+  !$ error: cannot find type 'FilePrivateProtocol' in scope
+  !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+  !! ^~~~~~~~~~~~~~~~~~~
+  ---
+  // these will fail, because PrivateProtocol isn't visible outside of its file
+  -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+        var privateProperty = 0
+        func privateMethod() {}
+     }
+  !$ error: cannot find type 'PrivateProtocol' in scope
+  !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+  !! ^~~~~~~~~~~~~~~
+  ```
+-->
+
+<!--
+  - test: `protocols_Module2_Public`
+
+  ```swifttest
+  // these should all be allowed without problem
+  -> import protocols_Module1
+  -> public class PublicClassConformingToPublicProtocol: PublicProtocol {
+        public var publicProperty = 0
+        public func publicMethod() {}
+     }
+  -> internal class InternalClassConformingToPublicProtocol: PublicProtocol {
+        var publicProperty = 0
+        func publicMethod() {}
+     }
+  -> private class PrivateClassConformingToPublicProtocol: PublicProtocol {
+        var publicProperty = 0
+        func publicMethod() {}
+     }
+  ```
+-->
+
+<!--
+  - test: `protocols_Module2_InternalAndPrivate`
+
+  ```swifttest
+  // these will all fail, because InternalProtocol, FilePrivateProtocol, and PrivateProtocol
+  // aren't visible to other modules
+  -> import protocols_Module1
+  -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
+        var internalProperty = 0
+        func internalMethod() {}
+     }
+  -> public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+        var filePrivateProperty = 0
+        func filePrivateMethod() {}
+     }
+  -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+        var privateProperty = 0
+        func privateMethod() {}
+     }
+  !$ error: cannot find type 'InternalProtocol' in scope
+  !! public class PublicClassConformingToInternalProtocol: InternalProtocol {
+  !! ^~~~~~~~~~~~~~~~
+  !$ error: cannot find type 'FilePrivateProtocol' in scope
+  !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
+  !! ^~~~~~~~~~~~~~~~~~~
+  !$ error: cannot find type 'PrivateProtocol' in scope
+  !! public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
+  !! ^~~~~~~~~~~~~~~
+  ```
+-->
+
+### 프로토콜 상속 (Protocol Inheritance)
+
+기존 프로토콜을 상속하는 새로운 프로토콜을 정의하면,
+새로운 프로토콜은 상속된 프로토콜의 접근 수준 이하여야 합니다.
+예를 들어
+internal 프로토콜을 상속해서 public 프로토콜을 작성할 수 없습니다.
+
+### 프로토콜 준수 (Protocol Conformance)
+
+타입은 타입 자체보다 접근 수준이 더 낮은 프로토콜을 준수할 수 있습니다.
+예를 들어 다른 모듈에서 사용할 수 있는 public 타입이
+프로토콜을 정의한 모듈 내에서만
+사용할 수 있는 internal 프로토콜을 준수할 수 있습니다.
+
+타입이 특정 프로토콜을 준수하는 컨텍스트의 접근 수준은
+타입의 접근 수준과 프로토콜의 접근 수준 중 더 낮은 수준으로 결정됩니다.
+예를 들어 타입이 public이지만 준수하는 프로토콜이 internal인 경우,
+해당 타입의 프로토콜에 대한 준수는 internal입니다.
+
+프로토콜을 준수하고 그 요구사항을 구현하기 위해 타입을 작성하거나 확장할 때,
+요구사항 구현의 접근 수준은
+프로토콜 준수 수준 이상이어야 합니다.
+예를 들어 public 타입이 internal 프로토콜을 준수하는 경우,
+각 프로토콜 요구사항 구현은 적어도 internal이어야 합니다.
+
+> Note: Objective-C처럼 Swift에서 프로토콜 준수성은 전역입니다 —--
+> 같은 프로그램 내에서
+> 하나의 타입이 두 가지 다른 방식으로 같은 프로토콜을 준수하는 것은 불가능 합니다.
+
+## 확장 (Extensions)
+
+클래스, 구조체, 열거형은 사용할 수 있는 모든 접근 컨텍스트에서
+확장할 수 있습니다.
+확장에 추가된 모든 타입 멤버는
+확장된 기존 타입에 선언된 타입 멤버와 같은 기본 접근 수준을 가집니다.
+public이나 internal 타입을 확장하면,
+추가한 모든 새로운 타입 멤버는 internal의 기본 접근 수준을 가집니다.
+fileprivate 타입을 확장하면,
+추가한 모든 새로운 타입 멤버는 fileprivate의 기본 접근 수준을 가집니다.
+private 타입을 확장하면,
+추가한 모든 새로운 타입 멤버는 private의 기본 접근 수준을 가집니다.
+
+단, 확장에 명시적으로 접근 수준 수식어를 붙이면
+(예: `private`)
+확장 내에서 정의된 모든 멤버는 새로운 기본 접근 수준으로 설정됩니다.
+이 새로운 기본 접근 수준은 확장 내에서
+개별 타입 멤버에 의해 재정의될 수 있습니다.
+
+확장을 사용하여 프로토콜 준수성을 추가하는 경우
+확장에 명시적 접근 수준 수식어를 제공할 수 없습니다.
+대신 프로토콜의 자체 접근 수준은
+확장 내 각 구현의 기본 접근 수준으로 적용됩니다.
+
+<!--
+  - test: `extensions_Module1, extensions_Module1_PublicAndInternal, extensions_Module1_Private`
+
+  ```swifttest
+  -> public struct PublicStruct {
+        public init() {}
+        func implicitlyInternalMethodFromStruct() -> Int { return 0 }
+     }
+  -> extension PublicStruct {
+        func implicitlyInternalMethodFromExtension() -> Int { return 0 }
+     }
+  -> fileprivate extension PublicStruct {
+        func filePrivateMethod() -> Int { return 0 }
+     }
+  -> var publicStructInSameFile = PublicStruct()
+  -> let sameFileA = publicStructInSameFile.implicitlyInternalMethodFromStruct()
+  -> let sameFileB = publicStructInSameFile.implicitlyInternalMethodFromExtension()
+  -> let sameFileC = publicStructInSameFile.filePrivateMethod()
+  ```
+-->
+
+<!--
+  - test: `extensions_Module1_PublicAndInternal`
+
+  ```swifttest
+  -> var publicStructInDifferentFile = PublicStruct()
+  -> let differentFileA = publicStructInDifferentFile.implicitlyInternalMethodFromStruct()
+  -> let differentFileB = publicStructInDifferentFile.implicitlyInternalMethodFromExtension()
+  ```
+-->
+
+<!--
+  - test: `extensions_Module1_Private`
+
+  ```swifttest
+  -> var publicStructInDifferentFile = PublicStruct()
+  -> let differentFileC = publicStructInDifferentFile.filePrivateMethod()
+  !$ error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
+  !! let differentFileC = publicStructInDifferentFile.filePrivateMethod()
+  !!                                                  ^~~~~~~~~~~~~~~~~
+  !$ note: 'filePrivateMethod()' declared here
+  !! func filePrivateMethod() -> Int { return 0 }
+  !! ^
+  ```
+-->
+
+<!--
+  - test: `extensions_Module2`
+
+  ```swifttest
+  -> import extensions_Module1
+  -> var publicStructInDifferentModule = PublicStruct()
+  -> let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
+  !$ error: 'implicitlyInternalMethodFromStruct' is inaccessible due to 'internal' protection level
+  !! let differentModuleA = publicStructInDifferentModule.implicitlyInternalMethodFromStruct()
+  !!                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: 'implicitlyInternalMethodFromStruct()' declared here
+  !! internal func implicitlyInternalMethodFromStruct() -> Int
+  !!               ^
+  -> let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
+  !$ error: 'implicitlyInternalMethodFromExtension' is inaccessible due to 'internal' protection level
+  !! let differentModuleB = publicStructInDifferentModule.implicitlyInternalMethodFromExtension()
+  !!                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: 'implicitlyInternalMethodFromExtension()' declared here
+  !! internal func implicitlyInternalMethodFromExtension() -> Int
+  !!               ^
+  -> let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
+  !$ error: 'filePrivateMethod' is inaccessible due to 'fileprivate' protection level
+  !! let differentModuleC = publicStructInDifferentModule.filePrivateMethod()
+  !!                                                      ^~~~~~~~~~~~~~~~~
+  !$ note: 'filePrivateMethod()' declared here
+  !! fileprivate func filePrivateMethod() -> Int
+  !!                  ^
+  ```
+-->
+
+### 확장에서 Private 멤버 (Private Members in Extensions)
+
+확장하는 클래스, 구조체, 열거형과
+같은 파일에 있는 확장은
+확장 안에 코드가
+기존 타입 선언의 부분으로 작성된 것처럼 동작합니다.
+결과적으로 다음을 수행할 수 있습니다:
+
+- 기존 선언에서 private 멤버를 선언하고,
+  같은 파일의 확장에서 해당 멤버에 접근 가능합니다.
+- 한 확장에서 private 멤버를 선언하고,
+  같은 파일의 다른 확장에서 해당 멤버에 접근 가능합니다.
+- 확장에서 private 멤버를 선언하고,
+  같은 파일의 기존 선언에서 해당 멤버에 접근 가능합니다.
+
+이 동작은 타입에 private 엔티티가 있는지 여부에 관계없이
+확장을 같은 방법으로 사용하여
+코드를 구성할 수 있다는 의미입니다.
+예를 들어 다음과 같은 간단한 프로토콜이 있습니다:
 
 ```swift
 protocol SomeProtocol {
     func doSomething()
 }
 ```
+
+<!--
+  - test: `extensions_privatemembers`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+         func doSomething()
+     }
+  ```
+-->
 
 아래와 같이 프로토콜 준수성을 추가하기 위해 확장을 사용할 수 있습니다:
 
@@ -848,14 +1433,87 @@ extension SomeStruct: SomeProtocol {
 }
 ```
 
-## 제네릭 \(Generics\)
+<!--
+  - test: `extensions_privatemembers`
 
-제네릭 타입 또는 제네릭 함수에 대한 접근 수준은 제네릭 타입 또는 함수 자체의 접근 수준과 해당 타입 파라미터에 대한 모든 타입 제약조건의 접근 수준의 최소입니다.
+  ```swifttest
+  -> struct SomeStruct {
+         private var privateVariable = 12
+     }
+  ---
+  -> extension SomeStruct: SomeProtocol {
+         func doSomething() {
+             print(privateVariable)
+         }
+     }
+  >> let s = SomeStruct()
+  >> s.doSomething()
+  << 12
+  ```
+-->
 
-## 타입 별칭 \(Type Aliases\)
+## 제네릭 (Generics)
 
-정의한 모든 타입 별칭은 접근 제어의 목적을 위해 고유한 타입으로 처리됩니다. 타입 별칭은 별칭이 지정된 타입의 접근 수준보다 작거나 같은 접근 수준을 가질 수 있습니다. 예를 들어 private 타입 별칭은 private, file-private, internal, public, 또는 open 타입의 별칭이 가능하지만 public 타입 별칭은 internal, file-private, 또는 private 타입의 별칭만 가능합니다.
+제네릭 타입이나 제네릭 함수의 접근 수준은
+제네릭 타입이나 제네릭 함수 자체의 접근 수준과
+제네릭 타입 파라미터의 타입 제약의 접근 수준 중 더 낮은 접근 수준으로 결정됩니다.
 
-> Note   
-> 이 규칙은 프로토콜 준수성을 충족하는데 사용되는 관련된 타입의 타입 별칭에도 적용됩니다.
+## 타입 별칭 (Type Aliases)
 
+정의한 모든 타입 별칭은 접근 제어 측면에서 고유한 타입으로 처리됩니다.
+타입 별칭은 원래 타입의 접근 수준 이하의 접근 수준을 가질 수 있습니다.
+예를 들어 private 타입 별칭은 private, fileprivate, internal, public, open 타입의 별칭이 가능하지만,
+public 타입 별칭은 internal, fileprivate, private 타입의 별칭이 불가능합니다.
+
+> Note: 이 규칙은 프로토콜 준수를 충족하는데 사용되는 관련된 타입의 타입 별칭에도 적용됩니다.
+
+<!--
+  - test: `typeAliases`
+
+  ```swifttest
+  -> public struct PublicStruct {}
+  -> internal struct InternalStruct {}
+  -> private struct PrivateStruct {}
+  ---
+  -> public typealias PublicAliasOfPublicType = PublicStruct
+  -> internal typealias InternalAliasOfPublicType = PublicStruct
+  -> private typealias PrivateAliasOfPublicType = PublicStruct
+  ---
+  -> public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
+  -> internal typealias InternalAliasOfInternalType = InternalStruct
+  -> private typealias PrivateAliasOfInternalType = InternalStruct
+  ---
+  -> public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
+  -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
+  -> private typealias PrivateAliasOfPrivateType = PrivateStruct
+  ---
+  !$ error: type alias cannot be declared public because its underlying type uses an internal type
+  !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
+  !! ^                           ~~~~~~~~~~~~~~
+  !$ note: type declared here
+  !! internal struct InternalStruct {}
+  !! ^
+  !$ error: type alias cannot be declared public because its underlying type uses a private type
+  !! public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
+  !! ^                          ~~~~~~~~~~~~~
+  !$ note: type declared here
+  !! private struct PrivateStruct {}
+  !! ^
+  !$ error: type alias cannot be declared internal because its underlying type uses a private type
+  !! internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
+  !! ^                            ~~~~~~~~~~~~~
+  !$ note: type declared here
+  !! private struct PrivateStruct {}
+  !! ^
+  ```
+-->
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->

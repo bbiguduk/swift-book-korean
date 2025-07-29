@@ -1796,7 +1796,7 @@ Swift 는 다섯 수준의 접근 제어를 제공합니다: open, public, inter
 
 위의 각 접근-수준 수식어는 괄호로 둘러싸인 `set` 키워드로 구성된 선택적으로 단일 인수를 허용합니다 ---
 예를 들어 `private(set)`.
-<doc:AccessControl#Getter-와-Setter-Getters-and-Setters> 에서 설명한대로 변수 또는 서브스크립트에 대한 접근 수준보다 작거나 같은 변수 또는 서브스크립트의 setter 에 대한 접근 수준을 지정하려면 이 형식의 접근-수준 수식어를 사용합니다.
+<doc:AccessControl#Getter와-Setter-Getters-and-Setters> 에서 설명한대로 변수 또는 서브스크립트에 대한 접근 수준보다 작거나 같은 변수 또는 서브스크립트의 setter 에 대한 접근 수준을 지정하려면 이 형식의 접근-수준 수식어를 사용합니다.
 
 > Grammar of a declaration modifier:
 >
