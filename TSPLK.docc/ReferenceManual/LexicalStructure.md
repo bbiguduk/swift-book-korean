@@ -196,7 +196,7 @@ _정수 리터럴 (Integer literals)_ 은 정밀도가 지정되지 않은 정�
 
 가독성을 위해 숫자 사이에 언더바 (`_`)를 허용하지만 무시되므로 리터럴 값에 영향을 주지 않습니다. 정수 리터럴은 `0` 으로 시작할 수 있지만 무시되므로 리터럴 값에 영향을 주지 않습니다.
 
-달리 지정하지 않는 한 정수 리터럴의 기본 유추 타입은 Swift 표준 라이브러리 타입 `Int` 입니다. Swift 표준 라이브러리는 <doc:TheBasics#정수-Integers> 에서 설명했듯이 다양한 크기의 부호있는 정수와 부호없는 정수의 타입을 정의합니다.
+달리 지정하지 않는 한 정수 리터럴의 기본 유추 타입은 Swift 표준 라이브러리 타입 `Int` 입니다. Swift 표준 라이브러리는 <doc:TheBasics#정수-Integers> 에서 설명했듯이 다양한 크기의 부호 있는 정수와 부호 없는 정수의 타입을 정의합니다.
 
 > Grammar of an integer literal:
 >
@@ -434,7 +434,7 @@ let regex2 = # #/abc/# #     // Error
 
 ## 연산자 (Operators)
 
-Swift 표준 라이브러리는 사용할 수 있는 여러가지 연산자를 정의하며 <doc:BasicOperators> 와 <doc:AdvancedOperators> 에 설명되어 있습니다. 이 섹션에서는 사용자 지정 연산자 (Custom operators)를 정의하는데 사용될 수 있는 문자를 설명합니다.
+Swift 표준 라이브러리는 사용할 수 있는 여러 가지 연산자를 정의하며 <doc:BasicOperators> 와 <doc:AdvancedOperators> 에 설명되어 있습니다. 이 섹션에서는 사용자 지정 연산자 (Custom operators)를 정의하는데 사용될 수 있는 문자를 설명합니다.
 
 사용자 지정 연산자는 ASCII 문자 `/`, `=`, `-`, `+`, `!`, `*`, `%`, `<`, `>`, `&`, `|`, `^`, `?`, 또는 `~` 중 하나로 시작하거나 아래 문법에 정의된 유니코드 문자 중 하나로 시작할 수 있습니다 (_수학적 연산자 (Mathematical Operators)_, _기타 기호 (Miscellaneous Symbols)_ 와 딩뱃 유니코드 (Dingbats Unicode) 블럭의 문자를 포함합니다). 첫번째 문자 뒤에 유니코드 문자를 결합하는 것도 가능합니다.
 
