@@ -1168,7 +1168,7 @@ print(somethingTextRepresentable.textualDescription)
 > Note: 타입은 요구사항이 충족된다고 해서 프로토콜을 자동으로 채택하지 않습니다.
 > 항상 프로토콜 채택을 명시적으로 선언해야 합니다.
 
-## 합성 구현을 사용하여 프로토콜 채택 (Adopting a Protocol Using a Synthesized Implementation)
+## 자동 생성 구현을 사용하여 프로토콜 채택 (Adopting a Protocol Using a Synthesized Implementation)
 
 Swift는 많은 경우에
 `Equatable`, `Hashable`, `Comparable`에 대해

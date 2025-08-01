@@ -650,7 +650,7 @@ if tenEighty === alsoTenEighty {
 커스텀 구조체와 클래스를 정의할 때,
 두 인스턴스가 같은지의 여부를 결정하는 것은 사용자의 몫입니다.
 `==`와 `!=` 연산자의 사용자 정의 방법은
-<doc:AdvancedOperators#등가-연산자-Equivalence-Operators>에 자세히 설명되어 있습니다.
+<doc:AdvancedOperators#동등-연산자-Equivalence-Operators>에 자세히 설명되어 있습니다.
 
 <!--
   - test: `classesDontGetEqualityByDefault`

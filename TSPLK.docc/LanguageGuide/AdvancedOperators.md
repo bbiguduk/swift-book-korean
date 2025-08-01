@@ -356,19 +356,37 @@ Swift의 16진수 표현에서 `0xCC6699`로 작성됩니다.
 
 ![Bit Shift Signed Addition](bitshiftSignedAddition)
 
-두 번째로 2의 보수 표현을 사용하면 음수의 비트를 양수처럼 왼쪽과 오른쪽으로 이동할 수 있고 왼쪽으로 이동할 때마다 두배로 늘리거나 오른쪽으로 이동할 때마다 반으로 줄입니다. 이를 위해 부호가 있는 정수를 오른쪽으로 이동할 때는 추가 규칙이 사용됩니다: 부호가 있는 정수를 오른쪽으로 이동할 때 부호가 없는 정수와 같은 규칙이 적용되지만 왼쪽에 비어있는 모든 비트에는 0이 아닌 _부호 비트 (sign bit)_ 를 채웁니다.
+두 번째로 2의 보수 표현을 사용하면
+음수의 비트도 양수처럼 왼쪽과 오른쪽으로 이동할 수 있고,
+왼쪽으로 이동할 때마다 두배로 늘리거나
+오른쪽으로 이동할 때마다 반으로 줄입니다.
+이를 위해 부호 있는 정수를 오른쪽으로 이동할 때는 추가 규칙이 있습니다:
+부호 있는 정수를 오른쪽으로 이동할 때,
+부호 없는 정수와 같은 규칙이 적용되지만
+왼쪽에 비어있는 모든 비트에는 0이 아닌
+*부호 비트(sign bit)*를 채웁니다.
 
 ![Bit Shift Signed](bitshiftSigned)
 
-이러한 작업은 부호가 있는 정수가 오른쪽으로 이동한 후에 같은 부호를 갖도록 하고 _산술 이동 (arithmetic shift)_ 이라고 합니다.
+이러한 작업은 부호 있는 정수가 오른쪽으로 이동한 후에 같은 부호를 갖도록 하고
+이것을 *산술 이동(arithmetic shift)*이라고 합니다.
 
-양수와 음수에 저장되는 특별한 방식 때문에 둘 중 하나를 오른쪽으로 이동하면 0에 가까워 집니다. 이 이동동안 부호 비트를 동일하게 유지한다는 것은 값이 0에 가까워 질 때 음의 정수가 음수로 유지됨을 의미합니다.
+양수와 음수에 저장되는 특별한 방식 때문에,
+이것을 오른쪽으로 이동하면 0에 가까워 집니다.
+이동하는 동안 부호 비트를 동일하게 유지한다는 것은
+값이 0에 가까워 질 때 음의 정수가 음수로 유지됨을 의미합니다.
 
 ## 오버플로우 연산자 (Overflow Operators)
 
-해당 값을 가질 수 없는 정수 상수 또는 변수에 숫자를 삽입하려고 하면 기본적으로 Swift는 유효하지 않은 값 생성을 허용하지 않고 오류가 발생합니다. 이러한 동작은 숫자가 너무 크거나 너무 작은 값으로 작업할 때 추가 안정성을 제공합니다.
+정수 상수나 정수 변수에 가질 수 없는
+숫자 값을 삽입하려고 하면
+기본적으로 Swift는 잘못된 값을 생성하지 않고 오류가 발생합니다.
+이러한 동작은 숫자가 너무 크거나 너무 작은 값으로 작업할 때 추가 안정성을 제공합니다.
 
-예를 들어 `Int16` 정수 타입은 `-32768` 과 `32767` 사이의 모든 부호 있는 정수를 가질 수 있습니다. `Int16` 상수나 변수에 범위를 벗어나는 숫자를 설정하려고 하면 오류가 발생합니다:
+예를 들어 `Int16` 정수 타입은
+`-32768`과 `32767` 사이의 모든 부호 있는 정수를 가질 수 있습니다.
+`Int16` 상수나 변수에 범위를 벗어나는 숫자를 설정하려고 하면
+오류가 발생합니다:
 
 ```swift
 var potentialOverflow = Int16.max
@@ -377,19 +395,40 @@ potentialOverflow += 1
 // this causes an error
 ```
 
-값이 너무 크거나 너무 작을 때 오류 처리를 제공하면 경계값 조건을 코딩할 때 더 많은 유연성을 얻을 수 있습니다.
+<!--
+  - test: `overflowOperatorsWillFailToOverflow`
 
-그러나 사용 가능한 비트 수를 자르기 위해 특별히 오버플로우 조건을 원하는 경우 오류가 발생하는 대신 이 동작을 선택할 수 있습니다. Swift는 정수 계산을 위한 오버플로우 동작을 선택하는 3가지 산술 _오버플로우 연산자 (overflow operators)_ 를 제공합니다. 이러한 연산자는 모두 앰퍼샌드 (`&`)로 시작합니다:
+  ```swifttest
+  -> var potentialOverflow = Int16.max
+  /> potentialOverflow equals \(potentialOverflow), which is the maximum value an Int16 can hold
+  </ potentialOverflow equals 32767, which is the maximum value an Int16 can hold
+  -> potentialOverflow += 1
+  xx overflow
+  // this causes an error
+  ```
+-->
 
-* 오버플로우 덧셈 (`&+`)
-* 오버플로우 뺄셈 (`&-`)
-* 오버플로우 곱셈 (`&*`)
+값이 너무 크거나 너무 작을 때 오류 처리를 제공하면
+경계값 조건을 코딩할 때 더 많은 유연성을 얻을 수 있습니다.
+
+그러나 오버플로우가 발생해도
+값을 잘라내면서 계속 진행하고 싶을 때는
+오류가 발생하는 대신 오버플로우 동작을 선택할 수 있습니다.
+Swift는 정수 계산을 위한 오버플로우 동작을 선택하는
+세 가지 산술 *오버플로우 연산자(overflow operators)*를 제공합니다.
+이러한 연산자는 모두 앰퍼샌드(`&`)로 시작합니다:
+
+- 오버플로우 덧셈(`&+`)
+- 오버플로우 뺄셈(`&-`)
+- 오버플로우 곱셈(`&*`)
 
 ### 값 오버플로우 (Value Overflow)
 
-숫자는 양과 음의 방향으로 오버플로우 될 수 있습니다.
+숫자는 양의 방향과 음의 방향으로 오버플로우 될 수 있습니다.
 
-다음은 부호 없는 정수가 오버플로우 덧셈 연산자 (`&+`)를 사용하여 양의 방향으로 오버플로우를 허용하면 무슨 일이 발생하는지를 나타내는 예시입니다:
+다음은 부호 없는 정수가 오버플로우 덧셈 연산자(`&+`)를 사용하여
+양의 방향으로 오버플로우를 허용하면
+무슨 일이 발생하는지를 나타내는 예시입니다:
 
 ```swift
 var unsignedOverflow = UInt8.max
@@ -398,11 +437,33 @@ unsignedOverflow = unsignedOverflow &+ 1
 // unsignedOverflow is now equal to 0
 ```
 
-변수 `unsignedOverflow` 는 `UInt8` 의 최대값 (`255` 또는 이진수로 `11111111`)으로 초기화됩니다. 그런 다음 오버플로우 덧셈 연산자 (`&+`)를 사용하여 `1` 만큼 증가시킵니다. 이것은 `UInt8` 이 가질 수 있는 크기보다 큰 바이너리 표현이 적용되어 아래 다이어그램과 같이 경계를 넘어 오버플로우 됩니다. 오버플로우 덧셈 후 `UInt8` 의 범위 내에 남아있는 값은 `00000000` 또는 0 입니다.
+<!--
+  - test: `overflowOperatorsWillOverflowInPositiveDirection`
+
+  ```swifttest
+  -> var unsignedOverflow = UInt8.max
+  /> unsignedOverflow equals \(unsignedOverflow), which is the maximum value a UInt8 can hold
+  </ unsignedOverflow equals 255, which is the maximum value a UInt8 can hold
+  -> unsignedOverflow = unsignedOverflow &+ 1
+  /> unsignedOverflow is now equal to \(unsignedOverflow)
+  </ unsignedOverflow is now equal to 0
+  ```
+-->
+
+변수 `unsignedOverflow`는 `UInt8`의 최대값(`255`이나 이진수로 `11111111`)으로
+초기화됩니다.
+그런 다음 오버플로우 덧셈 연산자(`&+`)를 사용하여 `1`만큼 증가시킵니다.
+이것은 `UInt8`이 가질 수 있는 크기보다 큰 바이너리 표현이 적용되어
+아래 다이어그램과 같이
+경계를 넘어 오버플로우 됩니다.
+오버플로우 덧셈 후 `UInt8`의 범위 내에 남아있는 값은
+`00000000` 또는 0 입니다.
 
 ![Overflow Addition](overflowAddition)
 
-부호 없는 정수가 음의 방향으로 오버플로우 될 때 비슷한 일이 발생합니다. 다음은 오버플로우 뺄셈 연산자 (`&-`)를 사용하는 예시입니다:
+부호 없는 정수가 음의 방향으로 오버플로우될 때
+비슷한 일이 발생합니다.
+다음은 오버플로우 뺄셈 연산자(`&-`)를 사용하는 예시입니다:
 
 ```swift
 var unsignedOverflow = UInt8.min
@@ -411,11 +472,31 @@ unsignedOverflow = unsignedOverflow &- 1
 // unsignedOverflow is now equal to 255
 ```
 
-`UInt8` 의 최소값은 0 또는 이진수로 `00000000` 을 가질 수 있습니다. 오버플로우 뺄셈 연산자 (`&-`)를 이용하여 `00000000` 에서 `1` 을 뺀다면 숫자는 오버플로우 되고 `11111111` 또는 십진수 `255` 로 래핑됩니다.
+<!--
+  - test: `overflowOperatorsWillOverflowInNegativeDirection`
+
+  ```swifttest
+  -> var unsignedOverflow = UInt8.min
+  /> unsignedOverflow equals \(unsignedOverflow), which is the minimum value a UInt8 can hold
+  </ unsignedOverflow equals 0, which is the minimum value a UInt8 can hold
+  -> unsignedOverflow = unsignedOverflow &- 1
+  /> unsignedOverflow is now equal to \(unsignedOverflow)
+  </ unsignedOverflow is now equal to 255
+  ```
+-->
+
+`UInt8`의 최소값은 0이나
+이진수로 `00000000`을 가질 수 있습니다.
+오버플로우 뺄셈 연산자(`&-`)를 이용하여 `00000000`에서 `1`을 뺀다면
+숫자는 오버플로우 되고 `11111111`이나
+십진수 `255`입니다.
 
 ![Overflow Unsigned Subtraction](overflowUnsignedSubtraction)
 
-오버플로우는 부호가 있는 정수에서도 발생합니다. 부호가 있는 정수에 대한 모든 덧셈과 뺄셈은 비트 방식으로 수행되며 부호 비트는 <doc:AdvancedOperators#비트-왼쪽과-오른쪽-이동-연산자-Bitwise-Left-and-Right-Shift-Operators> 에 설명된대로 덧셈 또는 뺄셈 숫자의 부분으로 포함됩니다.
+오버플로우는 부호 있는 정수에서도 발생합니다.
+부호 있는 정수에 대한 모든 덧셈과 뺄셈은 비트 방식으로 수행되며
+부호 비트는 <doc:AdvancedOperators#비트-왼쪽과-오른쪽-이동-연산자-Bitwise-Left-and-Right-Shift-Operators>에서 설명한대로
+덧셈이나 뺄셈 계산에 포함됩니다.
 
 ```swift
 var signedOverflow = Int8.min
@@ -424,65 +505,182 @@ signedOverflow = signedOverflow &- 1
 // signedOverflow is now equal to 127
 ```
 
-`Int8` 의 최소값은 `-128` 또는 이진수로 `10000000` 을 가질 수 있습니다. 오버플로우 연산자를 사용하여 이진수에 `1` 을 빼면 부호 비트를 토글하고 `Int8` 이 가질 수 있는 최대 양수값 `127` 인 `01111111` 의 이진수를 얻습니다.
+<!--
+  - test: `overflowOperatorsWillOverflowSigned`
+
+  ```swifttest
+  -> var signedOverflow = Int8.min
+  /> signedOverflow equals \(signedOverflow), which is the minimum value an Int8 can hold
+  </ signedOverflow equals -128, which is the minimum value an Int8 can hold
+  -> signedOverflow = signedOverflow &- 1
+  /> signedOverflow is now equal to \(signedOverflow)
+  </ signedOverflow is now equal to 127
+  ```
+-->
+
+`Int8` 의 최소값은 `-128`이나
+이진수 `10000000`을 가질 수 있습니다.
+오버플로우 연산자를 사용하여 이진수에 `1`을 빼면
+이진수 `01111111`이 되고,
+이것은 부호 비트를 토글하고
+`Int8`이 가질 수 있는 최대 양수값 `127`이 됩니다.
 
 ![Overflow Signed Subtraction](overflowSignedSubtraction)
 
-부호가 있는 정수와 부호가 없는 정수에 대해 양의 방향의 오버플로우는 최대 유효 정수값에서 최소값으로 돌아가고 음의 방향의 오버플로우는 최소값에서 최대값으로 순환합니다.
+부호 있는 정수와 부호 없는 정수에 대해
+양의 방향의 오버플로우는
+최대 유효 정수값에서 최소값으로 돌아가고
+음의 방향의 오버플로우는
+최소값에서 최대값으로 순환합니다.
 
-## 우선순위와 연관성 (Precedence and Associativity)
+## 우선순위와 결합방향 (Precedence and Associativity)
 
-연산자 _우선순위 (precedence)_ 는 일부 연산자에 다른 연산자 보다 높은 우선순위를 주고 이러한 연산자는 먼저 적용됩니다.
+연산자 *우선순위(precedence)*는 어떤 연산자에 다른 연산자 보다 높은 우선순위를 부여합니다;
+이러한 연산자는 먼저 적용됩니다.
 
-연산자 _연관성 (associativity)_ 은 우선순위가 같은 연산자를 왼쪽에서 그룹화 하거나 오른쪽에서 그룹화하는 방법을 정의합니다. "왼쪽에 있는 표현과 연관된다" 또는 "오른쪽에 있는 표현과 연관된다" 라는 의미로 생각해야 합니다.
+연산자 *결합방향(associativity)*은 우선순위가 같은 연산자를
+어떻게 결합하는지 정의합니다 ---
+왼쪽에서부터 결합하는지 오른쪽에서부터 결합하는지 정의합니다.
+"연산자가 왼쪽의 표현식과 결합합니다"
+또는 "연산자가 오른쪽의 표현식과 결합합니다"라는 의미로 생각해야 합니다.
 
-복합 표현식이 계산되는 순서를 작업할 때 각 연산자의 우선순위와 연관성을 고려하는 것은 중요합니다. 예를 들어 연산자 우선순위는 다음 표현식이 왜 `17` 인지를 설명합니다.
+복합 표현식이 계산되는 순서를 이해하기 위해서
+각 연산자의 우선순위와 결합방향을
+고려하는 것이 중요합니다.
+예를 들어
+연산자 우선순위는 다음 표현식이 왜 `17`인지를 설명합니다.
 
 ```swift
 2 + 3 % 4 * 5
 // this equals 17
 ```
 
-왼쪽에서 오른쪽으로 읽는다면 표현식은 아래와 같이 계산될 것으로 예상할 수 있습니다:
+<!--
+  - test: `evaluationOrder`
 
-* `2` 더하기 `3` 은 `5`
-* `5` 나머지 `4` 는 `1`
-* `1` 곱하기 `5` 는 `5`
+  ```swifttest
+  >> let r0 =
+  -> 2 + 3 % 4 * 5
+  >> assert(r0 == 17)
+  /> this equals \(2 + 3 % 4 * 5)
+  </ this equals 17
+  ```
+-->
 
-그러나 실제 정답은 `5` 가 아닌 `17` 입니다. 우선순위가 높은 연산자는 우선순위가 낮은 연산자보다 먼저 평가됩니다. Swift에서는 C와 같이 나머지 연산자 (`%`)와 곱셈 연산자 (`*`)는 덧셈 연산자 (`+`)보다 우선순위가 높습니다. 결과적으로 해당 연산자 모두 덧셈을 고려하기 전에 평가됩니다.
+<!--
+  Rewrite the above to avoid bare expressions.
+  Tracking bug is <rdar://problem/35301593>
+-->
 
-그러나 나머지와 곱셈은 서로 _동일한_ 우선순위를 가집니다. 정확한 순서로 계산을 진행하려면 서로의 연관성도 고려해야 합니다. 나머지와 곱셈은 모두 왼쪽의 표현식과 관련됩니다. 왼쪽에서 시작하여 표현식에 암시적으로 괄호가 있는 것으로 생각해야 합니다:
+왼쪽에서 오른쪽으로 읽는다면
+표현식은 아래와 같이 계산될 것으로 예상할 수 있습니다:
+
+- `2` 더하기 `3`은 `5`
+- `5` 나머지 `4`는 `1`
+- `1` 곱하기 `5`는 `5`
+
+그러나 실제 정답은 `5`가 아닌 `17`입니다.
+우선순위가 높은 연산자는 우선순위가 낮은 연산자보다 먼저 계산됩니다.
+Swift에서는 C와 같이
+나머지 연산자(`%`)와 곱셈 연산자(`*`)는
+덧셈 연산자(`+`)보다 우선순위가 높습니다.
+결과적으로 나머지 연산자와 곱셈 연산자 모두 덧셈을 고려하기 전에 계산됩니다.
+
+그러나 나머지와 곱셈은 서로 *동일한* 우선순위를 가집니다.
+정확한 순서로 계산을 진행하려면
+서로의 결합방향도 고려해야 합니다.
+나머지와 곱셈은 모두 연산자 왼쪽의 표현식과 결합됩니다.
+연산자 왼쪽에서 시작하여
+표현식에 암시적으로 괄호가 있는 것으로 생각해야 합니다:
 
 ```swift
 2 + ((3 % 4) * 5)
 ```
 
-`(3 % 4)` 은 `3` 이므로 아래와 같습니다:
+<!--
+  - test: `evaluationOrder`
+
+  ```swifttest
+  >> let r1 =
+  -> 2 + ((3 % 4) * 5)
+  >> assert(r1 == 17)
+  ```
+-->
+
+<!--
+  Rewrite the above to avoid bare expressions.
+  Tracking bug is <rdar://problem/35301593>
+-->
+
+`(3 % 4)`은 `3`이므로 다음과 같습니다:
 
 ```swift
 2 + (3 * 5)
 ```
 
-`(3 * 5)` 는 `15` 이므로 아래와 같습니다:
+<!--
+  - test: `evaluationOrder`
+
+  ```swifttest
+  >> let r2 =
+  -> 2 + (3 * 5)
+  >> assert(r2 == 17)
+  ```
+-->
+
+<!--
+  Rewrite the above to avoid bare expressions.
+  Tracking bug is <rdar://problem/35301593>
+-->
+
+`(3 * 5)`는 `15`이므로 다음과 같습니다:
 
 ```swift
 2 + 15
 ```
 
-이 계산의 결과는 `17` 입니다.
+<!--
+  - test: `evaluationOrder`
 
-연산자 우선순위 그룹과 연관성 설정의 전체 리스트를 포함하여 Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator\_declarations) 을 참고바랍니다.
+  ```swifttest
+  >> let r3 =
+  -> 2 + 15
+  >> assert(r3 == 17)
+  ```
+-->
 
-> Note\
-> Swift의 연산자 우선순위와 연관성 규칙은 C와 Objective-C보다 더 간단하고 예측 가능합니다. 그러나 이것은 C 기반 언어와 정확하게 일치하지 않음을 의미합니다. 기존 코드를 Swift로 이식할 때 연산자 상호작용이 의도한대로 작동하는지 계속 확인해야 합니다.
+<!--
+  Rewrite the above to avoid bare expressions.
+  Tracking bug is <rdar://problem/35301593>
+-->
+
+이 계산의 결과는 `17`입니다.
+
+연산자 우선순위 그룹과 결합방향 설정의 전체 목록을 포함하여
+Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은
+[연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator\_declarations)을 참고바랍니다.
+
+> Note: Swift의 연산자 우선순위와 결합방향 규칙은 C와 Objective-C보다
+> 더 간단하고 예측 가능합니다.
+> 그러나 이것은 C 기반 언어와 정확하게 일치하지 않음을 의미합니다.
+> 기존 코드를 Swift로 이식할 때
+> 연산자 상호작용이 의도한 대로 작동하는지 계속 확인해야 합니다.
 
 ## 연산자 메서드 (Operator Methods)
 
-클래스와 구조체는 기존 연산자의 자체 구현을 제공할 수 있습니다. 이것을 기존 연산자 _오버로딩 (overloading)_ 이라 합니다.
+클래스와 구조체는 기존 연산자의 자체 구현을 제공할 수 있습니다.
+이것을 기존 연산자 *오버로딩(overloading)*이라 합니다.
 
-아래의 예시는 커스텀 구조체에 산술적 덧셈 연산자 (`+`)를 어떻게 구현하는지 보여줍니다. 이 산술적 덧셈 연산자는 두 대상에서 동작하기 때문에 이항 연산자 (binary operator) 이고 두 대상 사이에 나타나기 때문에 중위 연산자 (infix operator) 입니다.
+아래의 예시는 커스텀 구조체에
+산술 덧셈 연산자(`+`)를 어떻게 구현하는지 보여줍니다.
+이 산술 덧셈 연산자는 두 대상에서 동작하기 때문에
+이항 연산자(binary operator)이고,
+두 대상 사이에 위치하기 때문에 중위 연산자(infix operator)입니다.
 
-이 예시는 2차원 벡터 `(x, y)` 에 대한 `Vector2D` 구조체를 정의한 다음 `Vector2D` 구조체의 인스턴스를 함께 더하기 위해 _연산자 메서드 (operator method)_ 의 정의가 이어집니다:
+이 예시는 2차원 위치 벡터 `(x, y)`에 대한
+`Vector2D` 구조체를 정의한 다음
+`Vector2D` 구조체의 인스턴스를 함께 더하기 위해
+*연산자 메서드(operator method)*를 구현합니다:
 
 ```swift
 struct Vector2D {
@@ -496,11 +694,41 @@ extension Vector2D {
 }
 ```
 
-이 연산자 메서드는 `Vector2D` 에서 오버로드 할 연산자 (`+`)와 일치하는 메서드 이름을 가진 타입 메서드로 정의됩니다. 덧셈은 벡터의 필수 동작의 일부가 아니므로 이 타입 메서드는 `Vector2D` 의 메인 구조체 선언이 아닌 `Vector2D` 의 확장에 정의됩니다. 산술적 덧셈 연산자는 이항 연산자 이므로 이 연산자 메서드는 `Vector2D` 타입의 두 입력 파라미터와 `Vector2D` 타입의 하나의 반환하는 출력값을 가집니다.
+<!--
+  - test: `customOperators`
 
-이 구현에서 입력 파라미터는 `+` 연산자의 왼쪽과 오른쪽 인 `Vector2D` 인스턴스를 나타내기 위해 `left` 와 `right` 의 이름을 가집니다. 이 메서드는 두 `Vector2D` 인스턴스의 `x` 와 `y` 프로퍼티의 합으로 초기화 되는 `x` 와 `y` 를 가진 새로운 `Vector2D` 인스턴스를 반환합니다.
+  ```swifttest
+  -> struct Vector2D {
+        var x = 0.0, y = 0.0
+     }
+  ---
+  -> extension Vector2D {
+         static func + (left: Vector2D, right: Vector2D) -> Vector2D {
+            return Vector2D(x: left.x + right.x, y: left.y + right.y)
+         }
+     }
+  ```
+-->
 
-이 타입 메서드는 기존 `Vector2D` 인스턴스 사이에 중위 연산자로 사용될 수 있습니다:
+이 연산자 메서드는 `Vector2D`에서 타입 메서드로 정의되고,
+오버로드 할 연산자(`+`)와 일치하는 메서드 이름을 가집니다.
+덧셈은 벡터의 필수 동작의 일부가 아니므로,
+이 타입 메서드는 `Vector2D`의 메인 구조체 선언이 아닌
+`Vector2D`의 확장에 정의합니다.
+산술 덧셈 연산자는 이항 연산자이므로,
+이 연산자 메서드는 `Vector2D` 타입의 두 입력 파라미터와
+`Vector2D` 타입의 하나의 반환하는 출력값을 가집니다.
+
+이 구현에서 입력 파라미터는 `left`와 `right`의 이름을 가지고
+이것은 `+` 연산자의 왼쪽과 오른쪽인
+`Vector2D` 인스턴스를 나타냅니다.
+이 메서드는 새로운 `Vector2D` 인스턴스를 반환하고,
+이것은 두 `Vector2D` 인스턴스의
+`x`와 `y` 프로퍼티를 더한
+`x`와 `y`를 가진 인스턴스입니다.
+
+이 타입 메서드는
+기존 `Vector2D` 인스턴스 사이의 중위 연산자로 사용할 수 있습니다:
 
 ```swift
 let vector = Vector2D(x: 3.0, y: 1.0)
@@ -509,15 +737,35 @@ let combinedVector = vector + anotherVector
 // combinedVector is a Vector2D instance with values of (5.0, 5.0)
 ```
 
-이 예시는 아래 그림과 같이 벡터 `(5.0, 5.0)` 을 만들기 위해 벡터 `(3.0, 1.0)` 과 `(2.0, 4.0)` 을 함께 더하는 것을 나타냅니다.
+<!--
+  - test: `customOperators`
+
+  ```swifttest
+  -> let vector = Vector2D(x: 3.0, y: 1.0)
+  -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
+  -> let combinedVector = vector + anotherVector
+  /> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
+  </ combinedVector is a Vector2D instance with values of (5.0, 5.0)
+  ```
+-->
+
+이 예시는 벡터 `(3.0, 1.0)`과 `(2.0, 4.0)`을 더하고
+아래 그림과 같이 벡터 `(5.0, 5.0)`을 만듭니다.
 
 ![Vector Addition](vectorAddition)
 
-### 접두사와 접미사 연산자 (Prefix and Postfix Operators)
+### 접두 연산자와 접미 연산자 (Prefix and Postfix Operators)
 
-위에 보여진 예시는 이진 중위 연산자의 커스텀 구현을 보여줍니다. 클래스와 구조체는 표준 _단항 (unary)_ 연산자의 구현도 제공할 수 있습니다. 단항 연산자는 단일 대상에서 동작합니다. `-a` 와 같이 대상의 앞에 오면 _접두사 (prefix)_ 이며 `b!` 와 같이 대상의 뒤에 오면 _접미사 (postfix)_ 연산자 입니다.
+위에 보여진 예시는 이진 중위 연산자의 커스텀 구현을 보여줍니다.
+클래스와 구조체는 표준 *단항(unary)* 연산자의
+구현도 제공할 수 있습니다.
+단항 연산자는 단일 대상에서 동작합니다.
+대상의 앞(`-a`)에 오면 *접두(prefix)* 연산자이며
+대상의 뒤(`b!`)에 오면 *접미(postfix)* 연산자 입니다.
 
-연산자 메서드를 선언할 때 `func` 키워드 앞에 `prefix` 또는 `postfix` 수식어를 작성하여 접두사 또는 접미사 단항 연산자를 구현합니다:
+접두 단항 연산자나 접미 단항 연산자를 구현하려면
+`prefix`나 `postfix` 수식어를
+`func` 키워드 앞에 작성하여 연산자 메서드를 선언합니다:
 
 ```swift
 extension Vector2D {
@@ -527,9 +775,27 @@ extension Vector2D {
 }
 ```
 
-위의 예시는 `Vector2D` 인스턴스에 대해 단항 마이너스 연산자 (`-a`)를 구현합니다. 이 단항 마이너스 연산자는 접두사 연산자이므로 이 메서드는 `prefix` 수식어를 지정해야 합니다.
+<!--
+  - test: `customOperators`
 
-간단한 숫자값에 대해 단항 마이너스 연산자는 양수를 음수로 또는 그 반대로 변환합니다. `Vector2D` 인스턴스에 대한 해당 구현은 `x` 와 `y` 프로퍼티에서 수행됩니다:
+  ```swifttest
+  -> extension Vector2D {
+         static prefix func - (vector: Vector2D) -> Vector2D {
+             return Vector2D(x: -vector.x, y: -vector.y)
+         }
+     }
+  ```
+-->
+
+위의 예시는 `Vector2D` 인스턴스에 대한
+단항 뺄셈 연산자(`-a`)를 구현합니다.
+이 단항 뺄셈 연산자는 접두 연산자이므로
+이 메서드는 `prefix` 수식어를 지정해야 합니다.
+
+간단한 숫자값에 대해 단항 뺄셈 연산자는
+양수를 음수로 음수를 양수로 변환합니다.
+`Vector2D` 인스턴스의
+`x`와 `y` 프로퍼티에도 동일하게 적용할 수 있습니다:
 
 ```swift
 let positive = Vector2D(x: 3.0, y: 4.0)
@@ -539,11 +805,30 @@ let alsoPositive = -negative
 // alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 ```
 
+<!--
+  - test: `customOperators`
+
+  ```swifttest
+  -> let positive = Vector2D(x: 3.0, y: 4.0)
+  -> let negative = -positive
+  /> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
+  </ negative is a Vector2D instance with values of (-3.0, -4.0)
+  -> let alsoPositive = -negative
+  /> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
+  </ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
+  ```
+-->
+
 ### 복합 할당 연산자 (Compound Assignment Operators)
 
-_복합 할당 연산자 (Compound assignment operators)_ 는 다른 연산과 할당 (`=`)을 결합합니다. 예를 들어 덧셈 할당 연산자 (`+=`)는 단일 연산으로 덧셈과 할당을 결합합니다. 파라미터의 값은 연산자 메서드 내에서 직접적으로 수정되므로 복합 할당 연산자의 왼쪽 입력 파라미터 타입을 `inout` 으로 표시합니다.
+*복합 할당 연산자(Compound assignment operators)*는 할당 연산자(`=`)와 다른 연산을 결합합니다.
+예를 들어 덧셈 할당 연산자(`+=`)는
+단일 연산으로 덧셈과 할당을 결합합니다.
+복합 할당 연산자의 왼쪽 입력 파라미터 타입을 `inout`으로 표시해야 하며,
+이것은 파라미터의 값은 연산자 메서드 내에서 직접적으로 수정되기 때문입니다.
 
-아래 예시는 `Vector2D` 인스턴스에 대해 덧셈 할당 연산자 메서드를 구현합니다:
+아래 예시는
+`Vector2D` 인스턴스에 대해 덧셈 할당 연산자 메서드를 구현합니다:
 
 ```swift
 extension Vector2D {
@@ -553,7 +838,23 @@ extension Vector2D {
 }
 ```
 
-덧셈 연산자는 이전에 정의 되었으므로 여기서 덧셈 프로세스를 재구현할 필요가 없습니다. 대신에 덧셈 할당 연산자 메서드는 기존에 덧셈 연산자 메서드를 활용하여 왼쪽의 값을 오른쪽 값으로 더하고 왼쪽 값에 설정하여 사용합니다:
+<!--
+  - test: `customOperators`
+
+  ```swifttest
+  -> extension Vector2D {
+         static func += (left: inout Vector2D, right: Vector2D) {
+             left = left + right
+         }
+     }
+  ```
+-->
+
+덧셈 연산자는 이전에 정의했으므로
+여기서 덧셈 과정을 재구현할 필요가 없습니다.
+대신에 덧셈 할당 연산자 메서드는
+기존에 덧셈 연산자 메서드를 활용하여
+왼쪽의 값을 오른쪽 값으로 더하고 왼쪽 값에 설정하여 사용합니다:
 
 ```swift
 var original = Vector2D(x: 1.0, y: 2.0)
@@ -562,14 +863,59 @@ original += vectorToAdd
 // original now has values of (4.0, 6.0)
 ```
 
-> Note\
-> 기본 할당 연산자 (`=`)는 오버로드가 불가능합니다. 복합 할당 연산자만 오버로드 될 수 있습니다. 마찬가지로 삼항 조건 연산자 (`a ? b : c`)는 오버로드 할 수 없습니다.
+<!--
+  - test: `customOperators`
 
-### 등가 연산자 (Equivalence Operators)
+  ```swifttest
+  -> var original = Vector2D(x: 1.0, y: 2.0)
+  -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
+  -> original += vectorToAdd
+  /> original now has values of (\(original.x), \(original.y))
+  </ original now has values of (4.0, 6.0)
+  ```
+-->
 
-기본적으로 커스텀 클래스와 구조체는 _같음_ 연산자 (`==`)와 같지 않음 연산자 (`!=`)라고 하는 _등가 연산자 (equivalence operators)_ 의 구현을 가지지 않습니다. 일반적으로 `==` 연산자를 구현하고 `==` 연산자의 결과를 부정하는 `!=` 연산자의 Swift 표준 라이브러리의 기본 구현을 사용합니다. `==` 연산자를 구현하는 두가지 방법이 있습니다: 직접 구현하거나 여러 타입의 경우에 Swift에 구현을 합성하도록 요청할 수 있습니다. 두 경우 모두 Swift 표준 라이브러리의 `Equatable` 프로토콜의 준수성을 추가합니다.
+> Note: 기본 할당 연산자(`=`)는
+> 오버로드가 불가능합니다.
+> 복합 할당 연산자만 오버로드할 수 있습니다.
+> 마찬가지로 삼항 조건 연산자
+> (`a ? b : c`)도 오버로드할 수 없습니다.
 
-다른 중위 연산자를 구현하는 것과 같은 방법으로 `==` 연산자의 구현을 제공합니다:
+<!--
+  - test: `cant-overload-assignment`
+
+  ```swifttest
+  >> struct Vector2D {
+  >>    var x = 0.0, y = 0.0
+  >> }
+  >> extension Vector2D {
+  >>     static func = (left: inout Vector2D, right: Vector2D) {
+  >>         left = right
+  >>     }
+  >> }
+  !$ error: expected identifier in function declaration
+  !! static func = (left: inout Vector2D, right: Vector2D) {
+  !!             ^
+  ```
+-->
+
+### 동등 연산자 (Equivalence Operators)
+
+기본적으로 커스텀 클래스와 구조체는
+*동등 연산자(equivalence operators)*인
+*같음*을 나타내는 연산자(`==`)와 *같지 않음*을 나타내는 연산자(`!=`)의 구현을 가지지 않습니다.
+일반적으로 `==` 연산자를 구현하고,
+`!=` 연산자는 `==` 연산자의 결과를 부정하는
+Swift 표준 라이브러리의 기본 구현을 사용합니다.
+`==` 연산자를 구현하는 두 가지 방법이 있습니다:
+직접 구현하거나
+여러 타입의 경우에
+Swift에 구현을 자동 생성하도록 요청할 수 있습니다.
+두 경우 모두
+Swift 표준 라이브러리의 `Equatable` 프로토콜을 준수해야 합니다.
+
+다른 중위 연산자를 구현하는 것과 같은 방법으로
+`==` 연산자의 구현을 제공합니다:
 
 ```swift
 extension Vector2D: Equatable {
@@ -579,7 +925,24 @@ extension Vector2D: Equatable {
 }
 ```
 
-위의 예시는 두 `Vector2D` 인스턴스가 같은 값을 가지고 있는지 확인하기 위해 `==` 연산자를 구현합니다. `Vector2D` 의 맥락에서 "동일"을 "두 인스턴스 모두 같은 `x` 값과 `y` 값을 가짐"을 의미하는 것으로 간주하는 것이 합리적이므로 이것이 연산자 구현에 사용되는 논리입니다.
+<!--
+  - test: `customOperators`
+
+  ```swifttest
+  -> extension Vector2D: Equatable {
+         static func == (left: Vector2D, right: Vector2D) -> Bool {
+            return (left.x == right.x) && (left.y == right.y)
+         }
+     }
+  ```
+-->
+
+위의 예시는 두 `Vector2D` 인스턴스가 같은 값을 가지고 있는지 확인하는
+`==` 연산자를 구현합니다.
+`Vector2D`의 맥락에서
+"동일"의 의미는
+"두 인스턴스 모두 같은 `x` 값과 `y` 값을 가짐"을 의미하고
+이것이 연산자 구현에 사용되는 로직입니다.
 
 이제 두 `Vector2D` 인스턴스가 같은지 확인하기 위해 연산자를 사용할 수 있습니다:
 
@@ -592,7 +955,22 @@ if twoThree == anotherTwoThree {
 // Prints "These two vectors are equivalent."
 ```
 
-많은 간단한 경우에 <doc:Protocols#합성-구현을-사용하여-프로토콜-채택-Adopting-a-Protocol-Using-a-Synthesized-Implementation> 에서 설명 된대로 Swift에 등가 연산자의 합성 구현을 제공하도록 요청할 수 있습니다.
+<!--
+  - test: `customOperators`
+
+  ```swifttest
+  -> let twoThree = Vector2D(x: 2.0, y: 3.0)
+  -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
+  -> if twoThree == anotherTwoThree {
+        print("These two vectors are equivalent.")
+     }
+  <- These two vectors are equivalent.
+  ```
+-->
+
+단순한 경우에
+<doc:Protocols#자동-생성-구현을-사용하여-프로토콜-채택-Adopting-a-Protocol-Using-a-Synthesized-Implementation>에서 설명한대로
+Swift에 의해 등가 연산자의 자동 생성 구현을 제공받을 수 있습니다.
 
 ## 커스텀 연산자 (Custom Operators)
 
@@ -622,7 +1000,7 @@ let afterDoubling = +++toBeDoubled
 
 ### 커스텀 중위 연산자의 우선순위 (Precedence for Custom Infix Operators)
 
-커스텀 중위 연산자는 각 우선순위 그룹에 속해 있습니다. 우선순위 그룹은 다른 중위 연산자에 상대적인 연산자의 우선순위와 연산자의 연관성을 지정합니다. 이러한 특성이 중위 연산자와 다른 중위 연산자 와의 상호작용에 미치는 영향에 대한 설명은 <doc:AdvancedOperators#우선순위와-연관성-Precedence-and-Associativity> 을 참고바랍니다.
+커스텀 중위 연산자는 각 우선순위 그룹에 속해 있습니다. 우선순위 그룹은 다른 중위 연산자에 상대적인 연산자의 우선순위와 연산자의 연관성을 지정합니다. 이러한 특성이 중위 연산자와 다른 중위 연산자 와의 상호작용에 미치는 영향에 대한 설명은 <doc:AdvancedOperators#우선순위와-결합방향-Precedence-and-Associativity> 을 참고바랍니다.
 
 우선순위 그룹에 명시적으로 위치되지 않은 커스텀 중위 연산자는 삼항 조건 연산자의 우선순위 바로 위인 기본 우선순위 그룹이 제공됩니다.
 
