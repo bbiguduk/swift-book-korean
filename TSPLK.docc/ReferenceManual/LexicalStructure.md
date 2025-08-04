@@ -1050,33 +1050,166 @@ let regex2 = # #/abc/# #     // Error
 
 ## 연산자 (Operators)
 
-Swift 표준 라이브러리는 사용할 수 있는 여러 가지 연산자를 정의하며 <doc:BasicOperators> 와 <doc:AdvancedOperators> 에 설명되어 있습니다. 이 섹션에서는 사용자 지정 연산자 (Custom operators)를 정의하는데 사용될 수 있는 문자를 설명합니다.
+Swift 표준 라이브러리는 사용할 수 있는 여러 가지 연산자를 정의하며
+<doc:BasicOperators>와
+<doc:AdvancedOperators>에 설명되어 있습니다.
+이 섹션에서는 커스텀 연산자(Custom operators)를 정의하는데 사용할 수 있는 문자를 설명합니다.
 
-사용자 지정 연산자는 ASCII 문자 `/`, `=`, `-`, `+`, `!`, `*`, `%`, `<`, `>`, `&`, `|`, `^`, `?`, 또는 `~` 중 하나로 시작하거나 아래 문법에 정의된 유니코드 문자 중 하나로 시작할 수 있습니다 (_수학적 연산자 (Mathematical Operators)_, _기타 기호 (Miscellaneous Symbols)_ 와 딩뱃 유니코드 (Dingbats Unicode) 블럭의 문자를 포함합니다). 첫번째 문자 뒤에 유니코드 문자를 결합하는 것도 가능합니다.
+커스텀 연산자는 ASCII 문자
+`/`, `=`, `-`, `+`, `!`, `*`, `%`, `<`, `>`,
+`&`, `|`, `^`, `?`, `~` 중 하나로 시작하거나
+아래 문법에 정의된 유니코드 문자 중 하나로 시작할 수 있습니다
+(*수학 연산자(Mathematical Operators)*, *기타 기호(Miscellaneous Symbols)*,
+*딩뱃(Dingbats)* 유니코드
+블럭의 문자를 포함합니다).
+첫 번째 문자 뒤에
+유니코드 문자를 결합하는 것도 가능합니다.
 
-점 (`.`) 으로 시작하는 사용자 지정 연산자도 정의할 수 있습니다. 이러한 연산자는 추가 점을 포함할 수 있습니다. 예를 들어 `.+.` 은 단일 연산자로 취급됩니다. 연산자가 점으로 시작하지 않으면 다른 곳에 점을 포함할 수 없습니다. 예를 들어 `+.+` 은 `+` 연산자 다음에 `.+` 연산자로 처리됩니다.
+커스텀 연산자도 정의할 수 있는데
+점(`.`)으로 시작합니다.
+이러한 연산자는 여러 개의 점을 포함할 수 있습니다.
+예를 들어 `.+.`은 단일 연산자로 취급됩니다.
+연산자가 점으로 시작하지 않으면,
+다른 곳에 점을 포함할 수 없습니다.
+예를 들어 `+.+`은
+`+` 연산자와 `.+` 연산자로 처리됩니다.
 
-물음표 (`?`) 를 포함하여 사용자 지정 연산자를 정의할 수 있지만 단일 물음표 문자로만 구성될 수 없습니다. 또한 연산자에 느낌표 (`!`) 를 포함할 수 있지만 접미사 연산자 (postfix operators) 는 물음표나 느낌표로 시작될 수 없습니다.
+<!--
+  - test: `dot-operator-must-start-with-dot`
 
-> Note\
-> 토큰 `=`, `->`, `//`, `/*`, `*/`, `.`, 접두사 연산자 `<`, `&`, 그리고 `?`, 중위 연산자 `?`, 그리고 접미사 연산자 `>`, `!`, 그리고 `?` 는 예약되어 있습니다. 이러한 토큰은 오버로드 할 수 없으며 사용자 지정 연산자로 사용할 수 없습니다.
+  ```swifttest
+  >> infix operator +.+ ;
+  !$ error: consecutive statements on a line must be separated by ';'
+  !! infix operator +.+ ;
+  !!                 ^
+  !!                 ;
+  !$ error: operator with postfix spacing cannot start a subexpression
+  !! infix operator +.+ ;
+  !!                 ^
+  !$ error: expected expression
+  !! infix operator +.+ ;
+  !!                    ^
+  >> infix operator .+
+  >> infix operator .+.
+  ```
+-->
 
-연산자 주변에 공백은 연산자가 접두사 연산자 (prefix operator), 접미사 연산자 (postfix operator), 또는 이항 연산자 (binary operator) 로 사용되는지 결정하기 위해 사용됩니다. 이 동작은 다음 규칙에 정리되어 있습니다:
+물음표(`?`)를 포함하는 커스텀 연산자를 정의할 수 있지만
+단일 물음표 문자로만 이루어진 연산자는 정의할 수 없습니다.
+또한 연산자에 느낌표(`!`)를 포함할 수 있지만
+접미 연산자(postfix operators)는 물음표나 느낌표로 시작할 수 없습니다.
 
-* 연산자 주변 양쪽에 모두 공백이 있거나 없는 경우 이항 연산자로 처리됩니다. 예를 들어 `a+++b` 와 `a +++ b` 에 연산자 `+++` 는 이항 연산자로 처리됩니다.
-* 연산자가 왼쪽에만 공백이 있다면 접두사 단항 연산자 (prefix unary operator)로 처리됩니다. 에를 들어 `a +++b` 에서 `+++` 연산자는 접두사 단항 연산자로 처리됩니다.
-* 연산자가 오른쪽에만 공백이 있다면 접미사 단항 연산자 (postfix unary operator)로 처리됩니다. 예를 들어 `a+++ b` 에서 `+++` 연산자는 접미사 단항 연산자로 처리됩니다.
-* 연산자 왼쪽에 공백이 없지만 바로 이어서 점 (`.`) 이 오면 접미사 단항 연산자로 처리됩니다. 예를 들어 `a+++.b` 에서 `+++` 연산자는 접미사 단항 연산자로 처리됩니다 (`a +++ .b` 가 아닌 `a+++ .b`).
+<!--
+  - test: `postfix-operators-dont-need-unique-prefix`
 
-이러한 규칙의 목적에 따라 연산자 앞의 문자 `(`, `[`, 그리고 `{` 연산자 뒤의 문자 `)`, `]`, 그리고 `}`, 그리고 문자 `,`, `;`, 그리고 `:` 도 공백으로 간주합니다.
+  ```swifttest
+  >> struct Num { var value: Int }
+     postfix operator +
+     postfix operator +*
+     postfix func + (x: Num) -> Int { return x.value + 1 }
+     postfix func +* (x: Num) -> Int { return x.value * 100 }
+  >> let n = Num(value: 5)
+  >> print(n+)
+  << 6
+  >> print(n+*)
+  << 500
+  ```
+-->
 
-미리 정의된 연산자 `!` 또는 `?` 에 왼편에 공백이 없다면 오른편에 공백 여부와 상관없이 접미사 연산자로 처리됩니다. 옵셔널 체이닝 연산자 (optional-chaining operator)로 `?` 을 사용하려면 왼편에 공백을 가지면 안됩니다. 삼항 조건부 연산자 (ternary conditional operator) (`?` `:`) 로 사용하려면 반드시 양쪽에 공백이 있어야 합니다.
+<!--
+  - test: `postfix-operator-cant-start-with-question-mark`
 
-중위 연산자 (infix operator)에 인수 중 하나가 정규 표현식 리터럴이라면 연산자는 양쪽에 공백을 가져야 합니다.
+  ```swifttest
+  >> postfix operator ?+
+  >> postfix func ?+ (x: Int) -> Int {
+         if x > 10 {
+             return x
+         }
+         return x + 1
+     }
+  >> print(1?+)
+  !$ error: postfix operator names starting with '?' or '!' are disallowed to avoid collisions with built-in unwrapping operators
+  !! postfix operator ?+
+  !!                  ^
+  !$ error: '+' is not a postfix unary operator
+  !! print(1?+)
+  !!         ^
+  ```
+-->
 
-특정 구문에서 선행으로 `<` 또는 `>` 연산자는 둘 이상의 토큰으로 분리될 수 있습니다. 나머지는 동일한 방식으로 처리되고 다시 분리될 수 있습니다. 그 결과로 `Dictionary<String, Array<Int>>` 와 같은 구문에서 닫는 `>` 문자 사이를 명확하게 하기 위해 공백을 추가할 필요가 없습니다. 예를 들어 닫는 `>` 문자는 비트 시프트 `>>` 연산자로 잘못 해석될 수 있는 단일 토큰으로 처리되지 않습니다.
+> Note: 토큰 `=`, `->`, `//`, `/*`, `*/`, `.`,
+> 접두 연산자 `<`, `&`, `?`,
+> 중위 연산자 `?`,
+> 접미 연산자 `>`, `!`, `?`는 예약되어 있습니다.
+> 이러한 토큰은 오버로드할 수 없으며, 커스텀 연산자로 사용할 수 없습니다.
 
-새로운 커스텀 연산자를 정의하는 방법을 알아보려면 <doc:AdvancedOperators#사용자-정의-연산자-Custom-Operators> 와 <doc:Declarations#연산자-선언-Operator-Declaration> 을 참고바랍니다. 기존 연산자를 오버로드 하는 방법을 알아보려면 <doc:AdvancedOperators#연산자-메서드-Operator-Methods> 를 참고바랍니다.
+연산자 주변의 공백은 연산자가
+접두 연산자(prefix operator), 접미 연산자(postfix operator),
+이항 연산자(binary operator)로 사용되는지 결정하기 위해 사용됩니다. 이 동작은 다음 규칙에 정리되어 있습니다:
+
+- 연산자 주변 양쪽에 모두 공백이 있거나 없는 경우,
+  이항 연산자로 처리됩니다.
+  예를 들어 `a+++b`와 `a +++ b`의 연산자 `+++`는 이항 연산자로 처리됩니다.
+- 연산자가 왼쪽에만 공백이 있다면,
+  접두 단항 연산자(prefix unary operator)로 처리됩니다.
+  에를 들어 `a +++b`에서 `+++` 연산자는 접두 단항 연산자로 처리됩니다.
+- 연산자가 오른쪽에만 공백이 있다면,
+  접미 단항 연산자(postfix unary operator)로 처리됩니다.
+  예를 들어 `a+++ b`에서 `+++` 연산자는 접미 단항 연산자로 처리됩니다.
+- 연산자 왼쪽에 공백이 없지만 바로 이어서 점(`.`)이 오면,
+  접미 단항 연산자로 처리됩니다.
+  예를 들어 `a+++.b`에서 `+++` 연산자는 접미 단항 연산자로 처리됩니다
+  (`a +++ .b`가 아닌 `a+++ .b`).
+
+이러한 규칙의 목적에 따라
+연산자 앞의 문자 `(`, `[`, `{`,
+연산자 뒤의 문자 `)`, `]`, `}`,
+문자 `,`, `;`, `:`도
+공백으로 간주합니다.
+
+미리 정의된 연산자 `!`나 `?`에 왼편에 공백이 없다면,
+오른편에 공백 여부와 상관없이
+접미 연산자로 처리됩니다.
+옵셔널 체이닝 연산자(optional-chaining operator)로 `?`를 사용하려면,
+왼편에 공백을 가지면 안됩니다.
+삼항 조건 연산자(ternary conditional operator)(`?` `:`)로 사용하려면,
+반드시 양쪽에 공백이 있어야 합니다.
+
+중위 연산자(infix operator)의 인수 중 하나가 정규 표현식 리터럴이라면,
+연산자는 양쪽에 공백을 가져야 합니다.
+
+특정 구문에서 `<` 또는 `>`로 시작하는 연산자는
+둘 이상의 토큰으로 분리될 수 있습니다. 나머지는 동일한 방식으로 처리되고
+다시 분리될 수 있습니다.
+그 결과로 `Dictionary<String, Array<Int>>`와 같은
+구문에서 닫는 `>` 문자 사이를 명확하게 하기 위해
+공백을 추가할 필요가 없습니다.
+예를 들어 닫는 `>` 문자는 비트 시프트 `>>` 연산자로 잘못 해석될 수 있는
+단일 토큰으로 처리되지 않습니다.
+
+<!--
+  NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
+  matches < and > and looks at what token comes after the > -- if it's a . or
+  a ( it treats the <...> as a generic parameter list, otherwise it treats
+  them as less than and greater than.
+
+  This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
+  don't write that.
+
+  We call out the > > vs >> because
+  C++ typically needs whitespace to resolve the ambiguity.
+-->
+
+새로운 커스텀 연산자를 정의하는 방법을 알아보려면,
+<doc:AdvancedOperators#커스텀-연산자-Custom-Operators>와 <doc:Declarations#연산자-선언-Operator-Declaration>을 참고바랍니다.
+기존 연산자를 오버로드 하는 방법을 알아보려면
+<doc:AdvancedOperators#연산자-메서드-Operator-Methods>를 참고바랍니다.
+
+<!--
+  NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
+  monad -- the ? is actually a monadic bind operator.  It is like a burrito.
+  The current list of reserved punctuation is in Tokens.def.
+-->
 
 > Grammar of operators:
 >
@@ -1118,3 +1251,13 @@ Swift 표준 라이브러리는 사용할 수 있는 여러 가지 연산자를 
 > *infix-operator* → *operator* \
 > *prefix-operator* → *operator* \
 > *postfix-operator* → *operator*
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
