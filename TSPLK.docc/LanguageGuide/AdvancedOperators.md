@@ -970,19 +970,39 @@ if twoThree == anotherTwoThree {
 
 단순한 경우에
 <doc:Protocols#자동-생성-구현을-사용하여-프로토콜-채택-Adopting-a-Protocol-Using-a-Synthesized-Implementation>에서 설명한대로
-Swift에 의해 등가 연산자의 자동 생성 구현을 제공받을 수 있습니다.
+Swift에 의해 동등 연산자의 자동 생성 구현을 제공받을 수 있습니다.
 
 ## 커스텀 연산자 (Custom Operators)
 
-Swift에서 제공하는 표준 연산자 외에 _커스텀 연산자 (custom operators)_ 를 선언하고 구현할 수 있습니다. 커스텀 연산자를 정의하는데 사용할 수 있는 문자의 리스트은 <doc:LexicalStructure#연산자-Operators> 를 참고바랍니다.
+Swift에서 제공하는 표준 연산자 외에
+*커스텀 연산자(custom operators)*를 선언하고 구현할 수 있습니다.
+커스텀 연산자를 정의하는데 사용할 수 있는 연산자 문자 목록은
+<doc:LexicalStructure#연산자-Operators>를 참고바랍니다.
 
-새로운 연산자는 `operator` 키워드를 사용하여 전역으로 선언되고 `prefix`, `infix` 또는 `postfix` 수식어를 사용하여 표기될 수 있습니다:
+새로운 연산자는 `operator` 키워드를 사용하여 전역으로 선언되고,
+`prefix`, `infix`, `postfix` 수식어를 사용하여 표기할 수 있습니다:
 
 ```swift
 prefix operator +++
 ```
 
-위의 예시는 `+++` 라는 새로운 접두사 연산자를 정의합니다. 이 연산자는 Swift에서 기존의 의미가 없으므로 `Vector2D` 인스턴스 작업의 특정 컨텍스트에서 아래에 고유한 사용자 정의 의미가 부여됩니다. 이 예시에서 `+++` 는 새로운 "접두사 배가" 연산자로 취급합니다. 이것은 이전에 정의한 덧셈 할당 연산자로 벡터 자신을 더해서 `Vector2D` 인스턴스의 `x` 와 `y` 값을 두배로 만듭니다. `+++` 연산자를 구현하기 위해 `Vector2D` 인스턴스에 `+++` 라는 타입 메서드를 아래와 같이 추가합니다:
+<!--
+  - test: `customOperators`
+
+  ```swifttest
+  -> prefix operator +++
+  ```
+-->
+
+위의 예시는 `+++`라는 새로운 접두 연산자를 정의합니다.
+이 연산자는 Swift에서 기존의 정의되어 있지 않기 때문에,
+`Vector2D` 인스턴스 작업에
+고유한 커스텀 의미를 부여할 수 있습니다. 이 예시에서
+`+++`는 새로운 "두 배로 만들기" 연산자로 취급합니다.
+이것은 이전에 정의한 덧셈 할당 연산자로 벡터 자신을 더해서
+`Vector2D` 인스턴스의 `x`와 `y` 값을 두 배로 만듭니다.
+`+++` 연산자를 구현하기 위해
+`Vector2D` 인스턴스에 `+++`라는 타입 메서드를 다음과 같이 추가합니다:
 
 ```swift
 extension Vector2D {
@@ -998,13 +1018,41 @@ let afterDoubling = +++toBeDoubled
 // afterDoubling also has values of (2.0, 8.0)
 ```
 
+<!--
+  - test: `customOperators`
+
+  ```swifttest
+  -> extension Vector2D {
+        static prefix func +++ (vector: inout Vector2D) -> Vector2D {
+           vector += vector
+           return vector
+        }
+     }
+  ---
+  -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
+  -> let afterDoubling = +++toBeDoubled
+  /> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
+  </ toBeDoubled now has values of (2.0, 8.0)
+  /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
+  </ afterDoubling also has values of (2.0, 8.0)
+  ```
+-->
+
 ### 커스텀 중위 연산자의 우선순위 (Precedence for Custom Infix Operators)
 
-커스텀 중위 연산자는 각 우선순위 그룹에 속해 있습니다. 우선순위 그룹은 다른 중위 연산자에 상대적인 연산자의 우선순위와 연산자의 연관성을 지정합니다. 이러한 특성이 중위 연산자와 다른 중위 연산자 와의 상호작용에 미치는 영향에 대한 설명은 <doc:AdvancedOperators#우선순위와-결합방향-Precedence-and-Associativity> 을 참고바랍니다.
+커스텀 중위 연산자는 각 우선순위 그룹에 속해 있습니다.
+우선순위 그룹은 해당 연산자가 다른 중위 연산자와 비교해 어느 우선순위와
+연산자의 결합방향을 지정합니다.
+이러한 특성이 중위 연산자와
+다른 중위 연산자의 상호작용에 미치는 영향에 대한 설명은
+<doc:AdvancedOperators#우선순위와-결합방향-Precedence-and-Associativity>을 참고바랍니다.
 
-우선순위 그룹에 명시적으로 위치되지 않은 커스텀 중위 연산자는 삼항 조건 연산자의 우선순위 바로 위인 기본 우선순위 그룹이 제공됩니다.
+우선순위 그룹에 명시적으로 속하지 않은 커스텀 중위 연산자는
+삼항 조건 연산자의 우선순위
+바로 위인 기본 우선순위 그룹이 제공됩니다.
 
-다음의 예시는 `AdditionPrecedence` 우선순위 그룹에 속해있는 `+-` 라는 새로운 커스텀 중위 연산자를 정의합니다:
+다음의 예시는 `+-`라는 새로운 커스텀 중위 연산자를
+`AdditionPrecedence` 우선순위 그룹에 속하도록 정의합니다:
 
 ```swift
 infix operator +-: AdditionPrecedence
@@ -1019,16 +1067,77 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 ```
 
-이 연산자는 두 벡터의 `x` 값을 더하고 첫번째 벡터에서 두번째 벡터의 `y` 값을 뺍니다. 본질적으로 "가산" 연산자이기 때문에 `+` 와 `-` 와 같은 가산 중위 연산자와 같은 우선순위 그룹이 지정되었습니다. 연산자 우선순위 그룹과 연관성 설정의 전체 리스트를 포함하여 Swift 표준 라이브러리에서 제공하는 연산자에 대한 정보는 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator\_declarations) 을 참고바랍니다. 우선순위 그룹에 대한 자세한 내용과 고유한 연산자와 우선순위 그룹에 대한 구문을 보려면 <doc:Declarations#연산자-선언-Operator-Declaration> 을 참고바랍니다.
+<!--
+  - test: `customOperators`
 
-> Note\
-> 접두사 또는 접미사 연산자를 정의할 때 우선순위를 지정하지 않습니다. 그러나 같은 피연산자에 접두사와 접미사 연산자를 모두 적용하면 접미사 연산자가 먼저 적용됩니다.
+  ```swifttest
+  -> infix operator +-: AdditionPrecedence
+  -> extension Vector2D {
+        static func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+           return Vector2D(x: left.x + right.x, y: left.y - right.y)
+        }
+     }
+  -> let firstVector = Vector2D(x: 1.0, y: 2.0)
+  -> let secondVector = Vector2D(x: 3.0, y: 4.0)
+  -> let plusMinusVector = firstVector +- secondVector
+  /> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
+  </ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
+  ```
+-->
+
+이 연산자는 두 벡터의 `x` 값을 더하고
+첫 번째 벡터에서 두 번째 벡터의 `y` 값을 뺍니다.
+본질적으로 "덧셈" 연산자이기 때문에
+`+`나 `-`와 같은 덧셈 중위 연산자와
+동일한 우선순위 그룹이 지정되었습니다.
+Swift 표준 라이브러리에서 제공하는 연산자의
+전체 우선순위 그룹과 결합방향 설정 목록은
+[연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator\_declarations)을 참고바랍니다.
+우선순위 그룹에 대한 자세한 내용과
+자체 정의한 연산자와 우선순위 그룹에 대한 문법을 보려면
+<doc:Declarations#연산자-선언-Operator-Declaration>을 참고바랍니다.
+
+> Note: 접두 연산자나 접미 연산자를 정의할 때 우선순위를 지정하지 않습니다.
+> 그러나 같은 피연산자에 접두 연산자와 접미 연산자를 모두 적용하면,
+> 접미 연산자가 먼저 적용됩니다.
+
+<!--
+  - test: `postfixOperatorsAreAppliedBeforePrefixOperators`
+
+  ```swifttest
+  -> prefix operator +++
+  -> postfix operator ---
+  -> extension Int {
+         static prefix func +++ (x: Int) -> Int {
+             return x * 2
+         }
+     }
+  -> extension Int {
+         static postfix func --- (x: Int) -> Int {
+             return x - 1
+         }
+     }
+  -> let x = +++1---
+  -> let y = +++(1---)
+  -> let z = (+++1)---
+  -> print(x, y, z)
+  <- 0 0 1
+  // Note that x==y
+  ```
+-->
 
 ## 결과 빌더 (Result Builders)
 
-_결과 빌더 (result builder)_ 는 리스트 (list) 나 트리 (tree) 와 같은 중첩된 데이터를 자연스럽고 선언적인 방식으로 생성하기 위한 구문을 추가하는 타입입니다. 결과 빌더를 사용하는 코드는 조건적이거나 반복되는 데이터의 조각을 처리하기 위해 `if` 와 `for` 와 같은 Swift 구문을 포함할 수 있습니다.
+*결과 빌더(result builder)*는
+리스트(list)나 트리(tree)와 같은
+중첩된 데이터를 자연스러운 선언적인 방식으로 생성하기 위한
+문법을 추가하는 타입입니다.
+결과 빌더를 사용하는 코드는
+`if`와 `for`와 같은 Swift 구문을 포함할 수 있어
+조건부나 반복적인 데이터를 처리하기에 적합합니다.
 
-아래 코드는 별과 텍스트를 사용하여 한줄로 그리기 위해 몇가지 타입을 정의합니다.
+아래 코드는 별과 텍스트를 사용하여
+한 줄로 그리기 위해 몇 가지 타입을 정의합니다.
 
 ```swift
 protocol Drawable {
@@ -1058,9 +1167,52 @@ struct AllCaps: Drawable {
 }
 ```
 
-`Drawable` 프로토콜은 선이나 모양을 그릴 수 있는 항목에 대한 요구사항을 정의합니다: 이 타입은 반드시 `draw()` 메서드를 구현해야 합니다. `Line` 구조체는 단일 선 그리는 것을 나타내며 대부분 그리는 것에 대해 최상위 컨테이너 역할을 합니다. `Line` 을 그리기 위해 구조체는 각 선의 구성요소에서 `draw()` 를 호출한 다음 결과 문자열을 하나의 문자열로 연결합니다. `Text` 구조체는 문자열을 감아 그리기의 일부로 만듭니다. AllCaps 구조체는 다른 그리기를 감싸고 수정하여 모든 텍스트를 대문자로 변환합니다.
+<!--
+  - test: `result-builder`
 
-이니셜라이저를 호출하여 이러한 타입으로 그리기가 가능합니다:
+  ```swifttest
+  -> protocol Drawable {
+         func draw() -> String
+     }
+  -> struct Line: Drawable {
+         var elements: [Drawable]
+         func draw() -> String {
+             return elements.map { $0.draw() }.joined(separator: "")
+         }
+     }
+  -> struct Text: Drawable {
+         var content: String
+         init(_ content: String) { self.content = content }
+         func draw() -> String { return content }
+     }
+  -> struct Space: Drawable {
+         func draw() -> String { return " " }
+     }
+  -> struct Stars: Drawable {
+         var length: Int
+         func draw() -> String { return String(repeating: "*", count: length) }
+     }
+  -> struct AllCaps: Drawable {
+         var content: Drawable
+         func draw() -> String { return content.draw().uppercased() }
+     }
+  ```
+-->
+
+`Drawable` 프로토콜은
+선이나 모양을 그릴 수 있는 항목에 대한 요구사항을 정의합니다:
+이 타입은 반드시 `draw()` 메서드를 구현해야 합니다.
+`Line` 구조체는 단일 선 그리는 것을 나타내며
+대부분 그리는 것에 대해 최상위 컨테이너 역할을 합니다.
+`Line`을 그리기 위해
+구조체는 각 선의 요소에서 `draw()`를 호출한 다음
+결과 문자열을 하나의 문자열로 연결합니다.
+`Text` 구조체는 문자열을 그리기의 일부로 만듭니다.
+`AllCaps` 구조체는 다른 그리기를 감싸고 수정하여
+모든 텍스트를 대문자로 변환합니다.
+
+이니셜라이저를 호출하여
+이러한 타입으로 그리기가 가능합니다:
 
 ```swift
 let name: String? = "Ravi Patel"
@@ -1075,9 +1227,37 @@ print(manualDrawing.draw())
 // Prints "***Hello RAVI PATEL!**"
 ```
 
-이 코드는 동작하지만 약간 어색합니다. `AllCaps` 는 뒤에 여러개 중첩된 괄호는 읽기 어렵습니다. `name` 이 `nil` 일 때 "World" 를 사용하는 대체 논리는 더 복잡해 지면 어려워질 수 있지만 `??` 연산자를 사용하여 인라인으로 수행해야 합니다. 그리기의 일부를 구성하기 위해 스위치 또는 `for` 루프를 포함하는 경우에는 그렇게 할 수 없습니다. 결과 빌더를 사용하면 일반적인 Swift 코드처럼 보이도록 다시 작성할 수 있습니다.
+<!--
+  - test: `result-builder`
 
-결과 빌더를 정의하려면 타입 선언에 `@resultBuilder` 속성을 작성해야 합니다. 예를 들어 이 코드는 선언적 구문을 사용하여 그리기를 설명할 수 있는 `DrawingBuilder` 라는 결과 빌더를 정의합니다:
+  ```swifttest
+  -> let name: String? = "Ravi Patel"
+  -> let manualDrawing = Line(elements: [
+          Stars(length: 3),
+          Text("Hello"),
+          Space(),
+          AllCaps(content: Text((name ?? "World") + "!")),
+          Stars(length: 2),
+     ])
+  -> print(manualDrawing.draw())
+  <- ***Hello RAVI PATEL!**
+  ```
+-->
+
+이 코드는 동작하지만 약간 어색합니다.
+`AllCaps` 뒤에 중첩된 괄호가 많아 읽기 어렵습니다.
+`name`이 `nil`일 때 "World"를 사용하는 대체 논리는
+`??` 연산자를 사용하여 인라인으로 수행해야 하는데,
+더 복잡해지면 읽기 어렵습니다.
+그리기를 구성하기 위해
+스위치나 `for` 루프를 포함할 수 없습니다.
+결과 빌더를 사용하면
+일반적인 Swift 코드처럼 보이도록 다시 작성할 수 있습니다.
+
+결과 빌더를 정의하려면,
+타입 선언에 `@resultBuilder` 속성을 작성해야 합니다.
+예를 들어 이 코드는 `DrawingBuilder` 라는 결과 빌더를 정의하고,
+이것은 선언적 문법을 사용하여 그리기를 설명할 수 있습니다:
 
 ```swift
 @resultBuilder
@@ -1094,9 +1274,37 @@ struct DrawingBuilder {
 }
 ```
 
-`DrawingBuilder` 구조체는 결과 빌더 구문의 일부를 구현하는 3개의 메서드를 정의합니다. `buildBlock(_:)` 메서드는 코드 블럭에 선을 작성하기 위한 지원을 추가합니다. 해당 블럭의 구성요소를 `Line` 으로 결합합니다. `buildEither(first:)` 와 `buildEither(second:)` 메서드는 `if`-`else` 에 대한 지원을 추가합니다.
+<!--
+  - test: `result-builder`
 
-`@DrawingBuilding` 을 함수의 파라미터로 적용하여 함수에 전달된 클로저를 결과 빌더가 해당 클로저에서 생성하는 값으로 바꿀 수 있습니다. 예를 들어:
+  ```swifttest
+  -> @resultBuilder
+  -> struct DrawingBuilder {
+         static func buildBlock(_ components: Drawable...) -> Drawable {
+             return Line(elements: components)
+         }
+         static func buildEither(first: Drawable) -> Drawable {
+             return first
+         }
+         static func buildEither(second: Drawable) -> Drawable {
+             return second
+         }
+     }
+  ```
+-->
+
+`DrawingBuilder` 구조체는 세 개의 메서드를 정의하고,
+이것은 결과 빌더 문법의 구현 일부입니다.
+`buildBlock(_:)` 메서드는
+코드 본문에 선을 작성하기 위한 지원을 추가합니다.
+해당 본문의 요소를 `Line`으로 결합합니다.
+`buildEither(first:)`와 `buildEither(second:)` 메서드는
+`if`-`else`에 대한 지원을 추가합니다.
+
+`@DrawingBuilding`을 함수의 파라미터로 적용하여
+함수에 전달된 클로저를
+결과 빌더가 해당 클로저에서 생성하는 값으로 바꿀 수 있습니다.
+예를 들어:
 
 ```swift
 func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
@@ -1131,7 +1339,56 @@ print(personalGreeting.draw())
 // Prints "***Hello RAVI PATEL!**"
 ```
 
-`makeGreeting(for:)` 함수는 `name` 파라미터를 가지고 와서 개인화 인사말을 그리는데 사용됩니다. `draw(_:)` 와 `caps(_:)` 함수는 모두 `@DrawingBuilder` 속성으로 표시된 인수로 단일 클로저를 가집니다. 이러한 함수를 호출할 때 `DrawingBuilder` 가 정의하는 특별한 구문을 사용합니다. Swift 는 그리기의 선언적 설명을 `DrawingBuilder` 의 메서드에 대한 호출로 변환하여 함수 인수로 전달되는 값을 구성합니다. 예를 들어 Swift 는 이 예시에서 `caps(_:)` 호출을 다음과 같은 코드로 변환합니다:
+<!--
+  - test: `result-builder`
+
+  ```swifttest
+  -> func draw(@DrawingBuilder content: () -> Drawable) -> Drawable {
+         return content()
+     }
+  -> func caps(@DrawingBuilder content: () -> Drawable) -> Drawable {
+         return AllCaps(content: content())
+     }
+  ---
+  -> func makeGreeting(for name: String? = nil) -> Drawable {
+         let greeting = draw {
+             Stars(length: 3)
+             Text("Hello")
+             Space()
+             caps {
+                 if let name = name {
+                     Text(name + "!")
+                 } else {
+                     Text("World!")
+                 }
+             }
+             Stars(length: 2)
+         }
+         return greeting
+     }
+  -> let genericGreeting = makeGreeting()
+  -> print(genericGreeting.draw())
+  <- ***Hello WORLD!**
+  ---
+  -> let personalGreeting = makeGreeting(for: "Ravi Patel")
+  -> print(personalGreeting.draw())
+  <- ***Hello RAVI PATEL!**
+  ```
+-->
+
+`makeGreeting(for:)` 함수는 `name` 파라미터를 가지고 와서
+개인화 인사말을 그리는데 사용됩니다.
+`draw(_:)`와 `caps(_:)` 함수는
+모두 `@DrawingBuilder` 속성으로 표시된
+인수로 단일 클로저를 가집니다.
+이러한 함수를 호출할 때,
+`DrawingBuilder`가 정의하는 특별한 구문을 사용합니다.
+Swift는 그리기의 선언적 설명을
+`DrawingBuilder`의 메서드에 대한 호출로 변환하여
+함수 인수로 전달되는 값을 구성합니다.
+예를 들어
+Swift는 이 예시에서 `caps(_:)` 호출을
+다음과 같은 코드로 변환합니다:
 
 ```swift
 let capsDrawing = caps {
@@ -1147,9 +1404,35 @@ let capsDrawing = caps {
 }
 ```
 
-Swift 는 `if`-`else` 블럭을 `buildEither(first:)` 와 `buildEither(second:)` 메서드에 대한 호출로 변환합니다. 코드에서 이러한 메서드를 호출하지 않지만 변환 결과를 표시하면 `DrawingBuilder` 구문을 사용할 때 Swift 가 코드를 어떻게 변환하는지 쉽게 확인할 수 있습니다.
+<!--
+  - test: `result-builder`
 
-특별한 그리기 구문에서 `for` 루프 지원을 추가하기 위해 `buildArray(_:)` 메서드를 추가합니다.
+  ```swifttest
+  -> let capsDrawing = caps {
+         let partialDrawing: Drawable
+         if let name = name {
+             let text = Text(name + "!")
+             partialDrawing = DrawingBuilder.buildEither(first: text)
+         } else {
+             let text = Text("World!")
+             partialDrawing = DrawingBuilder.buildEither(second: text)
+         }
+         return partialDrawing
+  -> }
+  >> print(capsDrawing.draw())
+  << RAVI PATEL!
+  ```
+-->
+
+Swift는 `if`-`else` 블럭을
+`buildEither(first:)`와 `buildEither(second:)` 메서드에 대한 호출로 변환합니다.
+코드에서 이러한 메서드를 호출하지 않지만
+변환 결과를 표시하면
+`DrawingBuilder` 구문을 사용할 때
+Swift가 코드를 어떻게 변환하는지 쉽게 확인할 수 있습니다.
+
+특별한 그리기 구문에서 `for` 루프 지원을 추가하기 위해
+`buildArray(_:)` 메서드를 추가합니다.
 
 ```swift
 extension DrawingBuilder {
@@ -1166,6 +1449,124 @@ let manyStars = draw {
 }
 ```
 
-위의 코드에서 `for` 루프는 그리기의 배열을 생성하고 `buildArray(_:)` 메서드는 해당 배열을 `Line` 으로 변환합니다.
+<!--
+  - test: `result-builder`
 
-Swift 가 빌더 구문을 빌더 타입의 메서드 호출로 변환하는 방법에 대한 전체 리스트는 <doc:Attributes#resultBuilder> 를 참고바랍니다.
+  ```swifttest
+  -> extension DrawingBuilder {
+         static func buildArray(_ components: [Drawable]) -> Drawable {
+             return Line(elements: components)
+         }
+     }
+  -> let manyStars = draw {
+         Text("Stars:")
+         for length in 1...3 {
+             Space()
+             Stars(length: length)
+         }
+  -> }
+  >> print(manyStars.draw())
+  << Stars: * ** ***
+  ```
+-->
+
+위의 코드에서 `for` 루프는 그리기의 배열을 생성하고,
+`buildArray(_:)` 메서드는 해당 배열을 `Line`으로 변환합니다.
+
+Swift가 빌더 구문을
+빌더 타입의 메서드 호출로 변환하는 방법에 대한 전체 목록은
+<doc:Attributes#resultBuilder>를 참고바랍니다.
+
+<!--
+  The following needs more work...
+
+   Protocol Operator Requirements
+   ------------------------------
+
+   You can include operators in the requirements of a protocol.
+   A type conforms to the protocol
+   only if there's an implementation of the operator for that type.
+   You use ``Self`` to refer to the type that will conform to the protocol,
+   just like you do in other protocol requirements.
+   For example, the Swift standard library defines the ``Equatable`` protocol
+   which requires the ``==`` operator:
+
+   .. testcode:: protocolOperator
+
+      -> protocol Equatable {
+             static func == (lhs: Self, rhs: Self) -> Bool
+         }
+
+   To make a type conform to the protocol,
+   you need to implement the ``==`` operator for that type.
+   For example:
+
+   .. testcode:: protocolOperator
+
+  -> struct Vector3D {
+        var x = 0.0, y = 0.0, z = 0.0
+     }
+  -> extension Vector3D: Equatable {
+         static func == (left: Vector3D, right: Vector3D) -> Bool {
+             return (left.x == right.x) && (left.y == right.y) && (left.z == right.z)
+         }
+     }
+  >> let r0 =
+  >> Vector3D(x: 1.1, y: 2.3, z: 12) == Vector3D(x: 1.1, y: 2.3, z: 12)
+  >> assert(r0)
+-->
+
+<!--
+  FIXME: This doesn't work
+  <rdar://problem/27536066> SE-0091 -- can't have protocol conformance & operator implementation in different types
+
+   For operators that take values of two different types,
+   the operator's implementation doesn't have to be
+   a member of the type that conforms to the protocol ---
+   the implementation can also be a member of the other type.
+   For example,
+   the code below defines the ``*`` operator
+   to scale a vector by a given amount.
+   The ``Vector2D`` structure conforms to this protocol
+   because there's an implementation of the operator
+   that takes a ``Vector2D`` as its second argument,
+   even though that implementation is a member of ``Double``.
+
+   .. testcode:: customOperators
+
+  -> infix operator *** {}
+  -> protocol AnotherProtocol {
+         // static func * (scale: Double, vector: Self) -> Self
+         static func *** (scale: Double, vector: Vector2D) -> Vector2D
+     }
+  ---
+  -> extension Double {
+         static func *** (scale: Double, vector: Vector2D) -> Vector2D {
+             return Vector2D(x: scale * vector.x, y: scale * vector.y)
+         }
+     }
+  -> extension Vector2D: AnotherProtocol {}
+  -> let unitVector = Vector2D(x: 1.0, y: 1.0)
+  -> print(2.5 *** unitVector)
+  <- Vector2D(x: 2.5, y: 2.5)
+-->
+
+<!--
+  TODO: However, Doug thought that this might be better covered by Generics,
+  where you know that two things are definitely of the same type.
+  Perhaps mention it here, but don't actually show an example?
+-->
+
+<!--
+  TODO: generic operators
+-->
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
