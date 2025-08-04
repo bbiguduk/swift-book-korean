@@ -159,7 +159,7 @@ let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 -->
 
 > Experiment: `\()`을 사용하여
-> 문자열에 부동 소수점(floating-point) 계산을 포함하고
+> 문자열에 부동소수점(floating-point) 계산을 포함하고
 > 인사말에 누군가의 이름을 포함해 보세요.
 
 여러줄의 문자열에 대해
@@ -1502,7 +1502,7 @@ let aceRawValue = ace.rawValue
 특정 값으로 이 동작을 변경할 수 있습니다.
 위의 예시에서 `Ace`는 명시적으로 `1`의 값이 주어지고
 나머지 원시값은 순서대로 할당됩니다.
-열거형의 원시 타입으로 문자열 또는 부동 소수점도
+열거형의 원시 타입으로 문자열 또는 부동소수점도
 사용할 수 있습니다.
 열거형 케이스의 원시값에 접근하기 위해 `rawValue` 프로퍼티를 사용합니다.
 

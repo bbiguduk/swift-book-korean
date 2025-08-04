@@ -896,9 +896,9 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-이 형식에서 각 케이스 블럭은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 첫번째 형식의 케이스와 달리 각 케이스는 동일한 기본 타입의 _원시값 (raw value)_ 인 기본값을 가집니다. 이러한 값의 타입은 _원시값 타입 (raw-value type)_ 으로 지정되고 정수, 부동 소수점 숫자, 문자열 또는 단일 문자로 표현되어야 합니다. 특히 _원시값 타입 (raw-value type)_ 은 `Equatable` 프로토콜과 다음 프로토콜 중 하나를 준수해야 합니다:\
+이 형식에서 각 케이스 블럭은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 첫번째 형식의 케이스와 달리 각 케이스는 동일한 기본 타입의 _원시값 (raw value)_ 인 기본값을 가집니다. 이러한 값의 타입은 _원시값 타입 (raw-value type)_ 으로 지정되고 정수, 부동소수점 숫자, 문자열 또는 단일 문자로 표현되어야 합니다. 특히 _원시값 타입 (raw-value type)_ 은 `Equatable` 프로토콜과 다음 프로토콜 중 하나를 준수해야 합니다:\
 정수 리터럴에 대한 `ExpressibleByIntegerLiteral`,\
-부동 소수점 리터럴에 대한 `ExpressibleByFloatLiteral`,\
+부동소수점 리터럴에 대한 `ExpressibleByFloatLiteral`,\
 문자의 모든 숫자를 포함하는 문자열 리터럴에 대한 `ExpressibleByStringLiteral`, 그리고 단일 문자만 포함하는 문자열 리터럴에 대한 `ExpressibleByUnicodeScalarLiteral` 또는 `ExpressibleByExtendedGraphemeClusterLiteral`. 각 케이스는 고유한 이름을 가지고 고유한 원시값이 할당 되어야 합니다.
 
 원시값 타입이 `Int` 로 지정되고 케이스에 명시적으로 값을 할당하지 않으면 암시적으로 값 `0`, `1`, `2`, 등으로 할당됩니다. 타입 `Int` 의 각 할당되지 않은 케이스는 이전 케이스의 원시값에서 자동으로 증가된 원시값으로 할당됩니다.
