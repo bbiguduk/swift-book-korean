@@ -518,7 +518,7 @@ let exclamationMark: Character = "!"
   ```
 -->
 
-`String` 값은 초기화 인수로
+`String` 값은 초기화 인자로
 `Character` 값의 배열을 전달해 생성할 수 있습니다:
 
 ```swift
@@ -988,7 +988,7 @@ print("the number of characters in \(word) is \(word.count)")
 `startIndex` 프로퍼티를 사용합니다.
 `endIndex` 프로퍼티는 `String`에 마지막 문자의 다음 위치입니다.
 그 결과
-`endIndex` 프로퍼티는 문자열의 서브스크립트에 유효한 인수가 아닙니다.
+`endIndex` 프로퍼티는 문자열의 서브스크립트에 유효한 인자가 아닙니다.
 `String`이 비어있다면, `startIndex`와 `endIndex`는 같습니다.
 
 `String`의 메서드 `index(before:)`와 `index(after:)`를 사용하여
@@ -1408,7 +1408,7 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
 
 문자열이 특정 문자열 접두사나 접미사를 가지고 있는지 확인하기 위해
 문자열의 `hasPrefix(_:)`와 `hasSuffix(_:)` 메서드를 호출하면 됩니다.
-두 메서드는 하나의 `String` 타입 인수를 받고 Boolean 값을 반환합니다.
+두 메서드는 하나의 `String` 타입 인자를 받고 Boolean 값을 반환합니다.
 
 <!--
   - test: `prefixComparisonUsesCharactersNotScalars`

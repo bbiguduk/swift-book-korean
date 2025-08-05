@@ -108,9 +108,9 @@ counter.reset()
   ```
 -->
 
-함수 파라미터는 <doc:Functions#함수-인수-레이블과-파라미터-이름-Function-Argument-Labels-and-Parameter-Names>에서 설명했듯이
+함수 파라미터는 <doc:Functions#함수-인자-레이블과-파라미터-이름-Function-Argument-Labels-and-Parameter-Names>에서 설명했듯이
 함수 본문 내에서 사용하는 이름과
-함수 호출할 때 사용하는 인수 레이블을 모두 가질 수 있습니다.
+함수 호출할 때 사용하는 인자 레이블을 모두 가질 수 있습니다.
 메서드도 타입에 속한 함수이므로,
 메서드 파라미터도 동일한 규칙을 따릅니다.
 

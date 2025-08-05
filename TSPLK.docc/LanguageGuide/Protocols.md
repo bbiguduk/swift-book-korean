@@ -777,7 +777,7 @@ API 구현에서 해당 타입을 선택하지만,
 예를 들어, 함수의 반환 타입을 숨기고
 값이 특정 프로토콜을 준수한다는 것만 보장할 수 있습니다.
 
-박싱된 프로토콜 타입(boxed protocol type)을 사용하는 코드는
+박싱 프로토콜 타입(boxed protocol type)을 사용하는 코드는
 런타임 때 선택된 프로토콜을 준수하는 모든 타입에서 동작할 수 있습니다.
 이런 런타임 유연성을 지원하기 위해,
 Swift는 필요할 때
@@ -792,7 +792,7 @@ Swift는 컴파일 시에 실제 타입을 알 수 없으므로,
 
 프로토콜을 제네릭 제약조건으로 사용하는 것에 대한 자세한 내용은
 <doc:Generics>을 참고바랍니다.
-불투명 타입과 박싱된 프로토콜 타입에 대한 자세한 내용은
+불투명 타입과 박싱 프로토콜 타입에 대한 자세한 내용은
 <doc:OpaqueTypes>을 참고바랍니다.
 
 <!--
@@ -2057,7 +2057,7 @@ class Counter {
 `increment()` 메서드는 먼저 데이터 소스의 `increment(forCount:)` 메서드를 통해
 증가 값을 조회하려고 합니다.
 `increment()` 메서드는 `increment(forCount:)` 호출에 대해 옵셔널 체이닝을 사용하고
-메서드의 단일 인수로 현재 `count` 값을 전달합니다.
+메서드의 단일 인자로 현재 `count` 값을 전달합니다.
 
 여기서 두 단계 옵셔널 체이닝을 사용합니다.
 먼저 `dataSource`는 `nil`일 수 있으므로,
@@ -2197,7 +2197,7 @@ class TowardsZeroSource: NSObject, CounterDataSource {
 
 `TowardsZeroSource` 클래스는
 `CounterDataSource` 프로토콜의 옵셔널 `increment(forCount:)` 메서드를 구현하고
-카운트 방향을 정하기 위해 `count` 인수값을 사용합니다.
+카운트 방향을 정하기 위해 `count` 인자값을 사용합니다.
 `count`가 0이면 이 메서드는 더이상 카운트 작업을 진행하지 않음을 나타내기 위해
 `0`을 반환합니다.
 

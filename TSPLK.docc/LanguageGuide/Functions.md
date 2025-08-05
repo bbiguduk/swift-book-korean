@@ -1,13 +1,13 @@
 # 함수 (Functions)
 
-함수를 정의하고 호출하며, 인수에 레이블을 지정하고 반환값을 사용합니다.
+함수를 정의하고 호출하며, 인자에 레이블을 지정하고 반환값을 사용합니다.
 
 *함수(Functions)*는 특정 작업을 수행하는 독립적인 코드 블럭입니다.
 무슨 동작을 하는지 함수에 특정 이름을 부여할 수 있으며,
 작업을 수행하기 위해 함수를 "호출"할 때 사용합니다.
 
 Swift의 통합된 함수 문법은 파라미터 이름이 없는 단순한 C 스타일 함수에서
-각 파라미터에 대한 이름과 인수 레이블이 있는
+각 파라미터에 대한 이름과 인자 레이블이 있는
 복잡한 Objective-C 스타일 메서드에 이르기까지
 모든 것을 표현할 수 있을 만큼 유연합니다.
 파라미터는 함수 호출을 단순화 하기위해 기본값을 제공할 수 있으며
@@ -35,8 +35,8 @@ Swift에서는 함수 타입을 다른 타입처럼 사용할 수 있으므로,
 *함수 이름*을 가지고 있습니다.
 함수를 사용하려면, 함수의 이름으로 "호출"하고
 함수의 파라미터 타입과 일치하는
-입력값(*인수(argument)*)을 전달해야 합니다.
-함수의 인수는 항상 함수의 파라미터 순서와
+입력값(*인자(argument)*)을 전달해야 합니다.
+함수의 인자는 항상 함수의 파라미터 순서와
 동일하게 제공해야 합니다.
 
 아래 예시의 함수는 `greet(person:)`이라는 이름을 가지고,
@@ -96,17 +96,17 @@ print(greet(person: "Brian"))
 -->
 
 `greet(person: "Anna")`와 같이
-`person` 인수 레이블 뒤에 `String` 값을 전달하여
+`person` 인자 레이블 뒤에 `String` 값을 전달하여
 `greet(person:)` 함수를 호출합니다.
 함수는 `String` 값을 반환하므로,
 `greet(person:)`은 위에서와 같이 반환값의 문자열을 출력하기 위해
 `print(_:separator:terminator:)` 함수 안에서 호출할 수 있습니다.
 
 > Note: `print(_:separator:terminator:)` 함수는
-> 첫 번째 인수가 레이블을 가지고 있지 않고,
-> 다른 인수는 기본값을 가지고 있으므로 생략할 수 있습니다.
+> 첫 번째 인자가 레이블을 가지고 있지 않고,
+> 다른 인자는 기본값을 가지고 있으므로 생략할 수 있습니다.
 > 이러한 함수 구문의 변형은 아래
-> <doc:Functions#함수-인수-레이블과-파라미터-이름-Function-Argument-Labels-and-Parameter-Names>과
+> <doc:Functions#함수-인자-레이블과-파라미터-이름-Function-Argument-Labels-and-Parameter-Names>과
 > <doc:Functions#파라미터-기본값-Default-Parameter-Values>에서 자세히 설명합니다.
 
 `greet(person:)` 함수의 본문은
@@ -218,15 +218,15 @@ print(greet(person: "Tim", alreadyGreeted: true))
   ```
 -->
 
-`person`이라는 레이블을 가진 `String` 타입의 인수값과
-`alreadyGreeted`이라는 레이블을 가진 `Bool` 타입의 인수값을
+`person`이라는 레이블을 가진 `String` 타입의 인자값과
+`alreadyGreeted`이라는 레이블을 가진 `Bool` 타입의 인자값을
 소괄호 안에 콤마로 구분하여
 `greet(person:alreadyGreeted:)` 함수로 전달하여 호출합니다.
 이전 섹션에서 본
 `greet(person:)` 함수와는 다른 함수인 것을 명심해야 합니다.
 두 함수 모두 `greet`으로 시작하는 이름을 가지지만,
-`greet(person:alreadyGreeted:)` 함수는 두 개의 인수를 가지지만
-`greet(person:)` 함수는 오직 하나의 인수를 가집니다.
+`greet(person:alreadyGreeted:)` 함수는 두 개의 인자를 가지지만
+`greet(person:)` 함수는 오직 하나의 인자를 가집니다.
 
 ### 반환값 없는 함수 (Functions Without Return Values)
 
@@ -428,7 +428,7 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 
 위에서 `minMax(array:)` 함수는 두 개의 `Int` 값을 포함하는 튜플을 반환합니다.
 그러나 이 함수는 전달된 배열에 대한 안정성 검사를 하지 않습니다.
-`array` 인수가 빈 배열을 포함하면
+`array` 인자가 빈 배열을 포함하면
 위에서 정의된 `minMax(array:)` 함수는
 `array[0]`을 접근할 때 런타임 오류가 발생합니다.
 
@@ -571,15 +571,15 @@ print(anotherGreeting(for: "Dave"))
   ```
 -->
 
-## 함수 인수 레이블과 파라미터 이름 (Function Argument Labels and Parameter Names)
+## 함수 인자 레이블과 파라미터 이름 (Function Argument Labels and Parameter Names)
 
-각 함수 파라미터는 *인수 레이블(argument label)*과
+각 함수 파라미터는 *인자 레이블(argument label)*과
 *파라미터 이름(parameter name)*을 가지고 있습니다.
-인수 레이블은 함수가 호출될 때 사용되고;
-각 인수는 함수 호출 시 인수 레이블 다음에 작성합니다.
+인자 레이블은 함수가 호출될 때 사용되고;
+각 인자는 함수 호출 시 인자 레이블 다음에 작성합니다.
 파라미터 이름은 함수의 구현 내부에서 사용됩니다.
 기본적으로 파라미터는
-파라미터 이름을 인수 레이블로 사용합니다.
+파라미터 이름을 인자 레이블로 사용합니다.
 
 ```swift
 func someFunction(firstParameterName: Int, secondParameterName: Int) {
@@ -603,8 +603,8 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
 
 모든 파라미터는 유니크한 이름을 가져야 합니다.
 여러 파라미터에
-동일한 인수 레이블을 가질 수 있지만,
-유니크한 인수 레이블은 코드를 더욱 읽기 편하게 해줍니다.
+동일한 인자 레이블을 가질 수 있지만,
+유니크한 인자 레이블은 코드를 더욱 읽기 편하게 해줍니다.
 
 <!--
   - test: `non-unique-external-name`
@@ -615,10 +615,10 @@ someFunction(firstParameterName: 1, secondParameterName: 2)
   ```
 -->
 
-### 인수 레이블 지정 (Specifying Argument Labels)
+### 인자 레이블 지정 (Specifying Argument Labels)
 
 공백으로 구분하여
-파라미터 이름 앞에 인수 레이블을 작성합니다:
+파라미터 이름 앞에 인자 레이블을 작성합니다:
 
 ```swift
 func someFunction(argumentLabel parameterName: Int) {
@@ -662,14 +662,14 @@ print(greet(person: "Bill", from: "Cupertino"))
   ```
 -->
 
-인수 레이블을 사용하면 함수를 마치
+인자 레이블을 사용하면 함수를 마치
 문장처럼 표현력 있게 호출할 수 있으며,
 동시에 함수 본문은 읽기 쉽고 의도를 명확하게 유지할 수 있습니다.
 
-### 인수 레이블 생략 (Omitting Argument Labels)
+### 인자 레이블 생략 (Omitting Argument Labels)
 
-파라미터에 인수 레이블을 원치 않으면,
-명시적으로 인수 레이블 작성하는 대신에 언더바(`_`)를 작성합니다.
+파라미터에 인자 레이블을 원치 않으면,
+명시적으로 인자 레이블 작성하는 대신에 언더바(`_`)를 작성합니다.
 
 ```swift
 func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
@@ -691,8 +691,8 @@ someFunction(1, secondParameterName: 2)
   ```
 -->
 
-파라미터가 인수 레이블을 가지고 있다면,
-함수를 호출할 때 인수는 *반드시* 레이블을 지정해야 합니다.
+파라미터가 인자 레이블을 가지고 있다면,
+함수를 호출할 때 인자는 *반드시* 레이블을 지정해야 합니다.
 
 ### 파라미터 기본값 (Default Parameter Values)
 
@@ -791,11 +791,11 @@ arithmeticMean(3, 8.25, 18.75)
 
 함수는 여러 개의 가변 파라미터를 가질 수 있습니다.
 가변 파라미터 뒤에 오는 첫 번째 파라미터는
-인수 레이블을 가지고 있어야 합니다.
-인수 레이블은
-가변 파라미터에 전달되는 인수와
+인자 레이블을 가지고 있어야 합니다.
+인자 레이블은
+가변 파라미터에 전달되는 인자와
 가변 파라미터 뒤에 오는
-파라미터에 전달되는 인수를 명확하게 합니다.
+파라미터에 전달되는 인자를 명확하게 합니다.
 
 <!--
   - test: `variadic-parameters-and-labels`
@@ -843,10 +843,10 @@ In-out 파라미터의 동작 방식과
 관련된 컴파일러 최적화에 대한
 자세한 설명은 <doc:Declarations#In-Out-파라미터-In-Out-Parameters>를 참고바랍니다.
 
-in-out 파라미터에 전달할 수 있는 인수는 변수만 가능합니다.
+in-out 파라미터에 전달할 수 있는 인자는 변수만 가능합니다.
 상수나 리터럴 값은 수정할 수 없기 때문에
-인수로 전달할 수 없습니다.
-in-out 파라미터에 변수를 인수로 전달할 때는
+인자로 전달할 수 없습니다.
+in-out 파라미터에 변수를 인자로 전달할 때는
 변수 이름 앞에 앰퍼샌드(`&`)를 붙여서
 해당 변수가 함수에 의해 수정될 수 있음을 나타냅니다.
 
@@ -1109,7 +1109,7 @@ printMathResult(addTwoInts, 3, 5)
 
 이 예시는 세 개의 파라미터를 가지는 `printMathResult(_:_:_:)`라는 함수를 정의합니다.
 첫 번째 파라미터는 `mathFunction`이라 불리는 `(Int, Int) -> Int` 타입입니다.
-이 첫 번째 파라미터의 인수로 해당 타입의 함수를 전달할 수 있습니다.
+이 첫 번째 파라미터의 인자로 해당 타입의 함수를 전달할 수 있습니다.
 두 번째 세 번째 파라미터는 `a`와 `b`라 불리고 둘 다 `Int` 타입입니다.
 이들은 제공된 수학 함수의 두 개의 입력값으로 사용됩니다.
 

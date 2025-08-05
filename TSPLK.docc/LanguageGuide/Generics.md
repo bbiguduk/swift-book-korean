@@ -1296,9 +1296,9 @@ func allItemsMatch<C1: Container, C2: Container>
 -->
 
 이 함수는
-`someContainer`와 `anotherContainer`라는 두 개의 인수를 가집니다.
-`someContainer` 인수는 `C1` 타입이고,
-`anotherContainer` 인수는 `C2` 타입입니다.
+`someContainer`와 `anotherContainer`라는 두 개의 인자를 가집니다.
+`someContainer` 인자는 `C1` 타입이고,
+`anotherContainer` 인자는 `C2` 타입입니다.
 `C1`과 `C2` 모두 함수가 호출될 때
 결정되는 두 가지 컨테이너 타입에 대한 타입 파라미터입니다.
 
@@ -1389,7 +1389,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 스택과 배열은 다른 타입이지만
 둘 다 `Container` 프로토콜을 준수하고,
 둘 다 같은 타입의 값을 포함합니다.
-따라서 이 둘을 컨테이너 인수로
+따라서 이 둘을 컨테이너 인자로
 `allItemsMatch(_:_:)` 함수를 호출합니다.
 위의 예시에서 `allItemsMatch(_:_:)` 함수는
 두 컨테이너의 모든 항목이 정확히 일치한다고 알려줍니다.

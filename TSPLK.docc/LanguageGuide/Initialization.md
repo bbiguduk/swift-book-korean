@@ -194,9 +194,9 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
   ```
 -->
 
-첫 번째 이니셜라이저는 `fromFahrenheit`라는 인수 레이블과
+첫 번째 이니셜라이저는 `fromFahrenheit`라는 인자 레이블과
 `fahrenheit`라는 파라미터 이름을 가진 하나의 초기화 파라미터를 가지고 있습니다.
-두 번째 이니셜라이저는 `fromKelvin`라는 인수 레이블과
+두 번째 이니셜라이저는 `fromKelvin`라는 인자 레이블과
 `kelvin`이라는 파라미터 이름을 가진 하나의 초기화 파라미터를 가지고 있습니다.
 두 이니셜라이저 모두 전달받은 하나의 값을
 섭씨 온도로 변환하고,
@@ -207,19 +207,19 @@ let freezingPointOfWater = Celsius(fromKelvin: 273.15)
   to show they can help you to get multiple initializers "for free" (after a fashion).
 -->
 
-### 파라미터 이름과 인수 레이블 (Parameter Names and Argument Labels)
+### 파라미터 이름과 인자 레이블 (Parameter Names and Argument Labels)
 
 함수와 메서드의 파라미터와 마찬가지로,
 초기화 파라미터는 이니셜라이저의 본문 내에서
 사용하는 파라미터 이름과
-이니셜라이저를 호출할 때 사용하는 인수 레이블 모두 가질 수 있습니다.
+이니셜라이저를 호출할 때 사용하는 인자 레이블 모두 가질 수 있습니다.
 
 그러나 이니셜라이저는 함수와 메서드처럼
 소괄호 앞에 식별용 함수 이름을 가지지 않습니다.
 따라서 이니셜라이저의 파라미터 이름과 타입이
 어떤 이니셜라이저를 호출해야 하는지 식별하는데 특히 중요한 역할을 합니다.
-이러한 이유 때문에 Swift는 인수 레이블을 제공하지 않으면
-이니셜라이저의 *모든* 파라미터에 대해 자동으로 인수 레이블을 제공합니다.
+이러한 이유 때문에 Swift는 인자 레이블을 제공하지 않으면
+이니셜라이저의 *모든* 파라미터에 대해 자동으로 인자 레이블을 제공합니다.
 
 다음 예시는 `red`, `green`, `blue`라는 세 개의 상수 프로퍼티를 가지는
 `Color`라는 구조체를 정의합니다.
@@ -289,8 +289,8 @@ let halfGray = Color(white: 0.5)
 -->
 
 이러한 이니셜라이저를 호출할 때는
-반드시 인수 레이블을 사용해야 합니다.
-인수 레이블이 정의되어 있는 경우,
+반드시 인자 레이블을 사용해야 합니다.
+인자 레이블이 정의되어 있는 경우,
 이를 생략하면 컴파일 시 오류가 발생합니다:
 
 ```swift
@@ -311,10 +311,10 @@ let veryGreen = Color(0.0, 1.0, 0.0)
   ```
 -->
 
-### 인수 레이블이 없는 이니셜라이저 파라미터 (Initializer Parameters Without Argument Labels)
+### 인자 레이블이 없는 이니셜라이저 파라미터 (Initializer Parameters Without Argument Labels)
 
-이니셜라이저 파라미터에 대해 인수 레이블을 사용하고 싶지 않은 경우,
-파라미터 인수 레이블 위치에 언더바(`_`)를 작성하여
+이니셜라이저 파라미터에 대해 인자 레이블을 사용하고 싶지 않은 경우,
+파라미터 인자 레이블 위치에 언더바(`_`)를 작성하여
 기본 동작을 무시할 수 있습니다.
 
 다음은 <doc:Initialization#초기화-파라미터-Initialization-Parameters>에서의
@@ -362,7 +362,7 @@ let bodyTemperature = Celsius(37.0)
 -->
 
 이니셜라이저 호출 `Celsius(37.0)`은
-인수 레이블 없이도 그 의도가 명확합니다.
+인자 레이블 없이도 그 의도가 명확합니다.
 따라서 이니셜라이저를 `init(_ celsius: Double)`로 작성하여
 이름 없는 `Double` 값을 제공하여 호출할 수 있습니다.
 
@@ -808,7 +808,7 @@ let basicRect = Rect()
 두 번째 `Rect` 이니셜라이저인 `init(origin:size:)`는
 구조체가 커스텀 이니셜라이저가 없으면
 자동으로 제공받는 멤버와이즈 이니셜라이저와 기능적으로 동일합니다.
-이 이니셜라이저는 전달된 `origin`과 `size` 인수값을
+이 이니셜라이저는 전달된 `origin`과 `size` 인자값을
 해당 저장 프로퍼티에 단순히 할당합니다:
 
 ```swift
@@ -1329,7 +1329,7 @@ print("Bicycle: \(bicycle.description)")
 
 하위 클래스의 이니셜라이저가
 초기화 과정의 2단계에서 별도의 커스터마이징을 수행하지 않고,
-상위 클래스가 동기적이며 인수가 없는 지정 이니셜라이저를 가지고 있다면,
+상위 클래스가 동기적이며 인자가 없는 지정 이니셜라이저를 가지고 있다면,
 모든 하위 클래스의 저장 프로퍼티에 값을 할당한 후에
 `super.init()` 호출을 생략할 수 있습니다.
 상위 클래스의 이니셜라이저가 비동기라면,
@@ -1515,7 +1515,7 @@ class Food {
 ![Initializer Example 1](initializersExample01)
 
 클래스는 기본 멤버와이즈 이니셜라이저를 제공하지 않기 때문에,
-`Food` 클래스는 `name`이라는 하나의 인수를 가지는
+`Food` 클래스는 `name`이라는 하나의 인자를 가지는
 지정 이니셜라이저를 제공합니다.
 이 이니셜라이저는 특정 이름으로 새로운 `Food` 인스턴스를 생성할 때 사용할 수 있습니다:
 
@@ -1542,7 +1542,7 @@ let namedMeat = Food(name: "Bacon")
 `init(name: String)` 이니셜라이저는 초기화를 완료하기 위해
 `super.init()`을 호출할 필요가 없습니다.
 
-`Food` 클래스는 인수가 없는 *편의* 이니셜라이저 `init()`도 제공합니다.
+`Food` 클래스는 인자가 없는 *편의* 이니셜라이저 `init()`도 제공합니다.
 `init()` 이니셜라이저는 `[Unnamed]`을 `name` 값으로 사용하여
 새로운 음식 이름을 설정하기 위해
 `Food` 클래스의 `init(name: String)` 이니셜라이저로 위임합니다:
@@ -1605,7 +1605,7 @@ class RecipeIngredient: Food {
 `RecipeIngredient` 클래스는 하나의 지정 이니셜라이저
 `init(name: String, quantity: Int)`를 가지고 있으며,
 이를 통해 새로운 `RecipeIngredient` 인스턴스의 모든 프로퍼티를 초기화할 수 있습니다.
-이 이니셜라이저는 먼저 전달받은 `quantity` 인수를
+이 이니셜라이저는 먼저 전달받은 `quantity` 인자를
 `RecipeIngredient` 클래스에서 새롭게 추가한
 `quantity` 프로퍼티에 할당합니다.
 그런 후에 `Food` 클래스의 `init(name: String)` 이니셜라이저로

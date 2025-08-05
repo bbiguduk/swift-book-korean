@@ -43,7 +43,7 @@
 | Return                       | 반환           |
 | Type                         | 타입           |
 | Parameter                    | 파라미터         |
-| Argument                     | 인수           |
+| Argument                     | 인자           |
 | Tuple                        | 튜플           |
 | Closure                      | 클로저          |
 | Delegate                     | 대리자          |

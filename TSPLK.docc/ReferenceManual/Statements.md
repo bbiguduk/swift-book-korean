@@ -211,7 +211,7 @@ default:
 }
 ```
 
-`switch` 구문의 _제어 표현식 (control expression)_ 은 평가된 다음에 각 케이스에 지정한 패턴과 비교됩니다. 일치하는 항목이 있으면 프로그램은 해당 케이스의 범위내에 _구문 (statements)_ 을 실행합니다. 각 케이스의 범위는 비어 있을 수 없습니다. 결과적으로 각 케이스 라벨의 콜론 (`:`) 다음에 적어도 하나의 구문이 포함되어야 합니다. 일치하는 케이스의 본문에서 코드를 실행하지 않으려면 단일 `break` 구문을 사용해야 합니다.
+`switch` 구문의 _제어 표현식 (control expression)_ 은 평가된 다음에 각 케이스에 지정한 패턴과 비교됩니다. 일치하는 항목이 있으면 프로그램은 해당 케이스의 범위내에 _구문 (statements)_ 을 실행합니다. 각 케이스의 범위는 비어 있을 수 없습니다. 결과적으로 각 케이스 레이블의 콜론 (`:`) 다음에 적어도 하나의 구문이 포함되어야 합니다. 일치하는 케이스의 본문에서 코드를 실행하지 않으려면 단일 `break` 구문을 사용해야 합니다.
 
 코드가 분기할 수 있는 표현식의 값은 매우 유연합니다. 예를 들어 정수와 문자와 같은 스칼라 타입의 값을 제외하고 코드는 부동소수점 숫자, 문자열, 튜플, 커스텀 클래스의 인스턴스, 그리고 옵셔널을 포함하는 모든 타입의 값으로 분기할 수 있습니다. _제어 표현식 (control expression)_ 의 값은 열거형의 케이스의 값과 일치하고 지정된 값 범위에 포함되는지 확인할 수도 있습니다. `switch` 구문에서 값의 이러한 여러 가지 타입을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#Switch> 를 참고바랍니다.
 
@@ -279,13 +279,13 @@ case .suppressed:
 > *switch-elseif-directive-clause* → *elseif-directive* *compilation-condition* *switch-cases*_?_ \
 > *switch-else-directive-clause* → *else-directive* *switch-cases*_?_
 
-## 라벨 구문 (Labeled Statement)
+## 레이블 구문 (Labeled Statement)
 
-접두사로 루프 구문, `if` 구문, `switch` 구문, 또는 `do` 구문을 라벨의 이름 뒤에 콜론 (`:`) 으로 구성된 _구문 라벨 (statement label)_ 을 붙일 수 있습니다. 아래 <doc:Statements#중단-구문-Break-Statement> 과 <doc:Statements#계속-구문-Continue-Statement> 에서 설명한대로 루프 구문 또는 `switch` 구문에서 제어 흐름을 변경하려는 방법을 명시하려면 `break` 와 `continue` 구문과 함께 구문 라벨을 사용해야 합니다.
+접두사로 루프 구문, `if` 구문, `switch` 구문, 또는 `do` 구문을 레이블의 이름 뒤에 콜론 (`:`) 으로 구성된 _구문 레이블 (statement label)_ 을 붙일 수 있습니다. 아래 <doc:Statements#중단-구문-Break-Statement> 과 <doc:Statements#계속-구문-Continue-Statement> 에서 설명한대로 루프 구문 또는 `switch` 구문에서 제어 흐름을 변경하려는 방법을 명시하려면 `break` 와 `continue` 구문과 함께 구문 레이블을 사용해야 합니다.
 
-라벨 구문의 범위는 구문 라벨 다음에 오는 전체 구문입니다. 라벨 구문을 중첩할 수 있지만 각 구문 라벨의 이름은 고유해야 합니다.
+레이블 구문의 범위는 구문 레이블 다음에 오는 전체 구문입니다. 레이블 구문을 중첩할 수 있지만 각 구문 레이블의 이름은 고유해야 합니다.
 
-구문 라벨을 어떻게 사용하는지 자세한 내용과 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고바랍니다.
+구문 레이블을 어떻게 사용하는지 자세한 내용과 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#레이블이-있는-구문-Labeled-Statements> 을 참고바랍니다.
 
 > Grammar of a labeled statement:
 >
@@ -311,20 +311,20 @@ case .suppressed:
 
 ### 중단 구문 (Break Statement)
 
-`break` 구문은 루프, `if` 구문, 또는 `switch` 구문의 프로그램 실행을 종료합니다. `break` 구문은 아래에서 본대로 `break` 키워드로만 구성되거나 `break` 키워드 다음에 구문 라벨의 이름으로 구성될 수 있습니다.
+`break` 구문은 루프, `if` 구문, 또는 `switch` 구문의 프로그램 실행을 종료합니다. `break` 구문은 아래에서 본대로 `break` 키워드로만 구성되거나 `break` 키워드 다음에 구문 레이블의 이름으로 구성될 수 있습니다.
 
 ```swift
 break
 break <#label name#>
 ```
 
-`break` 구문 다음에 구문 라벨의 이름이 오면 라벨로 명명된 루프, `if` 구문, 또는 `switch` 구문의 프로그램 실행을 종료합니다.
+`break` 구문 다음에 구문 레이블의 이름이 오면 레이블로 명명된 루프, `if` 구문, 또는 `switch` 구문의 프로그램 실행을 종료합니다.
 
-`break` 구문 다음에 구문 라벨의 이름이 없으면 `switch` 구문 또는 해당 구문이 발생한 가장 안쪽의 루프 구문의 프로그램 실행이 종료됩니다. `if` 구문을 벗어나기 위해 라벨이 없는 `break` 구문을 사용할 수 없습니다.
+`break` 구문 다음에 구문 레이블의 이름이 없으면 `switch` 구문 또는 해당 구문이 발생한 가장 안쪽의 루프 구문의 프로그램 실행이 종료됩니다. `if` 구문을 벗어나기 위해 레이블이 없는 `break` 구문을 사용할 수 없습니다.
 
 두 경우 모두 프로그램 제어는 루프나 `switch` 구문 다음 코드의 첫번째 줄로 전송됩니다.
 
-break 구문을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#중단-Break> 와 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고바랍니다.
+break 구문을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#중단-Break> 와 <doc:ControlFlow#레이블이-있는-구문-Labeled-Statements> 을 참고바랍니다.
 
 > Grammar of a break statement:
 >
@@ -332,22 +332,22 @@ break 구문을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 
 
 ### 계속 구문 (Continue Statement)
 
-`continue` 구문은 루프 구문의 현재 반복의 프로그램 실행을 종료하지만 루프 구문의 실행을 멈추지 않습니다. `continue` 구문은 아래에서 보는대로 `continue` 키워드로만 구성되거나 `continue` 키워드 다음에 구문 라벨의 이름으로 구성될 수 있습니다.
+`continue` 구문은 루프 구문의 현재 반복의 프로그램 실행을 종료하지만 루프 구문의 실행을 멈추지 않습니다. `continue` 구문은 아래에서 보는대로 `continue` 키워드로만 구성되거나 `continue` 키워드 다음에 구문 레이블의 이름으로 구성될 수 있습니다.
 
 ```swift
 continue
 continue <#label name#>
 ```
 
-`continue` 구문 다음에 구문 라벨의 이름이 따라오면 라벨로 명명된 루프 구문의 현재 반복의 프로그램 실행을 종료합니다.
+`continue` 구문 다음에 구문 레이블의 이름이 따라오면 레이블로 명명된 루프 구문의 현재 반복의 프로그램 실행을 종료합니다.
 
-`continue` 구문 다음에 구문 라벨의 이름이 따라오지 않으면 해당 구문이 발생한 가장 안쪽의 루프 구문의 현재 반복의 프로그램 실행이 종료됩니다.
+`continue` 구문 다음에 구문 레이블의 이름이 따라오지 않으면 해당 구문이 발생한 가장 안쪽의 루프 구문의 현재 반복의 프로그램 실행이 종료됩니다.
 
 두 경우 모두 프로그램 제어는 둘러싸인 루프 구문의 조건으로 전송됩니다.
 
 `for` 구문에서 증가 표현식은 루프의 본문이 실행된 후에 평가되므로 `continue` 구문 후에도 계속 계산됩니다.
 
-`continue` 구문 사용에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#계속-Continue> 과 <doc:ControlFlow#라벨이-있는-구문-Labeled-Statements> 을 참고바랍니다.
+`continue` 구문 사용에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#계속-Continue> 과 <doc:ControlFlow#레이블이-있는-구문-Labeled-Statements> 을 참고바랍니다.
 
 > Grammar of a continue statement:
 >
@@ -355,7 +355,7 @@ continue <#label name#>
 
 ### Fallthrough 구문 (Fallthrough Statement)
 
-`fallthrough` 구문은 `fallthrough` 키워드로 구성되고 `switch` 구문의 케이스 블럭에서만 발생합니다. `fallthrough` 구문은 `switch` 구문의 한 케이스에서 다음 케이스로 계속해서 프로그램이 실행되도록 합니다. `switch` 구문의 제어 표현식의 값이 케이스 라벨의 패턴과 일치하지 않아도 다음 케이스는 계속 실행됩니다.
+`fallthrough` 구문은 `fallthrough` 키워드로 구성되고 `switch` 구문의 케이스 블럭에서만 발생합니다. `fallthrough` 구문은 `switch` 구문의 한 케이스에서 다음 케이스로 계속해서 프로그램이 실행되도록 합니다. `switch` 구문의 제어 표현식의 값이 케이스 레이블의 패턴과 일치하지 않아도 다음 케이스는 계속 실행됩니다.
 
 `fallthrough` 구문은 케이스 블럭의 마지막 구문 뿐만 아니라 `switch` 구문 내 어디든 나타날 수 있지만 마지막 케이스 블럭에서는 사용될 수 없습니다. 또한 패턴에 값 바인딩 패턴이 포함된 케이스 블럭으로 제어를 전송할 수 없습니다.
 
@@ -507,7 +507,7 @@ do throws(<#type#>) {
 *타입*은
 `Error` 프로토콜을 준수하는 타입이거나,
 `Error` 프로토콜을 준수하는 불투명 타입,
-또는 `any Error` 의 박스형 프로토콜이어야 합니다.
+또는 `any Error` 의 박싱 프로토콜이어야 합니다.
 `do` 구문은 오류의 타입을 지정하지 않으면,
 Swift 는 다음과 같이 오류 타입을 추론합니다:
 
@@ -569,7 +569,7 @@ Swift 는 다음과 같이 오류 타입을 추론합니다:
 
 _컴파일러 조건 (compilation condition)_ 은 `true` 와 `false` 불린 리터럴 (Boolean literals), `-D` 명령줄 플래그를 사용한 식별자, 또는 아래 표에 나열된 플랫폼 조건이 포함될 수 있습니다.
 
-|         플랫폼 조건        |                         유효 인수                         |
+|         플랫폼 조건        |                         유효 인자                         |
 | :-------------------: | :---------------------------------------------------: |
 |         `os()`        | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
 |        `arch()`       |            `i386`, `x86_64`, `arm`, `arm64`           |
@@ -595,7 +595,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 // Prints "Compiled with the Swift 5 compiler or later in a Swift mode earlier than 5"
 ```
 
-`canImport()` 플랫폼 조건의 인수는 모든 플랫폼에 존재하지 않을 수 있는 모듈의 이름입니다. 모듈은 이름에 마침표 (`.`)를 포함할 수 있습니다. 이 조건은 해당 모듈을 가져올 수 있는지 검사하지만 실제로 가져오지 않습니다. 모듈이 있으면 플랫폼 조건은 `true` 를 반환하고 그렇지 않으면 `false` 를 반환합니다.
+`canImport()` 플랫폼 조건의 인자는 모든 플랫폼에 존재하지 않을 수 있는 모듈의 이름입니다. 모듈은 이름에 마침표 (`.`)를 포함할 수 있습니다. 이 조건은 해당 모듈을 가져올 수 있는지 검사하지만 실제로 가져오지 않습니다. 모듈이 있으면 플랫폼 조건은 `true` 를 반환하고 그렇지 않으면 `false` 를 반환합니다.
 
 `targetEnvironment()` 플랫폼 조건은 지정한 환경에 대해 코드가 컴파일 되면 `true` 를 반환하고 그렇지 않으면 `false` 를 반환합니다.
 
@@ -682,7 +682,7 @@ Swift 5.9 이전에는 컴파일 중에 `#warning` 과 `#error` 구문은 진단
 
 ## 가용성 조건 (Availability Condition)
 
-_가용성 조건 (availability condition)_ 은 지정된 플랫폼 인수를 기반으로 런타임 시에 API 의 가용성을 조사하기 위해 `if`, `while`, 그리고 `guard` 구문의 조건으로 사용됩니다.
+_가용성 조건 (availability condition)_ 은 지정된 플랫폼 인자를 기반으로 런타임 시에 API 의 가용성을 조사하기 위해 `if`, `while`, 그리고 `guard` 구문의 조건으로 사용됩니다.
 
 가용성 조건은 다음의 형식을 가집니다:
 
@@ -696,7 +696,7 @@ if #available(<#platform name#> <#version#>, <#...#>, *) {
 
 런타임 시 API 가 사용가능 여부에 따라 코드의 블럭을 실행하기 위해 가용성 조건을 사용합니다. 컴파일러는 코드의 블럭이 가능한 API 인 경우 가용성 조건에서 정보를 사용합니다.
 
-가용성 조건은 콤마로 구분된 플랫폼 이름과 버전을 가집니다. 플랫폼 이름으로 `iOS`, `macOS`, `watchOS`, `tvOS`, 그리고 `visionOS` 를 사용하고 해당 버전 숫자를 포함합니다. `*` 인수는 필수이고 다른 플랫폼에서 가용성 조건으로 보호되는 코드 블럭의 본문이 타겟에 지정한 최소 배포 타겟에서 실행되도록 합니다.
+가용성 조건은 콤마로 구분된 플랫폼 이름과 버전을 가집니다. 플랫폼 이름으로 `iOS`, `macOS`, `watchOS`, `tvOS`, 그리고 `visionOS` 를 사용하고 해당 버전 숫자를 포함합니다. `*` 인자는 필수이고 다른 플랫폼에서 가용성 조건으로 보호되는 코드 블럭의 본문이 타겟에 지정한 최소 배포 타겟에서 실행되도록 합니다.
 
 부울 조건과 다르게 `&&` 와 `||` 와 같은 논리 연산자를 사용하여 가용성 조건을 결합할 수 없습니다. 비가용성 조건을 사용하기 위해 가용성 조건에 부정을 나타내기 위해 `!` 을 사용하는 대신에 다음의 형식을 가질 수 있습니다:
 
@@ -708,7 +708,7 @@ if #unavailable(<#platform name#> <#version#>, <#...#>) {
 }
 ```
 
-`#unavailable` 형식은 조건을 부정하는 구문입니다. 비가용성 조건에서 `*` 인수는 암시적이고 포함되어서는 안됩니다. `*` 의 의미는 가용성 조건과 같은 의미를 가집니다.
+`#unavailable` 형식은 조건을 부정하는 구문입니다. 비가용성 조건에서 `*` 인자는 암시적이고 포함되어서는 안됩니다. `*` 의 의미는 가용성 조건과 같은 의미를 가집니다.
 
 > Grammar of an availability condition:
 >

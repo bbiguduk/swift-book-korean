@@ -4,14 +4,14 @@
 
 Swift 에는 두 종류의 속성 (attributes) 이 있습니다 — 선언에 적용하는 속성과 타입에 적용하는 속성이 있습니다. 속성은 선언 또는 타입에 대한 추가적인 정보를 제공합니다. 예를 들어 함수 선언에 `discardableResult` 속성은 함수가 값을 반환하지만 반환값이 사용되지 않을 때 컴파일러는 경고를 생성하지 않는 것을 나타냅니다.
 
-속성을 지정하려면 `@` 기호 다음에 속성의 이름과 속성이 허용하는 인수를 작성합니다:
+속성을 지정하려면 `@` 기호 다음에 속성의 이름과 속성이 허용하는 인자를 작성합니다:
 
 ```swift
 @<#attribute name#>
 @<#attribute name#>(<#attribute arguments#>)
 ```
 
-어떤 선언 속성은 속성에 대한 추가 정보와 특정 선언에 어떻게 적용하는지 지정하는 인수를 허용합니다. 이러한 _속성 인수 (attribute arguments)_ 는 소괄호로 둘러싸이고 해당 형식이 속한 속성에 의해 정의됩니다.
+어떤 선언 속성은 속성에 대한 추가 정보와 특정 선언에 어떻게 적용하는지 지정하는 인자를 허용합니다. 이러한 _속성 인자 (attribute arguments)_ 는 소괄호로 둘러싸이고 해당 형식이 속한 속성에 의해 정의됩니다.
 
 첨부된 매크로와 프로퍼티 래퍼도 속성 구문을 사용합니다.
 매크로 확장에 대한 자세한 내용은
@@ -25,29 +25,29 @@ Swift 에는 두 종류의 속성 (attributes) 이 있습니다 — 선언에 �
 
 ### attached
 
-매크로 선언에 `attached` 속성을 적용합니다. 이 속성의 인수는 매크로의 역할을 나타냅니다. 여러 역할이 있는 매크로인 경우 각 역할에 한번씩 여러번 `attached` 매크로를 적용합니다.
+매크로 선언에 `attached` 속성을 적용합니다. 이 속성의 인자는 매크로의 역할을 나타냅니다. 여러 역할이 있는 매크로인 경우 각 역할에 한번씩 여러번 `attached` 매크로를 적용합니다.
 
-이 속성에 첫번째 인수는 매크로 역할을 나타냅니다:
+이 속성에 첫번째 인자는 매크로 역할을 나타냅니다:
 
 - Peer 매크로:
-  이 속성에 첫번째 인수로 `peer` 를 작성합니다. 이 매크로 구현 타입은 `PeerMacro` 프로토콜을 준수합니다. 이러한 매크로는 매크로가 첨부된 선언과 동일한 범위에 새로운 선언을 생성합니다. 예를 들어, 구조체의 메서드에 peer 매크로를 적용하면 해당 구조체에 추가로 메서드와 프로퍼티를 정의할 수 있습니다.
+  이 속성에 첫번째 인자로 `peer` 를 작성합니다. 이 매크로 구현 타입은 `PeerMacro` 프로토콜을 준수합니다. 이러한 매크로는 매크로가 첨부된 선언과 동일한 범위에 새로운 선언을 생성합니다. 예를 들어, 구조체의 메서드에 peer 매크로를 적용하면 해당 구조체에 추가로 메서드와 프로퍼티를 정의할 수 있습니다.
 
 - Member 매크로:
-  이 속성에 첫번째 인수로 `member` 를 작성합니다. 이 매크로 구현 타입은 `MemberMacro` 프로토콜을 준수합니다. 이러한 매크로는 매크로가 첨부된 타입 또는 확장의 멤버인 새로운 선언을 생성합니다. 예를 들어, 구조체 선언에 member 매크로를 적용하면 해당 구조체에 추가로 메서드와 프로퍼티를 정의할 수 있습니다.
+  이 속성에 첫번째 인자로 `member` 를 작성합니다. 이 매크로 구현 타입은 `MemberMacro` 프로토콜을 준수합니다. 이러한 매크로는 매크로가 첨부된 타입 또는 확장의 멤버인 새로운 선언을 생성합니다. 예를 들어, 구조체 선언에 member 매크로를 적용하면 해당 구조체에 추가로 메서드와 프로퍼티를 정의할 수 있습니다.
 
 - Member 속성:
-  이 속성에 첫번째 인수로 `memberAttribute` 를 작성합니다. 이 매크로 구현 타입은 `MemberAttributeMacro` 프로토콜을 준수합니다. 이러한 매크로는 매크로가 첨부된 타입 또는 확장의 멤버에 속성을 추가합니다.
+  이 속성에 첫번째 인자로 `memberAttribute` 를 작성합니다. 이 매크로 구현 타입은 `MemberAttributeMacro` 프로토콜을 준수합니다. 이러한 매크로는 매크로가 첨부된 타입 또는 확장의 멤버에 속성을 추가합니다.
 
 - Accessor 매크로:
-  이 속성에 첫번째 인수로 `accessor` 를 작성합니다. 이 매크로 구현 타입은 `AccessorMacro` 프로토콜을 준수합니다. 이 매크로는 저장 프로퍼티에 접근자를 추가하여 연산 프로퍼티로 변경합니다.
+  이 속성에 첫번째 인자로 `accessor` 를 작성합니다. 이 매크로 구현 타입은 `AccessorMacro` 프로토콜을 준수합니다. 이 매크로는 저장 프로퍼티에 접근자를 추가하여 연산 프로퍼티로 변경합니다.
 
 - Extension 매크로:
-  이 속성에 첫번째 인수로 `extension` 을 작성합니다.
+  이 속성에 첫번째 인자로 `extension` 을 작성합니다.
   이 타입은 `ExtensionMacro` 프로토콜을 준수하는 매크로 구현입니다.
   이러한 매크로는 `where` 절로 프로토콜 준수성을 추가할 수 있고,
   매크로가 첨부된 타입의 멤버인 새로운 선언을 추가할 수 있습니다.
   매크로가 프로토콜 준수성을 추가하면,
-  `conformances:` 인수를 포함하고 프로토콜을 지정합니다.
+  `conformances:` 인자를 포함하고 프로토콜을 지정합니다.
   준수성 목록은 프로토콜 이름, 준수하는 목록 아이템의 타입 별칭,
   또는 복합 프로토콜 준수성 목록 아이템을 포함합니다.
   중첩된 타입에서 확장 매크로는 해당 파일의 최상위 레벨에서 확장합니다.
@@ -55,14 +55,14 @@ Swift 에는 두 종류의 속성 (attributes) 이 있습니다 — 선언에 �
   확장 매크로를 작성하거나
   확장 매크로를 사용하여 peer 매크로가 있는 확장을 추가할 수 없습니다.
 
-peer, member, 그리고 accessor 매크로 역할은 매크로가 생성하는 기호의 이름을 나열하는 `names:` 인수를 요구합니다.
+peer, member, 그리고 accessor 매크로 역할은 매크로가 생성하는 기호의 이름을 나열하는 `names:` 인자를 요구합니다.
 매크로가 확장 내에 선언을 추가한다면
-확장 매크로 역할도 `names:` 인수를 요구합니다.
-`names:` 인수가 매크로 선언에 포함되면,
+확장 매크로 역할도 `names:` 인자를 요구합니다.
+`names:` 인자가 매크로 선언에 포함되면,
 매크로 구현은 해당 목록과 일치하는 이름의 기호로만 생성해야 합니다.
 
-매크로 선언이 `named:` 인수를 포함할 때, 매크로 구현은 해당 리스트에 일치하는 이름의 기호만 생성해야 합니다.
-다시 말해, 매크로는 나열된 이름의 기호를 생성할 필요는 없습니다. 해당 인수의 값은 다음 중 하나 이상의 값입니다:
+매크로 선언이 `named:` 인자를 포함할 때, 매크로 구현은 해당 리스트에 일치하는 이름의 기호만 생성해야 합니다.
+다시 말해, 매크로는 나열된 이름의 기호를 생성할 필요는 없습니다. 해당 인자의 값은 다음 중 하나 이상의 값입니다:
 
 - `named(<#name#>)`
   여기서 _이름 (name)_ 은 미리 알려진 이름에 대한 고정 기호입니다.
@@ -85,7 +85,7 @@ peer, member, 그리고 accessor 매크로 역할은 매크로가 생성하는 �
 
 이 속성을 적용하여 특정 Swift 언어 버전 또는 특정 플랫폼과 운영체제 버전과 관련된 선언의 라이프 사이클을 나타냅니다.
 
-`available` 속성은 둘 이상의 콤마로 구분된 속성 인수의 리스트로 나타냅니다. 이러한 인수는 다음의 플랫폼 또는 언어 이름 중 하나로 시작합니다:
+`available` 속성은 둘 이상의 콤마로 구분된 속성 인자의 리스트로 나타냅니다. 이러한 인자는 다음의 플랫폼 또는 언어 이름 중 하나로 시작합니다:
 
 * `iOS`
 * `iOSApplicationExtension`
@@ -103,10 +103,10 @@ peer, member, 그리고 accessor 매크로 역할은 매크로가 생성하는 �
 
 또한 별표 (`*`) 를 사용하여 위에 나열된 모든 플랫폼 이름에 대한 선언의 가용성을 나타낼 수도 있습니다. Swift 버전을 사용하여 지정한 가용 `available` 속성은 별표를 사용할 수 없습니다.
 
-나머지 인수는 순서에 상관없이 나타날 수 있으며 중요한 이정표를 도입하여 선언의 라이프 사이클에 대한 추가 정보를 지정할 수 있습니다.
+나머지 인자는 순서에 상관없이 나타날 수 있으며 중요한 이정표를 도입하여 선언의 라이프 사이클에 대한 추가 정보를 지정할 수 있습니다.
 
-* `unavailable` 인수는 선언이 지정된 플랫폼에서 가능하지 않음을 나타냅니다. 이 인수는 Swift 버전 가용성을 지정할 때 사용될 수 없습니다.
-* `introduced` 인수는 선언이 도입된 지정된 플랫폼 또는 언어의 첫번째 버전을 나타냅니다. 다음과 같은 형식을 가집니다:
+* `unavailable` 인자는 선언이 지정된 플랫폼에서 가능하지 않음을 나타냅니다. 이 인자는 Swift 버전 가용성을 지정할 때 사용될 수 없습니다.
+* `introduced` 인자는 선언이 도입된 지정된 플랫폼 또는 언어의 첫번째 버전을 나타냅니다. 다음과 같은 형식을 가집니다:
 
 ```swift
 introduced: <#version number#>
@@ -114,7 +114,7 @@ introduced: <#version number#>
 
 _버전 번호 (version number)_ 는 마침표로 구분된 하나에서 세개의 양수로 구성됩니다.
 
-* `deprecated` 인수는 선언이 사용되지 않는 지정된 플랫폼 또는 언어의 첫번째 버전을 나타냅니다. 다음과 같은 형식을 가집니다:
+* `deprecated` 인자는 선언이 사용되지 않는 지정된 플랫폼 또는 언어의 첫번째 버전을 나타냅니다. 다음과 같은 형식을 가집니다:
 
 ```swift
 deprecated: <#version number#>
@@ -122,7 +122,7 @@ deprecated: <#version number#>
 
 옵셔널 _버전 번호 (version number)_ 는 마침표로 구분된 하나에서 세개의 양수로 구성됩니다. 버전 번호를 생략하면 지원 중단된 시기에 대한 정보를 제공하지 않고 선언이 현재 지원 중단됨을 나타냅니다. 버전 숫자를 생략하면 콜론 (`:`) 도 생략합니다.
 
-* `obsoleted` 인수는 선언이 폐기된 지정된 플랫폼 또는 언어의 첫번째 버전을 나타냅니다. 선언이 폐기되면 지정된 플랫폼 또는 언어에서 제거되고 더이상 사용이 불가능합니다. 다음의 형식을 가집니다:
+* `obsoleted` 인자는 선언이 폐기된 지정된 플랫폼 또는 언어의 첫번째 버전을 나타냅니다. 선언이 폐기되면 지정된 플랫폼 또는 언어에서 제거되고 더이상 사용이 불가능합니다. 다음의 형식을 가집니다:
 
 ```swift
 obsoleted: <#version number#>
@@ -130,7 +130,7 @@ obsoleted: <#version number#>
 
 _버전 번호 (version number)_ 는 마침표로 구분된 하나에서 세개의 양수로 구성됩니다.
 
-* `message` 인수는 지원 중단되거나 폐기된 선언 사용에 대한 경고나 오류를 생성할 때 컴파일러가 표시하는 텍스트 메세지를 제공합니다. 다음의 형식을 가집니다:
+* `message` 인자는 지원 중단되거나 폐기된 선언 사용에 대한 경고나 오류를 생성할 때 컴파일러가 표시하는 텍스트 메세지를 제공합니다. 다음의 형식을 가집니다:
 
 ```swift
 message: <#message#>
@@ -138,7 +138,7 @@ message: <#message#>
 
 _메세지 (message)_ 는 문자열 리터럴로 구성됩니다.
 
-* `renamed` 인수는 이름이 변경된 새로운 선언을 나타내는 텍스트 메세지를 제공합니다. 컴파일러는 이름이 변경된 선언 사용에 대한 오류를 생성할 때 새로운 이름을 표시합니다. 다음의 형식을 가집니다:
+* `renamed` 인자는 이름이 변경된 새로운 선언을 나타내는 텍스트 메세지를 제공합니다. 컴파일러는 이름이 변경된 선언 사용에 대한 오류를 생성할 때 새로운 이름을 표시합니다. 다음의 형식을 가집니다:
 
 ```swift
 renamed: <#new name#>
@@ -146,7 +146,7 @@ renamed: <#new name#>
 
 _새로운 이름 (new name)_ 은 문자열 리터럴로 구성됩니다.
 
-프레임워크 또는 라이브러리의 릴리즈 간에 변경된 선언의 이름을 나타내기 위해 아래와 같이 타입 별칭 선언에 `renamed` 와 `unavailable` 인수로 `available` 속성을 적용할 수 있습니다. 이 조합으로 인해 컴파일 시 선언이 변경되었다는 오류가 발생합니다.
+프레임워크 또는 라이브러리의 릴리즈 간에 변경된 선언의 이름을 나타내기 위해 아래와 같이 타입 별칭 선언에 `renamed` 와 `unavailable` 인자로 `available` 속성을 적용할 수 있습니다. 이 조합으로 인해 컴파일 시 선언이 변경되었다는 오류가 발생합니다.
 
 ```swift
 // First release
@@ -167,7 +167,7 @@ typealias MyProtocol = MyRenamedProtocol
 
 단일 선언에 여러개의 `available` 속성을 적용하여 다른 플랫폼과 다른 Swift 버전에서 선언의 가용성을 지정할 수 있습니다. `available` 속성이 적용된 선언은 현재 타겟이 지정한 플랫폼 또는 언어 버전이랑 일치하지 않으면 무시됩니다. 여러개의 `available` 속성을 사용하는 경우 효과적인 가용성은 플랫폼과 Swift 가용성의 조합입니다.
 
-`available` 속성이 플랫폼 또는 언어 이름 인수 외에 `introduced` 인수를 지정하는 경우 아래와 같은 짧은 구문을 사용할 수 있습니다:
+`available` 속성이 플랫폼 또는 언어 이름 인자 외에 `introduced` 인자를 지정하는 경우 아래와 같은 짧은 구문을 사용할 수 있습니다:
 
 ```swift
 @available(<#platform name#> <#version number#>, *)
@@ -205,7 +205,7 @@ struct MyStruct {
 구현 복사본은 *클라이언트로 내보내다 (emitting into the client)* 라고 합니다.
 
 이 속성은 이 기호를 제공하는 플랫폼의 첫번째 버전을 나타내는
-`before:` 인수를 가지고 있습니다.
+`before:` 인자를 가지고 있습니다.
 이 플랫폼 버전은 `available` 속성에 지정한 플랫폼 버전과
 같은 의미를 가집니다.
 `available` 속성과 다르게,
@@ -262,7 +262,7 @@ iOS 16 에서 실행하면
 
 호출 가능한 함수 타입의 인스턴스로 처리하기 위해 클래스, 구조체, 열거형, 또는 프로토콜에 이 속성을 적용합니다. 이 타입은 `dynamicallyCall(withArguments:)` 메서드, `dynamicallyCall(withKeywordArguments:)` 메서드 또는 둘 다 구현해야 합니다.
 
-여러 인수를 받는 함수 인 것처럼 동적으로 호출 가능한 타입의 인스턴스를 호출할 수 있습니다.
+여러 인자를 받는 함수 인 것처럼 동적으로 호출 가능한 타입의 인스턴스를 호출할 수 있습니다.
 
 ```swift
 @dynamicCallable
@@ -291,7 +291,7 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 
 `dynamicallyCall(withArguments:)` 메서드의 선언은 위의 예시에서 `[Int]` 와 같이 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral) 프로토콜을 준수하는 하나의 파라미터만 가져야 합니다. 반환 타입은 모든 타입이 가능합니다.
 
-`dynamicallyCall(withKeywordArguments:)` 메서드를 구현하는 경우 동적 메서드 호출에 라벨을 포함할 수 있습니다.
+`dynamicallyCall(withKeywordArguments:)` 메서드를 구현하는 경우 동적 메서드 호출에 레이블을 포함할 수 있습니다.
 
 ```swift
 @dynamicCallable
@@ -314,11 +314,11 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 // a
 ```
 
-`dynamicallyCall(withKeywordArguments:)` 메서드의 선언은 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 프로토콜을 준수하는 단일 파라미터를 가지고 반환 타입은 모든 타입이 가능합니다. 파라미터의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 는 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 여야 합니다. 이전 예시는 파라미터 타입으로 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 를 사용하므로 호출자는 중복 파라미터 라벨을 포함할 수 있습니다 — `a` 와 `b` 는 `repeat` 을 호출하는데 여러번 나타납니다.
+`dynamicallyCall(withKeywordArguments:)` 메서드의 선언은 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral) 프로토콜을 준수하는 단일 파라미터를 가지고 반환 타입은 모든 타입이 가능합니다. 파라미터의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key) 는 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 여야 합니다. 이전 예시는 파라미터 타입으로 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs) 를 사용하므로 호출자는 중복 파라미터 레이블을 포함할 수 있습니다 — `a` 와 `b` 는 `repeat` 을 호출하는데 여러번 나타납니다.
 
-`dynamicallyCall` 메서드 모두 구현하면 `dynamicallyCall(withKeywordArguments:)` 는 메서드 호출이 키워드 인수를 포함할 때 호출됩니다. 다른 경우에는 `dynamicallyCall(withArguments:)` 가 호출됩니다.
+`dynamicallyCall` 메서드 모두 구현하면 `dynamicallyCall(withKeywordArguments:)` 는 메서드 호출이 키워드 인자를 포함할 때 호출됩니다. 다른 경우에는 `dynamicallyCall(withArguments:)` 가 호출됩니다.
 
-`dynamicallyCall` 메서드 구현 중 하나에서 지정한 타입과 일치하는 인수와 반환값으로만 동적으로 호출 가능한 인스턴스를 호출할 수 있습니다. 다음 예시에서 호출은 `KeyValuePairs<String, String>` 을 가지는 `dynamicallyCall(withArguments:)` 의 구현이 없으므로 컴파일 되지 않습니다.
+`dynamicallyCall` 메서드 구현 중 하나에서 지정한 타입과 일치하는 인자와 반환값으로만 동적으로 호출 가능한 인스턴스를 호출할 수 있습니다. 다음 예시에서 호출은 `KeyValuePairs<String, String>` 을 가지는 `dynamicallyCall(withArguments:)` 의 구현이 없으므로 컴파일 되지 않습니다.
 
 ```swift
 repeatLabels(a: "four") // Error
@@ -328,9 +328,9 @@ repeatLabels(a: "four") // Error
 
 런타임 시 이름별로 멤버를 조회하기 위해 클래스, 구조체, 열거형, 또는 프로토콜에 이 속성을 적용합니다. 타입은 `subscript(dynamicMemberLookup:)` 으로 구현되어야 합니다.
 
-명시적 멤버 표현식에서 명명된 멤버에 대한 해당 선언이 없는 경우 표현식은 타입의 `subscript(dynamicMemberLookup:)` 를 호출하는 것으로 이해되고 멤버에 대한 정보를 인수로 전달합니다. 서브스크립트는 키 경로 또는 멤버 이름으로 파라미터를 사용할 수 있습니다; 두 서브스크립트를 모두 구현하면 키 경로 인수를 가지는 서브스크립트가 사용됩니다.
+명시적 멤버 표현식에서 명명된 멤버에 대한 해당 선언이 없는 경우 표현식은 타입의 `subscript(dynamicMemberLookup:)` 를 호출하는 것으로 이해되고 멤버에 대한 정보를 인자로 전달합니다. 서브스크립트는 키 경로 또는 멤버 이름으로 파라미터를 사용할 수 있습니다; 두 서브스크립트를 모두 구현하면 키 경로 인자를 가지는 서브스크립트가 사용됩니다.
 
-`subscript(dynamicMemberLookup:)` 의 구현은 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath), [`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath), 또는 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 타입의 인수를 사용하여 키 경로를 허용할 수 있습니다. 대부분 `String` 인 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 프로토콜을 준수하는 타입의 인수를 사용하여 멤버 이름을 허용할 수 있습니다. 서브스크립트의 반환 타입은 모든 타입이 가능합니다.
+`subscript(dynamicMemberLookup:)` 의 구현은 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath), [`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath), 또는 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath) 타입의 인자를 사용하여 키 경로를 허용할 수 있습니다. 대부분 `String` 인 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral) 프로토콜을 준수하는 타입의 인자를 사용하여 멤버 이름을 허용할 수 있습니다. 서브스크립트의 반환 타입은 모든 타입이 가능합니다.
 
 멤버 이름 별 동적 멤버 조회는 다른 언어의 데이터를 Swift 로 연결할 때와 같이 컴파일 시에 타입을 확인할 수 없는 데이터에 대한 래퍼 타입을 생성하기 위해 사용될 수 있습니다. 예를 들어:
 
@@ -407,7 +407,7 @@ print(wrapper.x)
 
 ### main
 
-프로그램 흐름에 대해 최상위 시작 지점을 포함하는 것을 나타내기 위해 구조체, 클래스 또는 열거형 선언에 이 속성을 적용할 수 있습니다. 타입은 인수가 없고 `Void` 를 반환하는 `main` 타입 함수를 제공해야 합니다. 예를 들어:
+프로그램 흐름에 대해 최상위 시작 지점을 포함하는 것을 나타내기 위해 구조체, 클래스 또는 열거형 선언에 이 속성을 적용할 수 있습니다. 타입은 인자가 없고 `Void` 를 반환하는 `main` 타입 함수를 제공해야 합니다. 예를 들어:
 
 ```swift
 @main
@@ -483,7 +483,7 @@ Objective-C 로 표현될 수 있는 모든 선언에 이 속성을 적용합니
 
 열거형에 objc 속성을 적용하면 각 열거형 케이스는 열거형 이름과 케이스 이름의 연결로 Objective-C 코드에 노출됩니다. 케이스 이름의 첫번째 문자는 대문자입니다. 예를 들어 Swift `Planet` 열거형에서 명명된 케이스 `venus` 는 명명된 케이스 `PlanetVenus` 로 Objective-C 코드로 노출됩니다.
 
-`objc` 속성은 식별자로 구성된 단일 속성 인수를 선택적으로 허용합니다. 식별자는 `objc` 속성을 적용하는 엔티티에 대해 Objective-C 로 노출될 이름을 지정합니다. 클래스, 열거형, 열거형 케이스, 프로토콜, 메서드, getter, setter, 그리고 이니셜라이저 이름으로 이 인수를 사용할 수 있습니다. 클래스, 프로토콜, 또는 열거형에 대해 Objective-C 이름을 지정하는 경우 [Objective-C 를 사용한 프로그래밍 (Programming with Objective-C)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 에 [규칙 (Conventions)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 에서 설명한대로 세글자의 접두사를 포함합니다. 아래 예시는 프로퍼티 자체의 이름이 아닌 `isEnabled` 로 Objective-C 에 `ExampleClass` 의 `enabled` 프로퍼티에 대한 getter 를 노출합니다.
+`objc` 속성은 식별자로 구성된 단일 속성 인자를 선택적으로 허용합니다. 식별자는 `objc` 속성을 적용하는 엔티티에 대해 Objective-C 로 노출될 이름을 지정합니다. 클래스, 열거형, 열거형 케이스, 프로토콜, 메서드, getter, setter, 그리고 이니셜라이저 이름으로 이 인자를 사용할 수 있습니다. 클래스, 프로토콜, 또는 열거형에 대해 Objective-C 이름을 지정하는 경우 [Objective-C 를 사용한 프로그래밍 (Programming with Objective-C)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011210) 에 [규칙 (Conventions)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Conventions/Conventions.html#//apple_ref/doc/uid/TP40011210-CH10-SW1) 에서 설명한대로 세글자의 접두사를 포함합니다. 아래 예시는 프로퍼티 자체의 이름이 아닌 `isEnabled` 로 Objective-C 에 `ExampleClass` 의 `enabled` 프로퍼티에 대한 getter 를 노출합니다.
 
 ```swift
 class ExampleClass: NSObject {
@@ -498,7 +498,7 @@ class ExampleClass: NSObject {
 더 자세한 내용은 [Objective-C 에 Swift 가져오기 (Importing Swift into Objective-C)](https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/importing_swift_into_objective-c) 를 참고바랍니다.
 
 > Note\
-> objc 속성에 인수는 해당 선언에 대한 런타임 이름도 변경할 수 있습니다. [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring) 과 같이 Objective-C 런타임과 상호작용하는 함수를 호출할 때와 앱의 info.plist 파일의 클래스 이름을 지정할 때 런타임 이름을 사용합니다. 인수를 전달하여 이름을 지정하면 해당 이름은 Objective-C 코드에서 이름과 런타임 이름으로 사용됩니다. 인수를 생략하면 Objective-C 코드에서 사용된 이름은 Swift 코드의 이름과 일치하고 런타임 이름은 일반 Swift 컴파일러 이름 변경 규칙을 따릅니다.
+> objc 속성에 인자는 해당 선언에 대한 런타임 이름도 변경할 수 있습니다. [`NSClassFromString(_:)`](https://developer.apple.com/documentation/foundation/1395135-nsclassfromstring) 과 같이 Objective-C 런타임과 상호작용하는 함수를 호출할 때와 앱의 info.plist 파일의 클래스 이름을 지정할 때 런타임 이름을 사용합니다. 인자를 전달하여 이름을 지정하면 해당 이름은 Objective-C 코드에서 이름과 런타임 이름으로 사용됩니다. 인자를 생략하면 Objective-C 코드에서 사용된 이름은 Swift 코드의 이름과 일치하고 런타임 이름은 일반 Swift 컴파일러 이름 변경 규칙을 따릅니다.
 
 ### objcMembers
 
@@ -568,7 +568,7 @@ Objective-C 의 선언은 항상
 
 프로퍼티 래퍼를 가지는 프로퍼티는 `willSet` 과 `didSet` 블럭을 포함할 수 있지만 컴파일러가 합성한 `get` 또는 `set` 블럭을 재정의할 수 없습니다.
 
-Swift 는 프로퍼티 래퍼의 초기화에 대해 두가지의 구문 설탕 (syntactic sugar) 을 제공합니다. 래핑된 값의 정의에 할당 구문을 사용하여 할당의 오른쪽에 있는 표현식을 프로퍼티 래퍼에 이니셜라이저의 `wrappedValue` 파라미터에 대한 인수로 전달할 수 있습니다. 프로퍼티에 속성을 적용할 때 속성에 인수를 제공할 수도 있으며 이 인수는 프로퍼티 래퍼의 이니셜라이저으로 전달됩니다. 예를 들어 아래 코드에서 `SomeStruct` 는 `SomeWrapper` 가 정의한 각 이니셜라이저를 호출합니다.
+Swift 는 프로퍼티 래퍼의 초기화에 대해 두가지의 구문 설탕 (syntactic sugar) 을 제공합니다. 래핑된 값의 정의에 할당 구문을 사용하여 할당의 오른쪽에 있는 표현식을 프로퍼티 래퍼에 이니셜라이저의 `wrappedValue` 파라미터에 대한 인자로 전달할 수 있습니다. 프로퍼티에 속성을 적용할 때 속성에 인자를 제공할 수도 있으며 이 인자는 프로퍼티 래퍼의 이니셜라이저으로 전달됩니다. 예를 들어 아래 코드에서 `SomeStruct` 는 `SomeWrapper` 가 정의한 각 이니셜라이저를 호출합니다.
 
 ```swift
 @propertyWrapper
@@ -641,10 +641,10 @@ s.$x.wrapper  // WrapperWithProjection value
   부분 결과의 배열을 단일 부분 결과로 결합합니다.
 
 - `static func buildPartialBlock(first: Component) -> Component`:
-  첫번째 컴포넌트로 부터 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블럭을 지원하기위해 이 메서드와 `buildPartialBlock(accumulated:next:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인수의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
+  첫번째 컴포넌트로 부터 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블럭을 지원하기위해 이 메서드와 `buildPartialBlock(accumulated:next:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
 
 - `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
-  누적된 컴포넌트와 새로운 컴포넌트를 결합하여 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블럭을 지원하기위해 이 메서드와 `buildPartialBlock(first:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인수의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
+  누적된 컴포넌트와 새로운 컴포넌트를 결합하여 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블럭을 지원하기위해 이 메서드와 `buildPartialBlock(first:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
 
 결과 빌더는 위에 나열된 블럭-빌딩 메서드 세가지 모두 구현할 수 있습니다. 이 경우에 가용성에 따라 호출되는 메서드가 결정됩니다. 기본적으로, Swift 는 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 호출합니다. Swift 가 `buildBlock(_:)` 을 호출하도록 하려면 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 에 작성하기 전에 동봉 선언 (enclosing declaration) 을 사용가능으로 표시합니다.
 
@@ -714,7 +714,7 @@ struct ArrayBuilder {
 var manualNumber = ArrayBuilder.buildExpression(10)
 ```
 
-* 할당 구문은 표현식 처럼 변환되지만 `()` 으로 평가되는 것으로 이해됩니다. 구체적으로 할당을 처리하기 위해 `()` 타입의 인수를 가지는 `buildExpression(_:)` 의 오버로드를 정의할 수 있습니다.
+* 할당 구문은 표현식 처럼 변환되지만 `()` 으로 평가되는 것으로 이해됩니다. 구체적으로 할당을 처리하기 위해 `()` 타입의 인자를 가지는 `buildExpression(_:)` 의 오버로드를 정의할 수 있습니다.
 * 가용성 조건을 확인하는 분기 구문은
   해당 메서드가 구현되어 있으면, `buildLimitedAvailability(_:)` 메서드에 대한 호출이 됩니다.
   `buildLimitedAvailability(_:)` 가 구현되어 있지 않다면,
@@ -838,7 +838,7 @@ if someNumber < 12 {
 }
 ```
 
-* `else` 절 없는 `if` 구문과 같이 값을 생성하지 않을 분기 구문은 `buildOptional(_:)` 에 대한 호출이 됩니다. `if` 구문의 조건이 충족되면 코드 블럭은 변환되고 인수로 전달됩니다; 그렇지 않으면 `buildOptional(_:)` 은 인수로 `nil` 가지고 호출됩니다. 예를 들어 다음의 선언은 동일합니다:
+* `else` 절 없는 `if` 구문과 같이 값을 생성하지 않을 분기 구문은 `buildOptional(_:)` 에 대한 호출이 됩니다. `if` 구문의 조건이 충족되면 코드 블럭은 변환되고 인자로 전달됩니다; 그렇지 않으면 `buildOptional(_:)` 은 인자로 `nil` 가지고 호출됩니다. 예를 들어 다음의 선언은 동일합니다:
 
 ```swift
 @ArrayBuilder var builderOptional: [Int] {
@@ -854,7 +854,7 @@ var manualOptional = ArrayBuilder.buildOptional(partialResult)
 
 - 결과 빌더가 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 구현하는 경우,
   코드 블럭 또는 `do` 구문은 해당 메서드를 호출합니다.
-  블럭의 첫번째 구문은 `buildPartialBlock(first:)` 메서드 인수로 변환되고,
+  블럭의 첫번째 구문은 `buildPartialBlock(first:)` 메서드 인자로 변환되고,
   나머지 구문은 `buildPartialBlock(accumulated:next:)` 메서드를 중첩 호출하게 됩니다.
   예를 들어, 다음 선언은 동일한 구문입니다:
 
@@ -897,7 +897,7 @@ let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
 )
 ```
 
-* 그렇지 않으면, 코드 블럭 또는 `do` 구문은 `buildBlock(_:)` 메서드에 대한 호출이 됩니다. 블럭 내부의 각 구문은 한번에 하나씩 변환되고 `buildBlock(_:)` 메서드에 대한 인수가 됩니다. 예를 들어 다음의 선언은 동일합니다:
+* 그렇지 않으면, 코드 블럭 또는 `do` 구문은 `buildBlock(_:)` 메서드에 대한 호출이 됩니다. 블럭 내부의 각 구문은 한번에 하나씩 변환되고 `buildBlock(_:)` 메서드에 대한 인자가 됩니다. 예를 들어 다음의 선언은 동일합니다:
 
 ```swift
 @ArrayBuilder var builderBlock: [Int] {
@@ -913,7 +913,7 @@ var manualBlock = ArrayBuilder.buildBlock(
 )
 ```
 
-* `for` 루프는 임시 변수, `for` 루프, 그리고 `buildArray(_:)` 메서드에 대한 호출이 됩니다. 새로운 `for` 루프는 시퀀스를 반복하고 각 부분 결과를 해당 배열에 추가합니다. 임시 배열은 `buildArray(_:)` 호출에 인수로 전달됩니다. 예를 들어 다음의 선언은 동일합니다:
+* `for` 루프는 임시 변수, `for` 루프, 그리고 `buildArray(_:)` 메서드에 대한 호출이 됩니다. 새로운 `for` 루프는 시퀀스를 반복하고 각 부분 결과를 해당 배열에 추가합니다. 임시 배열은 `buildArray(_:)` 호출에 인자로 전달됩니다. 예를 들어 다음의 선언은 동일합니다:
 
 ```swift
 @ArrayBuilder var builderArray: [Int] {
@@ -946,7 +946,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 * 함수 선언에서 결과 빌더는 함수의 본문을 빌드합니다.
 * getter 를 포함하는 변수 또는 서브스크립트 선언에서 결과 빌더는 getter 의 본문을 빌드합니다.
-* 함수 선언의 파라미터에서 결과 빌더는 해당 인수로 전달되는 클로저의 본문을 빌드합니다.
+* 함수 선언의 파라미터에서 결과 빌더는 해당 인자로 전달되는 클로저의 본문을 빌드합니다.
 
 결과 빌더 속성을 적용하는 것은 ABI 호환성에 영향을 주지 않습니다. 파라미터에 결과 빌더 속성을 적용하는 것은 해당 속성이 함수의 인터페이스의 부분으로 소스 호환성에 영향을 줄 수 있습니다.
 
@@ -1006,17 +1006,17 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 ### autoclosure
 
-인수 없이 해당 표현식을 클로저에 자동으로 래핑하여 표현식의 평가를 지연하기 위해 이 속성을 적용합니다. 메서드 또는 함수 선언에 파라미터의 타입에 인수를 사용하지 않고 표현식의 타입에 값을 반환하는 함수 타입 인 파라미터에 적용합니다. `autoclosure` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Closures#자동-클로저-Autoclosures> 와 <doc:Types#함수-타입-Function-Type> 을 참고바랍니다.
+인자 없이 해당 표현식을 클로저에 자동으로 래핑하여 표현식의 평가를 지연하기 위해 이 속성을 적용합니다. 메서드 또는 함수 선언에 파라미터의 타입에 인자를 사용하지 않고 표현식의 타입에 값을 반환하는 함수 타입 인 파라미터에 적용합니다. `autoclosure` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Closures#자동-클로저-Autoclosures> 와 <doc:Types#함수-타입-Function-Type> 을 참고바랍니다.
 
 ### convention
 
 호출 규칙 (calling conventions) 을 나타내기 위해 함수의 타입에 이 속성을 적용합니다.
 
-`convention` 속성은 항상 다음의 인수 중 하나에 나타납니다:
+`convention` 속성은 항상 다음의 인자 중 하나에 나타납니다:
 
-* `swift` 인수는 Swift 함수 참조를 나타냅니다. 이것은 Swift 에서 함수 값에 대한 표준 호출 규칙입니다.
-* `block` 인수는 Objective-C 호환 블럭 참조를 나타냅니다. 함수 값은 객체 내에 호출 함수 (invocation function) 를 포함하는 `id`-호환성 Objective-C 객체 인 블럭 객체에 대한 참조로 표시됩니다. 호출 함수는 C 호출 규칙을 사용합니다.
-* `c` 인수는 C 함수 참조를 나타냅니다. 함수 값은 컨텍스트를 전달하지 않으며 C 호출 규칙을 사용합니다.
+* `swift` 인자는 Swift 함수 참조를 나타냅니다. 이것은 Swift 에서 함수 값에 대한 표준 호출 규칙입니다.
+* `block` 인자는 Objective-C 호환 블럭 참조를 나타냅니다. 함수 값은 객체 내에 호출 함수 (invocation function) 를 포함하는 `id`-호환성 Objective-C 객체 인 블럭 객체에 대한 참조로 표시됩니다. 호출 함수는 C 호출 규칙을 사용합니다.
+* `c` 인자는 C 함수 참조를 나타냅니다. 함수 값은 컨텍스트를 전달하지 않으며 C 호출 규칙을 사용합니다.
 
 몇가지 예외를 제외하고 모든 호출 규칙의 함수는 다른 호출 규칙이 필요할 때 사용될 수 있습니다. 제네릭이 아닌 전역 함수, 지역 변수를 캡처하지 않는 지역 함수 또는 지역 변수를 캡처하지 않는 클로저는 C 호출 규칙으로 변환될 수 있습니다. 다른 Swift 함수는 C 호출 규칙으로 변환될 수 없습니다. Objective-C 블럭 호출 규칙을 가지는 함수는 C 호출 규칙으로 변환될 수 없습니다.
 

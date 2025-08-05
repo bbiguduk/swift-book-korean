@@ -1036,16 +1036,16 @@ public struct TrackedString {
 Swift는 모든 프로퍼티에 기본값을 제공하고
 커스텀 이니셜라이저를 제공하지 않는
 구조체나 기본 클래스에 대해
-인수없는 *기본 이니셜라이저(default initializer)*를 자동으로 제공합니다.
+인자없는 *기본 이니셜라이저(default initializer)*를 자동으로 제공합니다.
 
 기본 이니셜라이저는 타입이 `public`으로 정의되지 않는 한
 초기화하는 타입과 같은 접근 수준을 가집니다.
 `public`으로 정의된 타입의 경우,
 기본 이니셜라이저는 internal로 간주합니다.
 다른 모듈에서 사용할 때
-인수가 없는 이니셜라이저를 public 타입으로 초기화하려면
+인자가 없는 이니셜라이저를 public 타입으로 초기화하려면
 명시적으로 타입의 정의에서
-public으로 인수가 없는 이니셜라이저를 제공해야 합니다.
+public으로 인자가 없는 이니셜라이저를 제공해야 합니다.
 
 ### 구조체의 기본 멤버 이니셜라이저 (Default Memberwise Initializers for Structure Types)
 

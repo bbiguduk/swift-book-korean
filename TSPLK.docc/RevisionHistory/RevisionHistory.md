@@ -68,7 +68,7 @@
 * Swift 5.9 Beta 기반으로 문서 작업
 * <doc:ControlFlow> 챕터와 <doc:Expressions#조건-표현식-Conditional-Expression> 섹션에 `if` 와 `switch` 표현식에 대한 내용을 추가
 * 컴파일 때 코드를 생성하는 것에 대한 <doc:Macros> 챕터 추가
-* <doc:OpaqueTypes> 챕터에 박스형 프로토콜 타입 (boxed protocol type) 에 대한 내용을 추가
+* <doc:OpaqueTypes> 챕터에 박싱 프로토콜 타입 (boxed protocol type) 에 대한 내용을 추가
 * `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드에 대한 내용을 <doc:Attributes#결과-빌딩-메서드-Result-Building-Methods> 섹션에 추가
 * Swift-DocC 적용한 [TSPLK (The Swift Programming Language Korean)](https://bbiguduk.github.io/swift-book-korean/documentation/tsplk/) 페이지 오픈
 > GitBook 과 Swift-DocC 둘 다 운영할 계획입니다.

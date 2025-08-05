@@ -1,8 +1,8 @@
-# 제네릭 파라미터와 인수 (Generic Parameters and Arguments)
+# 제네릭 파라미터와 인자 (Generic Parameters and Arguments)
 
 선언을 일반화하여 구체적인 타입을 추상화합니다.
 
-이 챕터에서 제네릭 타입, 함수, 그리고 이니셜라이저에 대한 파라미터와 인수를 설명합니다. 제네릭 타입, 함수, 서브스크립트, 또는 이니셜라이저를 선언할 때 제네릭 타입, 함수, 또는 이니셜라이저이 동작할 수 있는 타입 파라미터를 지정합니다. 이러한 타입 파라미터는 제네릭 타입의 인스턴스가 생성되거나 제네릭 함수 또는 이니셜라이저이 호출 될 때 실제 구체적인 타입 인수에 의해 대체되는 자리표시자 역할을 합니다.
+이 챕터에서 제네릭 타입, 함수, 그리고 이니셜라이저에 대한 파라미터와 인자를 설명합니다. 제네릭 타입, 함수, 서브스크립트, 또는 이니셜라이저를 선언할 때 제네릭 타입, 함수, 또는 이니셜라이저이 동작할 수 있는 타입 파라미터를 지정합니다. 이러한 타입 파라미터는 제네릭 타입의 인스턴스가 생성되거나 제네릭 함수 또는 이니셜라이저이 호출 될 때 실제 구체적인 타입 인자에 의해 대체되는 자리표시자 역할을 합니다.
 
 Swift 의 제네릭에 대한 개요는 <doc:Generics> 을 참고바랍니다.
 
@@ -22,7 +22,7 @@ _제네릭 파라미터 리스트 (generic parameter list)_ 는 콤마로 구분
 
 제네릭 파라미터는 _타입 파라미터 (type parameter)_ 와 옵셔널 _제약사항 (constraint)_ 으로 구성됩니다. _타입 파라미터 (type parameter)_ 는 자리표시자 타입의 간단한 이름입니다 (예를 들어 `T`, `U`, `V`, `Key`, `Value`, 등). 함수 또는 이니셜라이저의 시그니처를 포함하는 나머지 타입, 함수, 또는 이니셜라이저 선언에서 타입 파라미터와 모든 연관된 타입에 접근할 수 있습니다.
 
-_제약조건 (constraint)_ 은 타입 파라미터가 특정 클래스를 상속하거나 프로토콜 또는 프로토콜 구성을 준수하도록 지정합니다. 예를 들어 아래 제네릭 함수에서 제네릭 파라미터 `T: Comparable` 은 타입 파라미터 `T` 를 대신하는 모든 타입 인수는 `Comparable` 프로토콜을 준수해야 함을 나타냅니다.
+_제약조건 (constraint)_ 은 타입 파라미터가 특정 클래스를 상속하거나 프로토콜 또는 프로토콜 구성을 준수하도록 지정합니다. 예를 들어 아래 제네릭 함수에서 제네릭 파라미터 `T: Comparable` 은 타입 파라미터 `T` 를 대신하는 모든 타입 인자는 `Comparable` 프로토콜을 준수해야 함을 나타냅니다.
 
 ```swift
 func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
@@ -33,7 +33,7 @@ func simpleMax<T: Comparable>(_ x: T, _ y: T) -> T {
 }
 ```
 
-예를 들어 `Int` 와 `Double` 은 `Comparable` 프로토콜을 준수하므로 이 함수는 두 타입의 인수를 허용합니다. 제네릭 타입과 다르게 제네릭 함수 또는 이니셜라이저를 사용할 때 제네릭 인수 절을 지정하지 않습니다. 대신에 타입 인수는 함수나 이니셜라이저에 전달되는 인수의 타입으로 부터 추론됩니다.
+예를 들어 `Int` 와 `Double` 은 `Comparable` 프로토콜을 준수하므로 이 함수는 두 타입의 인자를 허용합니다. 제네릭 타입과 다르게 제네릭 함수 또는 이니셜라이저를 사용할 때 제네릭 인자 절을 지정하지 않습니다. 대신에 타입 인자는 함수나 이니셜라이저에 전달되는 인자의 타입으로 부터 추론됩니다.
 
 ```swift
 simpleMax(17, 42) // T is inferred to be Int
@@ -52,7 +52,7 @@ where <#requirements#>
 
 `==` 연산자를 사용하여 두 타입이 동일해야 하는 요구사항을 지정할 수도 있습니다. 예를 들어 `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element` 은 `S1` 과 `S2` 가 `Sequence` 프로토콜을 준수하고 두 시퀀스의 요소는 같은 타입이어야 한다는 제약사항이 있습니다.
 
-타입 파라미터를 대체하는 모든 타입 인수는 타입 파라미터에 있는 모든 제약사항과 요구사항을 만족해야 합니다.
+타입 파라미터를 대체하는 모든 타입 인자는 타입 파라미터에 있는 모든 제약사항과 요구사항을 만족해야 합니다.
 
 제네릭 `where` 절은 타입 파라미터를 포함하는 선언의 부분 또는 타입 파라미터를 포함하는 선언의 내부에 중첩된 선언의 부분으로 나타날 수 있습니다. 중첩된 선언에 대한 제네릭 `where` 절은 둘러싸는 선언의 타입 파라미터를 참조할 수 있습니다; 그러나 `where` 절의 요구사항은 작성된 선언에만 적용됩니다.
 
@@ -86,15 +86,15 @@ extension Collection where Element: SomeProtocol {
 > *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
 > *same-type-requirement* → *type-identifier* **`==`** *type*
 
-## 제네릭 인수 절 (Generic Argument Clause)
+## 제네릭 인자 절 (Generic Argument Clause)
 
-_제네릭 인수 절 (generic argument clause)_ 은 제네릭 타입의 타입 인수를 지정합니다. 제네릭 인수 절은 꺾쇠 괄호 (<>) 로 둘러싸여져 있고 다음의 형식을 가집니다:
+_제네릭 인자 절 (generic argument clause)_ 은 제네릭 타입의 타입 인자를 지정합니다. 제네릭 인자 절은 꺾쇠 괄호 (<>) 로 둘러싸여져 있고 다음의 형식을 가집니다:
 
 ```swift
 <<#generic argument list#>>
 ```
 
-_제네릭 인수 리스트 (generic argument list)_ 는 콤마로 구분된 타입 인수의 리스트입니다. _타입 인수 (type argument)_ 는 제네릭 타입의 제네릭 파라미터 절에서 해당 타입 파라미터를 대체하는 실제 구체적인 타입의 이름입니다. 결과는 해당 제네릭 타입의 특수 버전입니다. 아래 예시는 Swift 표준 라이브러리의 제네릭 딕셔너리 타입의 간단한 버전을 보여줍니다.
+_제네릭 인자 리스트 (generic argument list)_ 는 콤마로 구분된 타입 인자의 리스트입니다. _타입 인자 (type argument)_ 는 제네릭 타입의 제네릭 파라미터 절에서 해당 타입 파라미터를 대체하는 실제 구체적인 타입의 이름입니다. 결과는 해당 제네릭 타입의 특수 버전입니다. 아래 예시는 Swift 표준 라이브러리의 제네릭 딕셔너리 타입의 간단한 버전을 보여줍니다.
 
 ```swift
 struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLiteral {
@@ -102,15 +102,15 @@ struct Dictionary<Key: Hashable, Value>: Collection, ExpressibleByDictionaryLite
 }
 ```
 
-제네릭 `Dictionary` 타입의 특수한 버전인 `Dictionary<String, Int>` 는 제네릭 파라미터 `Key: Hashable` 과 `Value` 를 구체적인 타입 인수 `String` 과 `Int` 로 대체하여 구성됩니다. 각 타입 인수는 제네릭 `where` 절에 지정된 추가 요구사항을 포함하여 대체하는 제네릭 파라미터의 모든 제약사항을 충족해야 합니다. 위의 예시에서 `Key` 타입 파라미터는 `Hashable` 프로토콜을 준수하도록 제한되므로 `String` 도 `Hashable` 프로토콜을 준수해야 합니다.
+제네릭 `Dictionary` 타입의 특수한 버전인 `Dictionary<String, Int>` 는 제네릭 파라미터 `Key: Hashable` 과 `Value` 를 구체적인 타입 인자 `String` 과 `Int` 로 대체하여 구성됩니다. 각 타입 인자는 제네릭 `where` 절에 지정된 추가 요구사항을 포함하여 대체하는 제네릭 파라미터의 모든 제약사항을 충족해야 합니다. 위의 예시에서 `Key` 타입 파라미터는 `Hashable` 프로토콜을 준수하도록 제한되므로 `String` 도 `Hashable` 프로토콜을 준수해야 합니다.
 
-타입 파라미터를 적절한 제약사항과 요구사항을 충족하는 경우 그 자체가 제네릭 타입의 특별한 버전인 타입 인수로 대체할 수 있습니다. 예를 들어 요소 자체가 정수의 배열인 `Array<Int>` 은 `Array<Element>` 배열의 특별한 버전으로 타입 파라미터 `Element` 를 대체할 수 있습니다.
+타입 파라미터를 적절한 제약사항과 요구사항을 충족하는 경우 그 자체가 제네릭 타입의 특별한 버전인 타입 인자로 대체할 수 있습니다. 예를 들어 요소 자체가 정수의 배열인 `Array<Int>` 은 `Array<Element>` 배열의 특별한 버전으로 타입 파라미터 `Element` 를 대체할 수 있습니다.
 
 ```swift
 let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 ```
 
-<doc:GenericParametersAndArguments#제네릭-파라미터-절-Generic-Parameter-Clause> 에서 언급했듯이 제네릭 함수 또는 이니셜라이저의 타입 인수로 지정하기 위해 제네릭 인수 절을 사용하지 않습니다.
+<doc:GenericParametersAndArguments#제네릭-파라미터-절-Generic-Parameter-Clause> 에서 언급했듯이 제네릭 함수 또는 이니셜라이저의 타입 인자로 지정하기 위해 제네릭 인자 절을 사용하지 않습니다.
 
 > Grammar of a generic argument clause:
 >
