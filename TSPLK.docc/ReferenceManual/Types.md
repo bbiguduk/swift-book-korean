@@ -1160,20 +1160,59 @@ if let first = mixed.first as? String {
 ## Self 타입 (Self Type)
 
 `Self` 타입은 특정 타입이 아니라
-해당 타입의 이름을 반복해서 명시하지 않고도
-현재 타입을 편리하게 참조할 수 있습니다.
+현재 타입을 반복해서 쓰거나 그 이름을 알 필요 없이
+편리하게 참조할 수 있습니다.
 
 프로토콜 선언이나 프로토콜 멤버 선언에서
-`Self` 타입은 프로토콜을 준수하는 최종 타입을 나타냅니다.
+`Self` 타입은 프로토콜을 채택하는 최종 타입을 나타냅니다.
 
-구조체, 클래스, 열거형 선언에서 `Self` 타입은 선언에 의해 도입된 타입을 참조합니다. 타입의 멤버에 대한 선언 내에서 `Self` 타입은 해당 타입을 참조합니다. 클래스 선언의 멤버에서 `Self` 는 다음을 나타낼 수 있습니다:
+구조체, 클래스, 열거형 선언에서
+`Self` 타입은 선언에 의해 도입된 타입을 참조합니다.
+타입의 멤버 선언 내에서
+`Self` 타입은 해당 타입을 참조합니다.
+클래스 선언의 멤버에서
+`Self` 타입은 다음의 경우에만 사용할 수 있습니다:
 
-* 메서드의 반환 타입
-* 읽기전용 서브스크립트의 반환 타입
-* 읽기전용 연산 프로퍼티의 타입
-* 메서드의 본문
+- 메서드의 반환 타입
+- 읽기 전용 서브스크립트의 반환 타입
+- 읽기 전용 연산 프로퍼티의 타입
+- 메서드의 본문
 
-예를 들어 아래의 코드는 반환 타입이 `Self` 인 인스턴스 메서드 `f` 를 보여줍니다.
+예를 들어
+아래의 코드는 반환 타입이 `Self`인
+인스턴스 메서드 `f`를 보여줍니다.
+
+<!--
+  - test: `self-in-class-cant-be-a-parameter-type`
+
+  ```swifttest
+  -> class C { func f(c: Self) { } }
+  !$ error: covariant 'Self' or 'Self?' can only appear as the type of a property, subscript or method result; did you mean 'C'?
+  !! class C { func f(c: Self) { } }
+  !!                     ^~~~
+  !!                     C
+  ```
+-->
+
+<!--
+  - test: `self-in-class-can-be-a-subscript-param`
+
+  ```swifttest
+  >> class C { subscript(s: Int) -> Self { return self } }
+  >> let c = C()
+  >> _ = c[12]
+  ```
+-->
+
+<!--
+  - test: `self-in-class-can-be-a-computed-property-type`
+
+  ```swifttest
+  >> class C { var s: Self { return self } }
+  >> let c = C()
+  >> _ = c.s
+  ```
+-->
 
 ```swift
 class Superclass {
@@ -1193,11 +1232,48 @@ print(type(of: z.f()))
 // Prints "Subclass"
 ```
 
-위의 예시의 마지막 부분은 `Self` 가 변수 자체의 컴파일 타임 타입 (compile-time type) `Superclass` 가 아닌 `z` 값의 런타임 타입 (runtime type) `Subclass` 를 참조하는 것을 보여줍니다.
+<!--
+  - test: `self-gives-dynamic-type`
 
-중첩된 타입 선언 내에서 `Self` 타입은 가장 안쪽 타입 선언에 의해 도입된 타입을 참조합니다.
+  ```swifttest
+  -> class Superclass {
+         func f() -> Self { return self }
+     }
+  -> let x = Superclass()
+  -> print(type(of: x.f()))
+  <- Superclass
+  ---
+  -> class Subclass: Superclass { }
+  -> let y = Subclass()
+  -> print(type(of: y.f()))
+  <- Subclass
+  ---
+  -> let z: Superclass = Subclass()
+  -> print(type(of: z.f()))
+  <- Subclass
+  ```
+-->
 
-`Self` 타입은 Swift 표준 라이브러리에서 [`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type) 함수와 동일한 타입을 참조합니다. 현재 타입의 멤버를 접근하기 위해 `Self.someStaticMember` 라고 작성하는 것은 `type(of:self).someStaticMember` 로 작성하는 것과 동일합니다.
+위의 예시의 마지막 부분은
+`Self`가 변수 `z` 자체의 컴파일 시 타입(compile-time type)인 `Superclass`가 아닌
+`z` 값의 런타임 타입(runtime type)인 `Subclass`를 참조하는 것을 보여줍니다.
+
+<!--
+  TODO: Using Self as the return type from a subscript or property doesn't
+  currently work.  The compiler allows it, but you get the wrong type back,
+  and the compiler doesn't enforce that the subscript/property must be
+  read-only.  See https://bugs.swift.org/browse/SR-10326
+-->
+
+중첩된 타입 선언 내에서
+`Self` 타입은 가장 안쪽 타입 선언에 의해 도입된
+타입을 참조합니다.
+
+`Self` 타입은
+Swift 표준 라이브러리에서
+[`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type) 함수와 동일한 타입을 참조합니다.
+현재 타입의 멤버를 접근하기 위해 `Self.someStaticMember`라고 작성하는 것은
+`type(of:self).someStaticMember`로 작성하는 것과 동일합니다.
 
 > Grammar of a Self type:
 >
@@ -1205,13 +1281,31 @@ print(type(of: z.f()))
 
 ## 타입 상속 절 (Type Inheritance Clause)
 
-_타입 상속 절 (type inheritance clause)_ 은 명명된 타입이 상속하는 클래스와 명명된 타입이 준수하는 프로토콜을 지정하기 위해 사용됩니다. 타입 상속 절은 콜론 (`:`) 으로 시작하고 그 뒤에 타입 식별자의 리스트가 옵니다.
+*타입 상속 절(type inheritance clause)*은 명명 타입이 상속하는 클래스와
+명명 타입이 준수하는 프로토콜을 지정하기 위해 사용됩니다.
+타입 상속 절은 콜론(`:`)으로 시작하고,
+그 뒤에 타입 식별자의 목록이 옵니다.
 
-클래스 타입은 단일 슈퍼클래스를 상속할 수 있고 여러개의 프로토콜을 준수할 수 있습니다. 클래스를 정의할 때 슈퍼클래스의 이름은 타입 식별자의 리스트에서 첫번째로 나타나야 하고 다음으로 준수하는 여러개의 프로토콜이 옵니다. 클래스가 다른 클래스를 상속하지 않으면 리스트는 대신 프로토콜로 시작할 수 있습니다. 클래스 상속에 대한 자세한 설명과 예시는 <doc:Inheritance> 을 참고바랍니다.
+클래스 타입은 하나의 상위 클래스를 상속할 수 있고 여러 개의 프로토콜을 준수할 수 있습니다.
+클래스를 정의할 때,
+상위 클래스의 이름은 타입 식별자의 목록에서 첫 번째로 나타나야 하고,
+다음으로 준수하는 여러 개의 프로토콜을 작성합니다.
+클래스가 다른 클래스를 상속하지 않으면
+해당 목록은 프로토콜로 시작할 수 있습니다.
+클래스 상속에 대한 자세한 설명과 예시는
+<doc:Inheritance>을 참고바랍니다.
 
-다른 명명된 타입은 프로토콜의 리스트에서 상속하거나 준수할 수 있습니다. 프로토콜 타입은 여러 다른 프로토콜을 상속할 수 있습니다. 프로토콜 타입은 다른 프로토콜을 상속할 때 다른 프로토콜의 요구사항을 모으고 현재 프로토콜에서 상속되는 모든 타입은 모든 요구사항을 준수해야 합니다.
+클래스 타입 외 명명 타입은 프로토콜 목록만 상속하거나 준수할 수 있습니다.
+프로토콜 타입은 여러 다른 프로토콜을 상속할 수 있습니다.
+프로토콜 타입이 다른 프로토콜을 상속할 때,
+그 상위 프로토콜의 요구사항이 통합되고
+해당 프로토콜을 상속하는 모든 타입은 그 요구사항을 모두 준수해야 합니다.
 
-열거형 정의에 타입 상속 절은 프로토콜의 리스트이거나 케이스에 원시값 (raw values) 을 할당하는 열거형인 경우 해당 원시값의 타입을 지정하는 단일 명명된 타입일 수 있습니다. 타입 상속 절을 사용하여 원시값의 타입을 지정하는 열거형 정의의 예는 <doc:Enumerations#원시값-Raw-Values> 을 참고바랍니다.
+열거형 정의의 타입 상속 절은 프로토콜 목록이거나
+케이스의 원시값(raw values)을 지정하는 열거형인 경우
+해당 원시값의 타입을 지정하는 단일 명명 타입일 수 있습니다.
+타입 상속 절을 사용하여
+원시값의 타입을 지정하는 열거형 정의의 예시는 <doc:Enumerations#원시값-Raw-Values>을 참고바랍니다.
 
 > Grammar of a type inheritance clause:
 >
@@ -1220,15 +1314,57 @@ _타입 상속 절 (type inheritance clause)_ 은 명명된 타입이 상속하�
 
 ## 타입 추론 (Type Inference)
 
-Swift 는 광범위하게 _타입 추론 (type inference)_ 을 사용하므로 코드에서 많은 변수와 표현식의 타입 또는 타입의 부분을 생략할 수 있습니다. 예를 들어 `var x: Int = 0` 으로 작성하는 대신에 `var x = 0` 으로 타입을 완벽하게 생략하고 작성할 수 있습니다 — 컴파일러는 `x` 를 타입 `Int` 의 값으로 추론합니다. 유사하게 컨텍스트에서 전체 타입이 추론될 수 있을 때 타입의 부분을 생략할 수 있습니다. 예를 들어 `let dict: Dictionary = ["A": 1]` 을 작성하면 컴파일러는 `dict` 이 타입 `Dictionary<String, Int>` 이라고 추론합니다.
+Swift는 광범위하게 *타입 추론(type inference)*을 사용하므로
+코드에서 많은 변수와 표현식의 타입 전체나 타입 일부를 생략할 수 있습니다.
+예를 들어
+`var x: Int = 0`으로 작성하는 대신에 `var x = 0`으로
+타입을 완벽하게 생략하고 작성할 수 있습니다 —--
+컴파일러는 `x`를 타입 `Int`의 값으로 추론합니다.
+유사하게 컨텍스트에서 전체 타입이 추론될 수 있을 때 타입을 생략할 수 있습니다.
+예를 들어 `let dict: Dictionary = ["A": 1]`을 작성하면,
+컴파일러는 `dict`이 타입 `Dictionary<String, Int>`이라고 추론합니다.
 
-위의 두 예시에서 타입 정보는 표현식 트리의 잎에서 루트까지 전달됩니다. 즉, `var x: Int = 0` 에서 `x` 의 타입은 먼저 `0` 의 타입을 확인한 다음에 이 타입 정보를 루트 (변수 `x`) 까지 전달하여 추론합니다.
+위의 두 예시에서
+타입 정보는 표현식 트리의 잎에서 루트까지 전달됩니다.
+즉,
+`var x: Int = 0`에서 `x`의 타입은 먼저 `0`의 타입을 확인한 다음에
+이 타입 정보를 루트(변수 `x`)까지 전달하여 추론합니다.
 
-Swift 에서 타입 정보는 루트에서 잎까지 반대로 흐를 수도 있습니다. 예를 들어 다음 예시에서 상수 `eFloat` 에 명시적 타입 주석 (`: Float`) 은 숫자 리터럴 `2.71828` 이 `Double` 이 아닌 `Float` 타입을 유추하도록 합니다.
+Swift에서 타입 정보는 루트에서 잎까지 반대로 흐를 수도 있습니다.
+예를 들어 다음 예시에서
+상수 `eFloat`의 명시적 타입 주석(`: Float`)은
+숫자 리터럴 `2.71828`이 `Double`이 아닌 `Float` 타입으로 추론합니다.
 
 ```swift
 let e = 2.71828 // The type of e is inferred to be Double.
 let eFloat: Float = 2.71828 // The type of eFloat is Float.
 ```
 
-Swift 에서 타입 추론은 단일 표현식 또는 구문 수준에서 동작합니다. 이것은 표현식에서 생략된 타입 또는 타입의 일부를 추론하는데 필요한 모든 정보는 표현식 또는 하위 표현식 중 하나를 타입 검사 (type-checking) 하여 접근할 수 있습니다.
+<!--
+  - test: `type-inference`
+
+  ```swifttest
+  -> let e = 2.71828 // The type of e is inferred to be Double.
+  -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
+  ```
+-->
+
+Swift의 타입 추론은 단일 표현식이나 구문 수준에서 동작합니다.
+이것은 표현식에서 생략된 타입이나 타입의 일부를 추론하는데 필요한 모든 정보는
+표현식이나 하위 표현식 중 하나를
+타입 검사(type-checking)하여 접근할 수 있습니다.
+
+<!--
+  TODO: Email Doug for a list of rules or situations describing when type-inference
+  is allowed and when types must be fully typed.
+-->
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
