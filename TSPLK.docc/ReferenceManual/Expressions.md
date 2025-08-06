@@ -1,22 +1,39 @@
 # 표현식 (Expressions)
 
-값에 접근, 수정, 그리고 할당합니다.
+값에 접근, 수정, 할당합니다.
 
-Swift 에서 접두사 표현식 (prefix expressions), 이진 표현식 (binary expressions), 기본 표현식 (primary expressions), 그리고 접미사 표현식 (postfix expressions) 의 네가지 표현식이 있습니다. 표현식을 수행하면 값을 반환하거나 오류가 발생하거나 둘다 발생합니다.
+Swift에는 네 종류의 표현식이 있습니다:
+접두 표현식(prefix expressions), 중위 표현식(infix expressions), 기본 표현식(primary expressions), 접미 표현식(postfix expressions)입니다.
+표현식을 평가하면 값을 반환하거나
+부작용(side effect)를 일으키거나 둘 다 발생합니다.
 
-접두사 그리고 이진 표현식은 더 작은 표현식에 연산자를 적용할 수 있습니다. 기본 표현식은 개념적으로 가장 간단한 표현식이며 값을 접근하는 방법을 제공합니다. 접두사와 이진 표현식과 같이 접미사 표현식은 함수 호출과 멤버 접근과 같이 접미사를 사용하여 더 복잡한 표현식을 작성할 수 있습니다. 표현식의 각 종류는 아래 섹션에서 자세하게 설명 합니다.
+접두 표현식과 중위 표현식은
+더 작은 표현식에 연산자를 적용할 수 있습니다.
+기본 표현식은 개념적으로 가장 간단한 표현식이며
+값에 접근하는 방법을 제공합니다.
+접미 표현식은
+접두 표현식과 중위 표현식과 같이
+함수 호출이나 멤버 접근과 같은 접미사를 사용하여
+더 복잡한 표현식을 작성할 수 있습니다.
+표현식의 각 종류는 아래 섹션에서
+자세하게 설명합니다.
 
 > Grammar of an expression:
 >
 > *expression* → *try-operator*_?_ *await-operator*_?_ *prefix-expression* *infix-expressions*_?_
 
-## 접두사 표현식 (Prefix Expressions)
+## 접두 표현식 (Prefix Expressions)
 
-_접두사 표현식 (Prefix expressions)_ 은 옵셔널 접두사 연산자 (prefix operator) 와 표현식을 결합합니다. 접두사 연산자는 그 뒤에 오는 표현식 인 하나의 인자를 가집니다.
+*접두 표현식(Prefix expressions)*은
+옵셔널 접두 연산자(prefix operator)와 표현식을 결합합니다.
+접두 연산자는 하나의 인자를 받으며
+그 인자는 연산자 뒤에 오는 표현식입니다.
 
-이 연산자의 동작에 대한 자세한 설명은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고바랍니다.
+이 연산자의 동작에 대한 자세한 설명은
+<doc:BasicOperators>와 <doc:AdvancedOperators>를 참고바랍니다.
 
-Swift 표준 라이브러리에 의해 제공되는 연산자의 자세한 설명은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고바랍니다.
+Swift 표준 라이브러리에 의해 제공되는 연산자의 자세한 설명은
+[연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations)을 참고바랍니다.
 
 > Grammar of a prefix expression:
 >
@@ -25,15 +42,21 @@ Swift 표준 라이브러리에 의해 제공되는 연산자의 자세한 설�
 
 ### In-Out 표현식 (In-Out Expression)
 
-_in-out 표현식 (in-out expression)_ 은 in-out 인자로 함수 호출 표현식에 전달되는 변수를 표시합니다.
+*in-out 표현식(in-out expression)*은
+in-out 인자로 함수 호출 표현식에 전달되는
+변수를 표시합니다.
 
 ```swift
 &<#expression#>
 ```
 
-in-out 파라미터에 대한 설명과 예시는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 를 참고바랍니다.
+in-out 파라미터에 대한 설명과 예시는
+<doc:Functions#In-Out-파라미터-In-Out-Parameters>를 참고바랍니다.
 
-in-out 표현식은 <doc:Expressions#포인터-타입으로-암시적-변환-Implicit-Conversion-to-a-Pointer-Type> 에서 설명한 대로 포인터가 필요한 컨텍스트에서 비포인터 인자 (non-pointer argument) 를 제공할 때도 사용됩니다.
+in-out 표현식은
+<doc:Expressions#포인터-타입으로-암시적-변환-Implicit-Conversion-to-a-Pointer-Type>에서 설명한대로
+포인터가 필요한 컨텍스트에서
+포인터가 아닌 인자(non-pointer argument)를 제공할 때도 사용합니다.
 
 > Grammar of an in-out expression:
 >
@@ -41,29 +64,45 @@ in-out 표현식은 <doc:Expressions#포인터-타입으로-암시적-변환-Imp
 
 ### Try 연산자 (Try Operator)
 
-_try 표현식 (try expression)_ 은 오류를 던질 수 있게 `try` 연산자 다음에 표현식으로 구성됩니다. 형식은 다음과 같습니다:
+*try 표현식(try expression)*은 `try` 연산자 다음에
+오류를 던질 수 있는 표현식으로 구성되어 있습니다.
+형식은 다음과 같습니다:
 
 ```swift
 try <#expression#>
 ```
 
-_옵셔널 try 표현식 (optional-try expression)_ 은 오류를 던질 수 있게 `try?` 연산자 다음에 표현식으로 구성됩니다. 형식은 다음과 같습니다:
+`try` 표현식의 값은 위 형식의 *표현식(expression)*과 같습니다.
+
+*옵셔널 try 표현식(optional-try expression)*은 `try?` 연산자 다음에
+오류를 던질 수 있는 표현식으로 구성되어 있습니다.
+형식은 다음과 같습니다:
 
 ```swift
 try? <#expression#>
 ```
 
-_표현식_ 이 오류를 던지지 않는다면 옵셔널 try 표현식의 값은 _표현식_ 의 값을 포함하는 옵셔널입니다. 그렇지 않으면 옵셔널 try 표현식의 값은 `nil` 입니다.
+위 형식의 *표현식(expression)*에서 오류를 던지지 않는다면,
+옵셔널 try 표현식의 값은
+위 형식의 *표현식(expression)*의 값을 포함하는 옵셔널입니다.
+그렇지 않으면 옵셔널 try 표현식의 값은 `nil`입니다.
 
-_강제 try 표현식 (forced-try expression)_ 은 오류를 던질 수 있게 `try!` 연산자 다음에 표현식으로 구성됩니다. 형식은 다음과 같습니다:
+*강제 try 표현식(forced-try expression)*은 `try!` 연산자 다음에
+오류를 던질 수 있는 표현식으로 구성되어 있습니다.
+형식은 다음과 같습니다:
 
 ```swift
 try! <#expression#>
 ```
 
-강제 try 표현식의 값은 표현식의 값입니다. _표현식_ 이 오류를 던지면 런타임 오류가 발생합니다.
+강제 try 표현식의 값은 위 형식의 *표현식(expression)*의 값입니다.
+위 형식의 *표현식(expression)*이 오류를 던지면
+런타임 오류가 발생합니다.
 
-중위 연산자의 왼쪽 표현식에 `try`, `try?`, 또는 `try!` 로 표시되면 해당 연산자는 중위 표현식 전체에 적용됩니다. 즉, 괄호를 사용하여 명시적으로 연산자의 적용 범위를 명시할 수 있습니다.
+중위 연산자의 왼쪽 피연산자에
+`try`, `try?`, `try!`가 표시되어 있으면,
+해당 연산자는 중위 표현식 전체에 적용됩니다.
+즉, 괄호를 사용하여 연산자의 적용 범위를 지정할 수 있습니다.
 
 ```swift
 // try applies to both function calls
@@ -76,9 +115,67 @@ sum = try (someThrowingFunction() + anotherThrowingFunction())
 sum = (try someThrowingFunction()) + anotherThrowingFunction()
 ```
 
-중위 연산자가 할당 연산자 이거나 `try` 표현식이 괄호로 묶여있지 않으면 `try` 표현식은 중위 연산자의 오른쪽에 나타날 수 없습니다.
+<!--
+  - test: `placement-of-try`
 
-더 자세한 정보와 `try`, `try?`, 그리고 `try!` 사용법에 대한 예시는 <doc:ErrorHandling> 를 참고바랍니다.
+  ```swifttest
+  >> func someThrowingFunction() throws -> Int { return 10 }
+  >> func anotherThrowingFunction() throws -> Int { return 5 }
+  >> var sum = 0
+  // try applies to both function calls
+  -> sum = try someThrowingFunction() + anotherThrowingFunction()
+  ---
+  // try applies to both function calls
+  -> sum = try (someThrowingFunction() + anotherThrowingFunction())
+  ---
+  // Error: try applies only to the first function call
+  -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
+  !$ error: call can throw but is not marked with 'try'
+  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
+  !!                                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+  !$ note: did you mean to use 'try'?
+  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
+  !!                                      ^
+  !!                                      try
+  !$ note: did you mean to handle error as optional value?
+  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
+  !!                                      ^
+  !!                                      try?
+  !$ note: did you mean to disable error propagation?
+  !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
+  !!                                      ^
+  !!                                      try!
+  ```
+-->
+
+`try` 표현식은 중위 연산자의 오른쪽 피연산자에 나타날 수 없지만,
+중위 연산자가 할당 연산자이거나
+`try` 표현식이 괄호로 묶여있는 경우에는 예외입니다.
+
+<!--
+  - test: `try-on-right`
+
+  ```swifttest
+  >> func someThrowingFunction() throws -> Int { return 10 }
+  >> var sum = 0
+  -> sum = 7 + try someThrowingFunction() // Error
+  !$ error: 'try' cannot appear to the right of a non-assignment operator
+  !! sum = 7 + try someThrowingFunction() // Error
+  !!           ^
+  -> sum = 7 + (try someThrowingFunction()) // OK
+  ```
+-->
+
+표현식에 `try`와 `await` 연산자 모두 포함될 경우,
+`try` 연산자를 먼저 작성합니다.
+
+<!--
+  The "try await" ordering is also part of the grammar for 'expression',
+  but it's important enough to be worth re-stating in prose.
+-->
+
+더 자세한 정보와 `try`, `try?`, `try!` 사용법에 대한 예시는
+<doc:ErrorHandling>를 참고바랍니다.
 
 > Grammar of a try expression:
 >
@@ -86,19 +183,36 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
 
 ## Await 연산자 (Await Operator)
 
-_await 표현식 (await expression)_ 은 `await` 연산자 다음에 비동기 동작의 결과를 사용하는 표현식으로 구성됩니다. 형식은 다음과 같습니다:
+*await 표현식(await expression)*은 `await` 연산자 다음에
+비동기 동작의 결과를 사용하는 표현식으로 구성되어 있습니다.
+형식은 다음과 같습니다:
 
 ```swift
 await <#expression#>
 ```
 
-`await` 표현의 값은 _표현식 (expression)_ 의 값입니다.
+`await` 표현식의 값은 위 형식의 *표현식(expression)*의 값입니다.
 
-`await` 로 표시된 표현식을 _잠재적 중단 지점 (potential suspension point)_ 이라 합니다. 비동기 함수의 실행은 `await` 로 표시된 각 표현식에서 일시 중단될 수 있습니다. 또한 동시 코드의 실행은 다른 시점에서 중단되지 않습니다. 이는 잠재적 중단 지점 사이의 코드가 다음 잠재적 중단 지점 이전에 업데이트를 완료하는 경우 일시적으로 중단을 깨야하는 상태를 안전하게 업데이트 할 수 있음을 의미합니다.
+`await`로 표시된 표현식은 *잠재적 중단 지점(potential suspension point)*이라 합니다.
+비동기 함수의 실행은
+`await`로 표시된 각 표현식에서 일시 중단될 수 있습니다.
+반대로
+비동기 코드의 실행은 이런 지점이 아닌 다른 시점에서는 중단되지 않습니다.
+이는 잠재적 중단 지점 사이의 코드가
+일시적으로 중단을 깨야하는 상태를 안전하게 업데이트 할 수 있고
+다음 잠재적 중단 지점 이전에
+해당 작업을 완료하기만 하면 됩니다.
 
-`await` 표현식은 `async(priority:operation:)` 함수에 전달된 후행 클로저와 같은 비동기 컨텍스트 내에서만 나타날 수 있습니다. `defer` 구문의 본문이나 동기 함수 타입의 자동 클로저 (autoclosure) 내에서는 나타날 수 없습니다.
+`await` 표현식은 `async(priority:operation:)` 함수에 전달된 후행 클로저와 같이
+비동기 컨텍스트 내에서만 사용할 수 있습니다.
+`defer` 구문의 본문이나
+동기 함수 타입의 자동 클로저(autoclosure) 내에서는 사용할 수 없습니다.
 
-중위 연산자 (infix operator) 의 좌항에 `await` 연산자로 표시되면 해당 연산자는 전체 중위 표현식에 적용됩니다. 즉, 괄호를 사용하여 연산자의 적용 범위를 명시할 수 있습니다.
+중위 연산자(infix operator)의 왼쪽 피연산자에
+`await` 연산자로 표시하면
+해당 연산자는 전체 중위 표현식에 적용됩니다.
+즉, 괄호를 사용하여
+연산자의 적용 범위를 명시할 수 있습니다.
 
 ```swift
 // await applies to both function calls
@@ -111,9 +225,62 @@ sum = await (someAsyncFunction() + anotherAsyncFunction())
 sum = (await someAsyncFunction()) + anotherAsyncFunction()
 ```
 
-`await` 표현식은 중위 연산자가 할당 연산자 이거나 `await` 표현식이 괄호로 묶인 경우가 아니면 중위 연산자의 우항에 나타날 수 없습니다.
+<!--
+  - test: `placement-of-await`
 
-표현식에 `await` 와 `try` 연산자가 모두 포함되면 `try` 연산자가 먼저 나타나야 합니다.
+  ```swifttest
+  >> func someAsyncFunction() async -> Int { return 10 }
+  >> func anotherAsyncFunction() async -> Int { return 5 }
+  >> func f() async {
+  >> var sum = 0
+  // await applies to both function calls
+  -> sum = await someAsyncFunction() + anotherAsyncFunction()
+  ---
+  // await applies to both function calls
+  -> sum = await (someAsyncFunction() + anotherAsyncFunction())
+  ---
+  // Error: await applies only to the first function call
+  -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
+  >> _ = sum  // Suppress irrelevant written-but-not-read warning
+  >> }
+  !$ error: expression is 'async' but is not marked with 'await'
+  !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
+  !! ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  !! await
+  !$ note: call is 'async'
+  !! sum = (await someAsyncFunction()) + anotherAsyncFunction()
+  !! ^
+  ```
+-->
+
+`await` 표현식은 중위 연산자의 우항에 나타날 수 없지만,
+중위 연산자가 할당 연산자이거나
+`await` 표현식이 괄호로 묶인 경우는 예외입니다.
+
+<!--
+  - test: `await-on-right`
+
+  ```swifttest
+  >> func f() async {
+  >> func someAsyncFunction() async -> Int { return 10 }
+  >> var sum = 0
+  >> sum = 7 + await someAsyncFunction()    // Error
+  !$ error: 'await' cannot appear to the right of a non-assignment operator
+  !! sum = 7 + await someAsyncFunction()    // Error
+  !! ^
+  >> sum = 7 + (await someAsyncFunction())  // OK
+  >> _ = sum  // Suppress irrelevant written-but-not-read warning
+  >> }
+  ```
+-->
+
+표현식에 `await`와 `try` 연산자가 모두 포함되면,
+`try` 연산자를 먼저 작성합니다.
+
+<!--
+  The "try await" ordering is also part of the grammar for 'expression',
+  but it's important enough to be worth re-stating in prose.
+-->
 
 > Grammar of an await expression:
 >
@@ -121,18 +288,40 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
 
 ## 중위 표현식 (Infix Expressions)
 
-_중위 표현식 (Infix expressions)_ 은 좌항과 우항 인자를 가지는 표현식과 중위 이항 연산자 (infix binary operator) 를 결합합니다. 형식은 다음과 같습니다:
+*중위 표현식(Infix expressions)*은
+중위 이항 연산자(infix binary operator)의
+왼쪽과 오른쪽 인자로 사용되는 표현식을 결합합니다.
+형식은 다음과 같습니다:
 
 ```swift
 <#left-hand argument#> <#operator#> <#right-hand argument#>
 ```
 
-이 연산자의 동작에 대한 자세한 설명은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고바랍니다.
+이 연산자의 동작에 대한 자세한 설명은
+<doc:BasicOperators>와 <doc:AdvancedOperators>를 참고바랍니다.
 
-Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고바랍니다.
+Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은
+[연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations)을 참고바랍니다.
 
-> Note\
-> 구문 분석 시 중위 연산자로 구성된 표현식은 단순 리스트로 표현됩니다. 이 리스트는 연산자 우선순위를 적용하여 트리로 변환됩니다. 예를 들어 표현식 `2 + 3 * 5` 는 처음에는 5개의 항목 `2`, `+`, `3`, `*`, 그리고 `5` 의 단순 리스트로 이해됩니다. 이 프로세스는 트리 (2 + (3 \* 5)) 로 변환합니다.
+<!--
+  You have essentially expression sequences here, and within it are
+  parts of the expressions.  We're calling them "expressions" even
+  though they aren't what we ordinarily think of as expressions.  We
+  have this two-phase thing where we do the expression sequence parsing
+  which gives a rough parse tree.  Then after name binding we know
+  operator precedence and we do a second phase of parsing that builds
+  something that's a more traditional tree.
+-->
+
+> Note: 구문 분석 시,
+> 중위 연산자로 구성된 표현식은
+> 평평한 목록으로 표현됩니다.
+> 이 목록은 연산자 우선순위를 적용하여
+> 트리로 변환합니다.
+> 예를 들어 표현식 `2 + 3 * 5`는
+> 처음에는 다섯 개의 항목 `2`, `+`, `3`, `*`, `5`의
+> 평평한 목록으로 이해합니다.
+> 이 과정은 표현식을 (2 + (3 * 5)) 트리로 변환합니다.
 
 > Grammar of an infix expression:
 >
@@ -144,20 +333,41 @@ Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세�
 
 ### 할당 연산자 (Assignment Operator)
 
-_할당 연산자 (assignment operator)_ 는 주어진 표현식에 대해 새로운 값을 설정합니다. 다음의 형식을 가집니다:
+*할당 연산자(assignment operator)*는
+주어진 표현식에 대해 새로운 값을 설정합니다.
+다음의 형식을 가집니다:
 
 ```swift
 <#expression#> = <#value#>
 ```
 
-_표현식_ 의 값은 평가한 _값_ 에 의해 얻어진 값으로 설정됩니다. _표현식_ 이 튜플이면 _값_ 은 동일한 수의 요소의 튜플이어야 합니다. (중첩된 튜플도 가능합니다.) _값_ 의 각 부분에서 _표현식_ 의 해당 부분으로 할당이 수행됩니다. 예를 들어:
+위 형식의 *표현식(expression)*의 값은
+위 형식의 *값(value)*을 평가하여 얻어진 값으로 설정합니다.
+위 형식의 *표현식(expreesion)*이 튜플이면,
+위 형식의 *값(value)*은 튜플이어야 하고
+동일한 수의 요소를 가져야 합니다.
+(중첩된 튜플도 가능합니다.)
+위 형식의 *값(value)*에서
+위 형식의 *표현식(expression)*에 할당됩니다.
+예를 들어:
 
 ```swift
 (a, _, (b, c)) = ("test", 9.45, (12, 3))
 // a is "test", b is 12, c is 3, and 9.45 is ignored
 ```
 
-할당 연산자는 모든 값을 반환하지 않습니다.
+<!--
+  - test: `assignmentOperator`
+
+  ```swifttest
+  >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
+  -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
+  /> a is \"\(a)\", b is \(b), c is \(c), and 9.45 is ignored
+  </ a is "test", b is 12, c is 3, and 9.45 is ignored
+  ```
+-->
+
+할당 연산자는 값을 반환하지 않습니다.
 
 > Grammar of an assignment operator:
 >
@@ -165,15 +375,23 @@ _표현식_ 의 값은 평가한 _값_ 에 의해 얻어진 값으로 설정됩�
 
 ### 삼항 조건 연산자 (Ternary Conditional Operator)
 
-_삼항 조건 연산자 (ternary conditional operator)_ 는 조건의 값을 기반으로 주어진 두 개의 값 중 하나로 나타냅니다. 다음의 형식을 가집니다:
+*삼항 조건 연산자(ternary conditional operator)*는 조건의 값을 기반으로
+주어진 두 개의 값 중 하나로 나타냅니다.
+다음의 형식을 가집니다:
 
 ```swift
 <#condition#> ? <#expression used if true#> : <#expression used if false#>
 ```
 
-_조건_ 이 `true` 이면 조건부 연산자는 첫번째 표현식을 평가하고 해당 값을 반환합니다. 그렇지 않으면 두번째 표현식을 평가하고 그것의 값을 반환합니다. 사용하지 않은 표현식은 평가되지 않습니다.
+위 형식의 *조건(condition)*이 `true`이면,
+조건부 연산자는 첫 번째 표현식을 평가하고
+해당 값을 반환합니다.
+그렇지 않으면 두 번째 표현식을 평가하고
+해당 값을 반환합니다.
+사용하지 않은 표현식은 평가되지 않습니다.
 
-삼항 조건 연산자 사용에 대한 예시는 <doc:BasicOperators#삼항-조건-연산자-Ternary-Conditional-Operator> 를 참고바랍니다.
+삼항 조건 연산자 사용에 대한 예시는
+<doc:BasicOperators#삼항-조건-연산자-Ternary-Conditional-Operator>를 참고바랍니다.
 
 > Grammar of a conditional operator:
 >
@@ -181,7 +399,11 @@ _조건_ 이 `true` 이면 조건부 연산자는 첫번째 표현식을 평가�
 
 ### 타입 캐스팅 연산자 (Type-Casting Operators)
 
-`is` 연산자, `as` 연산자, `as?` 연산자, 그리고 `as!` 연산자 인 4개의 타입 캐스팅 연산자 (type-casting operators) 가 있습니다.
+타입 캐스팅 연산자(type-casting operators)는 네 가지가 있습니다:
+`is` 연산자,
+`as` 연산자,
+`as?` 연산자,
+`as!` 연산자입니다.
 
 다음의 형식을 가지고 있습니다:
 
@@ -192,9 +414,45 @@ _조건_ 이 `true` 이면 조건부 연산자는 첫번째 표현식을 평가�
 <#expression#> as! <#type#>
 ```
 
-`is` 연산자는 _표현식_ 이 지정된 _타입_ 으로 캐스팅 될 수 있는지 런타임 시에 확인합니다. _표현식_ 이 지정된 _타입_ 으로 캐스팅 될 수 있으면 `true` 를 반환하고 그렇지 않으면 `false` 를 반환합니다.
+`is` 연산자는 런타임 시에 위 형식의 *표현식(expression)*이
+지정된 위 형식의 *타입(type)*으로 캐스팅될 수 있는지 확인합니다.
+위 형식의 *표현식(expression)*이 지정된 위 형식의 *타입(type)*으로 캐스팅될 수 있으면 `true`를 반환하고;
+그렇지 않으면 `false`를 반환합니다.
 
-`as` 연산자는 업캐스팅 (upcasting) 또는 브릿징 (bridging) 과 같이 변환이 항상 성공하는 것으로 컴파일 시 알려진 경우에 캐스팅을 수행합니다. 업캐스팅 (Upcasting) 을 사용하면 중간 변수를 사용하지 않고 표현식을 해당 타입의 상위 타입 인스턴스로 사용할 수 있습니다. 다음 접근은 동일합니다:
+<!--
+  - test: `triviallyTrueIsAndAs`
+
+  ```swifttest
+  -> assert("hello" is String)
+  -> assert(!("hello" is Int))
+  !$ warning: 'is' test is always true
+  !! assert("hello" is String)
+  !!                ^
+  !$ warning: cast from 'String' to unrelated type 'Int' always fails
+  !! assert(!("hello" is Int))
+  !!          ~~~~~~~ ^  ~~~
+  ```
+-->
+
+<!--
+  - test: `is-operator-tautology`
+
+  ```swifttest
+  -> class Base {}
+  -> class Subclass: Base {}
+  -> var s = Subclass()
+  -> var b = Base()
+  ---
+  -> assert(s is Base)
+  !$ warning: 'is' test is always true
+  !! assert(s is Base)
+  !!          ^
+  ```
+-->
+
+`as` 연산자는
+업캐스팅(upcasting)이나 브리징(bridging)과 같이
+변환이 항상 성공하는 것으로 컴파일 시 알려진 경우에 캐스팅을 수행합니다. 업캐스팅 (Upcasting) 을 사용하면 중간 변수를 사용하지 않고 표현식을 해당 타입의 상위 타입 인스턴스로 사용할 수 있습니다. 다음 접근은 동일합니다:
 
 ```swift
 func f(_ any: Any) { print("Function for Any") }
