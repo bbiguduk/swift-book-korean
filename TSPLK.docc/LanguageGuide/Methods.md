@@ -251,7 +251,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
   ```
 -->
 
-위의 `Point` 구조체는 변경 메서드인 `moveBy(x:y:)`를 정의하며,
+위의 `Point` 구조체는 mutating 메서드인 `moveBy(x:y:)`를 정의하며,
 이 메서드는 `Point` 인스턴스를 일정한 값만큼 이동시킵니다.
 새로운 위치를 반환하는 대신에
 이 메서드는 실제로 호출된 인스턴스를 직접 수정합니다.
@@ -260,7 +260,7 @@ print("The point is now at (\(somePoint.x), \(somePoint.y))")
 
 <doc:Properties#상수-구조체-인스턴스의-저장-프로퍼티-Stored-Properties-of-Constant-Structure-Instances>에서 설명했듯이
 프로퍼티가 변수 프로퍼티라도 변경할 수 없기 때문에
-구조체 타입의 상수에 대해 변경 메서드를 호출할 수 없습니다:
+구조체 타입의 상수에 대해 mutating 메서드를 호출할 수 없습니다:
 
 ```swift
 let fixedPoint = Point(x: 3.0, y: 3.0)
@@ -299,9 +299,9 @@ fixedPoint.moveBy(x: 2.0, y: 3.0)
   if the setter for the computed property is explicitly defined as @!mutating.
 -->
 
-### 변경 메서드 내에서 self 할당 (Assigning to self Within a Mutating Method)
+### Mutating 메서드 내에서 self 할당 (Assigning to self Within a Mutating Method)
 
-변경 메서드(Mutating methods)에서는 암시적인 `self` 프로퍼티에 완전히 새로운 인스턴스를 할당할 수 있습니다.
+mutating 메서드에서는 암시적인 `self` 프로퍼티에 완전히 새로운 인스턴스를 할당할 수 있습니다.
 위에서 본 `Point` 예시는 다음과 같은 방식으로 작성할 수도 있습니다:
 
 ```swift
@@ -330,12 +330,12 @@ struct Point {
   ```
 -->
 
-이 변경 메서드 `moveBy(x:y:)`는
+이 mutating 메서드 `moveBy(x:y:)`는
 `x`와 `y` 값이 대상 위치로 설정된 새로운 구조체를 생성하고, 이를 `self`에 할당합니다.
 이 대체 버전의 메서드를 호출한 최종 결과는
 이전 버전의 호출 결과와 동일합니다.
 
-열거형의 변경 메서드는 동일한 열거형의 다른 케이스를
+열거형의 mutating 메서드는 동일한 열거형의 다른 케이스를
 암시적인 `self`에 설정할 수 있습니다:
 
 ```swift

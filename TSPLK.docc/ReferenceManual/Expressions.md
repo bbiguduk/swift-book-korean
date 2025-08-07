@@ -452,7 +452,11 @@ Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세�
 
 `as` 연산자는
 업캐스팅(upcasting)이나 브리징(bridging)과 같이
-변환이 항상 성공하는 것으로 컴파일 시 알려진 경우에 캐스팅을 수행합니다. 업캐스팅 (Upcasting) 을 사용하면 중간 변수를 사용하지 않고 표현식을 해당 타입의 상위 타입 인스턴스로 사용할 수 있습니다. 다음 접근은 동일합니다:
+컴파일 시 변환이 항상 성공하는 경우에
+캐스팅을 수행합니다.
+업캐스팅(Upcasting)을 사용하면 중간 변수를 사용하지 않고
+표현식을 해당 타입의 상위 타입 인스턴스로 사용할 수 있습니다.
+다음 예시의 방식은 둘 다 동일합니다:
 
 ```swift
 func f(_ any: Any) { print("Function for Any") }
@@ -469,13 +473,51 @@ f(x as Any)
 // Prints "Function for Any"
 ```
 
-브릿징 (Bridging) 을 사용하면 새로운 인스턴스를 생성할 필요없이 `NSString` 과 같은 해당 Foundation 타입으로 `String` 과 같은 Swift 표준 라이브러리 타입의 표현식으로 사용할 수 있습니다. 브릿징에 대한 자세한 설명은 [Foundation 타입 동작 (Working with Foundation Types)](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types) 을 참고바랍니다.
+<!--
+  - test: `explicit-type-with-as-operator`
 
-`as?` 연산자는 지정한 _타입_ 으로 _표현식_ 의 조건부 캐스팅을 수행합니다. `as?` 연산자는 지정한 _타입_ 의 옵셔널로 반환합니다. 런타임에 캐스팅이 성공하면 _표현식_ 의 값은 옵셔널로 래핑되고 반환됩니다; 그렇지 않으면 반환된 값은 `nil` 입니다. 지정된 _타입_ 으로 캐스팅이 실패하거나 성공이 보장되면 컴파일 시 오류가 발생합니다.
+  ```swifttest
+  -> func f(_ any: Any) { print("Function for Any") }
+  -> func f(_ int: Int) { print("Function for Int") }
+  -> let x = 10
+  -> f(x)
+  <- Function for Int
+  ---
+  -> let y: Any = x
+  -> f(y)
+  <- Function for Any
+  ---
+  -> f(x as Any)
+  <- Function for Any
+  ```
+-->
 
-`as!` 연산자는 지정한 _타입_ 으로 _표현식_ 의 강제 캐스팅을 수행합니다. `as!` 연산자는 옵셔널 타입이 아닌 지정한 _타입_ 의 값을 반환합니다. 캐스팅이 실패하면 런타임 오류가 발생합니다. `x as! T` 의 동작은 `(x as? T)!` 의 동작과 동일합니다.
+브리징(Bridging)을 사용하면
+`String`과 같은 Swift 표준 라이브러리 타입을
+`NSString`과 같은 해당 Foundation 타입으로 사용할 수 있게 해주고
+새로운 인스턴스를 생성할 필요가 없습니다.
+브리징에 대한 자세한 설명은
+[Foundation 타입 동작 (Working with Foundation Types)](https://developer.apple.com/documentation/swift/imported_c_and_objective_c_apis/working_with_foundation_types)을 참고바랍니다.
 
-타입 캐스팅에 대한 자세한 내용과 타입 캐스팅 연산자 사용에 대한 예시는 <doc:TypeCasting> 을 참고바랍니다.
+`as?` 연산자는
+위 형식의 *표현식(expression)*을
+지정한 위 형식의 *타입(type)*으로 조건부로 캐스팅을 수행합니다.
+`as?` 연산자는 지정한 위 형식의 *타입(type)*의 옵셔널로 반환합니다.
+런타임 시 캐스팅이 성공하면,
+위 형식의 *표현식(expression)*의 값은 옵셔널로 래핑하여 반환됩니다;
+그렇지 않으면 `nil`이 반환됩니다.
+지정된 위 형식의 *타입(type)*으로 캐스팅이
+항상 실패하거나 항상 성공이 보장되면
+컴파일 시 오류가 발생합니다.
+
+`as!` 연산자는 위 형식의 *표현식(expression)*을 지정한 위 형식의 *타입(type)*으로 강제 캐스팅을 수행합니다.
+`as!` 연산자는 옵셔널 타입이 아닌 지정한 위 형식의 *타입(type)*의 값을 반환합니다.
+캐스팅이 실패하면 런타임 오류가 발생합니다.
+`x as! T`의 동작은 `(x as? T)!`의 동작과 동일합니다.
+
+타입 캐스팅에 대한 자세한 내용과
+타입 캐스팅 연산자 사용에 대한 예시는
+<doc:TypeCasting>을 참고바랍니다.
 
 > Grammar of a type-casting operator:
 >
@@ -486,7 +528,11 @@ f(x as Any)
 
 ## 기본 표현식 (Primary Expressions)
 
-_기본 표현식 (Primary expressions)_ 은 표현식의 가장 기본입니다. 표현식 자체로 사용될 수 있으며 접두사 표현식, 중위 표현식, 그리고 접미사 표현식을 만들기 위해 다른 토큰과 결합될 수 있습니다.
+*기본 표현식(Primary expressions)*은
+표현식의 가장 기본입니다.
+표현식 자체로 사용될 수 있으며,
+접두 표현식, 중위 표현식, 접미 표현식을 만들기 위해
+다른 토큰과 결합될 수 있습니다.
 
 > Grammar of a primary expression:
 >
@@ -505,48 +551,126 @@ _기본 표현식 (Primary expressions)_ 은 표현식의 가장 기본입니다
 > *primary-expression* → *selector-expression* \
 > *primary-expression* → *key-path-string-expression*
 
+<!--
+  NOTE: One reason for breaking primary expressions out of postfix
+  expressions is for exposition -- it makes it easier to organize the
+  prose surrounding the production rules.
+-->
+
+<!--
+  TR: Is a generic argument clause allowed
+  after an identifier in expression context?
+  It seems like that should only occur when an identifier
+  is a *type* identifier.
+-->
+
 ### 리터럴 표현식 (Literal Expression)
 
-_리터럴 표현식 (literal expression)_ 은 일반 리터럴 (문자열 또는 숫자 등), 배열 또는 딕셔너리 리터럴, 플레이그라운드 리터럴로 구성됩니다:
+*리터럴 표현식(literal expression)*은
+일반 리터럴(문자열이나 숫자 등),
+배열이나 딕셔너리 리터럴,
+플레이그라운드 리터럴로 구성됩니다:
 
 > Note:
-> Swift 5.9 이전에는 다음의 특수 리터럴이 인식됩니다: `#column`, `#dsohandle`, `#fileID`, `#filePath`, `#file`, `#function`, 그리고 `#line`.
-> 이것은 현재 Swift 표준 라이브러리에 매크로 (macros) 로 구현되어 있습니다:
+> Swift 5.9 이전에는
+> 다음의 특수 리터럴이 인식되었습니다:
+> `#column`,
+> `#dsohandle`,
+> `#fileID`,
+> `#filePath`,
+> `#file`,
+> `#function`,
+> `#line`.
+> 이것은 현재 Swift 표준 라이브러리에 매크로(macro)로 구현됩니다:
 > [`column()`](https://developer.apple.com/documentation/swift/column()),
 > [`dsohandle()`](https://developer.apple.com/documentation/swift/dsohandle()),
 > [`fileID()`](https://developer.apple.com/documentation/swift/fileID()),
 > [`filePath()`](https://developer.apple.com/documentation/swift/filePath()),
 > [`file()`](https://developer.apple.com/documentation/swift/file()),
 > [`function()`](https://developer.apple.com/documentation/swift/function()),
-> 그리고 [`line()`](https://developer.apple.com/documentation/swift/line()).
+> [`line()`](https://developer.apple.com/documentation/swift/line()).
 
-_배열 리터럴 (array literal)_ 은 순서가 있는 값의 컬렉션입니다. 형식은 아래와 같습니다:
+<!--
+  - test: `pound-file-flavors`
+
+  ```swifttest
+  >> print(#file == #filePath)
+  << true
+  >> print(#file == #fileID)
+  << false
+  ```
+-->
+
+*배열 리터럴(array literal)*은
+순서가 있는 값의 컬렉션입니다.
+형식은 다음과 같습니다:
 
 ```swift
 [<#value 1#>, <#value 2#>, <#...#>]
 ```
 
-배열의 마지막 표현식은 옵셔널 콤마가 따라올 수 있습니다. 배열 리터럴의 값은 `T` 는 표현식 내의 타입인 타입 `[T]` 를 가집니다. 여러 타입의 표현식이 있는 경우 `T` 는 가장 가까운 공통 상위 타입 (supertype) 입니다. 빈 배열 리터럴은 빈 대괄호 쌍을 사용하여 작성하고 지정된 타입의 빈 배열을 생성하는데 사용될 수 있습니다.
+배열의 마지막 표현식 뒤에 콤마를 추가할 수 있습니다.
+배열 리터럴의 값은 `[T]` 타입이고,
+여기서 `T`는 표현식 내의 타입을 나타냅니다.
+여러 타입의 표현식이 있는 경우
+`T`는 가장 가까운 공통 상위 타입(supertype)입니다.
+빈 배열 리터럴은
+빈 대괄호 쌍을 사용하여 작성하고 지정된 타입의 빈 배열을 생성할 수 있습니다.
 
 ```swift
 var emptyArray: [Double] = []
 ```
 
-_딕셔너리 리터럴 (dictionary literal)_ 은 순서가 없는 키-값 쌍의 컬렉션입니다. 형식은 아래와 같습니다:
+<!--
+  - test: `array-literal-brackets`
+
+  ```swifttest
+  -> var emptyArray: [Double] = []
+  ```
+-->
+
+*딕셔너리 리터럴(dictionary literal)*은
+순서가 없는 키-값 쌍의 컬렉션입니다.
+형식은 다음과 같습니다:
 
 ```swift
 [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 ```
 
-딕셔너리에 마지막 표현식은 옵셔널 콤마가 따라올 수 있습니다. 딕셔너리 리터럴의 값은 `Key` 는 키 표현식의 타입이고 `Value` 는 값 표현식의 타입인 타입 `[Key: Value]` 를 가집니다. 여러 타입의 표현식이 있는 경우 `Key` 와 `Value` 는 해당 값에 대해 가장 가까운 공통 상위 타입입니다. 빈 딕셔너리 리터럴은 빈 배열 리터럴과 구분하기 위해 대괄호 쌍내에 콜론 (`[:]`) 을 작성합니다. 지정한 키와 값 타입으로 빈 딕셔너리 리터럴을 생성하기 위해 빈 딕셔너리 리터럴을 사용할 수 있습니다.
+딕셔너리에 마지막 표현식 뒤에 콤마를 추가할 수 있습니다.
+딕셔너리 리터럴의 값은 `[Key: Value]` 타입을 가지고,
+여기서 `Key`는 키 표현식의 타입이고
+`Value`는 값 표현식의 타입입니다.
+여러 타입의 표현식이 있는 경우
+`Key`와 `Value`는 해당 값에 대해
+가장 가까운 공통 상위 타입입니다.
+빈 딕셔너리 리터럴은
+빈 배열 리터럴과 구분하기 위해
+대괄호 쌍 내에 콜론(`[:]`)을 작성합니다.
+빈 딕셔너리 리터럴을
+지정한 키와 값 타입으로 빈 딕셔너리 리터럴을 생성할 수 있습니다.
 
 ```swift
 var emptyDictionary: [String: Double] = [:]
 ```
 
-_플레이그라운드 리터럴 (playground literal)_ 은 프로그램 편집기 내에서 색상, 파일, 또는 이미지의 상호 표현을 생성하기 위해 Xcode 에 의해 사용됩니다. Xcode 의 외부 플레인 텍스트에서 플레이그라운드 리터럴은 특수 리터럴 구문을 사용하여 표현됩니다.
+<!--
+  - test: `dictionary-literal-brackets`
 
-Xcode 에서 플레이그라운드 리터럴 사용에 대한 정보는 Xcode 도움에 [색상, 파일, 또는 이미지 리터럴 추가하기 (Add a color, file, or image literal)](https://help.apple.com/xcode/mac/current/#/dev4c60242fc) 을 참고바랍니다.
+  ```swifttest
+  -> var emptyDictionary: [String: Double] = [:]
+  ```
+-->
+
+*플레이그라운드 리터럴(playground literal)*은
+Xcode에서 색상, 파일, 이미지를
+대화형으로 나타낼 수 있는 표현식입니다.
+Xcode 외부의 일반 텍스트에서 플레이그라운드 리터럴은
+특수 리터럴 구문을 사용하여 표현합니다.
+
+Xcode에서 플레이그라운드 리터럴 사용에 대한 정보는
+Xcode Help의
+[색상, 파일, 이미지 리터럴 추가하기 (Add a color, file, or image literal)](https://help.apple.com/xcode/mac/current/#/dev4c60242fc)를 참고바랍니다.
 
 > Grammar of a literal expression:
 >
@@ -567,7 +691,9 @@ Xcode 에서 플레이그라운드 리터럴 사용에 대한 정보는 Xcode �
 
 ### Self 표현식 (Self Expression)
 
-`self` 표현식은 현재 타입 또는 해당 타입의 인스턴스에 대한 명시적 참조입니다. 형식은 다음과 같습니다:
+`self` 표현식은 현재 타입
+또는 해당 타입의 인스턴스를 명시적으로 참조하는 표현입니다.
+형식은 다음과 같습니다:
 
 ```swift
 self
@@ -577,9 +703,19 @@ self(<#initializer arguments#>)
 self.init(<#initializer arguments#>)
 ```
 
-이니셜라이저, 서브스크립트, 또는 인스턴스 메서드에서 `self` 는 해당 타입의 현재 인스턴스를 참조합니다. 타입 메서드에서 `self` 는 현재 타입을 참조합니다.
+<!--
+  TODO: Come back and explain the second to last form (i.e., self(arg: value)).
+-->
 
-`self` 표현식은 멤버에 접근할 때 범위를 지정하는데 사용되고 함수 파라미터와 같이 범위에 같은 이름의 다른 변수가 있을 때 명확성을 제공합니다. 예를 들어:
+이니셜라이저, 서브스크립트, 인스턴스 메서드에서 `self`는
+해당 코드가 속한 타입의 인스턴스를 참조합니다.
+타입 메서드에서 `self`는 해당 코드가 속한 타입 자체를 참조합니다.
+
+`self` 표현식은 멤버에 접근할 때
+범위를 지정하는데 사용되고
+함수 파라미터와 같이
+범위에 같은 이름의 다른 변수가 있을 때 혼돈을 방지하기 위해 사용됩니다.
+예를 들어:
 
 ```swift
 class SomeClass {
@@ -590,7 +726,22 @@ class SomeClass {
 }
 ```
 
-값 타입의 변경가능 메서드 (mutating method) 에서 해당 값 타입의 새 인스턴스를 `self` 에 할당할 수 있습니다. 예를 들어:
+<!--
+  - test: `self-expression`
+
+  ```swifttest
+  -> class SomeClass {
+         var greeting: String
+         init(greeting: String) {
+             self.greeting = greeting
+         }
+     }
+  ```
+-->
+
+값 타입의 mutating 메서드에서
+해당 값 타입의 새 인스턴스를 `self`에 할당할 수 있습니다.
+예를 들어:
 
 ```swift
 struct Point {
@@ -601,6 +752,25 @@ struct Point {
 }
 ```
 
+<!--
+  - test: `self-expression`
+
+  ```swifttest
+  -> struct Point {
+        var x = 0.0, y = 0.0
+        mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+           self = Point(x: x + deltaX, y: y + deltaY)
+        }
+     }
+  >> var somePoint = Point(x: 1.0, y: 1.0)
+  >> somePoint.moveBy(x: 2.0, y: 3.0)
+  >> print("The point is now at (\(somePoint.x), \(somePoint.y))")
+  << The point is now at (3.0, 4.0)
+  ```
+-->
+
+<!-- Apple Books screenshot begins here. -->
+
 > Grammar of a self expression:
 >
 > *self-expression* → **`self`** | *self-method-expression* | *self-subscript-expression* | *self-initializer-expression*
@@ -609,9 +779,11 @@ struct Point {
 > *self-subscript-expression* → **`self`** **`[`** *function-call-argument-list* **`]`** \
 > *self-initializer-expression* → **`self`** **`.`** **`init`**
 
-### 슈퍼클래스 표현식 (Superclass Expression)
+### 상위 클래스 표현식 (Superclass Expression)
 
-_슈퍼클래스 표현식 (superclass expression)_ 을 사용하면 클래스가 슈퍼클래스와 상호작용 할 수 있습니다. 다음 형식 중 하나가 있습니다:
+*상위 클래스 표현식(superclass expression)*을 사용하면
+클래스의 상위 클래스와 상호작용할 수 있습니다.
+다음 형식 중 하나를 사용합니다:
 
 ```swift
 super.<#member name#>
@@ -619,9 +791,13 @@ super[<#subscript index#>]
 super.init(<#initializer arguments#>)
 ```
 
-첫번째 형식은 슈퍼클래스의 멤버에 접근하기 위해 사용됩니다. 두번째 형식은 슈퍼클래스의 서브스크립트 구현에 접근하기 위해 사용됩니다. 세번째 형식은 슈퍼클래스의 이니셜라이저에 접근하기 위해 사용됩니다.
+첫 번째 형식은 상위 클래스의 멤버에 접근하기 위해 사용합니다.
+두 번째 형식은 상위 클래스의 서브스크립트 구현에 접근하기 위해 사용합니다.
+세 번째 형식은 상위 클래스의 이니셜라이저에 접근하기 위해 사용합니다.
 
-서브클래스는 멤버, 서브스크립트 그리고 이니셜라이저에서 슈퍼클래스 표현식을 사용하여 슈퍼클래스의 구현을 사용할 수 있습니다.
+하위 클래스는
+멤버, 서브스크립트, 이니셜라이저 구현 내에서
+상위 클래스 표현식을 사용하여 상위 클래스의 구현을 활용할 수 있습니다.
 
 > Grammar of a superclass expression:
 >
@@ -633,7 +809,9 @@ super.init(<#initializer arguments#>)
 
 ### 조건 표현식 (Conditional Expression)
 
-_조건 표현식 (conditional expression)_ 은 조건의 값을 기반으로 주어진 몇몇 값 중 하나로 평가합니다. 다음의 형식을 가집니다:
+*조건 표현식(conditional expression)*은 조건의 값을 기반으로
+여러 주어진 값 중 하나로 평가됩니다.
+다음의 형식을 가집니다:
 
 ```swift
 if <#condition 1#> {
@@ -643,7 +821,6 @@ if <#condition 1#> {
 } else {
    <#expression used if both conditions are false#>
 }
-
 
 switch <#expression#> {
 case <#pattern 1#>:
@@ -655,30 +832,53 @@ default:
 }
 ```
 
-조건 표현식은 아래에서 설명하는 다른점을 제외하고는 `if` 구문 또는 `switch` 구문과 같은 동작과 구문을 가집니다.
+조건 표현식은
+`if` 구문이나 `switch` 구문과 같은 동작과 구문을 가지지만,
+아래에서 설명하는 다른점을 가집니다.
 
 조건 표현식은 다음 컨텍스트에서만 나타납니다:
 
   - 변수에 할당된 값.
-  - 변수 또는 상수 선언에서 초기값.
-  - `throw` 표현식으로 오류를 발생.
-  - 함수, 클로저, 또는 프로퍼티 getter 에 의해 반환된 값.
-  - 조건 표현식의 구문안에서의 값.
+  - 변수나 상수 선언에서 초기값.
+  - `throw` 표현식에서 발생시키는 오류.
+  - 함수, 클로저, 프로퍼티 getter의 반환된 값.
+  - 조건 표현식의 분기 안에서의 값.
 
-조건 표현식의 구문은 조건에 상관없이 값을 생성하므로 완벽합니다. 이것은 각 `if` 분기는 적절한 `else` 분기가 필요합니다. 
+조건 표현식의 분기는
+조건에 상관없이
+값을 생성하므로 완벽합니다.
+이것은 각 `if` 분기는 적절한 `else` 분기가 필요합니다. 
 
-각 분기는 분기의 조건이 참일 때 조건 표현식의 값으로 사용되는 단일 표현식, `throw` 구문, 또는 반환하지 않는 함수 호출을 포함합니다.
+각 분기는 하나의 표현식만 포함되어야 하고,
+이 표현식은 해당 조건이 참일 때
+그 분기의 결과 값으로 사용하거나
+`throw` 구문이나
+반환하지 않는 함수 호출로 구성될 수 있습니다.
 
-각 분기는 같은 타입의 값을 생성해야 합니다. 각 분기의 타입 검사는 독립적이기 때문에 분기가 다른 종류의 리터럴을 포함하거나 분기의 값이 `nil` 과 같을 때 값의 타입을 명시해야 합니다. 이 정보를 제공해야 할 때, 할당되는 결과 변수에 타입 명시를 추가하거나 분기의 값에 `as` 변환을 추가합니다.
+각 분기는 같은 타입의 값을 반환해야 합니다.
+각 분기의 타입 검사는 독립적이기 때문에,
+분기가 다른 종류의 리터럴을 포함하거나
+분기의 값이 `nil`과 같을 때
+값의 타입을 명시해야 합니다.
+이 정보를 제공해야 할 때,
+할당되는 결과 변수에 타입 명시를 추가하거나
+분기의 값에 `as` 변환을 추가합니다.
 
 ```swift
 let number: Double = if someCondition { 10 } else { 12.34 }
 let number = if someCondition { 10 as Double } else { 12.34 }
 ```
 
-결과 빌더 (result builder) 내에서 조건 표현식은 변수 또는 상수의 초기값으로만 나타날 수 있습니다. 변수 또는 상수 선언 외부의 결과 빌더에서 `if` 또는 `switch` 를 작성하면 해당 코드는 분기 구문으로 이해하고 결과 빌더의 메서드 중 하나가 해당 코드를 변환한다는 의미입니다.
+결과 빌더(result builder) 내에서
+조건 표현식은
+변수나 상수의 초기값으로만 사용할 수 있습니다.
+이것은 결과 빌더 내에서 `if`나 `switch`를
+변수나 상수 선언이 아닌 위치에서 사용하면
+그 코드는 분기 구문으로 이해하고
+결과 빌더의 메서드 중 하나가 해당 코드를 변환한다는 의미입니다.
 
-조건 표현식의 분기 중 하나가 오류를 발생하더라도 `try` 표현식에 조건 표현식을 작성하면 안됩니다. 
+조건 표현식의 분기 중 하나가 오류를 발생하더라도
+`try` 표현식에 조건 표현식을 작성하면 안됩니다.
 
 > Grammar of a conditional expression:
 >
@@ -695,7 +895,13 @@ let number = if someCondition { 10 as Double } else { 12.34 }
 
 ### 클로저 표현식 (Closure Expression)
 
-_클로저 표현식 (closure expression)_ 은 다른 프로그래밍 언어에서 _람다 (lambda)_ 또는 _익명 함수 (anonymous function)_ 라고 알고 있는 클로저를 생성합니다. 함수 선언과 같이 클로저는 구문을 포함하고 둘러싸인 범위에서 상수와 변수를 캡처합니다. 형식은 다음과 같습니다:
+*클로저 표현식(closure expression)*은 클로저를 생성하는 표현식이며
+다른 프로그래밍 언어에서
+*람다(lambda)*나 *익명 함수(anonymous function)*라고 알고 있습니다.
+함수 선언과 같이
+클로저는 구문을 포함하고
+둘러싸인 범위에서 상수와 변수를 캡처합니다.
+형식은 다음과 같습니다:
 
 ```swift
 { (<#parameters#>) -> <#return type#> in
@@ -703,9 +909,12 @@ _클로저 표현식 (closure expression)_ 은 다른 프로그래밍 언어에�
 }
 ```
 
-_파라미터 (parameters)_ 는 <doc:Declarations#함수-선언-Function-Declaration> 에서 설명했듯이 함수 선언에서 파라미터 형식과 동일합니다.
+*파라미터(parameters)*는
+<doc:Declarations#함수-선언-Function-Declaration>에서 설명했듯이
+함수 선언의 파라미터 형식과 동일합니다.
 
-클로저 표현식에 명시적으로 `throws` 또는 `async` 작성하는 것은 클로저를 throwing 또는 비동기를 나타냅니다.
+클로저 표현식에 `throws`나 `async`를 명시하면
+해당 클로저가 오류를 던지거나 비동기 작업을 수행하는 것을 나타냅니다.
 
 ```swift
 { (<#parameters#>) async throws -> <#return type#> in
@@ -713,20 +922,34 @@ _파라미터 (parameters)_ 는 <doc:Declarations#함수-선언-Function-Declara
 }
 ```
 
-클로저 본문에 오류를 처리할 `do` 구문이 없고 
-`throws` 구문 또는 `try` 표현식이 포함되어 있으면,
-이 클로저는 던지는 것으로 간주됩니다.
-던지는 클로저 (throwing closure) 가 하나의 오류 타입만 던지면,
+클로저 본문에 `throws` 구문이나 `try` 표현식이 포함되어 있고
+`do` 구문 내에 오류를 처리하지 않는 경우에
+이 클로저는 오류를 던지는 것으로 간주됩니다.
+클로저가 하나의 오류 타입만 던지면,
 클로저는 해당 오류 타입을 던지는 것으로 간주됩니다;
-반대는 `any Error` 를 던지는 것으로 간주됩니다.
-마찬가지로, 본문에 `await` 표현식이 포함되어 있다면,
-비동기로 간주합니다.
+그렇지 않으면 `any Error`를 던지는 것으로 간주됩니다.
+마찬가지로 `await` 표현식이 포함되어 있다면,
+비동기로 간주됩니다.
 
-클로저를 보다 간결하게 작성할 수 있는 몇가지 특별한 형식이 있습니다:
+클로저를 보다 간결하게 작성할 수 있는
+몇 가지 특별한 형식이 있습니다:
 
-* 클로저는 파라미터의 타입, 반환 타입 또는 둘 다 생략할 수 있습니다. 파라미터 이름과 타입 모두 생략하는 경우 구문 전에 `in` 키워드도 생략합니다. 생략한 타입을 유추할 수 없을 때 컴파일 시 오류가 발생합니다.
-* 클로저는 파라미터 이름을 생략할 수 있습니다. 파라미터는 암시적으로 `$` 다음에 위치가 붙어 이름이 붙여집니다: `$0`, `$1`, `$2`, 등.
-* 단일 표현식으로만 구성된 클로저는 해당 표현식의 값을 반환하는 것으로 이해됩니다. 이 표현식의 내용은 주변 표현식에 대한 타입 추론을 수행할 때도 고려됩니다.
+<!-- Apple Books screenshot ends here. -->
+
+- 클로저는
+  파라미터의 타입, 반환 타입 또는 둘 다 생략할 수 있습니다.
+  파라미터 이름과 타입 모두 생략하는 경우
+  구문 전에 `in` 키워드도 생략합니다.
+  생략한 타입을 추론할 수 없으면
+  컴파일 시 오류가 발생합니다.
+- 클로저는 파라미터 이름을 생략할 수 있습니다.
+  그러면 파라미터는 암시적으로
+  `$` 다음에 위치가 붙어 이름이 붙여집니다:
+  `$0`, `$1`, `$2`, 등.
+- 단일 표현식으로만 구성된 클로저는
+  해당 표현식의 값을 반환하는 것으로 간주됩니다.
+  이 표현식의 내용은
+  주변 표현식에 대한 타입 추론을 수행할 때도 고려됩니다.
 
 다음의 클로저 표현식은 동일합니다:
 
@@ -744,19 +967,66 @@ myFunction { return $0 + $1 }
 myFunction { $0 + $1 }
 ```
 
-함수에 인자로 클로저를 전달하는 것에 대한 정보는 <doc:Expressions#함수-호출-표현식-Function-Call-Expression> 을 참고바랍니다.
+<!--
+  - test: `closure-expression-forms`
 
-클로저 표현식은 함수 호출의 일부로 클로저를 즉시 사용할 때와 같이 변수나 상수에 저장하지 않고 사용될 수 있습니다. 위 코드에서 `myFunction` 에 전달된 클로저 표현식은 이러한 종류의 즉각적인 사용의 예시입니다. 결과적으로 클로저 표현식은 탈출 (escaping) 인지 비탈출 (nonescaping) 인지 여부는 주변의 컨텍스트에 의해 결정됩니다. 클로저 표현식은 즉시 호출되거나 비탈출 함수 인자로 전달되면 비탈출 입니다. 그렇지 않으면 클로저 표현식은 탈출입니다.
+  ```swifttest
+  >> func myFunction(f: (Int, Int) -> Int) {}
+  -> myFunction { (x: Int, y: Int) -> Int in
+         return x + y
+     }
+  ---
+  -> myFunction { x, y in
+         return x + y
+     }
+  ---
+  -> myFunction { return $0 + $1 }
+  ---
+  -> myFunction { $0 + $1 }
+  ```
+-->
 
-탈출 클로저에 대한 자세한 내용은 <doc:Closures#탈출-클로저-Escaping-Closures> 를 참고바랍니다.
+함수에 인자로 클로저를 전달하는 것에 대한 정보는
+<doc:Expressions#함수-호출-표현식-Function-Call-Expression>을 참고바랍니다.
 
-#### **캡처 리스트 (Capture Lists)**
+클로저 표현식은 함수 호출의 일부로 클로저를 즉시 사용할 때와 같이
+변수나 상수에 저장하지 않고
+사용할 수 있습니다.
+위 코드에서 `myFunction`에 전달된 클로저 표현식은
+즉시 사용되는 예시입니다.
+결과적으로
+클로저 표현식은 탈출(escaping)인지 비탈출(nonescaping)인지 여부는
+주변의 컨텍스트에 의해 결정됩니다.
+클로저 표현식은 즉시 호출되거나
+비탈출 함수 인자로 전달되면
+비탈출 클로저입니다.
+그렇지 않으면 클로저 표현식은 탈출 클로저입니다.
 
-기본적으로 클로저 표현식은 해당 값의 강한 참조를 사용하여 주변 범위에서 상수와 변수를 캡처합니다. _캡처 리스트 (capture list)_ 를 사용하여 클로저에서 값이 캡쳐되는 방법을 명시적으로 제어할 수 있습니다
+탈출 클로저에 대한 자세한 내용은 <doc:Closures#탈출-클로저-Escaping-Closures>를 참고바랍니다.
 
-캡처 리스트은 파라미터의 리스트 전에 대괄호로 둘러싸여 콤마로 구분하여 작성됩니다. 캡처 리스트를 사용하면 파라미터 이름, 파라미터 타입, 그리고 반환 타입을 생략하더라도 `in` 키워드를 사용해야 합니다.
+#### 캡처 목록 (Capture Lists)
 
-캡처 리스트의 항목은 클로저가 생성될 때 초기화 됩니다. 캡처 리스트의 각 항목에 대해 상수는 주변 범위에서 이름이 같은 상수 또는 변수의 값으로 초기화 됩니다. 예를 들어 아래 코드에서 `a` 는 캡처 리스트에 포함되지만 `b` 는 포함되지 않으므로 다른 동작을 보여줍니다.
+기본적으로 클로저 표현식은
+클로저를 감싼 범위의 상수와 변수를
+강한 참조로 캡처합니다.
+*캡처 목록(capture list)*을 사용하여
+클로저에서 값을 어떻게 캡처할지 명시적으로 제어할 수 있습니다
+
+캡처 목록은
+대괄호 안에 콤마로 구분하여 표현식을 나열해 작성하고
+파라미터 목록 앞에 작성합니다.
+캡처 목록을 사용하면 파라미터 이름, 파라미터 타입, 반환 타입을 생략하더라도
+`in` 키워드를 작성해야 합니다.
+
+캡처 목록의 항목은
+클로저가 생성될 때 초기화됩니다.
+캡처 목록의 각 항목에 대해
+상수는 외부 범위에서
+이름이 같은 상수나 변수의 값으로
+초기화 됩니다.
+예를 들어 아래 코드에서
+`a`는 캡처 목록에 포함되지만 `b`는 포함되지 않으므로
+다른 동작을 보여줍니다.
 
 ```swift
 var a = 0
@@ -771,7 +1041,47 @@ closure()
 // Prints "0 10"
 ```
 
-주변 범위에서 변수와 클로저의 범위에서 상수로 `a` 라는 이름으로 두가지가 있지만 `b` 는 변수로 하나만 존재합니다. 내부 범위의 `a` 는 클로저가 생성될 때 외부 범위에서 `a` 의 값으로 초기화 되지만 해당 값은 특별한 방법으로 연결되지 않습니다. 이것은 외부 범위의 `a` 의 값이 변경되더라도 내부 범위의 `a` 의 값은 영향을 받지 않고 클로저 내에 `a` 가 변경되어도 클로저 외부의 `a` 의 값은 영향을 받지 않습니다. 반대로 외부 범위에 `b` 는 하나의 변수로만 있으므로 클로저 내부 또는 외부에서 변경되면 두 위치 모두에 반영됩니다.
+<!--
+  - test: `capture-list-value-semantics`
+
+  ```swifttest
+  -> var a = 0
+  -> var b = 0
+  -> let closure = { [a] in
+      print(a, b)
+  }
+  ---
+  -> a = 10
+  -> b = 10
+  -> closure()
+  <- 0 10
+  ```
+-->
+
+주변 범위의 변수와
+클로저 범위의 상수로
+`a`라는 이름으로 두 가지가 있지만,
+`b`는 변수로 하나만 존재합니다.
+내부 범위의 `a`는
+클로저가 생성될 때
+외부 범위의 `a` 값으로 초기화 되지만,
+해당 값은 서로 연결되지 않습니다.
+이것은 외부 범위의 `a`의 값이 변경되더라도
+내부 범위의 `a`의 값은 영향을 받지 않고
+클로저 내의 `a`가 변경되어도
+클로저 외부 `a`의 값은 영향을 받지 않는다는 의미입니다.
+반대로 외부 범위의 `b`는
+하나의 변수로만 있으므로
+클로저 내부나 외부에서 변경되면 두 위치 모두에 반영됩니다.
+
+<!--
+  [Contributor 6004] also describes the distinction as
+  "capturing the variable, not the value"
+  but he notes that we don't have a rigorous definition of
+  capturing a variable in Swift
+  (unlike some other languages)
+  so that description's not likely to be very helpful for developers.
+-->
 
 캡처된 변수의 타입이 의미가 있는 참조인 경우 구분이 표시되지 않습니다. 예를 들어 아래 코드에서 `x` 라는 이름의 두가지가 있는데 외부 범위의 변수와 내부 범위의 상수이지만 둘다 참조 의미이기 때문에 동일한 객체를 참조합니다.
 

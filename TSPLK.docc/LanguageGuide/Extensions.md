@@ -430,11 +430,11 @@ extension Int {
 
 확장에 추가된 인스턴스 메서드는 인스턴스 자체로 수정 또는 변경할 수 있습니다.
 `self`나 프로퍼티를 수정하는 구조체와 열거형 메서드는
-기존 구현의 변경 메서드와 같이
+기존 구현의 mutating 메서드와 같이
 `mutating`으로 인스턴스 메서드를 표시해야 합니다.
 
 아래 예시는 원래 값을 제곱하는
-Swift의 `Int` 타입의 `square`라는 새로운 변경 메서드를 추가합니다:
+Swift의 `Int` 타입의 `square`라는 새로운 mutating 메서드를 추가합니다:
 
 ```swift
 extension Int {

@@ -374,7 +374,7 @@ print("And another one: \(generator.random())")
   ```
 -->
 
-## 변경 메서드 요구사항 (Mutating Method Requirements)
+## Mutating 메서드 요구사항 (Mutating Method Requirements)
 
 메서드가 속한 인스턴스를 수정이나 *변경*해야 하는 경우가 있습니다.
 값 타입(구조체와 열거형)의 인스턴스 메서드의 경우
