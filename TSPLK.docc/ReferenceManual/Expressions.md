@@ -1083,7 +1083,13 @@ closure()
   so that description's not likely to be very helpful for developers.
 -->
 
-캡처된 변수의 타입이 의미가 있는 참조인 경우 구분이 표시되지 않습니다. 예를 들어 아래 코드에서 `x` 라는 이름의 두가지가 있는데 외부 범위의 변수와 내부 범위의 상수이지만 둘다 참조 의미이기 때문에 동일한 객체를 참조합니다.
+이 차이는
+캡처된 변수의 타입이 참조 의미(reference semantics)를 가질 경우에는 눈에 띄지 않습니다.
+예를 들어
+아래 코드에서 `x`라는 이름의 두 가지가 있는데
+하나는 외부 범위의 변수와 또 다른 하나는 내부 범위의 상수이지만
+둘 다 참조 의미이기 때문에
+동일한 객체를 참조합니다.
 
 ```swift
 class SimpleClass {
@@ -1101,7 +1107,63 @@ closure()
 // Prints "10 10"
 ```
 
-표현식의 값의 타입이 클래스라면 표현식의 값을 약한 또는 미소유 참조로 캡처하기 위해 `weak` 또는 `unowned` 로 캡처 리스트에 표현식을 표시할 수 있습니다.
+<!--
+  - test: `capture-list-reference-semantics`
+
+  ```swifttest
+  -> class SimpleClass {
+         var value: Int = 0
+     }
+  -> var x = SimpleClass()
+  -> var y = SimpleClass()
+  -> let closure = { [x] in
+         print(x.value, y.value)
+     }
+  ---
+  -> x.value = 10
+  -> y.value = 10
+  -> closure()
+  <- 10 10
+  ```
+-->
+
+<!--
+  - test: `capture-list-with-commas`
+
+  ```swifttest
+  -> var x = 100
+  -> var y = 7
+  -> var f: () -> Int = { [x, y] in x+y }
+  >> let r0 = f()
+  >> assert(r0 == 107)
+  ```
+-->
+
+<!--
+  It's not an error to capture things that aren't included in the capture list,
+  although maybe it should be.  See also rdar://17024367.
+-->
+
+<!--
+  - test: `capture-list-is-not-exhaustive`
+
+  ```swifttest
+  -> var x = 100
+     var y = 7
+     var f: () -> Int = { [x] in x }
+     var g: () -> Int = { [x] in x+y }
+  ---
+  -> let r0 = f()
+  -> assert(r0 == 100)
+  -> let r1 = g()
+  -> assert(r1 == 107)
+  ```
+-->
+
+표현식의 값의 타입이 클래스라면
+표현식의 값을
+약한 참조나 미소유 참조로 캡처하기 위해
+`weak`나 `unowned`로 캡처 목록에 표현식을 표시할 수 있습니다.
 
 ```swift
 myFunction { print(self.title) }                    // implicit strong capture
@@ -1110,14 +1172,78 @@ myFunction { [weak self] in print(self!.title) }    // weak capture
 myFunction { [unowned self] in print(self.title) }  // unowned capture
 ```
 
-캡처 리스트의 명명된 값에 임의의 표현식을 바인딩 할 수도 있습니다. 표현식은 클로저가 생성될 때 평가되고 값은 지정된 강도로 캡처됩니다. 예를 들어:
+<!--
+  - test: `closure-expression-weak`
+
+  ```swifttest
+  >> func myFunction(f: () -> Void) { f() }
+  >> class C {
+  >> let title = "Title"
+  >> func method() {
+  -> myFunction { print(self.title) }                    // implicit strong capture
+  -> myFunction { [self] in print(self.title) }          // explicit strong capture
+  -> myFunction { [weak self] in print(self!.title) }    // weak capture
+  -> myFunction { [unowned self] in print(self.title) }  // unowned capture
+  >> } }
+  >> C().method()
+  << Title
+  << Title
+  << Title
+  << Title
+  ```
+-->
+
+캡처 목록의 명명 값에
+임의의 표현식을 바인딩할 수도 있습니다.
+표현식은 클로저가 생성될 때 평가되고,
+값은 캡처됩니다.
+예를 들어:
 
 ```swift
 // Weak capture of "self.parent" as "parent"
 myFunction { [weak parent = self.parent] in print(parent!.title) }
 ```
 
-클로저 표현식에 자세한 내용과 예시는 <doc:Closures#클로저-표현식-Closure-Expressions> 을 참고바랍니다. 캡처 리스트에 자세한 내용과 예시는 <doc:AutomaticReferenceCounting#클로저의-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-for-Closures> 을 참고바랍니다.
+<!--
+  - test: `closure-expression-capture`
+
+  ```swifttest
+  >> func myFunction(f: () -> Void) { f() }
+  >> class P { let title = "Title" }
+  >> class C {
+  >> let parent = P()
+  >> func method() {
+  // Weak capture of "self.parent" as "parent"
+  -> myFunction { [weak parent = self.parent] in print(parent!.title) }
+  >> } }
+  >> C().method()
+  << Title
+  ```
+-->
+
+클로저 표현식의 자세한 내용과 예시는
+<doc:Closures#클로저-표현식-Closure-Expressions>을 참고바랍니다.
+캡처 목록의 자세한 내용과 예시는
+<doc:AutomaticReferenceCounting#클로저의-강한-순환-참조-해결-Resolving-Strong-Reference-Cycles-for-Closures>을 참고바랍니다.
+
+<!--
+  - test: `async-throwing-closure-syntax`
+
+  ```swifttest
+  >> var a = 12
+  >> let c1 = { [a] in return a }                  // OK -- no async or throws
+  >> let c2 = { [a] async in return a }            // ERROR
+  >> let c3 = { [a] async -> in return a }         // ERROR
+  >> let c4 = { [a] () async -> Int in return a }  // OK -- has () and ->
+  !$ error: expected expression
+  !! let c3 = { [a] async -> in return a }         // ERROR
+  !! ^
+  !$ error: unable to infer type of a closure parameter 'async' in the current context
+  !! let c2 = { [a] async in return a }            // ERROR
+  !! ^
+  // NOTE: The error message for c3 gets printed by the REPL before the c2 error.
+  ```
+-->
 
 > Grammar of a closure expression:
 >

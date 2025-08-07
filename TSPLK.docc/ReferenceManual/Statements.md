@@ -665,7 +665,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 #sourceLocation()
 ```
 
-라인 제어 구문의 첫번째 형식은 라인 제어 구문 다음에 코드의 라인에서 시작하여 `#line`, `#file`, `#fileID`, 그리고 `#filePath` 리터럴 표현식의 값을 변경합니다. _라인 숫자 (line number)_ 는 `#line` 의 값을 변경하고 0 보다 큰 모든 정수 리터럴 입니다. _파일 경로 (file path)_ 는 `#file`, `#fileID`, 그리고 `#filePath` 의 값을 변경하고 문자열 리터럴 입니다. 지정한 문자열은 `#filePath` 의 값이 되고 문자열의 마지막 구성요소는 `#fileID` 의 값으로 사용됩니다. `#file`, `#fileID`, 그리고 `#filePath` 에 자세한 내용은 <doc:Expressions#리터럴-표현식-Literal-Expression> 을 참고바랍니다.
+라인 제어 구문의 첫번째 형식은 라인 제어 구문 다음에 코드의 라인에서 시작하여 `#line`, `#file`, `#fileID`, 그리고 `#filePath` 리터럴 표현식의 값을 변경합니다. _라인 숫자 (line number)_ 는 `#line` 의 값을 변경하고 0 보다 큰 모든 정수 리터럴 입니다. _파일 경로 (file path)_ 는 `#file`, `#fileID`, 그리고 `#filePath` 의 값을 변경하고 문자열 리터럴 입니다. 지정한 문자열은 `#filePath` 의 값이 되고 문자열의 마지막 구성요소는 `#fileID` 의 값으로 사용됩니다. `#file`, `#fileID`, 그리고 `#filePath` 의 자세한 내용은 <doc:Expressions#리터럴-표현식-Literal-Expression> 을 참고바랍니다.
 
 라인 제어 구문의 두번째 형식 인 `#sourceLocation()` 은 소스 코드 위치를 기본 라인 숫자와 파일 경로로 초기화 합니다.
 
