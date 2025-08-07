@@ -1267,7 +1267,12 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 ### 암시적 멤버 표현식 (Implicit Member Expression)
 
-_암시적 멤버 표현식 (implicit member expression)_ 은 타입 추론이 암시된 타입을 결정할 수 있는 컨텍스트에서 열거형 케이스 또는 타입 메서드와 같은 타입의 멤버에 접근하기 위한 축약된 방법입니다. 다음과 같은 형식을 가집니다:
+*암시적 멤버 표현식(implicit member expression)*은
+열거형 케이스나 타입 메서드처럼
+어떤 타입의 멤버에 접근할 때
+타입 추론이 암시된 타입을 결정할 수 있는 문맥에서
+사용할 수 있는 축약된 방식입니다.
+다음과 같은 형식을 가집니다:
 
 ```swift
 .<#member name#>
@@ -1280,13 +1285,46 @@ var x = MyEnumeration.someValue
 x = .anotherValue
 ```
 
-추론된 타입이 옵셔널이면 암시적 멤버 표현식에서 옵셔널이 아닌 타입의 멤버로 사용할 수도 있습니다.
+<!--
+  - test: `implicitMemberEnum`
+
+  ```swifttest
+  >> enum MyEnumeration { case someValue, anotherValue }
+  -> var x = MyEnumeration.someValue
+  -> x = .anotherValue
+  ```
+-->
+
+타입이 옵셔널로 추론되는 경우에
+암시적 멤버 표현식에서
+옵셔널이 아닌 타입의 멤버를 사용할 수도 있습니다.
 
 ```swift
 var someOptional: MyEnumeration? = .someValue
 ```
 
-암시적 멤버 표현식 뒤에는 접미사 연산자 (postfix operator) 또는 <doc:Expressions#접미사-표현식-Postfix-Expressions> 에 나열된 다른 접미사 구문이 올 수 있습니다. 이것을 _연결된 암시적 멤버 표현식 (chained postfix expressions)_ 이라 합니다. 연결된 접미사 표현식이 동일한 타입을 갖는 것이 일반적이지만 유일한 요구사항은 전체 연결된 암시적 멤버 표현식이 컨텍스트에 의해 암시된 타입으로 변환될 수 있어야 한다는 것입니다. 특히, 암시적 타입이 옵셔널인 경우 옵셔널 타입이 아닌 값을 사용할 수 있고 암시적 타입이 클래스 타입인 경우 해당 서브클래스 중 하나의 값을 사용할 수 있습니다. 예를 들어:
+<!--
+  - test: `implicitMemberEnum`
+
+  ```swifttest
+  -> var someOptional: MyEnumeration? = .someValue
+  ```
+-->
+
+암시적 멤버 표현식 뒤에는
+접미 연산자(postfix operator)나 <doc:Expressions#접미사-표현식-Postfix-Expressions>에
+나열된 다른 접미 구문이 올 수 있습니다.
+이것을 *연쇄 암시적 멤버 표현식(chained implicit member expression)*이라 합니다.
+연쇄 접미 표현식(chained postfix expression)이
+모두 동일한 타입을 갖는 것이 일반적이지만 반드시 그래야 하는 것은 아닙니다.
+전체 연쇄 암시적 멤버 표현식이 문맥에서
+요구하는 타입으로 변환 가능하면 됩니다.
+구체적으로
+암시적 타입이 옵셔널인 경우
+옵셔널 타입이 아닌 값을 사용할 수 있고,
+암시적 타입이 클래스 타입인 경우
+해당 하위 클래스 중 하나의 값을 사용할 수 있습니다.
+예를 들어:
 
 ```swift
 class SomeClass {
@@ -1304,16 +1342,87 @@ let y: SomeClass? = .shared
 let z: SomeClass = .sharedSubclass
 ```
 
-위의 코드에서 `x` 의 타입은 컨텍스트가 암시하는 타입과 정확히 일치하고 `y` 의 타입은 `SomeClass` 에서 `SomeClass?` 로 변환 가능하며 `z` 의 타입은 `SomeSubclass` 에서 `SomeClass` 로 변환 가능합니다.
+<!--
+  - test: `implicit-member-chain`
+
+  ```swifttest
+  -> class SomeClass {
+         static var shared = SomeClass()
+         static var sharedSubclass = SomeSubclass()
+         var a = AnotherClass()
+     }
+  -> class SomeSubclass: SomeClass { }
+  -> class AnotherClass {
+         static var s = SomeClass()
+         func f() -> SomeClass { return AnotherClass.s }
+     }
+  -> let x: SomeClass = .shared.a.f()
+  -> let y: SomeClass? = .shared
+  -> let z: SomeClass = .sharedSubclass
+  ```
+-->
+
+위의 코드에서
+`x`의 타입은 문맥에서 암시하는 타입과 정확히 일치하고,
+`y`의 타입은 `SomeClass`에서 `SomeClass?`로 변환 가능하며,
+`z`의 타입은 `SomeSubclass`에서 `SomeClass`로 변환 가능합니다.
 
 > Grammar of an implicit member expression:
 >
 > *implicit-member-expression* → **`.`** *identifier* \
 > *implicit-member-expression* → **`.`** *identifier* **`.`** *postfix-expression*
 
-### 괄호 안 표현식 (Parenthesized Expression)
+<!--
+  The grammar above allows the additional pieces tested below,
+  which work even though they're omitted from the SE-0287 list.
+  The grammar also overproduces, allowing any primary expression
+  because of the definition of postfix-expression.
+-->
 
-_괄호 안 표현식 (parenthesized expression)_ 은 표현식을 괄호로 둘러싸인 것으로 구성됩니다. 괄호를 사용하여 표현식을 명시적으로 그룹화 하여 작업의 우선순위를 지정할 수 있습니다. 그룹화 괄호는 표현식의 타입을 변경하지 않습니다 — 예를 들어 `(1)` 의 타입은 단순히 `Int` 입니다.
+<!--
+  - test: `implicit-member-grammar`
+
+  ```swifttest
+  // self expression
+  >> enum E { case left, right }
+  >> let e: E = .left
+  >> let e2: E = .left.self
+  >> assert(e == e2)
+  ---
+  // postfix operator
+  >> postfix operator ~
+  >> extension E {
+  >>     static postfix func ~ (e: E) -> E {
+  >>         switch e {
+  >>         case .left: return .right
+  >>         case .right: return .left
+  >>         }
+  >>     }
+  >> }
+  >> let e3: E = .left~
+  >> assert(e3 == .right)
+  ---
+  // initializer expression
+  >> class S {
+  >>     var num: Int
+  >>     init(bestNumber: Int) { self.num = bestNumber }
+  >> }
+  >> let s: S = .init(bestNumber: 42)
+  ```
+-->
+
+### 괄호 표현식 (Parenthesized Expression)
+
+*괄호 표현식(parenthesized expression)*은
+괄호로 둘러싸인 표현식으로 구성됩니다.
+연산의 우선순위를 지정할 때,
+괄호를 사용하여 표현식을 명시적으로 묶을 수 있습니다.
+괄호로 묶이는 것은 표현식의 타입을 변경하지 않습니다 —--
+예를 들어 `(1)`의 타입은 단순히 `Int`입니다.
+
+<!--
+  See "Tuple Expression" below for langref grammar.
+-->
 
 > Grammar of a parenthesized expression:
 >
@@ -1321,18 +1430,49 @@ _괄호 안 표현식 (parenthesized expression)_ 은 표현식을 괄호로 둘
 
 ### 튜플 표현식 (Tuple Expression)
 
-_튜플 표현식 (tuple expression)_ 은 괄호호 묶인 콤마로 구분된 표현식의 리스트로 구성됩니다. 각 표현식은 표현식 앞에 콜론 (`:`) 으로 구분된 식별자를 가질 수 있습니다. 형식은 다음과 같습니다:
+*튜플 표현식(tuple expression)*은
+콤마로 구분된 표현식의 목록을 괄호로 묶어서 구성됩니다.
+각 표현식 앞에 식별자를 지정할 수 있으며,
+콜론(`:`)으로 구분됩니다.
+형식은 다음과 같습니다:
 
 ```swift
 (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 ```
 
-튜플 표현식의 각 식별자는 튜플 표현식의 범위 내에서 고유해야 합니다. 중첩된 튜플 표현식에서 동일한 수준의 중첩한 식별자는 고유해야 합니다. 예를 들어 `(a: 10, a: 20)` 은 레이블 `a` 가 동일한 수준에서 두번 나타나므로 유효하지 않습니다. 그러나 `(a: 10, b: (a: 1, x:2))` 는 `a` 가 두번 나타나도 외부 튜플과 내부 튜플에서 나타나므로 유효합니다.
+튜플 표현식의 각 식별자는
+튜플 표현식의 범위 내에서 고유해야 합니다.
+중첩된 튜플 표현식에서
+동일한 수준의 중첩에서 식별자는 고유해야 합니다.
+예를 들어
+`(a: 10, a: 20)`은
+레이블 `a`가 동일한 수준에서 두 번 나타나므로 유효하지 않습니다.
+그러나 `(a: 10, b: (a: 1, x:2))`는
+`a`가 두 번 나타나도
+외부 튜플과 내부 튜플에서 나타나므로 유효합니다.
 
-튜플 표현식은 0개의 표현식을 포함하거나 2개 이상의 표현식을 포함할 수 있습니다. 괄호 안에 단일 표현식은 괄호 안 표현식 입니다.
+<!--
+  - test: `tuple-labels-must-be-unique`
 
-> Note\
-> 빈 튜플 표현식과 빈 튜플 타입 모두 Swift 에서 `()` 로 작성됩니다. `Void` 는 `()` 에 대한 타입 별칭이므로 빈 튜플 타입을 작성하기위해 사용할 수 있습니다. 그러나 모든 타입 별칭과 마찬가지로 `Void` 는 항상 타입이므로 빈 튜플 표현식으로 작성하기 위해 사용할 수 없습니다.
+  ```swifttest
+  >> let bad = (a: 10, a: 20)
+  >> let good = (a: 10, b: (a: 1, x: 2))
+  !$ error: cannot create a tuple with a duplicate element label
+  !! let bad = (a: 10, a: 20)
+  !! ^
+  ```
+-->
+
+튜플 표현식은 표현식을 하나도 포함하지 않거나
+두 개 이상의 표현식을 포함할 수 있습니다.
+괄호 안의 단일 표현식은 괄호 표현식입니다.
+
+> Note: 빈 튜플 표현식과 빈 튜플 타입 모두
+> Swift에서 `()`로 작성합니다.
+> `Void`는 `()`의 타입 별칭이므로,
+> 빈 튜플 타입을 작성하는데 사용할 수 있습니다.
+> 그러나 모든 타입 별칭과 마찬가지로 `Void`는 타입이므로 ---
+> 빈 튜플 표현식으로 작성할 수 없습니다.
 
 > Grammar of a tuple expression:
 >
@@ -1342,12 +1482,25 @@ _튜플 표현식 (tuple expression)_ 은 괄호호 묶인 콤마로 구분된 �
 
 ### 와일드카드 표현식 (Wildcard Expression)
 
-_와일드카드 표현식 (wildcard expression)_ 은 할당 중에 값을 명시적으로 무시하는데 사용됩니다. 예를 들어 다음의 할당에서 10 은 `x` 에 할당되고 20 은 무시됩니다:
+*와일드카드 표현식(wildcard expression)*은
+할당 중에 값을 명시적으로 무시하는데 사용됩니다.
+예를 들어 다음의 할당에서
+10은 `x`에 할당되고 20은 무시됩니다:
 
 ```swift
 (x, _) = (10, 20)
 // x is 10, and 20 is ignored
 ```
+
+<!--
+  - test: `wildcardTuple`
+
+  ```swifttest
+  >> var (x, _) = (10, 20)
+  -> (x, _) = (10, 20)
+  -> // x is 10, and 20 is ignored
+  ```
+-->
 
 > Grammar of a wildcard expression:
 >
@@ -1355,21 +1508,23 @@ _와일드카드 표현식 (wildcard expression)_ 은 할당 중에 값을 명�
 
 ### 매크로-확장 표현식 (Macro-Expansion Expression)
 
-_매크로-확장 표현식 (macro-expansion expression)_ 은 매크로 이름 다음에 소괄호로 매크로의 인자를 콤마로 구분되어 구성합니다. 매크로는 컴파일 때 확장됩니다. 매크로-확장 표현식은 다음의 형식을 가집니다:
+*매크로-확장 표현식(macro-expansion expression)*은 매크로 이름
+다음에 매크로의 인자를 콤마로 구분하여 나열하고 괄호로 감싸서 구성합니다.
+매크로는 컴파일 때 확장됩니다.
+매크로-확장 표현식은 다음의 형식을 가집니다:
 
 ```swift
 <#macro name#>(<#macro argument 1#>, <#macro argument 2#>)
 ```
 
-매크로-확장 표현식은 인자를 사용하지 않는 경우에
+매크로-확장 표현식은 매크로가 인자를 가지지 않는 경우에
 매크로의 이름뒤에 오는 소괄호를 생략합니다.
 
 매크로-확장 표현식은 파라미터의 기본값으로 사용할 수 있습니다.
-
-함수 또는 메서드 파라미터의 기본값으로 사용될 때,
+함수나 메서드 파라미터의 기본값으로 사용할 때,
 매크로는 함수를 정의한 위치가 아닌
 호출된 소스 코드 위치를 기준으로 평가됩니다.
-하지만, 기본값이 매크로 뿐만 아니라
+하지만 기본값이 매크로 뿐만 아니라
 다른 코드도 포함하는 더 큰 표현식일 경우에
 해당 매크로는 함수를 정의한 위치를 기준으로 평가됩니다.
 
@@ -1381,17 +1536,17 @@ f()  // Prints "4 1 101"
 ```
 
 위 함수에서,
-`a` 의 기본값은 단일 매크로 표현식이므로
-`f(a:b:c:)` 가 호출된 소스 코드 위치에서
-해당 매크로가 평가됩니다.
-반면에 `b` 와 `c` 의 값은
+`a`의 기본값은 단일 매크로 표현식이므로,
+`f(a:b:c:)`가 호출된
+소스 코드 위치에서 해당 매크로가 평가됩니다.
+반면에 `b`와 `c`의 값은
 매크로를 포함하는 표현식으로 이루어져 있으며 ---
 이 매크로는
-`f(a:b:c:)` 가 정의된 소스 코드 위치에서 평가됩니다.
+`f(a:b:c:)`가 정의된 소스 코드 위치에서 평가됩니다.
 
 기본값으로 매크로를 사용할 때,
-다음의 요구사항을 확인하기 위해
-매크로는 확장없이 타입을 검사합니다:
+매크로는 확장없이 타입 검사를 하고
+다음의 요구사항을 만족해야 합니다:
 
 - 매크로의 접근 수준은
   매크로를 사용하는 함수와 같거나 덜 제한적이어야 합니다.
@@ -1399,41 +1554,47 @@ f()  // Prints "4 1 101"
   인자는 문자열 보간이 없는 리터럴이어야 합니다.
 - 매크로의 반환 타입은 파라미터의 타입과 일치합니다.
 
-독립형 매크로를 호출하려면 매크로 표현식을 사용합니다.
-첨부된 매크로를 호출하려면,
-<doc:Attributes> 에서 설명한 커스텀 속성 구문을 사용합니다.
-독립형 매크로와 첨부된 매크로 모두 아래와 같이 확장합니다:
+독립 매크로를 호출하려면 매크로 표현식을 사용합니다.
+첨부 매크로를 호출하려면,
+<doc:Attributes>에서 설명한 커스텀 속성 구문을 사용합니다.
+독립 매크로와 첨부 매크로 모두 아래와 같이 확장합니다:
 
-1. Swift 는 소스 코드를 분석해서 추상 구문 트리 (AST) 를 생성합니다.
+1. Swift는 소스 코드를 분석해서
+   추상 구문 트리(AST)를 생성합니다.
 
-2. 매크로 구현은 AST 노드를 입력으로 수신하고 해당 매크로에 필요한 변환을 수행합니다.
+2. 매크로 구현은 AST 노드를 입력으로 수신하고
+   해당 매크로에 필요한 변환을 수행합니다.
 
-3. 매크로 구현을 통해 변환된 AST 노드는 본래 AST 에 추가됩니다.
+3. 매크로 구현을 통해 변환된 AST 노드는
+   본래 AST에 추가됩니다.
 
 각 매크로의 확장은 독립적입니다.
 그러나 성능 최적화로
-Swift 는 매크로를 구현하는 외부 프로세스를 시작하고
-여러 매크로를 확장 하기위해 동일한 프로세스를 재사용합니다.
+Swift는 매크로를 구현하는 외부 프로세스를 시작하고
+여러 매크로를 확장하기 위해 동일한 프로세스를 재사용합니다.
 매크로를 구현할 때,
 해당 코드는 이전에 확장된 매크로가 무엇인지 또는
-현재시간과 같이 외부 상태에 의존하면 안됩니다.
+현재 시간과 같이 외부 상태에 의존하면 안됩니다.
 
-여러 역할을 가지는 중첩된 매크로와 첨부된 매크로에 대해 확장 프로세스는 반복됩니다.
-중첩된 매크로-확장 표현식은 외부에서 안으로 확장됩니다.
+여러 역할을 가지는 중첩 매크로와 첨부 매크로에 대해
+확장 프로세스는 반복됩니다.
+중첩 매크로-확장 표현식은 외부에서 안으로 확장됩니다.
 예를 들어, 아래 코드에서
-`outerMacro(_:)` 가 먼저 확장되고 `innerMacro(_:)` 에 확장되지 않은 호출이
-`outerMacro(_:)` 가 입력으로 받는 추상 구문 트리에 나타납니다.
+`outerMacro(_:)`가 먼저 확장되고 `innerMacro(_:)` 호출이 확장되지 않은 상태로
+`outerMacro(_:)`가 입력으로 받는
+추상 구문 트리에 나타납니다.
 
 ```swift
 #outerMacro(12, #innerMacro(34), "some text")
 ```
 
-여러 역할을 가지는 첨부된 매크로는 각 역할에 대해 한 번씩 확장됩니다.
-각 확장은 동일한 AST 를 입력으로 받습니다.
-Swift 는 생성된 모든 AST 노드를 수집하고
-AST 에서 적절한 위치에 배치하여 전체 확장을 형성합니다.
+여러 역할을 가지는 첨부 매크로는 각 역할에 대해 한 번씩 확장합니다.
+각 확장은 동일한 AST를 입력으로 받습니다.
+Swift는 생성된 모든 AST 노드를 수집하고
+AST에서 적절한 위치에 배치하여
+전체 확장을 형성합니다.
 
-Swift 에서 매크로의 개요는 <doc:Macros> 를 참고바랍니다.
+Swift에서 매크로의 개요는 <doc:Macros>를 참고바랍니다.
 
 > Grammar of a macro-expansion expression:
 >
