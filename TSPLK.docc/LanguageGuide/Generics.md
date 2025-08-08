@@ -1732,7 +1732,7 @@ extension Container where Item: Equatable {
 
 연관 타입에 제네릭 `where` 절을 포함할 수 있습니다.
 예를 들어 Swift 표준 라이브러리에서 `Sequence` 프로토콜이 사용하는 것과 같이
-반복자를 포함하는
+이터레이터(iterator)를 포함하는
 `Container`의 버전을 만들고 싶다고 가정해 봅시다.
 작성 방법은 아래와 같습니다:
 
@@ -1770,10 +1770,10 @@ protocol Container {
 -->
 
 `Iterator`의 제네릭 `where` 절은
-반복자의 타입과 상관없이
+이터레이터(iterator)의 타입과 상관없이
 컨테이너의 항목과 동일한 항목 타입의
 요소를 탐색해야 합니다.
-`makeIterator()` 함수는 컨테이너의 반복자에 접근을 제공합니다.
+`makeIterator()` 함수는 컨테이너의 이터레이터(iterator)에 접근을 제공합니다.
 
 <!--
   This example requires SE-0157 Recursive protocol constraints
@@ -1946,7 +1946,7 @@ extension Container {
 - 서브스크립트는 `Indices` 타입의 인스턴스 인
   `indices`라는 단일 파라미터를 가집니다.
 - 제네릭 `where` 절은
-  시퀀스에 대한 반복자가
+  시퀀스에 대한 이터레이터(iterator)가
   `Int` 타입의 요소여야 합니다.
   이렇게 하면 시퀀스의 인덱스는
   컨테이너에 사용되는 인덱스와 동일한 타입입니다.

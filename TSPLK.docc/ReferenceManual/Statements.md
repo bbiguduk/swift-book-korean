@@ -1,12 +1,26 @@
-# 구문 (Statements)
+# 명령문 (Statements)
 
-표현식을 그룹화하고 실행의 흐름을 제어합니다.
+표현식을 그룹화하고 실행 흐름을 제어합니다.
 
-Swift 에서 간단한 구문 (simple statements), 컴파일러 제어 구문 (compiler control statements), 그리고 제어 흐름 구문 (control flow statements) 의 세가지 구문이 있습니다. 간단한 구문은 가장 일반적이고 표현식 또는 선언으로 구성됩니다. 컴파일러 제어 구문은 프로그램이 컴파일러의 동작 측면을 변경할 수 있고 조건부 컴파일러 및 라인 제어 구문을 포함할 수 있습니다.
+Swift에서 세 종류의 명령어가 있습니다: 단순 명령문(simple statements), 컴파일러 제어 명령문(compiler control statements),
+제어 흐름 명령문(control flow statements)입니다.
+단순 명령문은 가장 일반적이고 표현식이나 선언으로 구성되어 있습니다.
+컴파일러 제어 명령문은 프로그램이 컴파일러의 동작 일부를 변경할 수 있고
+조건부 컴파일러 블록과 라인 제어 명령문이 포함됩니다.
 
-제어 흐름 구문은 프로그램에서 실행의 흐름을 제어하기 위해 사용됩니다. Swift 에서 루프 구문 (loop statements), 분기 구문 (branch statements), 그리고 제어 전송 구문 (control transfer statements) 을 포함하는 제어 흐름 구문의 몇가지 타입이 있습니다. 루프 제어문은 반복적으로 실행되는 코드의 블럭을 허용하고, 분기 구문은 조건이 일치 할 때만 실행되도록 코드의 블럭을 허용하고, 제어 전송 구문은 코드가 실행되는 순서를 변경하는 방법을 제공합니다. 또한 Swift 는 범위를 도입하고 오류를 잡고 처리하는 `do` 구문과 현재 범위가 종료하기 직전에 정리 동작을 실행하는 `defer` 구문을 제공합니다.
+제어 흐름 명령문은 프로그램에서 실행 흐름을 제어하기 위해 사용됩니다.
+Swift는 다양한 제어 흐름 명령문을 포함하고 있으며,
+루프 명령문(loop statements), 분기 명령문(branch statements), 흐름 전환 명령문(control transfer statements)이 있습니다.
+루프 명령문은 코드 블록을 반복적으로 실행하고,
+분기 명령문은 특정 조건이 일치 할 때만
+코드 블록을 실행하고,
+흐름 전환 명령문은 코드의 실행 순서를 변경하는 방법을 제공합니다.
+또한 Swift는 새로운 범위를 만들고
+오류를 잡고 처리하는 `do` 명령문과
+현재 범위가 종료되기 직전에 정리 동작을 실행하는 `defer` 명령문을 제공합니다.
 
-세미콜론 (`;`) 은 모든 구문에 선택적으로 나타날 수 있고 같은 줄에 여러 구문을 구분하기 위해 사용될 수 있습니다.
+세미콜론(`;`)은 모든 명령문에 선택적으로 나타날 수 있고
+같은 줄에 여러 명령문을 구분하기 위해 사용할 수 있습니다.
 
 > Grammar of a statement:
 >
@@ -21,11 +35,29 @@ Swift 에서 간단한 구문 (simple statements), 컴파일러 제어 구문 (c
 > *statement* → *compiler-control-statement* \
 > *statements* → *statement* *statements*_?_
 
-## 루프 구문 (Loop Statements)
+<!--
+  NOTE: Removed semicolon-statement as syntactic category,
+  because, according to Doug, they're not really statements.
+  For example, you can't have
+      if foo { ; }
+  but you should be able to if it's truly considered a statement.
+  The semicolon isn't even required for the compiler; we just added
+  rules that require them in some places to enforce a certain amount
+  of readability.
+-->
 
-루프 구문 (Loop statements) 은 루프에 지정한 조건에 따라 반복적으로 실행되는 코드의 블럭을 허용합니다. Swift 는 `for`-`in` 구문, `while` 구문, 그리고 `repeat`-`while` 구문과 같이 세가지 루프 구문을 가집니다.
+## 루프 명령문 (Loop Statements)
 
-루프 구문에서 제어 흐름은 `break` 구문과 `continue` 구문에 의해 변경될 수 있고 아래에 <doc:Statements#중단-구문-Break-Statement> 과 <doc:Statements#계속-구문-Continue-Statement> 에 설명되어 있습니다.
+루프 명령문(Loop statement)은 루프에 명시한 조건에 따라
+특정 코드 블록을 반복적으로 실행되도록 합니다.
+Swift는 세 가지 루프 명령문을 가지고 있습니다:
+`for`-`in` 명령문,
+`while` 명령문,
+`repeat`-`while` 명령문입니다.
+
+루프 명령문에서 제어 흐름은 `break` 명령문과
+`continue` 명령문에 의해 변경될 수 있고 아래에 <doc:Statements#중단-명령문-Break-Statement>과
+<doc:Statements#계속-명령문-Continue-Statement>에 설명되어 있습니다.
 
 > Grammar of a loop statement:
 >
@@ -33,11 +65,14 @@ Swift 에서 간단한 구문 (simple statements), 컴파일러 제어 구문 (c
 > *loop-statement* → *while-statement* \
 > *loop-statement* → *repeat-while-statement*
 
-### For-In 구문 (For-In Statement)
+### For-In 명령문 (For-In Statement)
 
-`for`-`in` 구문은 [`Sequence`](https://developer.apple.com/documentation/swift/sequence) 프로토콜을 준수하는 컬렉션 또는 모든 타입에서 각 아이템에 대해 한번 실행되기 위해 코드의 블럭을 허용합니다.
+`for`-`in` 명령문은
+[`Sequence`](https://developer.apple.com/documentation/swift/sequence) 프로토콜을 준수하는
+컬렉션이나 타입의 각 항목에 대해
+한 번씩 코드 블록을 실행합니다.
 
-`for`-`in` 구문은 다음의 형식을 가집니다:
+`for`-`in` 명령문은 다음의 형식을 가집니다:
 
 ```swift
 for <#item#> in <#collection#> {
@@ -45,7 +80,18 @@ for <#item#> in <#collection#> {
 }
 ```
 
-`makeIterator()` 메서드는 [`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) 프로토콜을 준수하는 타입인 반복기 타입의 값을 포함하기 위해 _컬렉션_ 표현식 (_collection_ expression) 에서 호출됩니다. 프로그램은 반복기에서 `next()` 메서드를 호출하여 루프를 실행합니다. 값이 `nil` 을 반환하지 않으면 _항목 (item)_ 패턴에 할당되고 프로그램은 _구문 (statements)_ 를 실행한 다음에 루프의 시작된 부분에서 계속 실행합니다. 그렇지 않으면 프로그램은 할당 또는 _구문 (statements)_ 실행을 수행하지 않고 `for`-`in` 구문 실행을 종료합니다.
+*컬렉션* 표현식(collection expression)에 대해 `makeIterator()` 메서드가 호출되어
+[`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol) 프로토콜을
+준수하는 타입인
+이터레이터(iterator) 타입의 값을 반환합니다.
+프로그램은 이터레이터의 `next()` 메서드를 호출하여
+루프를 실행합니다.
+값이 `nil`을 반환하지 않으면
+위 형식의 *항목(item)* 패턴에 할당되고,
+프로그램은 위 형식의 *명령문(statements)*을 실행한 다음에
+루프의 처음으로 돌아가 위 동작을 계속 실행합니다.
+그렇지 않으면 프로그램은 할당이나 위 형식의 *명령문(statements)* 실행을 수행하지 않고
+`for`-`in` 명령문 실행을 종료합니다.
 
 > Grammar of a for-in statement:
 >
