@@ -1602,19 +1602,43 @@ Swift에서 매크로의 개요는 <doc:Macros>를 참고바랍니다.
 
 ### 키-경로 표현식 (Key-Path Expression)
 
-_키-경로 표현식 (key-path expression)_ 은 타입의 프로퍼티 또는 서브스크립트를 참조합니다. 키-값 관찰 (key-value observing) 과 같은 동적 프로그래밍 작업 (dynamic programming tasks) 에서 키-경로 표현식을 사용합니다. 형식은 다음과 같습니다:
+*키-경로 표현식(key-path expression)*은
+타입의 프로퍼티나 서브스크립트를 참조합니다.
+키-경로 표현식은
+키-값 관찰(key-value observing)과 같은
+동적 프로그래밍 작업(dynamic programming task)에서 사용합니다.
+형식은 다음과 같습니다:
 
 ```swift
 \<#type name#>.<#path#>
 ```
 
-_타입 이름 (type name)_ 은 `String`, `[Int]`, 또는 `Set<Int>` 와 같은 모든 제네릭 파라미터를 포함한 구체적 타입의 이름입니다.
+위 형식의 *타입 이름(type name)*은
+`String`, `[Int]`, `Set<Int>`와 같은
+제네릭 파라미터를 포함한 구체적인 타입 이름입니다.
 
-_경로 (path)_ 는 프로퍼티 이름, 서브스크립트, 옵셔널 체이닝 표현식, 그리고 강제 언래핑한 표현식으로 구성됩니다. 이러한 각 키-경로 요소는 순서에 상관없이 필요한 만큼 여러번 반복할 수 있습니다.
+위 형식의 *경로(path)*는
+프로퍼티 이름, 서브스크립트, 옵셔널 체이닝 표현식,
+강제 언래핑 표현식으로 구성됩니다.
+이러한 각 키-경로 요소는
+필요에 따라 어떤 순서로든
+여러 번 반복될 수 있습니다.
 
-컴파일 시에 키-경로 표현식은 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath) 클래스의 인스턴스에 의해 대체됩니다.
+컴파일 시에 키-경로 표현식은
+[`KeyPath`](https://developer.apple.com/documentation/swift/keypath) 클래스의
+인스턴스로 대체됩니다.
 
-키 경로를 사용하여 값에 접근하려면 모든 타입에서 사용할 수 있는 `subscript(keyPath:)` 서브스크립트에 키 경로를 전달해야 합니다. 예를 들어:
+키 경로를 사용하여 값에 접근하려면,
+모든 타입에서 사용할 수 있는
+`subscript(keyPath:)` 서브스크립트에 키 경로를 전달해야 합니다.
+예를 들어:
+
+<!--
+  The subscript name subscript(keyPath:) above is a little odd,
+  but it matches what would be displayed on the web.
+  There isn't actually an extension on Any that implements this subscript;
+  it's a special case in the compiler.
+-->
 
 ```swift
 struct SomeStructure {
@@ -1628,7 +1652,28 @@ let value = s[keyPath: pathToProperty]
 // value is 12
 ```
 
-_타입 이름 (type name)_ 은 타입 추론이 암시된 타입으로 결정할 수 있는 컨텍스트에서는 생략될 수 있습니다. 다음 코드는 `\SomeClass.someProperty` 대신에 `\.someProperty` 를 사용합니다:
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> struct SomeStructure {
+         var someValue: Int
+     }
+  ---
+  -> let s = SomeStructure(someValue: 12)
+  -> let pathToProperty = \SomeStructure.someValue
+  ---
+  -> let value = s[keyPath: pathToProperty]
+  /> value is \(value)
+  </ value is 12
+  ```
+-->
+
+위 형식의 *타입 이름(type name)*은
+타입 추론으로 암시된 타입을 결정할 수 있는
+문맥에서는 생략할 수 있습니다.
+다음 코드는 `\SomeClass.someProperty` 대신에
+`\.someProperty`를 사용합니다:
 
 ```swift
 class SomeClass: NSObject {
@@ -1644,7 +1689,36 @@ c.observe(\.someProperty) { object, change in
 }
 ```
 
-_경로 (path)_ 는 식별자 키 경로 (`\.self`) 를 생성하기 위해 `self` 를 참조할 수 있습니다. 식별자 키 경로 (identity key path) 는 전체 인스턴스를 참조하므로 이를 사용하여 변수에 저장된 모든 데이터를 한번에 접근하고 변경할 수 있습니다. 예를 들어:
+<!--
+  - test: `keypath-expression-implicit-type-name`
+
+  ```swifttest
+  >> import Foundation
+  -> class SomeClass: NSObject {
+  ->     @objc dynamic var someProperty: Int
+  ->     init(someProperty: Int) {
+  ->         self.someProperty = someProperty
+  ->     }
+  -> }
+  ---
+  -> let c = SomeClass(someProperty: 10)
+  >> let r0 =
+  -> c.observe(\.someProperty) { object, change in
+         // ...
+     }
+  ```
+-->
+
+<!--
+  Rewrite the above to avoid discarding the function's return value.
+  Tracking bug is <rdar://problem/35301593>
+-->
+
+위 형식의 *경로(path)*는 `self`를 참조해 아이덴티티 키 경로(identity key path)(`\.self`)를 생성할 수 있습니다.
+아이덴티티 키 경로(identity key path)는 전체 인스턴스를 참조하므로
+이를 사용하여 변수에 저장된 모든 데이터를
+한 번에 접근하고 변경할 수 있습니다.
+예를 들어:
 
 ```swift
 var compoundValue = (a: 1, b: 2)
@@ -1652,7 +1726,23 @@ var compoundValue = (a: 1, b: 2)
 compoundValue[keyPath: \.self] = (a: 10, b: 20)
 ```
 
-_경로 (path)_ 는 프로퍼티의 값의 프로퍼티를 참조하기 위해 마침표로 구분된 여러 프로퍼티 이름이 포함될 수 있습니다. 이 코드는 `OuterStructure` 타입의 `outer` 프로퍼티의 `someValue` 프로퍼티를 접근하기 위해 키 경로 표현식 `\OuterStructure.outer.someValue` 을 사용합니다:
+<!--
+  - test: `keypath-expression-self-keypath`
+
+  ```swifttest
+  -> var compoundValue = (a: 1, b: 2)
+  // Equivalent to compoundValue = (a: 10, b: 20)
+  -> compoundValue[keyPath: \.self] = (a: 10, b: 20)
+  ```
+-->
+
+위 형식의 *경로(path)*는 마침표로 구분된
+여러 프로퍼티 이름을 포함할 수 있으므로,
+어떤 프로퍼티의 값이 가진 또 다른 프로퍼티를 참조할 수 있습니다.
+이 코드는 키 경로 표현식
+`\OuterStructure.outer.someValue`을 사용하여
+`OuterStructure` 타입의 `outer` 프로퍼티가 가진
+`someValue` 프로퍼티에 접근합니다:
 
 ```swift
 struct OuterStructure {
@@ -1669,7 +1759,30 @@ let nestedValue = nested[keyPath: nestedKeyPath]
 // nestedValue is 24
 ```
 
-_경로 (path)_ 는 서브스크립트의 파라미터 타입이 `Hashable` 프로토콜을 준수하는 한 대괄호를 사용하여 서브스크립트를 포함할 수 있습니다. 이 예시는 배열의 두번째 요소를 접근하기 위해 키 경로로 서브스크립트를 사용합니다:
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> struct OuterStructure {
+         var outer: SomeStructure
+         init(someValue: Int) {
+             self.outer = SomeStructure(someValue: someValue)
+         }
+     }
+  ---
+  -> let nested = OuterStructure(someValue: 24)
+  -> let nestedKeyPath = \OuterStructure.outer.someValue
+  ---
+  -> let nestedValue = nested[keyPath: nestedKeyPath]
+  /> nestedValue is \(nestedValue)
+  </ nestedValue is 24
+  ```
+-->
+
+위 형식의 *경로(path)*는 대괄호를 사용하여 서브스크립트를 포함할 수 있으며,
+이때 서브스크립트의 파라미터 타입은 `Hashable` 프로토콜을 준수해야 합니다.
+이 예시는 배열의 두 번째 요소를 접근하기 위해
+키 경로로 서브스크립트를 사용합니다:
 
 ```swift
 let greetings = ["hello", "hola", "bonjour", "안녕"]
@@ -1677,7 +1790,32 @@ let myGreeting = greetings[keyPath: \[String].[1]]
 // myGreeting is 'hola'
 ```
 
-서브스크립트에서 사용된 값은 명명된 값 또는 리터럴 일 수 있습니다. 값은 값 의미로 사용하여 키 경로에서 캡처됩니다. 다음 코드는 키-경로 표현식과 클로저 모두에서 변수 `index` 를 사용하여 `greetings` 배열의 세번째 요소를 접근합니다. `index` 가 수정될 때 클로저는 새로운 인덱스를 사용하는 동안 키-경로 표현식은 여전히 세번째 요소를 참조합니다.
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> let greetings = ["hello", "hola", "bonjour", "안녕"]
+  -> let myGreeting = greetings[keyPath: \[String].[1]]
+  /> myGreeting is '\(myGreeting)'
+  </ myGreeting is 'hola'
+  ```
+-->
+
+<!--
+  TODO: Update examples here and below to remove type names once
+  inference bugs are fixed. The compiler currently gives an error
+  that the usage is ambiguous.
+  <rdar://problem/34376681> [SR-5865]: Key path expression is "ambiguous without more context"
+-->
+
+서브스크립트에서 사용된 값은 명명 값이나 리터럴일 수 있습니다.
+값은 값 의미로 키 경로에 캡처됩니다.
+다음 코드는 변수 `index`를
+키-경로 표현식과 클로저 모두에서 사용하여
+`greetings` 배열의 세 번째 요소에 접근합니다.
+`index`가 수정되면,
+키-경로 표현식은 여전히 세 번째 요소를 참조하지만
+클로저는 새로운 인덱스를 사용합니다.
 
 ```swift
 var index = 2
@@ -1699,7 +1837,33 @@ print(fn(greetings))
 // Prints "안녕"
 ```
 
-_경로 (path)_ 는 옵셔널 체이닝과 강제 언래핑을 사용할 수 있습니다. 이 코드는 옵셔널 문자열의 프로퍼티를 접근하기 위해 키 경로에 옵셔널 체이닝을 사용합니다:
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> var index = 2
+  -> let path = \[String].[index]
+  -> let fn: ([String]) -> String = { strings in strings[index] }
+  ---
+  -> print(greetings[keyPath: path])
+  <- bonjour
+  -> print(fn(greetings))
+  <- bonjour
+  ---
+  // Setting 'index' to a new value doesn't affect 'path'
+  -> index += 1
+  -> print(greetings[keyPath: path])
+  <- bonjour
+  ---
+  // Because 'fn' closes over 'index', it uses the new value
+  -> print(fn(greetings))
+  <- 안녕
+  ```
+-->
+
+위 형식의 *경로(path)*는 옵셔널 체이닝과 강제 언래핑을 사용할 수 있습니다.
+이 코드는 키 경로에 옵셔널 체이닝을 사용하여
+옵셔널 문자열의 프로퍼티에 접근합니다:
 
 ```swift
 let firstGreeting: String? = greetings.first
@@ -1712,7 +1876,32 @@ print(count as Any)
 // Prints "Optional(5)"
 ```
 
-타입 내에 깊게 중첩된 값을 접근하기 위해 키 경로의 구성요소를 혼합하고 매치할 수 있습니다. 다음 코드는 구성요소를 결합한 키-경로 표현식을 사용하여 배열에 딕셔너리의 다른 값과 프로퍼티를 접근합니다.
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> let firstGreeting: String? = greetings.first
+  -> print(firstGreeting?.count as Any)
+  <- Optional(5)
+  ---
+  // Do the same thing using a key path.
+  -> let count = greetings[keyPath: \[String].first?.count]
+  -> print(count as Any)
+  <- Optional(5)
+  ```
+-->
+
+<!--
+  The test above is failing, which appears to be a compiler bug.
+  <rdar://problem/58484319> Swift 5.2 regression in keypaths
+-->
+
+키 경로의 요소를 조합해
+어떤 타입 안에 중첩된 값에도 접근할 수 있습니다.
+다음 코드는 이러한 요소를 결합한
+키-경로 표현식을 사용하여
+배열의 딕셔너리에서
+다른 값과 프로퍼티에 접근합니다.
 
 ```swift
 let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
@@ -1728,7 +1917,31 @@ print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth
 // Prints "64"
 ```
 
-일반적으로 함수 또는 클로저를 제공하는 컨텍스트에서 키 경로 표현식을 사용할 수 있습니다. 특히, 루트 타입이 `SomeType` 이고 타입 `(SomeType) -> Value` 의 함수 또는 클로저 대신에 타입 `Value` 의 값을 생성하는 키 경로 표현식을 사용할 수 있습니다.
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
+                               "triangular": [1, 3, 6, 10, 15, 21, 28],
+                               "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+  -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
+  <- Optional([2, 3, 5, 7, 11, 13, 17])
+  -> print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
+  <- 2
+  -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
+  <- 7
+  -> print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
+  <- 64
+  ```
+-->
+
+키 경로 표현식은
+일반적으로 함수나 클로저를 제공하는 곳에서도 사용할 수 있습니다.
+구체적으로
+루트 타입이 `SomeType`이고
+그 경로가 `Value` 타입의 값을 생성하는
+키 경로 표현식은
+`(SomeType) -> Value` 타입의 함수나 클로저 대신에 사용할 수 있습니다.
 
 ```swift
 struct Task {
@@ -1746,7 +1959,39 @@ let descriptions = toDoList.filter(\.completed).map(\.description)
 let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
 ```
 
-키 경로 표현식의 문제는 표현식이 평가되는 시점에만 평가됩니다. 예를 들어 키 경로 표현식에 서브스크립트 내에 함수 호출하는 경우 함수는 키 경로가 사용될 때마다가 아니라 표현식 평가의 일부로 한번만 호출됩니다.
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> struct Task {
+         var description: String
+         var completed: Bool
+     }
+  -> var toDoList = [
+         Task(description: "Practice ping-pong.", completed: false),
+         Task(description: "Buy a pirate costume.", completed: true),
+         Task(description: "Visit Boston in the Fall.", completed: false),
+     ]
+  ---
+  // Both approaches below are equivalent.
+  -> let descriptions = toDoList.filter(\.completed).map(\.description)
+  -> let descriptions2 = toDoList.filter { $0.completed }.map { $0.description }
+  >> assert(descriptions == descriptions2)
+  ```
+-->
+
+<!--
+  REFERENCE
+  The to-do list above draws from the lyrics of the song
+  "The Pirates Who Don't Do Anything".
+-->
+
+키 경로 표현식의 부작용은
+표현식이 평가되는 시점에만 평가됩니다.
+예를 들어
+키 경로 표현식의 서브스크립트 내에서 함수 호출하는 경우
+함수는 표현식을 평가하는 과정에서 한 번만 호출되고
+키 경로가 사용될 때마다 호출되지 않습니다.
 
 ```swift
 func makeIndex() -> Int {
@@ -1761,7 +2006,31 @@ let taskKeyPath = \[Task][makeIndex()]
 let someTask = toDoList[keyPath: taskKeyPath]
 ```
 
-Objective-C API 와 함께 상혹작용하는 코드에서 키 경로를 사용하는 것에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고바랍니다. 키-값 코딩과 키-값 관찰에 대한 자세한 내용은 [키-값 코딩 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 와 [키-값 관찰 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i) 을 참고바랍니다.
+<!--
+  - test: `keypath-expression`
+
+  ```swifttest
+  -> func makeIndex() -> Int {
+         print("Made an index")
+         return 0
+     }
+  // The line below calls makeIndex().
+  -> let taskKeyPath = \[Task][makeIndex()]
+  <- Made an index
+  >> print(type(of: taskKeyPath))
+  << WritableKeyPath<Array<Task>, Task>
+  ---
+  // Using taskKeyPath doesn't call makeIndex() again.
+  -> let someTask = toDoList[keyPath: taskKeyPath]
+  ```
+-->
+
+Objective-C API와 함께 상호작용하는 코드에서
+키 경로를 사용하는 것에 대한 자세한 내용은
+[Swift에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)을 참고바랍니다.
+키-값 코딩과 키-값 관찰에 대한 자세한 내용은
+[키-값 코딩 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)와
+[키-값 관찰 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)를 참고바랍니다.
 
 > Grammar of a key-path expression:
 >
@@ -1772,9 +2041,12 @@ Objective-C API 와 함께 상혹작용하는 코드에서 키 경로를 사용�
 > *key-path-postfixes* → *key-path-postfix* *key-path-postfixes*_?_ \
 > *key-path-postfix* → **`?`** | **`!`** | **`self`** | **`[`** *function-call-argument-list* **`]`**
 
-### 선택기 표현식 (Selector Expression)
+### Selector 표현식 (Selector Expression)
 
-선택기 표현식 (selector expression) 을 사용하면 Objective-C 에 메서드 또는 프로퍼티의 getter 또는 setter 를 참조하는데 사용되는 선택기 (selector) 에 접근할 수 있습니다. 형식은 다음과 같습니다:
+selector 표현식은
+Objective-C에서 메서드나 프로퍼티의
+getter나 setter를 참조하는 selector에 접근할 수 있습니다.
+형식은 다음과 같습니다:
 
 ```swift
 #selector(<#method name#>)
@@ -1782,7 +2054,10 @@ Objective-C API 와 함께 상혹작용하는 코드에서 키 경로를 사용�
 #selector(setter: <#property name#>)
 ```
 
-_메서드 이름 (method name)_ 과 _프로퍼티 이름 (property name)_ 은 Objective-C 런타임에 사용할 수 있는 메서드 또는 프로퍼티에 대한 참조여야 합니다. 선택기 표현식의 값은 `Selector` 타입의 인스턴스입니다. 예를 들어:
+위 형식의 *메서드 이름(method name)*과 *프로퍼티 이름(property name)은
+Objective-C 런타임에 사용할 수 있는 메서드나 프로퍼티여야 합니다.
+selector 표현식의 값은 `Selector` 타입의 인스턴스입니다.
+예를 들어:
 
 ```swift
 class SomeClass: NSObject {
@@ -1799,9 +2074,35 @@ let selectorForMethod = #selector(SomeClass.doSomething(_:))
 let selectorForPropertyGetter = #selector(getter: SomeClass.property)
 ```
 
-프로퍼티의 getter 에 대한 선택기를 생성할 때 _프로퍼티 이름 (property name)_ 은 변수 또는 상수 프로퍼티에 참조될 수 있습니다. 반대로 프로퍼티의 setter 에 대한 선택기를 생성할 때 _프로퍼티 이름 (property name)_ 은 변수 프로퍼티에만 참조될 수 있습니다.
+<!--
+  - test: `selector-expression`
 
-_메서드 이름 (method name)_ 은 그룹화 (grouping) 을 위해 소괄호와 이름을 공유하지만 타입 서명이 다른 메서드를 명확하기 하기위해 `as` 연산자도 포함할 수 있습니다. 예를 들어:
+  ```swifttest
+  >> import Foundation
+  -> class SomeClass: NSObject {
+  ->     @objc let property: String
+  ---
+  ->     @objc(doSomethingWithInt:)
+         func doSomething(_ x: Int) { }
+  ---
+         init(property: String) {
+             self.property = property
+         }
+     }
+  -> let selectorForMethod = #selector(SomeClass.doSomething(_:))
+  -> let selectorForPropertyGetter = #selector(getter: SomeClass.property)
+  ```
+-->
+
+프로퍼티의 getter에 대한 selector를 생성할 때,
+*프로퍼티 이름(property name)*은 변수나 상수 프로퍼티를 참조할 수 있습니다.
+반대로 프로퍼티의 setter에 대한 selector를 생성할 때,
+*프로퍼티 이름(property name)*은 변수 프로퍼티만 참조할 있습니다.
+
+*메서드 이름(method name)*은 그룹화를 위해 소괄호를 포함할 수 있고,
+이름은 같지만 시그니처가 다른 메서드를 구분하기 위해
+`as` 연산자를 사용할 수 있습니다.
+예를 들어:
 
 ```swift
 extension SomeClass {
@@ -1811,12 +2112,37 @@ extension SomeClass {
 let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
 ```
 
-선택기는 런타임이 아닌 컴파일 시 생성되기 때문에 컴파일러는 메서드 또는 프로퍼티가 존재하고 Objective-C 런타임에 노출되는지 확인할 수 있습니다.
+<!--
+  - test: `selector-expression-with-as`
 
-> Note\
-> _메서드 이름 (method name)_ 과 _프로퍼티 이름 (property name)_ 은 표현식이지만 절대 평가되지 않습니다.
+  ```swifttest
+  >> import Foundation
+  >> class SomeClass: NSObject {
+  >>     @objc let property: String
+  >>     @objc(doSomethingWithInt:)
+  >>     func doSomething(_ x: Int) {}
+  >>     init(property: String) {
+  >>         self.property = property
+  >>     }
+  >> }
+  -> extension SomeClass {
+  ->     @objc(doSomethingWithString:)
+         func doSomething(_ x: String) { }
+     }
+  -> let anotherSelector = #selector(SomeClass.doSomething(_:) as (SomeClass) -> (String) -> Void)
+  ```
+-->
 
-Objective-C API 와 상호작용하는 Swift 코드에서 선택기 사용에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고바랍니다.
+selector는 런타임이 아닌 컴파일 시 생성되기 때문에,
+컴파일러는 메서드나 프로퍼티가 존재하고
+Objective-C 런타임에 노출되는지 확인할 수 있습니다.
+
+> Note: 위 형식의 *메서드 이름(method name)*과 *프로퍼티 이름(property name)*은 표현식이지만
+> 절대 평가되지 않습니다.
+
+Objective-C API와 상호작용하는 Swift 코드에서
+selector 사용에 대한 자세한 내용은
+[Swift에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)을 참고바랍니다.
 
 > Grammar of a selector expression:
 >
@@ -1824,15 +2150,28 @@ Objective-C API 와 상호작용하는 Swift 코드에서 선택기 사용에 �
 > *selector-expression* → **`#selector`** **`(`** **`getter:`** *expression* **`)`** \
 > *selector-expression* → **`#selector`** **`(`** **`setter:`** *expression* **`)`**
 
+<!--
+  Note: The parser does allow an arbitrary expression inside #selector(), not
+  just a member name.  For example, see changes in Swift commit ef60d7289d in
+  lib/Sema/CSApply.cpp -- there's explicit code to look through parens and
+  optional binding.
+-->
+
 ### 키-경로 문자열 표현식 (Key-Path String Expression)
 
-키-경로 문자열 표현식 (key-path string expression) 을 사용하면 키-값 코딩 (key-value coding) 과 키-값 관찰 (key-value observing) API 에서 사용하기 위해 Objective-C 에서 프로퍼티 참조에 사용되는 문자열을 접근할 수 있습니다. 형식은 다음과 같습니다:
+키-경로 문자열 표현식(key-path string expression)은
+Objective-C에서 프로퍼티 참조에 사용되는 문자열을 접근할 수 있게 해주며,
+이 표현식을 사용하면 KVC(key-value coding)와 KVO(key-value observing) API에서 사용됩니다.
+형식은 다음과 같습니다:
 
 ```swift
 #keyPath(<#property name#>)
 ```
 
-_프로퍼티 이름 (property name)_ 은 Objective-C 런타임에 사용할 수 있는 프로퍼티를 참조해야 합니다. 컴파일 시에 키-경로 문자열 표현식은 문자열 리터럴에 의해 대체됩니다. 예를 들어:
+위 형식의 *프로퍼티 이름(property name)*은
+Objective-C 런타임에서 사용할 수 있는 프로퍼티를 참조해야 합니다.
+컴파일 시에 키-경로 문자열 표현식은 문자열 리터럴로 대체됩니다.
+예를 들어:
 
 ```swift
 class SomeClass: NSObject {
@@ -1851,7 +2190,31 @@ if let value = c.value(forKey: keyPath) {
 // Prints "12"
 ```
 
-클래스 내에 키-경로 문자열 표현식을 사용할 때 클래스 이름 없이 프로퍼티 이름 만으로 해당 클래스의 프로퍼티에 참조할 수 있습니다.
+<!--
+  - test: `keypath-string-expression`
+
+  ```swifttest
+  >> import Foundation
+  -> class SomeClass: NSObject {
+  ->    @objc var someProperty: Int
+        init(someProperty: Int) {
+            self.someProperty = someProperty
+        }
+     }
+  ---
+  -> let c = SomeClass(someProperty: 12)
+  -> let keyPath = #keyPath(SomeClass.someProperty)
+  ---
+  -> if let value = c.value(forKey: keyPath) {
+  ->     print(value)
+  -> }
+  <- 12
+  ```
+-->
+
+클래스 내에 키-경로 문자열 표현식을 사용하면,
+클래스 이름 없이 프로퍼티 이름 만으로
+해당 클래스의 프로퍼티에 참조할 수 있습니다.
 
 ```swift
 extension SomeClass {
@@ -1863,24 +2226,49 @@ print(keyPath == c.getSomeKeyPath())
 // Prints "true"
 ```
 
-키 경로 문자열은 런타임이 아닌 컴파일 시에 생성되기 때문에 컴파일러는 프로퍼티가 존재하고 해당 프로퍼티가 Objective-C 런타임에 노출되는지 확인할 수 있습니다.
+<!--
+  - test: `keypath-string-expression`
 
-Objective-C API 와 상호작용하는 Swift 코드에서 키 경로를 사용하는 것에 대한 자세한 내용은 [Swift 에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift) 을 참고바랍니다. 키-값 코딩과 키-값 관찰에 대한 자세한 내용은 [키-값 코딩 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i) 와 [키-값 관찰 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i) 를 참고바랍니다.
+  ```swifttest
+  -> extension SomeClass {
+        func getSomeKeyPath() -> String {
+           return #keyPath(someProperty)
+        }
+     }
+  -> print(keyPath == c.getSomeKeyPath())
+  <- true
+  ```
+-->
 
-> Note\
-> _프로퍼티 이름 (property name)_ 은 표현식이지만 절대 평가되지 않습니다.
+키 경로 문자열은 런타임이 아닌 컴파일 시에 생성되기 때문에,
+컴파일러는 프로퍼티가 존재하고
+해당 프로퍼티가 Objective-C 런타임에 노출되는지 확인할 수 있습니다.
+
+Objective-C API와 상호작용하는 Swift 코드에서
+키 경로를 사용하는 것에 대한 자세한 내용은
+[Swift에서 Objective-C 런타임 특성 사용 (Using Objective-C Runtime Features in Swift)](https://developer.apple.com/documentation/swift/using_objective_c_runtime_features_in_swift)을 참고바랍니다.
+KVC와 KVO에 대한 자세한 내용은
+[키-값 코딩(KVC) 프로그래밍 가이드 (Key-Value Coding Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i)와
+[키-값 관찰(KVO) 프로그래밍 가이드 (Key-Value Observing Programming Guide)](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html#//apple_ref/doc/uid/10000177i)를 참고바랍니다.
+
+> Note: 위 형식의 *프로퍼티 이름(property name)*은 표현식이지만 절대 평가되지 않습니다.
 
 > Grammar of a key-path string expression:
 >
 > *key-path-string-expression* → **`#keyPath`** **`(`** *expression* **`)`**
 
-## 접미사 표현식 (Postfix Expressions)
+## 접미 표현식 (Postfix Expressions)
 
-_접미사 표현식 (Postfix expressions)_ 은 접미사 연산자 (postfix operator) 또는 다른 접미사 구문 (other postfix syntax) 을 표현식에 적용하여 형성됩니다. 구문적으로 모든 기본 표현식은 접미사 표현식 입니다.
+*접미 표현식(Postfix expressions)*은
+표현식에
+접미 연산자(postfix operator)나 기타 접미 구문(postfix syntax)을 적용하여 구성됩니다.
+문법적으로 모든 기본 표현식(primary expression)은 접미 표현식 입니다.
 
-이러한 연산자의 동작에 대한 자세한 내용은 <doc:BasicOperators> 와 <doc:AdvancedOperators> 를 참고바랍니다.
+이러한 연산자의 동작에 대한 자세한 내용은
+<doc:BasicOperators>와 <doc:AdvancedOperators>를 참고바랍니다.
 
-Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations) 을 참고바랍니다.
+Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세한 내용은
+[연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations)을 참고바랍니다.
 
 > Grammar of a postfix expression:
 >
@@ -1896,21 +2284,38 @@ Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세�
 
 ### 함수 호출 표현식 (Function Call Expression)
 
-_함수 호출 표현식 (function call expression)_ 은 함수 이름 다음에 소괄호로 둘러싸이고 콤마로 구분된 함수의 인자의 리스트로 구성됩니다. 함수 호출 표현식 형식은 다음과 같습니다:
+<!--
+  TODO: After we rewrite function decls,
+  revisit this section to make sure that the names for things match.
+-->
+
+*함수 호출 표현식(function call expression)*은 함수 이름
+다음에 소괄호 안에 콤마로 구분된 인자 목록으로 구성됩니다.
+함수 호출 표현식 형식은 다음과 같습니다:
 
 ```swift
 <#function name#>(<#argument value 1#>, <#argument value 2#>)
 ```
 
-_함수 이름 (function name)_ 은 값이 함수 타입인 모든 표현식이 될 수 있습니다.
+위 형식의 *함수 이름(function name)*은 함수 타입 값을 나타내는 표현식이 될 수 있습니다.
 
-함수 정의가 파라미터에 대한 이름을 포함하는 경우 함수 호출은 콜론 (`:`) 으로 분리하여 인자값 전에 이름을 반드시 포함해야 합니다. 이러한 종류의 함수 호출 표현식 형식은 다음과 같습니다:
+함수 정의가 파라미터에 대한 이름을 포함하는 경우,
+함수 호출 시 그 이름을 반드시 포함해야 하고 인자값 전에
+콜론(`:`)을 붙여 작성합니다.
+이러한 종류의 함수 호출 표현식 형식은 다음과 같습니다:
 
 ```swift
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
-함수 호출 표현식은 닫는 소괄호 바로 다음에 클로저 표현식의 형식으로 후행 클로저 (trailing closures) 를 포함할 수 있습니다. 이 후행 클로저는 마지막 괄호 인자 후에 추가된 함수의 인자로 이해됩니다. 첫번째 클로저 표현식은 레이블이 없습니다; 모든 추가 클로저 표현식은 인자 레이블이 앞에 옵니다. 아래 예시에서 후행 클로저 구문을 사용하거나 사용하지 않는 함수 호출의 동등한 버전을 보여줍니다:
+함수 호출 표현식은 닫는 소괄호 바로 다음에
+클로저 표현식을 작성해 후행 클로저(trailing closures)를 포함할 수 있습니다.
+이 후행 클로저는 괄호로 감싼 인자 목록 뒤에 클로저를 작성해
+함수의 인자로 이해됩니다.
+첫 번째 클로저 표현식은 레이블이 없습니다;
+그 다음 모든 추가 클로저 표현식은 인자 레이블이 앞에 옵니다.
+아래 예시는 함수 호출의 예시이며,
+후행 클로저 구문의 사용 여부와 상관없이 동일합니다:
 
 ```swift
 // someFunction takes an integer and a closure as its arguments
@@ -1922,7 +2327,44 @@ anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
 anotherFunction(x: x) { $0 == 13 } g: { print(99) }
 ```
 
-후행 클로저만 함수의 인자인 경우 소괄호를 생략할 수 있습니다.
+<!--
+  - test: `trailing-closure`
+
+  ```swifttest
+  >> func someFunction (x: Int, f: (Int) -> Bool) -> Bool {
+  >>    return f(x)
+  >> }
+  >> let x = 10
+  // someFunction takes an integer and a closure as its arguments
+  >> let r0 =
+  -> someFunction(x: x, f: { $0 == 13 })
+  >> assert(r0 == false)
+  >> let r1 =
+  -> someFunction(x: x) { $0 == 13 }
+  >> assert(r1 == false)
+  ---
+  >> func anotherFunction(x: Int, f: (Int) -> Bool, g: () -> Void) -> Bool {
+  >>    g(); return f(x)
+  >> }
+  // anotherFunction takes an integer and two closures as its arguments
+  >> let r2 =
+  -> anotherFunction(x: x, f: { $0 == 13 }, g: { print(99) })
+  << 99
+  >> assert(r2 == false)
+  >> let r3 =
+  -> anotherFunction(x: x) { $0 == 13 } g: { print(99) }
+  << 99
+  >> assert(r3 == false)
+  ```
+-->
+
+<!--
+  Rewrite the above to avoid bare expressions.
+  Tracking bug is <rdar://problem/35301593>
+-->
+
+후행 클로저만 함수의 인자인 경우
+소괄호를 생략할 수 있습니다.
 
 ```swift
 // someMethod takes a closure as its only argument
@@ -1930,27 +2372,105 @@ myData.someMethod() { $0 == 13 }
 myData.someMethod { $0 == 13 }
 ```
 
-인자에 후행 클로저를 포함하려면 컴파일러는 다음과 같이 왼쪽에서 오른쪽으로 함수의 파라미터를 검사합니다:
+<!--
+  - test: `no-paren-trailing-closure`
 
-| 후행 클로저 |     파라미터    |                                    동작                                   |
-| :----: | :---------: | :---------------------------------------------------------------------: |
-|   레이블   |      레이블     |             레이블이 동일하면 클로저는 파라미터와 매치됩니다; 그렇지 않으면 파라미터를 건너뜁니다.             |
-|   레이블   |    레이블 없음    |                               파라미터를 건너뜁니다.                              |
-|  레이블 없음 | 레이블 또는 레이블 없음 | 아래 정의된대로 파라미터가 구조적으로 함수 타입과 유사하면 클로저는 파라미터와 매치됩니다; 그렇지 않으면 파라미터를 건너뜁니다. |
+  ```swifttest
+  >> class Data {
+  >>    let data = 10
+  >>    func someMethod(f: (Int) -> Bool) -> Bool {
+  >>       return f(self.data)
+  >>    }
+  >> }
+  >> let myData = Data()
+  // someMethod takes a closure as its only argument
+  >> let r0 =
+  -> myData.someMethod() { $0 == 13 }
+  >> assert(r0 == false)
+  >> let r1 =
+  -> myData.someMethod { $0 == 13 }
+  >> assert(r1 == false)
+  ```
+-->
 
-후행 클로저는 매치하는 파라미터에 대해 인자로 전달됩니다. 검색 프로세스 중에 건너뛴 파라미터에는 인자가 전달되지 않습니다 — 예를 들어 기본 파라미터를 사용할 수 있습니다. 일치하는 항목을 찾은 후에 다음 후행 클로저와 다음 파라미터 검색을 계속 합니다. 일치 프로세스가 끝나면 모든 후행 클로저는 매치되어야 합니다.
+<!--
+  Rewrite the above to avoid bare expressions.
+  Tracking bug is <rdar://problem/35301593>
+-->
 
-파라미터가 in-out 파라미터가 아니고 파라미터가 다음 중 하나인 경우 _구조적 (structurally)_ 으로 함수 타입과 _유사합니다 (resembles)_:
+인자에 후행 클로저를 포함하려면
+컴파일러는 다음과 같이 왼쪽에서 오른쪽으로 함수의 파라미터를 검사합니다:
 
-* `(Bool) -> Int` 와 같이 타입이 함수 타입인 파라미터
-* `@autoclosure () -> ((Bool) -> Int)` 와 같이 래핑된 표현식의 타입이 함수 타입인 autoclosure 파라미터
-* `((Bool) -> Int)...` 와 같이 배열 요소 타입이 함수 타입인 가변 파라미터
-* `Optional<(Bool) -> Int>` 와 같이 타입이 하나 이상의 옵셔널 레이어에 래핑된 파라미터
-* `(Optional<(Bool) -> Int>)...` 와 같이 타입이 이러한 허용된 타입을 결합하는 파라미터
+| 후행 클로저 | 파라미터 | 동작 |
+| -------- | ------ | --- |
+| 레이블 있음 | 레이블 있음 | 레이블이 동일하면 클로저는 파라미터와 일치됩니다; 그렇지 않으면 파라미터를 건너뜁니다. |
+| 레이블 있음 | 레이블 없음 | 파라미터를 건너뜁니다. |
+| 레이블 없음 | 레이블 존재 여부 무관 | 아래 정의된대로 파라미터가 구조적으로 함수 타입과 유사하면 클로저는 파라미터와 일치됩니다; 그렇지 않으면 파라미터를 건너뜁니다. |
 
-후행 클로저는 타입이 함수 타입과 구조적으로 유사하지만 함수는 아닌 파리미터와 일치하면 클로저는 필요에 따라 래핑됩니다. 예를 들어 파라미터의 타입이 옵셔널 타입인 경우 클로저는 자동으로 `Optional` 로 래핑됩니다.
+후행 클로저는 일치하는 파라미터에 대해 인자로 전달됩니다.
+검색 과정 중에 건너뛴 파라미터에는
+인자가 전달되지 않습니다 —--
+예를 들어 기본 파라미터를 사용할 수 있습니다.
+일치하는 항목을 찾은 후에
+다음 후행 클로저와 다음 파라미터 검색을 계속 합니다.
+일치 과정이 끝나면
+모든 후행 클로저는 일치되어야 합니다.
 
-오른쪽에서 왼쪽으로 매칭을 수행하는 Swift 5.3 이전 버전에서 코드를 쉽게 마이그레이션 하기위해 컴파일러는 왼쪽에서 오른쪽과 오른쪽에서 왼쪽으로 모두 확인합니다. 검색 방향이 다른 결과를 가져오면 오래된 오른쪽에서 왼쪽 순서가 사용되고 컴파일러는 경고를 발생시킵니다. Swift 의 향후 버전은 항상 왼쪽에서 오른쪽 순서가 사용될 것입니다.
+파라미터가 in-out 파라미터가 아니고
+파라미터가 다음 중 하나인 경우
+함수 타입과 *구조적으로 유사합니다*:
+
+- `(Bool) -> Int`와 같이
+  함수 타입인 파라미터
+- `@autoclosure () -> ((Bool) -> Int)`와 같이
+  래핑된 표현식의 타입이 함수 타입인
+  autoclosure 파라미터
+- `((Bool) -> Int)...`와 같이
+  배열 요소 타입이 함수 타입인
+  가변 파라미터
+- `Optional<(Bool) -> Int>`와 같이
+  하나 이상의 옵셔널 계층에 래핑된 파라미터
+- `(Optional<(Bool) -> Int>)...`와 같이
+  이러한 허용된 타입을 결합하는 파라미터
+
+후행 클로저는 함수 타입과 구조적으로 유사하지만 함수는 아닌
+파리미터와 일치하면
+클로저는 필요에 따라 래핑됩니다.
+예를 들어 파라미터의 타입이 옵셔널 타입인 경우
+클로저는 자동으로 `Optional`로 래핑됩니다.
+
+<!--
+  - test: `when-can-you-use-trailing-closure`
+
+  ```swifttest
+  // These tests match the example types given above
+  // when describing what "structurally resembles" a function type.
+  ---
+  >> func f1(x: Int, y: (Bool)->Int) { print(x + y(true)) }
+  >> f1(x: 10) { $0 ? 1 : 100 }
+  << 11
+  >> func f2(x: Int, y: @autoclosure ()->((Bool)->Int)) { print(x + y()(false)) }
+  >> f2(x: 20) { $0 ? 2 : 200 }
+  << 220
+  >> func f3(x: Int, y: ((Bool)->Int)...) { print(x + y[0](true)) }
+  >> f3(x: 30) { $0 ? 3 : 300}
+  << 33
+  >> func f4(x: Int, y: Optional<(Bool)->Int>) { print(x + y!(false)) }
+  >> f4(x: 40) { $0 ? 4 : 400 }
+  << 440
+  >> func f5(x: Int, y: (Optional<(Bool) -> Int>)...) { print(x + y[0]!(true)) }
+  >> f5(x: 50) { $0 ? 5 : 500 }
+  << 55
+  ```
+-->
+
+오른쪽에서 왼쪽으로 매칭을 수행하는 ---
+Swift 5.3 이전 버전에서 코드를 쉽게 마이그레이션 하기위해 ---
+컴파일러는 왼쪽에서 오른쪽과 오른쪽에서 왼쪽으로 모두 확인합니다.
+검색 방향이 다른 결과를 가져오면
+오래된 매칭 방법인 오른쪽에서 왼쪽 순서가 사용되고
+컴파일러는 경고를 발생시킵니다.
+Swift의 향후 버전은 항상 왼쪽에서 오른쪽 순서가 사용될 것입니다.
 
 ```swift
 typealias Callback = (Int) -> Int
@@ -1966,20 +2486,64 @@ someFunction { return $0 + 100 }  // Ambiguous
 someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
 ```
 
-위의 예시에서 "Ambiguous" 로 표시된 함수 호출은 "- 120" 을 출력하고 Swift 5.3 에서 컴파일러는 경고가 발생합니다. Swift 향후 버전은 "110 -" 이 출력될 것입니다.
+<!--
+  - test: `trailing-closure-scanning-direction`
 
-클래스, 구조체, 또는 열거형 타입은 <doc:Declarations#특별한-이름의-메서드-Methods-with-Special-Names> 에서 설명한대로 여러 메서드 중 하나로 선언하여 함수 호출 구문에 대한 문법적 설탕 (syntactic sugar) 을 활성화 할 수 있습니다.
+  ```swifttest
+  -> typealias Callback = (Int) -> Int
+  -> func someFunction(firstClosure: Callback? = nil,
+                     secondClosure: Callback? = nil) {
+         let first = firstClosure?(10)
+         let second = secondClosure?(20)
+         print(first ?? "-", second ?? "-")
+     }
+  ---
+  -> someFunction()  // Prints "- -"
+  << - -
+  -> someFunction { return $0 + 100 }  // Ambiguous
+  << - 120
+  !$ warning: backward matching of the unlabeled trailing closure is deprecated; label the argument with 'secondClosure' to suppress this warning
+  !! someFunction { return $0 + 100 }  // Ambiguous
+  !!              ^
+  !!              (secondClosure:     )
+  !$ note: 'someFunction(firstClosure:secondClosure:)' declared here
+  !! func someFunction(firstClosure: Callback? = nil,
+  !!      ^
+  -> someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
+  << 10 20
+  ```
+-->
 
-#### **포인터 타입으로 암시적 변환 (Implicit Conversion to a Pointer Type)**
+위의 예시에서
+"Ambiguous"로 표시된 함수 호출은
+"- 120"을 출력하고 Swift 5.3에서 컴파일러는 경고가 발생합니다.
+Swift 향후 버전에서는 "110 -"이 출력됩니다.
 
-함수 호출 표현식에서 인자와 파라미터가 다른 타입을 갖는 경우 컴파일러는 다음 리스트의 암시적 변환 중 하나를 적용하여 해당 타입을 일치시키려고 합니다:
+<!--
+  Smart quotes on the line above are needed
+  because the regex heuristics gets the close quote wrong.
+-->
 
-* `inout SomeType` 은 `UnsafePointer<SomeType>` 또는 `UnsafeMutablePointer<SomeType>` 이 될 수 있습니다.
-* `inout Array<SomeType>` 은 `UnsafePointer<SomeType>` 또는 `UnsafeMutablePointer<SomeType>` 이 될 수 있습니다.
-* `Array<SomeType>` 은 `UnsafePointer<SomeType>` 이 될 수 있습니다.
-* `String` 은 `UnsafePointer<CChar>` 가 될 수 있습니다.
+클래스, 구조체, 열거형 타입은
+<doc:Declarations#특별한-이름의-메서드-Methods-with-Special-Names>에서 설명한대로
+여러 메서드 중 하나로 선언하여
+함수 호출 구문에 대한 편의 문법(syntactic sugar)을 활성화 할 수 있습니다.
 
-다음 두가지 함수 호출은 동일합니다:
+#### 포인터 타입으로 암시적 변환 (Implicit Conversion to a Pointer Type)
+
+함수 호출 표현식에서
+인자와 파라미터가 다른 타입을 갖는 경우
+컴파일러는 다음 목록의 암시적 변환 중 하나를 적용하여
+해당 타입을 일치시키려고 합니다:
+
+- `inout SomeType`은
+  `UnsafePointer<SomeType>`이나 `UnsafeMutablePointer<SomeType>`이 될 수 있습니다.
+- `inout Array<SomeType>`은
+  `UnsafePointer<SomeType>`이나 `UnsafeMutablePointer<SomeType>`이 될 수 있습니다.
+- `Array<SomeType>`은 `UnsafePointer<SomeType>`이 될 수 있습니다.
+- `String`은 `UnsafePointer<CChar>`가 될 수 있습니다.
+
+다음 두 가지 함수 호출은 동일합니다:
 
 ```swift
 func unsafeFunction(pointer: UnsafePointer<Int>) {
@@ -1991,12 +2555,88 @@ unsafeFunction(pointer: &myNumber)
 withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 ```
 
-이러한 암시적 변환에 의해 생성된 포인터는 함수 호출 동안에만 유효합니다. 정의되지 않은 동작을 방지하려면 함수 호출이 끝난 후에 코드가 포인터를 유지되지 않도록 해야합니다.
+<!--
+  - test: `inout-unsafe-pointer`
 
-> Note\
-> 암시적으로 배열을 안전하지 않은 포인터 (unsafe pointer) 로 변환할 때 Swift 는 필요에 따라 배열을 변환하거나 복사하여 배열의 저장소가 연속되도록 합니다. 예를 들어 저장소에 대한 API 계약을 작성하지 않은 `NSArray` 서브클래스에서 `Array` 로 연결된 배열에 이 구문을 사용할 수 있습니다. 배열의 저장소가 이미 연속됨을 보장해야 하므로 암시적 변환은 이 작업을 수행할 필요가 없는 경우 `Array` 대신 `ContiguousArray` 를 사용하십시오.
+  ```swifttest
+  -> func unsafeFunction(pointer: UnsafePointer<Int>) {
+  ->     // ...
+  >>     print(pointer.pointee)
+  -> }
+  -> var myNumber = 1234
+  ---
+  -> unsafeFunction(pointer: &myNumber)
+  -> withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
+  << 1234
+  << 1234
+  ```
+-->
 
-`withUnsafePointer(to:)` 와 같이 명시적 함수 대신 `&` 사용하는 것은 특히 함수가 여러 포인터 인자를 가지고 있을 때 저수준 C 함수 (low-level C functions) 를 더 읽기 쉽게 호출할 수 있습니다. 그러나 다른 Swift 코드에서 함수를 호출할 때 안전하지 않은 API 를 명시적으로 사용하는 대신 `&` 을 사용하는 것은 피해야 합니다.
+이러한 암시적 변환에 의해 생성된 포인터는
+함수 호출 동안에만 유효합니다.
+정의되지 않은 동작을 방지하려면,
+함수 호출이 끝난 후에
+코드가 포인터를 유지하지 않도록 해야합니다.
+
+> Note: 암시적으로 배열을 안전하지 않은 포인터(unsafe pointer)로 변환할 때,
+> Swift는 필요에 따라 배열을 변환하거나 복사하여
+> 배열의 저장소가 연속되도록 합니다.
+> 예를 들어 저장소에 대한 API 계약을 작성하지 않은
+> `NSArray`의 하위 클래스를 `Array`로 브리지했을 때도
+> 이 구문을 사용할 수 있습니다.
+> 이런 암시적 변환 작업을 수행할 필요 없이
+> 배열의 저장소가 이미 연속됨을 보장하고 싶다면,
+> `Array` 대신 `ContiguousArray`를 사용해야 합니다.
+
+`withUnsafePointer(to:)`와 같이 명시적 함수 대신 `&`을 사용하는 것은
+함수가 여러 포인터 인자를 가지는
+저수준 C 함수(low-level C functions)를 더 읽기 쉽게 호출할 수 있습니다.
+그러나 다른 Swift 코드에서 함수를 호출할 때
+`&`을 사용하는 대신에 안전하지 않은 API를 명시적으로 사용하는 것이 좋습니다.
+
+<!--
+  - test: `implicit-conversion-to-pointer`
+
+  ```swifttest
+  >> import Foundation
+  >> func takesUnsafePointer(p: UnsafePointer<Int>) { }
+  >> func takesUnsafeMutablePointer(p: UnsafeMutablePointer<Int>) { }
+  >> func takesUnsafePointerCChar(p: UnsafePointer<CChar>) { }
+  >> func takesUnsafeMutablePointerCChar(p: UnsafeMutablePointer<CChar>) { }
+  >> var n = 12
+  >> var array = [1, 2, 3]
+  >> var nsarray: NSArray = [10, 20, 30]
+  >> var bridgedNSArray = nsarray as! Array<Int>
+  >> var string = "Hello"
+  ---
+  // bullet 1
+  >> takesUnsafePointer(p: &n)
+  >> takesUnsafeMutablePointer(p: &n)
+  ---
+  // bullet 2
+  >> takesUnsafePointer(p: &array)
+  >> takesUnsafeMutablePointer(p: &array)
+  >> takesUnsafePointer(p: &bridgedNSArray)
+  >> takesUnsafeMutablePointer(p: &bridgedNSArray)
+  ---
+  // bullet 3
+  >> takesUnsafePointer(p: array)
+  >> takesUnsafePointer(p: bridgedNSArray)
+  ---
+  // bullet 4
+  >> takesUnsafePointerCChar(p: string)
+  ---
+  // invalid conversions
+  >> takesUnsafeMutablePointer(p: array)
+  !$ error: cannot convert value of type '[Int]' to expected argument type 'UnsafeMutablePointer<Int>'
+  !! takesUnsafeMutablePointer(p: array)
+  !!                              ^
+  >> takesUnsafeMutablePointerCChar(p: string)
+  !$ error: cannot convert value of type 'String' to expected argument type 'UnsafeMutablePointer<CChar>' (aka 'UnsafeMutablePointer<Int8>')
+  !! takesUnsafeMutablePointerCChar(p: string)
+  !!                                   ^
+  ```
+-->
 
 > Grammar of a function call expression:
 > 
@@ -2014,13 +2654,18 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 
 ### 이니셜라이저 표현식 (Initializer Expression)
 
-_이니셜라이저 표현식 (initializer expression)_ 은 타입의 이니셜라이저에 접근하는 것을 제공합니다. 형식은 다음과 같습니다:
+*이니셜라이저 표현식(initializer expression)*은
+타입의 이니셜라이저에 접근하는 것을 제공합니다.
+형식은 다음과 같습니다:
 
 ```swift
 <#expression#>.init(<#initializer arguments#>)
 ```
 
-타입의 새로운 인스턴스를 초기화하기 위해 함수 호출 표현식 내에 이니셜라이저 표현식을 사용합니다. 슈퍼클래스의 이니셜라이저를 위임하기 위해 이니셜라이저 표현식을 사용할 수도 있습니다.
+이니셜라이저 표현식은 함수 호출 표현식 내에서 사용해
+새로운 인스턴스를 초기화합니다.
+또한 상위 클래스의 이니셜라이저에 위임할 때
+사용할 수도 있습니다.
 
 ```swift
 class SomeSubClass: SomeSuperClass {
@@ -2031,7 +2676,22 @@ class SomeSubClass: SomeSuperClass {
 }
 ```
 
-함수와 같이 이니셜라이저는 값으로 사용될 수 있습니다. 예를 들어:
+<!--
+  - test: `init-call-superclass`
+
+  ```swifttest
+  >> class SomeSuperClass { }
+  -> class SomeSubClass: SomeSuperClass {
+  ->     override init() {
+  ->         // subclass initialization goes here
+  ->         super.init()
+  ->     }
+  -> }
+  ```
+-->
+
+함수와 같이 이니셜라이저는 값으로 사용할 수 있습니다.
+예를 들어:
 
 ```swift
 // Type annotation is required because String has multiple initializers.
@@ -2041,7 +2701,21 @@ print(oneTwoThree)
 // Prints "123"
 ```
 
-이름으로 타입을 지정하면 이니셜라이저 표현식 사용없이 타입의 이니셜라이저에 접근할 수 있습니다. 다른 모든 상황에서는 이니셜라이저 표현식을 사용해야 합니다.
+<!--
+  - test: `init-as-value`
+
+  ```swifttest
+  // Type annotation is required because String has multiple initializers.
+  -> let initializer: (Int) -> String = String.init
+  -> let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
+  -> print(oneTwoThree)
+  <- 123
+  ```
+-->
+
+이름으로 타입을 지정하면
+이니셜라이저 표현식 사용없이 타입의 이니셜라이저에 접근할 수 있습니다.
+다른 모든 상황에서는 이니셜라이저 표현식을 사용해야 합니다.
 
 ```swift
 let s1 = SomeType.init(data: 3)  // Valid
@@ -2051,6 +2725,26 @@ let s3 = type(of: someValue).init(data: 7)  // Valid
 let s4 = type(of: someValue)(data: 5)       // Error
 ```
 
+<!--
+  - test: `explicit-implicit-init`
+
+  ```swifttest
+  >> struct SomeType {
+  >>     let data: Int
+  >> }
+  -> let s1 = SomeType.init(data: 3)  // Valid
+  -> let s2 = SomeType(data: 1)       // Also valid
+  ---
+  >> let someValue = s1
+  -> let s3 = type(of: someValue).init(data: 7)  // Valid
+  -> let s4 = type(of: someValue)(data: 5)       // Error
+  !$ error: initializing from a metatype value must reference 'init' explicitly
+  !! let s4 = type(of: someValue)(data: 5)       // Error
+  !!                              ^
+  !!                              .init
+  ```
+-->
+
 > Grammar of an initializer expression:
 >
 > *initializer-expression* → *postfix-expression* **`.`** **`init`** \
@@ -2058,13 +2752,18 @@ let s4 = type(of: someValue)(data: 5)       // Error
 
 ### 명시적 멤버 표현식 (Explicit Member Expression)
 
-_명시적 멤버 표현식 (explicit member expression)_ 은 명명된 타입, 튜플, 또는 모듈의 멤버에 접근을 허용합니다. 이것은 멤버의 아이템과 식별자 사이에 점 (`.`) 으로 구성됩니다.
+*명시적 멤버 표현식(explicit member expression)*은
+명명 타입, 튜플, 모듈의 멤버에 접근을 허용합니다.
+이것은 점(`.`)으로 멤버의 이름과
+식별자를 연결하여 구성됩니다.
 
 ```swift
 <#expression#>.<#member name#>
 ```
 
-명명된 타입의 멤버는 타입의 선언 또는 표현식의 부분으로 명명됩니다. 예를 들어:
+명명 타입의 멤버는
+타입의 선언이나 확장을 통해 정의됩니다.
+예를 들어:
 
 ```swift
 class SomeClass {
@@ -2074,7 +2773,22 @@ let c = SomeClass()
 let y = c.someProperty  // Member access
 ```
 
-튜플의 멤버는 0을 시작으로 순서대로 정수를 사용하여 암시적으로 명명됩니다. 예를 들어:
+<!--
+  - test: `explicitMemberExpression`
+
+  ```swifttest
+  -> class SomeClass {
+         var someProperty = 42
+     }
+  -> let c = SomeClass()
+  -> let y = c.someProperty  // Member access
+  ```
+-->
+
+튜플의 멤버는
+0을 시작으로
+순서대로 정수를 사용하여 암시적으로 명명됩니다.
+예를 들어:
 
 ```swift
 var t = (10, 20, 30)
@@ -2082,11 +2796,31 @@ t.0 = t.1
 // Now t is (20, 20, 30)
 ```
 
-모듈의 멤버는 해당 모듈의 최상위 선언에 접근합니다.
+<!--
+  - test: `explicit-member-expression`
 
-`dynamicMemberLookup` 속성으로 선언된 타입은 <doc:Attributes> 에서 설명한대로 런타임 시 조회되는 멤버가 포함됩니다.
+  ```swifttest
+  -> var t = (10, 20, 30)
+  -> t.0 = t.1
+  -> // Now t is (20, 20, 30)
+  ```
+-->
 
-인자 이름만으로 이름이 다른 메서드 또는 이니셜라이저를 구별하려면 인자 이름을 소괄호 안에 포함하고 각 인자 이름 뒤에 콜론 (`:`) 을 붙입니다. 인자에 이름이 없는 경우 언더바 (`_`) 를 작성합니다. 오버로드된 메서드를 구별하려면 타입 주석을 사용합니다. 예를 들어:
+모듈의 멤버는
+해당 모듈의 최상위 선언입니다.
+
+`dynamicMemberLookup` 속성으로 선언된 타입은
+<doc:Attributes>에서 설명한대로
+런타임 시 조회되는 멤버가 포함됩니다.
+
+이름은 동일하지만 파라미터 이름만 다른
+메서드나 이니셜라이저를 구분하기 위해
+인자 이름을 소괄호 안에 포함하고
+각 인자 이름 뒤에 콜론(`:`)을 붙입니다.
+인자에 이름이 없는 경우 언더바(`_`)를 작성합니다.
+오버로드된 메서드를 구별하려면
+타입 주석을 사용합니다.
+예를 들어:
 
 ```swift
 class SomeClass {
@@ -2105,7 +2839,59 @@ let d = instance.overloadedMethod(x:y:)  // Still ambiguous
 let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
 ```
 
-줄 시작에 마침표가 나타나면 암시적 멤버 표현식이 아닌 명시적 멤버 표현식의 부분으로 이해됩니다. 예를 들어 다음 리스트는 여러줄로 분할된 메서드 호출 체인을 보여줍니다:
+<!--
+  - test: `function-with-argument-names`
+
+  ```swifttest
+  -> class SomeClass {
+         func someMethod(x: Int, y: Int) {}
+         func someMethod(x: Int, z: Int) {}
+         func overloadedMethod(x: Int, y: Int) {}
+         func overloadedMethod(x: Int, y: Bool) {}
+     }
+  -> let instance = SomeClass()
+  ---
+  -> let a = instance.someMethod              // Ambiguous
+  !$ error: ambiguous use of 'someMethod'
+  !! let a = instance.someMethod              // Ambiguous
+  !!         ^
+  !$ note: found this candidate
+  !!              func someMethod(x: Int, y: Int) {}
+  !!                   ^
+  !$ note: found this candidate
+  !!              func someMethod(x: Int, z: Int) {}
+  !!                   ^
+  -> let b = instance.someMethod(x:y:)        // Unambiguous
+  ---
+  -> let d = instance.overloadedMethod        // Ambiguous
+  !$ error: ambiguous use of 'overloadedMethod(x:y:)'
+  !! let d = instance.overloadedMethod        // Ambiguous
+  !!         ^
+  !$ note: found this candidate
+  !!              func overloadedMethod(x: Int, y: Int) {}
+  !!                   ^
+  !$ note: found this candidate
+  !!              func overloadedMethod(x: Int, y: Bool) {}
+  !!                   ^
+  -> let d = instance.overloadedMethod(x:y:)  // Still ambiguous
+  !$ error: ambiguous use of 'overloadedMethod(x:y:)'
+  !!     let d = instance.overloadedMethod(x:y:)  // Still ambiguous
+  !!             ^
+  !$ note: found this candidate
+  !!              func overloadedMethod(x: Int, y: Int) {}
+  !!                   ^
+  !$ note: found this candidate
+  !!              func overloadedMethod(x: Int, y: Bool) {}
+  !!                   ^
+  -> let d: (Int, Bool) -> Void  = instance.overloadedMethod(x:y:)  // Unambiguous
+  ```
+-->
+
+줄 시작에 마침표가 나타나면
+암시적 멤버 표현식이 아닌
+명시적 멤버 표현식의 부분으로 이해합니다.
+예를 들어 다음 목록은 여러 줄로 분할된
+메서드 호출 체인을 보여줍니다:
 
 ```swift
 let x = [10, 3, 20, 15, 4]
@@ -2114,22 +2900,110 @@ let x = [10, 3, 20, 15, 4]
     .map { $0 * 100 }
 ```
 
-이 여러줄로 연결된 구문을 컴파일러 제어문과 결합하여 각 메서드가 호출되는 시기를 제어할 수 있습니다. 예를 들어 다음 코드는 iOS 에서 다른 필터링 규칙을 사용합니다:
+<!--
+  - test: `period-at-start-of-line`
+
+  ```swifttest
+  -> let x = [10, 3, 20, 15, 4]
+  ->     .sorted()
+  ->     .filter { $0 > 5 }
+  ->     .map { $0 * 100 }
+  >> print(x)
+  << [1000, 1500, 2000]
+  ```
+-->
+
+이 여러 줄로 연결된 구문은
+컴파일러 제어문과 결합하여
+각 메서드가 호출되는 시기를 제어할 수 있습니다.
+예를 들어
+다음 코드는 iOS에서 다른 필터링 규칙을 사용합니다:
 
 ```swift
 let numbers = [10, 20, 33, 43, 50]
 #if os(iOS)
-.filter { $0 < 40 }
+    .filter { $0 < 40 }
 #else
-.filter { $0 > 25 }
+    .filter { $0 > 25 }
 #endif
 ```
 
-`#if`, `#endif` 와 다른 컴파일 지시문 사이에 조건부 컴파일 블록은 암시적 멤버 표현식 뒤에 접미사를 포함하지 않거나 많은 접미사를 포함하여 접미사 표현식을 형성할 수 있습니다. 다른 조건부 컴파일러 블럭 또는 이러한 표현식과 블럭을 포함할 수도 있습니다.
+<!--
+  - test: `pound-if-inside-postfix-expression`
 
-최상위 코드 뿐만 아니라 명시적 멤버 표현식을 작성할 수 있는 모든 곳에서 이 구문을 사용할 수 있습니다.
+  ```swifttest
+  -> let numbers = [10, 20, 33, 43, 50]
+     #if os(iOS)
+         .filter { $0 < 40 }
+     #else
+         .filter { $0 > 25 }
+     #endif
+  >> print(numbers)
+  << [33, 43, 50]
+  ```
+-->
 
-조건부 컴파일러 블럭에서 `#if` 컴파일러 지시문의 분기에는 하나 이상의 표현식이 포함되어야 합니다. 다른 분기는 비어있을 수 있습니다.
+`#if`, `#endif`와 다른 컴파일 지시어 사이의
+조건부 컴파일 블록은
+접미 표현식을 구성하기 위해
+암시적 멤버 표현식 뒤에
+접미사를 포함하지 않거나 많은 접미사를 포함할 수 있습니다.
+다른 조건부 컴파일러 블록이나
+이러한 표현식과 블록을 조합하여
+포함할 수도 있습니다.
+
+이 문법은 최상위 코드뿐만 아니라
+명시적 멤버 표현식을
+작성할 수 있는 모든 곳에서 사용할 수 있습니다.
+
+조건부 컴파일러 블록에서
+`#if` 컴파일러 지시어의 분기는
+하나 이상의 표현식이 포함되어야 합니다.
+다른 분기는 비어있을 수 있습니다.
+
+<!--
+  - test: `pound-if-empty-if-not-allowed`
+
+  ```swifttest
+  >> let numbers = [10, 20, 33, 43, 50]
+  >> #if os(iOS)
+  >> #else
+  >>     .filter { $0 > 25 }
+  >> #endif
+  !$ error: reference to member 'filter' cannot be resolved without a contextual type
+  !! .filter { $0 > 25 }
+  !! ~^~~~~~
+  ```
+-->
+
+<!--
+  - test: `pound-if-else-can-be-empty`
+
+  ```swifttest
+  >> let numbers = [10, 20, 33, 43, 50]
+  >> #if os(iOS)
+  >>     .filter { $0 > 25 }
+  >> #else
+  >> #endif
+  >> print(numbers)
+  << [10, 20, 33, 43, 50]
+  ```
+-->
+
+<!--
+  - test: `pound-if-cant-use-binary-operators`
+
+  ```swifttest
+  >> let s = "some string"
+  >> #if os(iOS)
+  >>     + " on iOS"
+  >> #endif
+  !$ error: unary operator cannot be separated from its operand
+  !! + " on iOS"
+  !! ^~
+  !!-
+  ```
+-->
 
 > Grammar of an explicit member expression:
 >
@@ -2141,18 +3015,33 @@ let numbers = [10, 20, 33, 43, 50]
 > *argument-names* → *argument-name* *argument-names*_?_ \
 > *argument-name* → *identifier* **`:`**
 
-### 접미사 Self 표현식 (Postfix Self Expression)
+<!--
+  The grammar for method-name doesn't include the following:
+      method-name -> identifier argument-names-OPT
+  because the "postfix-expression . identifier" line above already covers that case.
+-->
 
-접미사 `self` 표현식 (postfix `self` expression) 은 표현식 또는 타입의 이름 뒤에 `.self` 로 구성됩니다. 형식은 다음과 같습니다:
+<!--
+  See grammar for initializer-expression for the related "argument name" production there.
+-->
+
+### 접미 Self 표현식 (Postfix Self Expression)
+
+접미 `self` 표현식(postfix `self` expression)은 표현식이나 타입의 이름 뒤에
+`.self`를 붙여 구성됩니다. 형식은 다음과 같습니다:
 
 ```swift
 <#expression#>.self
 <#type#>.self
 ```
 
-첫번째 형식은 _표현식 (expression)_ 의 값으로 평가됩니다. 예를 들어 `x.self` 는 `x` 로 평가됩니다.
+첫 번째 형식은 위 형식의 *표현식(expression)*의 값으로 평가됩니다.
+예를 들어 `x.self`는 `x`로 평가됩니다.
 
-두번째 형식은 _타입 (type)_ 의 값으로 평가됩니다. 값으로 타입을 접근하려면 이 형식을 사용합니다. 예를 들어 `SomeClass.self` 는 `SomeClass` 타입 자체로 평가되므로 타입 수준 인자 (type-level argument) 를 허용하는 함수나 메서드에 전달할 수 있습니다.
+두 번째 형식은 위 형식의 *타입(type)*의 값으로 평가됩니다.
+값으로 타입을 접근하려면 이 형식을 사용합니다.
+예를 들어 `SomeClass.self`는 `SomeClass` 타입 자체로 평가되므로
+타입을 인자로 요구하는 함수나 메서드에 전달할 수 있습니다.
 
 > Grammar of a postfix self expression:
 >
@@ -2160,31 +3049,77 @@ let numbers = [10, 20, 33, 43, 50]
 
 ### 서브스크립트 표현식 (Subscript Expression)
 
-_서브스크립트 표현식 (subscript expression)_ 은 해당 서브스크립트 선언의 getter 와 setter 를 사용하여 서브스크립트에 접근을 제공합니다. 형식은 다음과 같습니다:
+*서브스크립트 표현식(subscript expression)*은
+해당 서브스크립트 선언의 getter와 setter를 사용하여
+서브스크립트 접근을 제공합니다.
+형식은 다음과 같습니다:
 
 ```swift
 <#expression#>[<#index expressions#>]
 ```
 
-서브스크립트 표현식의 값을 평가하기 위해 _표현식 (expression)_ 의 타입에 대한 서브스크립트 getter 는 서브스크립트 파라미터로 _인덱스 표현식 (index expressions)_ 을 전달하여 호출됩니다. 값을 설정하기 위해선 서브스크립트 setter 는 동일한 방식으로 호출됩니다.
+서브스크립트 표현식의 값을 평가하기 위해
+위 형식의 *표현식(expression)*의 타입에 대한 서브스크립트 getter는
+서브스크립트 파라미터로 위 형식의 *인덱스 표현식(index expressions)*을 전달하여 호출합니다.
+값을 설정하기 위해서는
+서브스크립트 setter는 동일한 방식으로 호출합니다.
 
-서브스크립트 선언에 대한 자세한 내용은 <doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration> 을 참고바랍니다.
+<!--
+  TR: Confirm that indexing on
+  a comma-separated list of expressions
+  is intentional, not just a side effect.
+  I see this working, for example:
+  (swift) class Test {
+            subscript(a: Int, b: Int) -> Int { return 12 }
+          }
+  (swift) var t = Test()
+  // t : Test = <Test instance>
+  (swift) t[1, 2]
+  // r0 : Int = 12
+-->
+
+서브스크립트 선언에 대한 자세한 내용은
+<doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration>을 참고바랍니다.
 
 > Grammar of a subscript expression:
 >
 > *subscript-expression* → *postfix-expression* **`[`** *function-call-argument-list* **`]`**
 
+<!--
+  - test: `subscripts-can-take-operators`
+
+  ```swifttest
+  >> struct S {
+         let x: Int
+         let y: Int
+         subscript(operation: (Int, Int) -> Int) -> Int {
+             return operation(x, y)
+         }
+     }
+  >> let s = S(x: 10, y: 20)
+  >> assert(s[+] == 30)
+  ```
+-->
+
 ### 강제-값 표현식 (Forced-Value Expression)
 
-_강제-값 표현식 (forced-value expression)_ 은 `nil` 이 아니라고 확신하는 옵셔널 값을 언래핑 합니다. 형식은 다음과 같습니다:
+*강제-값 표현식(forced-value expression)*은 `nil` 이 아니라고 확신하는
+옵셔널 값을 언래핑합니다.
+형식은 다음과 같습니다:
 
 ```swift
 <#expression#>!
 ```
 
-_표현식 (expression)_ 의 값이 `nil` 이 아니라면 옵셔널 값은 언래핑 되고 해당 옵셔널이 아닌 타입을 반환합니다. 그렇지 않으면 런타임 오류가 발생합니다.
+위 형식의 *표현식(expression)*의 값이 `nil`이 아니라면
+옵셔널 값은 언래핑되고
+옵셔널이 아닌 타입을 반환합니다.
+그렇지 않으면 런타임 오류가 발생합니다.
 
-강제-값 표현식의 언래핑된 값은 값 자체를 변경하거나 값의 멤버중 하나에 할당하여 수정할 수 있습니다. 예를 들어:
+강제-값 표현식의 언래핑된 값은 값 자체를
+변경하거나
+값의 멤버중 하나에 할당하여 수정할 수 있습니다.
+예를 들어:
 
 ```swift
 var x: Int? = 0
@@ -2196,30 +3131,80 @@ someDictionary["a"]![0] = 100
 // someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
 ```
 
+<!--
+  - test: `optional-as-lvalue`
+
+  ```swifttest
+  -> var x: Int? = 0
+  -> x! += 1
+  /> x is now \(x!)
+  </ x is now 1
+  ---
+  -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+  -> someDictionary["a"]![0] = 100
+  /> someDictionary is now \(someDictionary)
+  </ someDictionary is now ["a": [100, 2, 3], "b": [10, 20]]
+  ```
+-->
+
 > Grammar of a forced-value expression:
 >
 > *forced-value-expression* → *postfix-expression* **`!`**
 
 ### 옵셔널-체이닝 표현식 (Optional-Chaining Expression)
 
-_옵셔널-체이닝 표현식 (optional-chaining expression)_ 은 접미사 표현식으로 옵셔널 값을 사용하기 위해 간단한 구문을 제공합니다. 형식은 다음과 같습니다:
+*옵셔널-체이닝 표현식(optional-chaining expression)*은
+접미 표현식으로 옵셔널 값을 사용하여 간단한 구문을 제공합니다.
+형식은 다음과 같습니다:
 
 ```swift
 <#expression#>?
 ```
 
-접미사 `?` 연산자는 표현식의 값 변경없이 표현식에서 옵셔널-체이닝 표현식을 만듭니다.
+접미 `?` 연산자는 표현식의 값 변경없이 표현식에서
+옵셔널-체이닝 표현식을 만듭니다.
 
-옵셔널-체이닝 표현식은 접미사 표현식 내에 나타나야 하고 접미사 표현식이 특별한 방법으로 평가되도록 합니다. 옵셔널-체이닝 표현식의 값이 `nil` 이면 접미사 표현식의 다른 모든 동작은 무시되고 전체 접미사 표현식은 `nil` 로 평가됩니다. 옵셔널-체이닝 표현식의 값이 `nil` 이 아니면 옵셔널-체이닝 표현식의 값은 언래핑되고 나머지 접미사 표현식에 평가하기 위해 사용됩니다. 두 경우 모두 접미사 표현식의 값은 여전히 옵셔널 타입입니다.
+옵셔널-체이닝 표현식은 접미 표현식 내에 나타나야 하고
+접미 표현식이 특별한 방법으로 평가되도록 합니다.
+옵셔널-체이닝 표현식의 값이 `nil`이면,
+접미 표현식의 다른 모든 동작은 무시되고
+전체 접미 표현식은 `nil`로 평가됩니다.
+옵셔널-체이닝 표현식의 값이 `nil`이 아니면,
+옵셔널-체이닝 표현식의 값은 언래핑되고
+나머지 접미 표현식을 평가하기 위해 사용됩니다.
+두 경우 모두
+접미 표현식의 값은 여전히 옵셔널 타입입니다.
 
-옵셔널-체이닝 표현식이 포함된 접미사 표현식이 다른 접미사 표현식 내에 중첩되었다면 가장 바깥쪽 표현식만 옵셔널 타입을 반환합니다. 아래의 예시에서 `c` 가 `nil` 이 아닐 때 `.performAction()` 을 평가하기 위해 사용되는 `.property` 를 평가하는데 사용됩니다. 전체 표현식 `c?.property.performAction()` 은 옵셔널 타입의 값을 가집니다.
+옵셔널-체이닝 표현식이 포함된 접미 표현식이
+다른 접미 표현식 내에 중첩되었다면
+가장 바깥쪽 표현식만 옵셔널 타입을 반환합니다.
+아래의 예시에서
+`c`가 `nil`이 아니면
+해당 값은 언래핑되고 `.property`를 평가하기 위해 사용되고
+그 값을 다시 `.performAction()`을 평가하기 위해 사용됩니다.
+전체 표현식 `c?.property.performAction()`은
+옵셔널 타입의 값을 가집니다.
 
 ```swift
 var c: SomeClass?
 var result: Bool? = c?.property.performAction()
 ```
 
-다음의 예시는 옵셔널 체이닝 사용없이 위의 예시의 동작을 보여줍니다.
+<!--
+  - test: `optional-chaining`
+
+  ```swifttest
+  >> class OtherClass { func performAction() -> Bool {return true} }
+  >> class SomeClass { var property: OtherClass = OtherClass() }
+  -> var c: SomeClass?
+  -> var result: Bool? = c?.property.performAction()
+  >> assert(result == nil)
+  ```
+-->
+
+다음의 예시는
+옵셔널 체이닝 사용없이
+위의 예시의 동작을 보여줍니다.
 
 ```swift
 var result: Bool?
@@ -2228,7 +3213,27 @@ if let unwrappedC = c {
 }
 ```
 
-옵셔널-체이닝 표현식의 언래핑된 값은 값 자체를 변경하거나 값의 멤버중 하나에 할당을 통해 변경될 수 있습니다. 옵셔널-체이닝 표현식의 값이 `nil` 이라면 할당 연산자의 오른편의 표현식은 평가되지 않습니다. 예를 들어:
+<!--
+  - test: `optional-chaining-alt`
+
+  ```swifttest
+  >> class OtherClass { func performAction() -> Bool {return true} }
+  >> class SomeClass { var property: OtherClass = OtherClass() }
+  >> var c: SomeClass?
+  -> var result: Bool?
+  -> if let unwrappedC = c {
+        result = unwrappedC.property.performAction()
+     }
+  ```
+-->
+
+옵셔널-체이닝 표현식의 언래핑된 값은
+값 자체를 변경하거나
+값의 멤버중 하나에 할당을 통해 변경할 수 있습니다.
+옵셔널-체이닝 표현식의 값이 `nil`이라면
+할당 연산자의 오른쪽의 표현식은
+평가되지 않습니다.
+예를 들어:
 
 ```swift
 func someFunctionWithSideEffects() -> Int {
@@ -2245,6 +3250,38 @@ someDictionary["a"]?[0] = someFunctionWithSideEffects()
 // someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
 ```
 
+<!--
+  - test: `optional-chaining-as-lvalue`
+
+  ```swifttest
+  -> func someFunctionWithSideEffects() -> Int {
+        return 42  // No actual side effects.
+     }
+  -> var someDictionary = ["a": [1, 2, 3], "b": [10, 20]]
+  ---
+  -> someDictionary["not here"]?[0] = someFunctionWithSideEffects()
+  // someFunctionWithSideEffects isn't evaluated
+  /> someDictionary is still \(someDictionary)
+  </ someDictionary is still ["a": [1, 2, 3], "b": [10, 20]]
+  ---
+  -> someDictionary["a"]?[0] = someFunctionWithSideEffects()
+  /> someFunctionWithSideEffects is evaluated and returns \(someFunctionWithSideEffects())
+  </ someFunctionWithSideEffects is evaluated and returns 42
+  /> someDictionary is now \(someDictionary)
+  </ someDictionary is now ["a": [42, 2, 3], "b": [10, 20]]
+  ```
+-->
+
 > Grammar of an optional-chaining expression:
 >
 > *optional-chaining-expression* → *postfix-expression* **`?`**
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
