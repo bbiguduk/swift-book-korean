@@ -1,26 +1,26 @@
-# 명령문 (Statements)
+# 구문 (Statements)
 
 표현식을 그룹화하고 실행 흐름을 제어합니다.
 
-Swift에서 세 종류의 명령어가 있습니다: 단순 명령문(simple statements), 컴파일러 제어 명령문(compiler control statements),
-제어 흐름 명령문(control flow statements)입니다.
-단순 명령문은 가장 일반적이고 표현식이나 선언으로 구성되어 있습니다.
-컴파일러 제어 명령문은 프로그램이 컴파일러의 동작 일부를 변경할 수 있고
-조건부 컴파일러 블록과 라인 제어 명령문이 포함됩니다.
+Swift에서 세 종류의 명령어가 있습니다: 단순 구문(simple statements), 컴파일러 제어 구문(compiler control statements),
+제어 흐름 구문(control flow statements)입니다.
+단순 구문은 가장 일반적이고 표현식이나 선언으로 구성되어 있습니다.
+컴파일러 제어 구문은 프로그램이 컴파일러의 동작 일부를 변경할 수 있고
+조건부 컴파일러 블록과 라인 제어 구문이 포함됩니다.
 
-제어 흐름 명령문은 프로그램에서 실행 흐름을 제어하기 위해 사용됩니다.
-Swift는 다양한 제어 흐름 명령문을 포함하고 있으며,
-루프 명령문(loop statements), 분기 명령문(branch statements), 흐름 전환 명령문(control transfer statements)이 있습니다.
-루프 명령문은 코드 블록을 반복적으로 실행하고,
-분기 명령문은 특정 조건이 일치 할 때만
+제어 흐름 구문은 프로그램에서 실행 흐름을 제어하기 위해 사용됩니다.
+Swift는 다양한 제어 흐름 구문을 포함하고 있으며,
+루프 구문(loop statements), 분기 구문(branch statements), 제어 전송 구문(control transfer statements)이 있습니다.
+루프 구문은 코드 블록을 반복적으로 실행하고,
+분기 구문은 특정 조건이 일치 할 때만
 코드 블록을 실행하고,
-흐름 전환 명령문은 코드의 실행 순서를 변경하는 방법을 제공합니다.
+제어 전송 구문은 코드의 실행 순서를 변경하는 방법을 제공합니다.
 또한 Swift는 새로운 범위를 만들고
-오류를 잡고 처리하는 `do` 명령문과
-현재 범위가 종료되기 직전에 정리 동작을 실행하는 `defer` 명령문을 제공합니다.
+오류를 잡고 처리하는 `do` 구문과
+현재 범위가 종료되기 직전에 정리 동작을 실행하는 `defer` 구문을 제공합니다.
 
-세미콜론(`;`)은 모든 명령문에 선택적으로 나타날 수 있고
-같은 줄에 여러 명령문을 구분하기 위해 사용할 수 있습니다.
+세미콜론(`;`)은 모든 구문에 선택적으로 나타날 수 있고
+같은 줄에 여러 구문을 구분하기 위해 사용할 수 있습니다.
 
 > Grammar of a statement:
 >
@@ -46,18 +46,18 @@ Swift는 다양한 제어 흐름 명령문을 포함하고 있으며,
   of readability.
 -->
 
-## 루프 명령문 (Loop Statements)
+## 루프 구문 (Loop Statements)
 
-루프 명령문(Loop statement)은 루프에 명시한 조건에 따라
+루프 구문(Loop statement)은 루프에 명시한 조건에 따라
 특정 코드 블록을 반복적으로 실행되도록 합니다.
-Swift는 세 가지 루프 명령문을 가지고 있습니다:
-`for`-`in` 명령문,
-`while` 명령문,
-`repeat`-`while` 명령문입니다.
+Swift는 세 가지 루프 구문을 가지고 있습니다:
+`for`-`in` 구문,
+`while` 구문,
+`repeat`-`while` 구문입니다.
 
-루프 명령문에서 제어 흐름은 `break` 명령문과
-`continue` 명령문에 의해 변경될 수 있고 아래에 <doc:Statements#중단-명령문-Break-Statement>과
-<doc:Statements#계속-명령문-Continue-Statement>에 설명되어 있습니다.
+루프 구문에서 제어 흐름은 `break` 구문과
+`continue` 구문에 의해 변경될 수 있고 아래에 <doc:Statements#중단-구문-Break-Statement>과
+<doc:Statements#계속-구문-Continue-Statement>에 설명되어 있습니다.
 
 > Grammar of a loop statement:
 >
@@ -65,14 +65,14 @@ Swift는 세 가지 루프 명령문을 가지고 있습니다:
 > *loop-statement* → *while-statement* \
 > *loop-statement* → *repeat-while-statement*
 
-### For-In 명령문 (For-In Statement)
+### For-In 구문 (For-In Statement)
 
-`for`-`in` 명령문은
+`for`-`in` 구문은
 [`Sequence`](https://developer.apple.com/documentation/swift/sequence) 프로토콜을 준수하는
 컬렉션이나 타입의 각 항목에 대해
 한 번씩 코드 블록을 실행합니다.
 
-`for`-`in` 명령문은 다음의 형식을 가집니다:
+`for`-`in` 구문은 다음의 형식을 가집니다:
 
 ```swift
 for <#item#> in <#collection#> {
@@ -88,10 +88,10 @@ for <#item#> in <#collection#> {
 루프를 실행합니다.
 값이 `nil`을 반환하지 않으면
 위 형식의 *항목(item)* 패턴에 할당되고,
-프로그램은 위 형식의 *명령문(statements)*을 실행한 다음에
+프로그램은 위 형식의 *구문(statements)*을 실행한 다음에
 루프의 처음으로 돌아가 위 동작을 계속 실행합니다.
-그렇지 않으면 프로그램은 할당이나 위 형식의 *명령문(statements)* 실행을 수행하지 않고
-`for`-`in` 명령문 실행을 종료합니다.
+그렇지 않으면 프로그램은 할당이나 위 형식의 *구문(statements)* 실행을 수행하지 않고
+`for`-`in` 구문 실행을 종료합니다.
 
 > Grammar of a for-in statement:
 >
@@ -99,7 +99,8 @@ for <#item#> in <#collection#> {
 
 ### While 구문 (While Statement)
 
-`while` 구문은 조건이 참으로 남아있는 한 반복적으로 실행되기 위해 코드의 블럭을 허용합니다.
+`while` 구문은 조건이 참으로 남아있는 한
+반복적으로 코드 블럭을 실행합니다.
 
 `while` 구문은 다음의 형식을 가집니다:
 
@@ -111,12 +112,19 @@ while <#condition#> {
 
 `while` 구문은 다음과 같이 실행됩니다:
 
-1. _조건 (condition)_ 은 평가됩니다. `true` 이면 2번이 계속 실행됩니다. `false` 이면 프로그램은 `while` 구문 실행을 종료합니다.
-2. 프로그램은 _구문 (statements)_ 을 실행하고 실행은 1번으로 돌아갑니다.
+1. 위 형식의 *조건(condition)*은 평가됩니다.
+   
+   `true`이면 2번이 계속 실행됩니다.
+   `false`이면 프로그램은 `while` 구문 실행을 종료합니다.
+2. 프로그램은 위 형식의 *구문(statements)*을 실행하고 다시 1번으로 돌아갑니다.
 
-_조건 (condition)_ 의 값이 _구문 (statements)_ 이 실행되기 전에 평가되므로 `while` 구문의 _구문 (statements)_ 은 0번 또는 더 많이 실행될 수 있습니다.
+위 형식의 *조건(condition)*의 값이 위 형식의 *구문(statements)*이 실행되기 전에 평가되므로,
+`while` 구문의 위 형식의 *구문(statements)*은 한 번도 실행되지 않거나 여러 번 실행될 수 있습니다.
 
-_조건 (condition)_ 의 값은 타입 `Bool` 이거나 `Bool` 에 브릿지된 타입이어야 합니다. 조건은 <doc:TheBasics#옵셔널-바인딩-Optional-Binding> 에서 설명한대로 옵셔널 바인딩 선언일 수도 있습니다.
+위 형식의 *조건(condition)*의 값은
+`Bool` 타입이거나 `Bool`에 브리지된 타입이어야 합니다.
+조건은 <doc:TheBasics#옵셔널-바인딩-Optional-Binding>에서 설명한대로
+옵셔널 바인딩 선언일 수도 있습니다.
 
 > Grammar of a while statement:
 >
@@ -130,7 +138,8 @@ _조건 (condition)_ 의 값은 타입 `Bool` 이거나 `Bool` 에 브릿지된 
 
 ### Repeat-While 구문 (Repeat-While Statement)
 
-`repeat`-`while` 구문은 조건이 참인 경우에 한하여 한 번 이상 실행되기 위한 코드의 블럭을 허용합니다.
+`repeat`-`while` 구문은 조건이 참인 경우에 한하여
+코드 블럭을 한 번 이상 실행합니다.
 
 `repeat`-`while` 구문은 다음의 형식을 가집니다:
 
@@ -142,12 +151,18 @@ repeat {
 
 `repeat`-`while` 구문은 다음과 같이 실행됩니다:
 
-1. 프로그램은 _구문 (statements)_ 을 실행하고 2번이 계속 실행됩니다.
-2. _조건 (condition)_ 이 평가됩니다. `true` 이면 실행은 1번으로 돌아갑니다. `false` 이면 프로그램은 `repeat`-`while` 구문 실행이 종료됩니다.
+1. 프로그램은 위 형식의 *구문(statements)*을 실행하고,
+   2번이 계속 실행됩니다.
+2. 위 형식의 *조건(condition)*이 평가됩니다.
+   
+   `true`이면 다시 1번으로 돌아갑니다.
+   `false`이면 프로그램은 `repeat`-`while` 구문 실행을 종료합니다.
 
-_조건 (condition)_ 의 값이 평가되기 때문에 후에 _구문 (statements)_ 이 실행되고 `repeat`-`while` 구문에서 _구문 (statements)_ 은 적어도 한 번은 실행됩니다.
+위 형식의 *구문(statements)*이 실행된 후에 위 형식의 *조건(condition)*의 값이 평가되기 때문에,
+`repeat`-`while` 구문에서 위 형식의 *구문(statements)*은 무조건 한 번은 실행됩니다.
 
-_조건 (condition)_ 의 값은 타입 `Bool` 이거나 `Bool` 로 브릿지된 타입이어야 합니다.
+위 형식의 *조건(condition)*의 값은
+`Bool` 타입이거나 `Bool`로 브리지된 타입이어야 합니다.
 
 > Grammar of a repeat-while statement:
 >
@@ -155,9 +170,15 @@ _조건 (condition)_ 의 값은 타입 `Bool` 이거나 `Bool` 로 브릿지된 
 
 ## 분기 구문 (Branch Statements)
 
-분기 구문 (Branch statements) 은 프로그램이 하나 이상의 조건의 값에 따라 코드의 특정 부분을 실행하는 것을 허용합니다. 분기 구문에서 지정된 조건의 값은 프로그램 분기 방법 및 코드의 어떤 블럭이 실행되는지 제어합니다. Swift 는 `if` 구문, `guard` 구문, 그리고 `switch` 구문의 세가지 분기 구문을 가지고 있습니다.
+분기 구문(Branch statement)은 프로그램이 하나 이상의 조건의 값에 따라
+코드의 특정 부분을 실행하는 것을 허용합니다.
+분기 구문에서 지정된 조건의 값은
+프로그램 분기 방법 및 코드의 어떤 블럭이 실행되는지 제어합니다.
+Swift는 세 가지 분기 구문을 가지고 있습니다:
+`if` 구문, `guard` 구문, `switch` 구문입니다.
 
-`if` 구문 또는 `switch` 구문에서 제어 흐름은 `break` 구문에 의해 변경될 수 있고 아래 <doc:Statements#중단-구문-Break-Statement> 에 설명되어 있습니다.
+`if` 구문이나 `switch` 구문의 제어 흐름은 `break` 구문에 의해 변경될 수 있고
+아래 <doc:Statements#중단-구문-Break-Statement>에 설명되어 있습니다.
 
 > Grammar of a branch statement:
 >
@@ -167,11 +188,14 @@ _조건 (condition)_ 의 값은 타입 `Bool` 이거나 `Bool` 로 브릿지된 
 
 ### If 구문 (If Statement)
 
-`if` 구문은 하나 이상의 조건의 평가를 기반으로 코드 실행에 사용됩니다.
+`if` 구문은 하나 이상의 조건 평가를 기반으로
+코드 실행에 사용됩니다.
 
-`if` 구문에는 두가지 기본 형식이 있습니다. 각 형식에서 여는 중괄호와 닫는 중괄호가 필요합니다.
+`if` 구문에는 두 가지 기본 형식이 있습니다.
+각 형식은 여는 중괄호와 닫는 중괄호가 필요합니다.
 
-첫번째 형식은 조건이 참이고 다음의 형식을 가지고 있을 때만 코드가 실행되도록 합니다:
+첫 번째 형식은 조건이 참일 때만 코드를 실행하고
+다음의 형식을 가지고 있습니다:
 
 ```swift
 if <#condition#> {
@@ -179,7 +203,11 @@ if <#condition#> {
 }
 ```
 
-`if` 구문의 두번째 형식은 추가로 `else` 키워드로 도입된 _else 절 (else clause)_ 을 제공하고 조건이 참일 때 코드의 한 부분을 실행하고 동일한 조건이 거짓일 때 코드의 다른 부분을 실행하는데 사용됩니다. 하나의 else 절이 있는 경우에 `if` 구문은 다음의 형식을 가집니다:
+`if` 구문의 두 번째 형식은 추가로 *else 절(else clause)*을 제공하고
+(`else` 키워드 사용)
+조건이 참일 때 코드의 한 부분을 실행하고
+동일한 조건이 거짓일 때 코드의 다른 부분을 실행하는데 사용됩니다.
+하나의 else 절이 있는 경우에 `if` 구문은 다음의 형식을 가집니다:
 
 ```swift
 if <#condition#> {
@@ -189,7 +217,9 @@ if <#condition#> {
 }
 ```
 
-`if` 구문의 else 절은 둘 이상의 조건을 검사하기 위해 다른 `if` 구문을 포함할 수 있습니다. 이러한 방법으로 연결된 `if` 구문은 다음의 형식을 가집니다:
+`if` 구문의 else 절은 둘 이상의 조건을 검사할 수 있는
+다른 `if` 구문을 포함할 수 있습니다.
+이러한 방법으로 연결된 `if` 구문은 다음의 형식을 가집니다:
 
 ```swift
 if <#condition 1#> {
@@ -201,7 +231,10 @@ if <#condition 1#> {
 }
 ```
 
-`if` 구문에서 모든 조건의 값은 타입 `Bool` 이거나 `Bool` 로 브릿지된 타입이어야 합니다. 조건은 <doc:TheBasics#옵셔널-바인딩-Optional-Binding> 에서 설명한대로 옵셔널 바인딩 선언일 수도 있습니다.
+`if` 구문의 모든 조건 값은
+`Bool` 타입이거나 `Bool`로 브리지된 타입이어야 합니다.
+조건은 <doc:TheBasics#옵셔널-바인딩-Optional-Binding>에서 설명한대로
+옵셔널 바인딩 선언일 수도 있습니다.
 
 > Grammar of an if statement:
 >
@@ -210,7 +243,8 @@ if <#condition 1#> {
 
 ### Guard 구문 (Guard Statement)
 
-`guard` 구문은 하나 이상의 조건이 충족되지 않을 때 범위 밖으로 프로그램 제어를 전송하기 위해 사용됩니다.
+`guard` 구문은 하나 이상의 조건이 충족되지 않을 때
+범위 밖으로 프로그램 제어를 전달하기 위해 사용됩니다.
 
 `guard` 구문은 다음의 형식을 가집니다:
 
@@ -220,18 +254,28 @@ guard <#condition#> else {
 }
 ```
 
-`guard` 구문의 모든 조건의 값은 타입 `Bool` 이거나 `Bool` 로 브릿지된 타입이어야 합니다. 조건은 <doc:TheBasics#옵셔널-바인딩-Optional-Binding> 에서 설명한대로 옵셔널 바인딩 선언일 수도 있습니다.
+`guard` 구문의 모든 조건의 값은
+`Bool` 타입이거나 `Bool`로 브리지된 타입이어야 합니다.
+조건은 <doc:TheBasics#옵셔널-바인딩-Optional-Binding>에서 설명한대로
+옵셔널 바인딩 선언일 수도 있습니다.
 
-`guard` 구문 조건에서 옵셔널 바인딩 선언으로 할당된 모든 상수 또는 변수 값은 guard 구문을 둘러싼 범위 내에서 사용될 수 있습니다.
+`guard` 구문 조건에서 옵셔널 바인딩 선언으로
+할당된 모든 상수나 변수 값은
+guard 구문을 둘러싼 범위 내에서 사용할 수 있습니다.
 
-`guard` 구문의 `else` 절은 필수이고 `Never` 반환 타입 또는 다음 구문 중 하나를 사용하여 guard 구문을 둘러싼 범위 밖으로 프로그램 제어를 전송해야 합니다:
+`guard` 구문의 `else` 절은 필수이고
+`Never` 반환 타입을 가진 함수를 호출하거나
+다음 구문 중 하나를 사용하여
+guard 구문을 둘러싼 범위 밖으로 프로그램 제어를 전달해야 합니다:
 
-* `return`
-* `break`
-* `continue`
-* `throw`
+- `return`
+- `break`
+- `continue`
+- `throw`
 
-제어 전송 구문은 아래 <doc:Statements#제어-전송-구문-Control-Transfer-Statements> 에서 설명되어 있습니다. Never 반환 타입이 있는 함수에 자세한 내용은 <doc:Declarations#반환되지-않는-함수-Functions-that-Never-Return> 를 참고바랍니다.
+제어 전송 구문은 아래 <doc:Statements#제어-전송-구문-Control-Transfer-Statements>에 설명되어 있습니다.
+`Never` 반환 타입이 가진 함수에 자세한 내용은
+<doc:Declarations#반환되지-않는-함수-Functions-that-Never-Return>를 참고바랍니다.
 
 > Grammar of a guard statement:
 >
@@ -239,7 +283,8 @@ guard <#condition#> else {
 
 ### Switch 구문 (Switch Statement)
 
-`switch` 구문은 제어 표현식의 값에 따라 특정 코드의 블럭이 실행됩니다.
+`switch` 구문은 제어 표현식의 값에 따라
+특정 코드 블럭을 실행합니다.
 
 `switch` 구문은 다음의 형식을 가집니다:
 
@@ -257,11 +302,30 @@ default:
 }
 ```
 
-`switch` 구문의 _제어 표현식 (control expression)_ 은 평가된 다음에 각 케이스에 지정한 패턴과 비교됩니다. 일치하는 항목이 있으면 프로그램은 해당 케이스의 범위내에 _구문 (statements)_ 을 실행합니다. 각 케이스의 범위는 비어 있을 수 없습니다. 결과적으로 각 케이스 레이블의 콜론 (`:`) 다음에 적어도 하나의 구문이 포함되어야 합니다. 일치하는 케이스의 본문에서 코드를 실행하지 않으려면 단일 `break` 구문을 사용해야 합니다.
+`switch` 구문에서 위 형식의 *제어 표현식(control expression)*은 평가된 다음에
+각 케이스에 지정된 위 형식의 패턴과 비교합니다.
+일치하는 항목이 있으면,
+프로그램은 해당 케이스의 범위 내의 위 형식의 *구문(statements)*을 실행합니다.
+각 케이스의 범위는 비어 있을 수 없습니다.
+결과적으로 각 케이스 레이블의 콜론(`:`) 다음에
+적어도 하나의 구문이 포함되어야 합니다.
+일치하는 케이스의 본문에서 코드를 실행하지 않으려면 `break` 구문을 사용해야 합니다.
 
-코드가 분기할 수 있는 표현식의 값은 매우 유연합니다. 예를 들어 정수와 문자와 같은 스칼라 타입의 값을 제외하고 코드는 부동소수점 숫자, 문자열, 튜플, 커스텀 클래스의 인스턴스, 그리고 옵셔널을 포함하는 모든 타입의 값으로 분기할 수 있습니다. _제어 표현식 (control expression)_ 의 값은 열거형의 케이스의 값과 일치하고 지정된 값 범위에 포함되는지 확인할 수도 있습니다. `switch` 구문에서 값의 이러한 여러 가지 타입을 어떻게 사용하는지에 대한 예시는 <doc:ControlFlow> 에 <doc:ControlFlow#Switch> 를 참고바랍니다.
+코드가 분기할 수 있는 표현식의 값은 매우 유연합니다.
+예를 들어 정수와 문자와 같은 스칼라 타입의 값을 제외하고
+코드는 부동소수점 숫자, 문자열, 튜플, 커스텀 클래스의 인스턴스, 옵셔널을
+포함한 모든 타입의 값으로 분기할 수 있습니다.
+*제어 표현식(control expression)*의 값은 열거형의 케이스의 값과 일치하는지 확인할 수도 있고,
+지정된 값 범위에 포함되는지 확인할 수도 있습니다.
+`switch` 구문에서 값의 이러한 여러 가지 타입을 어떻게 사용하는지에 대한 예시는
+<doc:ControlFlow>의 <doc:ControlFlow#Switch>를 참고바랍니다.
 
-`switch` 케이스는 각 패턴 후에 선택적으로 `where` 절을 포함할 수 있습니다. _where 절 (where clause)_ 은 `where` 키워드 다음에 표현식을 붙여 도입되고 케이스에 패턴이 _제어 표현식 (control expression)_ 에 일치되는지 간주되기 전에 추가 조건을 제공하는데 사용됩니다. `where` 절이 있는 경우 연관된 케이스 내에 _구문 (statements)_ 은 _제어 표현식 (control expression)_ 의 값이 케이스의 패턴 중 하나와 일치하고 `where` 절의 표현식이 `true` 로 평가될 때만 실행됩니다. 예를 들어 _제어 표현식 (control expression)_ 은 `(1, 1)` 과 같이 동일한 값의 두 요소가 포함된 튜플인 경우에만 아래 예시의 케이스는 일치됩니다.
+`switch` 케이스는 각 패턴 후에 선택적으로 `where` 절을 포함할 수 있습니다.
+*where 절(where clause)*은 `where` 키워드 다음에 표현식을 붙여 작성하고
+케이스의 패턴이 *제어 표현식(control expression)*에 일치하는지 확인하기 전에
+추가 조건을 제공하는데 사용합니다.
+`where` 절이 있는 경우 연관된 케이스 내의 *구문(statements)*은
+*제어 표현식(control expression)*의 값이 케이스의 패턴 중 하나와 일치하고 `where` 절의 표현식이 `true` 로 평가될 때만 실행됩니다. 예를 들어 _제어 표현식 (control expression)_ 은 `(1, 1)` 과 같이 동일한 값의 두 요소가 포함된 튜플인 경우에만 아래 예시의 케이스는 일치됩니다.
 
 ```swift
 case let (x, y) where x == y:
