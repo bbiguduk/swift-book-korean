@@ -566,7 +566,7 @@ Objective-C 의 선언은 항상
 
 래퍼는 `wrappedValue` 인스턴스 프로퍼티를 정의해야 합니다. 프로퍼티의 _래핑된 값 (wrapped value)_ 은 이 프로퍼티에 대해 getter 와 setter 를 노출하는 값입니다. 대부분의 경우 `wrappedValue` 는 계산된 값이지만 대신 저장된 값이 될 수 있습니다. 래퍼는 래핑된 값에 필요한 기본 저장소를 정의하고 관리합니다. 컴파일러는 래핑된 프로퍼티의 이름 앞에 언더바 (`_`) 로 래퍼 타입의 인스턴스에 대해 저장소를 합성합니다. 예를 들어 `someProperty` 에 대한 래퍼는 `_someProperty` 로 저장됩니다. 래퍼에 대한 합성된 저장소는 `private` 의 접근 제어 수준을 가집니다.
 
-프로퍼티 래퍼를 가지는 프로퍼티는 `willSet` 과 `didSet` 블럭을 포함할 수 있지만 컴파일러가 합성한 `get` 또는 `set` 블럭을 재정의할 수 없습니다.
+프로퍼티 래퍼를 가지는 프로퍼티는 `willSet` 과 `didSet` 블록을 포함할 수 있지만 컴파일러가 합성한 `get` 또는 `set` 블록을 재정의할 수 없습니다.
 
 Swift 는 프로퍼티 래퍼의 초기화에 대해 두가지의 구문 설탕 (syntactic sugar) 을 제공합니다. 래핑된 값의 정의에 할당 구문을 사용하여 할당의 오른쪽에 있는 표현식을 프로퍼티 래퍼에 이니셜라이저의 `wrappedValue` 파라미터에 대한 인자로 전달할 수 있습니다. 프로퍼티에 속성을 적용할 때 속성에 인자를 제공할 수도 있으며 이 인자는 프로퍼티 래퍼의 이니셜라이저으로 전달됩니다. 예를 들어 아래 코드에서 `SomeStruct` 는 `SomeWrapper` 가 정의한 각 이니셜라이저를 호출합니다.
 
@@ -641,12 +641,12 @@ s.$x.wrapper  // WrapperWithProjection value
   부분 결과의 배열을 단일 부분 결과로 결합합니다.
 
 - `static func buildPartialBlock(first: Component) -> Component`:
-  첫번째 컴포넌트로 부터 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블럭을 지원하기위해 이 메서드와 `buildPartialBlock(accumulated:next:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
+  첫번째 컴포넌트로 부터 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블록을 지원하기위해 이 메서드와 `buildPartialBlock(accumulated:next:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
 
 - `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
-  누적된 컴포넌트와 새로운 컴포넌트를 결합하여 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블럭을 지원하기위해 이 메서드와 `buildPartialBlock(first:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
+  누적된 컴포넌트와 새로운 컴포넌트를 결합하여 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블록을 지원하기위해 이 메서드와 `buildPartialBlock(first:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
 
-결과 빌더는 위에 나열된 블럭-빌딩 메서드 세가지 모두 구현할 수 있습니다. 이 경우에 가용성에 따라 호출되는 메서드가 결정됩니다. 기본적으로, Swift 는 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 호출합니다. Swift 가 `buildBlock(_:)` 을 호출하도록 하려면 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 에 작성하기 전에 동봉 선언 (enclosing declaration) 을 사용가능으로 표시합니다.
+결과 빌더는 위에 나열된 블록-빌딩 메서드 세가지 모두 구현할 수 있습니다. 이 경우에 가용성에 따라 호출되는 메서드가 결정됩니다. 기본적으로, Swift 는 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 호출합니다. Swift 가 `buildBlock(_:)` 을 호출하도록 하려면 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 에 작성하기 전에 동봉 선언 (enclosing declaration) 을 사용가능으로 표시합니다.
 
 추가적인 결과-빌딩 메서드는 다음과 같습니다:  
 
@@ -838,7 +838,7 @@ if someNumber < 12 {
 }
 ```
 
-* `else` 절 없는 `if` 구문과 같이 값을 생성하지 않을 분기 구문은 `buildOptional(_:)` 에 대한 호출이 됩니다. `if` 구문의 조건이 충족되면 코드 블럭은 변환되고 인자로 전달됩니다; 그렇지 않으면 `buildOptional(_:)` 은 인자로 `nil` 가지고 호출됩니다. 예를 들어 다음의 선언은 동일합니다:
+* `else` 절 없는 `if` 구문과 같이 값을 생성하지 않을 분기 구문은 `buildOptional(_:)` 에 대한 호출이 됩니다. `if` 구문의 조건이 충족되면 코드 블록은 변환되고 인자로 전달됩니다; 그렇지 않으면 `buildOptional(_:)` 은 인자로 `nil` 가지고 호출됩니다. 예를 들어 다음의 선언은 동일합니다:
 
 ```swift
 @ArrayBuilder var builderOptional: [Int] {
@@ -853,8 +853,8 @@ var manualOptional = ArrayBuilder.buildOptional(partialResult)
 ```
 
 - 결과 빌더가 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 구현하는 경우,
-  코드 블럭 또는 `do` 구문은 해당 메서드를 호출합니다.
-  블럭의 첫번째 구문은 `buildPartialBlock(first:)` 메서드 인자로 변환되고,
+  코드 블록 또는 `do` 구문은 해당 메서드를 호출합니다.
+  블록의 첫번째 구문은 `buildPartialBlock(first:)` 메서드 인자로 변환되고,
   나머지 구문은 `buildPartialBlock(accumulated:next:)` 메서드를 중첩 호출하게 됩니다.
   예를 들어, 다음 선언은 동일한 구문입니다:
 
@@ -897,7 +897,7 @@ let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
 )
 ```
 
-* 그렇지 않으면, 코드 블럭 또는 `do` 구문은 `buildBlock(_:)` 메서드에 대한 호출이 됩니다. 블럭 내부의 각 구문은 한번에 하나씩 변환되고 `buildBlock(_:)` 메서드에 대한 인자가 됩니다. 예를 들어 다음의 선언은 동일합니다:
+* 그렇지 않으면, 코드 블록 또는 `do` 구문은 `buildBlock(_:)` 메서드에 대한 호출이 됩니다. 블록 내부의 각 구문은 한번에 하나씩 변환되고 `buildBlock(_:)` 메서드에 대한 인자가 됩니다. 예를 들어 다음의 선언은 동일합니다:
 
 ```swift
 @ArrayBuilder var builderBlock: [Int] {
@@ -936,7 +936,7 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 
 결과 빌더 변환 코드에서 `break`, `continue`, `defer`, `guard`, 또는 `return` 구문, `while` 구문, 또는 `do`-`catch` 구문을 사용할 수 없습니다.
 
-변환 프로세스는 코드에서 선언을 변경하지 않으므로 임시 상수와 변수를 사용하여 부분적으로 표현식을 작성할 수 있습니다. `throw` 구문, 컴파일-시간 진단 구문, 또는 `return` 구문이 포함된 클로저도 변경하지 않습니다.
+변환 프로세스는 코드에서 선언을 변경하지 않으므로 임시 상수와 변수를 사용하여 부분적으로 표현식을 작성할 수 있습니다. `throw` 구문, 컴파일 시점 진단 구문, 또는 `return` 구문이 포함된 클로저도 변경하지 않습니다.
 
 가능할 때마다 변환이 통합됩니다. 예를 들어 표현식 `4 + 5 * 6` 은 해당 함수를 여러번 호출하는 대신 `buildExpression(4 + 5 * 6)` 으로 됩니다. 마찬가지로 중첩된 분기 구문은 `buildEither` 메서드에 대한 호출의 단일 이진 트리가 됩니다.
 
@@ -1015,10 +1015,10 @@ let manualArray = ArrayBuilder.buildArray(temporary)
 `convention` 속성은 항상 다음의 인자 중 하나에 나타납니다:
 
 * `swift` 인자는 Swift 함수 참조를 나타냅니다. 이것은 Swift 에서 함수 값에 대한 표준 호출 규칙입니다.
-* `block` 인자는 Objective-C 호환 블럭 참조를 나타냅니다. 함수 값은 객체 내에 호출 함수 (invocation function) 를 포함하는 `id`-호환성 Objective-C 객체 인 블럭 객체에 대한 참조로 표시됩니다. 호출 함수는 C 호출 규칙을 사용합니다.
+* `block` 인자는 Objective-C 호환 블록 참조를 나타냅니다. 함수 값은 객체 내에 호출 함수 (invocation function) 를 포함하는 `id`-호환성 Objective-C 객체 인 블록 객체에 대한 참조로 표시됩니다. 호출 함수는 C 호출 규칙을 사용합니다.
 * `c` 인자는 C 함수 참조를 나타냅니다. 함수 값은 컨텍스트를 전달하지 않으며 C 호출 규칙을 사용합니다.
 
-몇가지 예외를 제외하고 모든 호출 규칙의 함수는 다른 호출 규칙이 필요할 때 사용될 수 있습니다. 제네릭이 아닌 전역 함수, 지역 변수를 캡처하지 않는 지역 함수 또는 지역 변수를 캡처하지 않는 클로저는 C 호출 규칙으로 변환될 수 있습니다. 다른 Swift 함수는 C 호출 규칙으로 변환될 수 없습니다. Objective-C 블럭 호출 규칙을 가지는 함수는 C 호출 규칙으로 변환될 수 없습니다.
+몇가지 예외를 제외하고 모든 호출 규칙의 함수는 다른 호출 규칙이 필요할 때 사용될 수 있습니다. 제네릭이 아닌 전역 함수, 지역 변수를 캡처하지 않는 지역 함수 또는 지역 변수를 캡처하지 않는 클로저는 C 호출 규칙으로 변환될 수 있습니다. 다른 Swift 함수는 C 호출 규칙으로 변환될 수 없습니다. Objective-C 블록 호출 규칙을 가지는 함수는 C 호출 규칙으로 변환될 수 없습니다.
 
 ### escaping
 

@@ -1424,7 +1424,7 @@ let capsDrawing = caps {
   ```
 -->
 
-Swift는 `if`-`else` 블럭을
+Swift는 `if`-`else` 블록을
 `buildEither(first:)`와 `buildEither(second:)` 메서드에 대한 호출로 변환합니다.
 코드에서 이러한 메서드를 호출하지 않지만
 변환 결과를 표시하면

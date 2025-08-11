@@ -38,9 +38,9 @@ Swift 소스 파일에서 최상위-수준 코드는 비어있거나 구문, 선
 >
 > _top-level-declaration_ → _statements?_
 
-## 코드 블럭 (Code Blocks)
+## 코드 블록 (Code Blocks)
 
-_코드 블럭 (code block)_ 은 선언 및 제어 구조에서 구문을 그룹화 하기위해 사용됩니다. 다음의 형식을 가집니다:
+_코드 블록 (code block)_ 은 선언 및 제어 구조에서 구문을 그룹화 하기위해 사용됩니다. 다음의 형식을 가집니다:
 
 ```swift
 {
@@ -48,7 +48,7 @@ _코드 블럭 (code block)_ 은 선언 및 제어 구조에서 구문을 그룹
 }
 ```
 
-코드 블럭 내에 _구문 (statements)_ 은 선언, 표현식, 그리고 구문의 다른 종류가 포함되고 소스 코드에 나타나는 순서대로 실행됩니다.
+코드 블록 내에 _구문 (statements)_ 은 선언, 표현식, 그리고 구문의 다른 종류가 포함되고 소스 코드에 나타나는 순서대로 실행됩니다.
 
 > Grammar of a code block:
 >
@@ -791,7 +791,7 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
 
 ### 반환되지 않는 함수 (Functions that Never Return)
 
-Swift 는 함수 또는 메서드가 호출자에게 반환하지 않음을 나타내는 [`Never`][] 타입을 정의합니다. `Never` 반환 타입이 있는 함수와 메서드는 _비반환 (nonreturning)_ 이라고 합니다. 비반환 함수와 메서드는 복구할 수 없는 오류를 발생하거나 무한으로 계속되는 작업을 시작합니다. 이것은 호출 직후 코드가 실행되지 않음을 뜻합니다. 던지고 다시 던지는 함수는 비반환인 경우에도 적절한 `catch` 블럭으로 프로그램 제어를 전송할 수 있습니다.
+Swift 는 함수 또는 메서드가 호출자에게 반환하지 않음을 나타내는 [`Never`][] 타입을 정의합니다. `Never` 반환 타입이 있는 함수와 메서드는 _비반환 (nonreturning)_ 이라고 합니다. 비반환 함수와 메서드는 복구할 수 없는 오류를 발생하거나 무한으로 계속되는 작업을 시작합니다. 이것은 호출 직후 코드가 실행되지 않음을 뜻합니다. 던지고 다시 던지는 함수는 비반환인 경우에도 적절한 `catch` 블록으로 프로그램 제어를 전송할 수 있습니다.
 
 [`Never`]: https://developer.apple.com/documentation/swift/never
 
@@ -850,7 +850,7 @@ enum <#enumeration name#>: <#adopted protocols#> {
 
 이 형식으로 선언된 열거형은 다른 프로그래밍 언어에서 _구별된 공용체 (discriminated unions)_ 라고도 합니다.
 
-이 형식에서 각 케이스 블럭은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 각 케이스의 이름은 고유해야 합니다. 각 케이스는 주어진 타입의 값을 저장하도록 지정할 수도 있습니다. 이러한 타입은 케이스의 이름 바로 다음에 _연관값 타입 (associated value types)_ 튜플로 지정됩니다.
+이 형식에서 각 케이스 블록은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 각 케이스의 이름은 고유해야 합니다. 각 케이스는 주어진 타입의 값을 저장하도록 지정할 수도 있습니다. 이러한 타입은 케이스의 이름 바로 다음에 _연관값 타입 (associated value types)_ 튜플로 지정됩니다.
 
 연관값을 저장하는 열거형 케이스는 지정된 연관값을 사용하여 열거형의 인스턴스를 생성하는 함수로 사용될 수 있습니다. 함수와 마찬가지로 코드에 열거형 케이스에 대한 참조를 가져오고 적용할 수 있습니다.
 
@@ -896,7 +896,7 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-이 형식에서 각 케이스 블럭은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 첫번째 형식의 케이스와 달리 각 케이스는 동일한 기본 타입의 _원시값 (raw value)_ 인 기본값을 가집니다. 이러한 값의 타입은 _원시값 타입 (raw-value type)_ 으로 지정되고 정수, 부동소수점 숫자, 문자열 또는 단일 문자로 표현되어야 합니다. 특히 _원시값 타입 (raw-value type)_ 은 `Equatable` 프로토콜과 다음 프로토콜 중 하나를 준수해야 합니다:\
+이 형식에서 각 케이스 블록은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 첫번째 형식의 케이스와 달리 각 케이스는 동일한 기본 타입의 _원시값 (raw value)_ 인 기본값을 가집니다. 이러한 값의 타입은 _원시값 타입 (raw-value type)_ 으로 지정되고 정수, 부동소수점 숫자, 문자열 또는 단일 문자로 표현되어야 합니다. 특히 _원시값 타입 (raw-value type)_ 은 `Equatable` 프로토콜과 다음 프로토콜 중 하나를 준수해야 합니다:\
 정수 리터럴에 대한 `ExpressibleByIntegerLiteral`,\
 부동소수점 리터럴에 대한 `ExpressibleByFloatLiteral`,\
 문자의 모든 숫자를 포함하는 문자열 리터럴에 대한 `ExpressibleByStringLiteral`, 그리고 단일 문자만 포함하는 문자열 리터럴에 대한 `ExpressibleByUnicodeScalarLiteral` 또는 `ExpressibleByExtendedGraphemeClusterLiteral`. 각 케이스는 고유한 이름을 가지고 고유한 원시값이 할당 되어야 합니다.
@@ -927,7 +927,7 @@ enum GamePlayMode: String {
 
 열거형 타입의 케이스를 참조하기 위해 `EnuerationType.enumerationCase` 와 같이 점 (`.`) 구문을 사용합니다. 열거형 타입이 컨텍스트에서 유추될 수 있으면 <doc:Enumerations#열거형-구문-Enumeration-Syntax> 과 <doc:Expressions#암시적-멤버-표현식-Implicit-Member-Expression> 에서 설명한대로 점은 그대로 유지한 채 생략할 수 있습니다.
 
-열거형 케이스의 값을 검사하려면 <doc:Enumerations#스위치-구문에서-열거형-값-일치-Matching-Enumeration-Values-with-a-Switch-Statement> 에서 봤듯이 `switch` 구문을 사용합니다. 열거형 타입은 <doc:Patterns#열거형-케이스-패턴-Enumeration-Case-Pattern> 에서 설명한대로 `switch` 구문의 케이스 블럭에서 열거형 케이스 패턴에 대해 일치합니다.
+열거형 케이스의 값을 검사하려면 <doc:Enumerations#스위치-구문에서-열거형-값-일치-Matching-Enumeration-Values-with-a-Switch-Statement> 에서 봤듯이 `switch` 구문을 사용합니다. 열거형 타입은 <doc:Patterns#열거형-케이스-패턴-Enumeration-Case-Pattern> 에서 설명한대로 `switch` 구문의 케이스 블록에서 열거형 케이스 패턴에 대해 일치합니다.
 
 > Grammar of an enumeration declaration:
 >

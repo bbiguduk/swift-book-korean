@@ -60,7 +60,7 @@
 - <doc:GuidedTour> 에 동시성 예시 추가
 - <doc:Attributes#결과-변환-Result-Transformations> 섹션에
   `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드에 대한 내용 추가
-- <doc:Attributes#available> 과 <doc:Statements#조건부-컴파일-블럭-Conditional-Compilation-Block> 에서
+- <doc:Attributes#available> 과 <doc:Statements#조건부-컴파일-블록-Conditional-Compilation-Block> 에서
   플랫폼 목록에 visionOS 추가
 
 ### 2023-06-19(월)
