@@ -275,23 +275,38 @@ print("The second number is \(secondNumber).")
 
 ### 저장 변수와 저장 변수 프로퍼티 (Stored Variables and Stored Variable Properties)
 
-다음의 형식으로 저장된 변수 (stored variable) 또는 저장된 변수 프로퍼티 (stored variable property) 를 선언할 수 있습니다:
+다음의 형식으로 저장 변수(stored variable)나 저장 변수 프로퍼티(stored variable property)를 선언할 수 있습니다:
 
 ```swift
 var <#variable name#>: <#type#> = <#expression#>
 ```
 
-이러한 형식의 변수 선언은 전역 범위, 함수의 지역 범위, 또는 클래스나 구조체 선언의 컨텍스트에서 정의합니다. 이러한 형식의 변수 선언이 전역 범위나 함수의 지역 범위로 선언되면 _저장된 변수 (stored variable)_ 로 참조됩니다. 클래스나 구조체 선언의 컨텍스트에서 선언되면 _저장된 변수 프로퍼티 (stored variable property)_ 로 참조됩니다.
+이러한 형식의 변수 선언은 전역 범위,
+함수의 지역 범위나 클래스나 구조체 선언의 컨텍스트에서 정의합니다.
+이러한 형식의 변수 선언이 전역 범위나
+함수의 지역 범위로 선언되면 *저장 변수(stored variable)*로 참조됩니다.
+클래스나 구조체 선언의 컨텍스트에서 선언되면
+*저장 변수 프로퍼티(stored variable property)*로 참조됩니다.
 
-이니셜라이저 _표현식 (expression)_ 은 프로토콜 선언에 있을 수 없지만 다른 모든 컨텍스트에서 이니셜라이저 _표현식 (expression)_ 은 선택사항입니다. 즉, 이니셜라이저 _표현식 (expression)_ 이 없으면 변수 선언은 명시적 타입 주석 (`:` 타입) 을 포함해야 합니다.
+이니셜라이저 *표현식(expression)*은 프로토콜 선언에 있을 수 없지만
+다른 모든 컨텍스트에서는 이니셜라이저 *표현식(expression)*이 선택 사항입니다.
+즉, 이니셜라이저 *표현식(expression)*이 없으면,
+변수 선언은 명시적 타입 주석(`:` *타입(type)*)을 포함해야 합니다.
 
-상수 선언과 마찬가지로 _변수 이름 (variable name)_ 이 튜플 패턴인 경우 튜플에서 각 항목에 이름은 이니셜라이저 _표현식 (expression)_ 에서 해당 값에 바인딩 됩니다.
+상수 선언과 마찬가지로
+변수 선언이 이니셜라이저 *표현식(expression)*을 생략하는 경우,
+변수는 처음 읽기 전에 값을 설정해야 합니다.
+또한 상수 선언과 마찬가지로
+*변수 이름(variable name)*이 튜플 패턴인 경우,
+튜플에서 각 항목에 이름은 이니셜라이저 *표현식(expression)*의
+해당 값에 바인딩 됩니다.
 
-이름에서 알 수 있듯이, 저장된 변수 또는 저장된 변수 프로퍼티의 값은 메모리에 저장됩니다.
+이름에서 알 수 있듯이, 저장 변수나 저장 변수 프로퍼티의 값은
+메모리에 저장됩니다.
 
-### 계산된 변수와 연산 프로퍼티 (Computed Variables and Computed Properties)
+### 연산 변수와 연산 프로퍼티 (Computed Variables and Computed Properties)
 
-다음의 형식은 계산된 변수 (computed variable) 또는 연산 프로퍼티 (computed property) 를 선언합니다:
+다음의 형식은 연산 변수(computed variable)나 연산 프로퍼티(computed property)를 선언합니다:
 
 ```swift
 var <#variable name#>: <#type#> {
