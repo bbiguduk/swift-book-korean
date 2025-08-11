@@ -1,46 +1,78 @@
 # 선언 (Declarations)
 
-타입, 연산자, 변수, 등을 도입하고 작성합니다.
+타입, 연산자, 변수 및 기타 이름과 구성을 소개합니다.
 
-_선언 (declaration)_ 은 프로그램에 새로운 이름 또는 구성을 도입합니다. 예를 들어 함수와 메서드를 도입하기 위해, 변수와 상수를 도입하기 위해, 그리고 열거형, 구조체, 클래스, 그리고 프로토콜 타입을 정의하기 위해 선언을 사용합니다. 기존에 명명된 타입의 동작을 확장하기 위해 그리고 다른 곳에서 선언된 기호를 프로그램으로 가져오기 위해 선언을 사용할 수도 있습니다.
+*선언(declaration)*은 프로그램에 새로운 이름이나 구성을 도입합니다.
+예를 들어 함수와 메서드를 도입하기 위해,
+변수와 상수를 도입하기 위해,
+열거형, 구조체, 클래스, 프로토콜 타입을 정의하기 위해 선언을 사용합니다.
+또한 선언을 사용하여 기존에 명명 타입의 동작을 확장하고
+다른 곳에서 선언된 기호를 프로그램으로 가져올 수도 있습니다.
 
-Swift 에서 대부분의 선언은 선언과 동시에 구현되거나 초기화 된다는 의미에서도 정의이기도 합니다. 이 말은 프로토콜은 멤버를 정의하지 않으므로 대부분 프로토콜 멤버는 선언만 있습니다. 편의상 그리고 Swift 에서 구별이 그다지 중요하지 않으므로 _선언 (declaration)_ 은 선언과 정의를 모두 포함합니다.
+Swift에서 대부분의 선언은 선언과 동시에 구현되거나
+초기화된다는 의미에서 정의이기도 합니다.
+이 말은 프로토콜은 멤버를 정의하지 않으므로 대부분 프로토콜 멤버는 선언만 있습니다.
+편의상 그리고 Swift에서는 해당 구별이 그다지 중요하지 않으므로
+*선언(declaration)*은 선언과 정의를 모두 포함합니다.
 
 > Grammar of a declaration:
 >
-> _declaration_ → _import-declaration_ \
-> _declaration_ → _constant-declaration_ \
-> _declaration_ → _variable-declaration_ \
-> _declaration_ → _typealias-declaration_ \
-> _declaration_ → _function-declaration_ \
-> _declaration_ → _enum-declaration_ \
-> _declaration_ → _struct-declaration_ \
-> _declaration_ → _class-declaration_ \
-> _declaration_ → _actor-declaration_ \
-> _declaration_ → _protocol-declaration_ \
-> _declaration_ → _initializer-declaration_ \
-> _declaration_ → _deinitializer-declaration_ \
-> _declaration_ → _extension-declaration_ \
-> _declaration_ → _subscript-declaration_ \
+> *declaration* → *import-declaration* \
+> *declaration* → *constant-declaration* \
+> *declaration* → *variable-declaration* \
+> *declaration* → *typealias-declaration* \
+> *declaration* → *function-declaration* \
+> *declaration* → *enum-declaration* \
+> *declaration* → *struct-declaration* \
+> *declaration* → *class-declaration* \
+> *declaration* → *actor-declaration* \
+> *declaration* → *protocol-declaration* \
+> *declaration* → *initializer-declaration* \
+> *declaration* → *deinitializer-declaration* \
+> *declaration* → *extension-declaration* \
+> *declaration* → *subscript-declaration* \
 > *declaration* → *macro-declaration* \
-> _declaration_ → _operator-declaration_ \
-> _declaration_ → _precedence-group-declaration_
+> *declaration* → *operator-declaration* \
+> *declaration* → *precedence-group-declaration*
 
 ## 최상위-수준 코드 (Top-Level Code)
 
-Swift 소스 파일에서 최상위-수준 코드는 비어있거나 구문, 선언, 그리고 표현식으로 구성됩니다. 기본적으로 소스 파일의 최상위-수준에 선언된 변수, 상수, 그리고 다른 명명된 선언은 동일한 모듈의 일부인 모든 소스 파일 코드에 접근할 수 있습니다. <doc:Declarations#접근-제어-수준-Access-Control-Levels> 에서 설명된대로 접근-수준 수정자 (access-level modifier) 로 선언을 표시하여 기본 동작을 재정의할 수 있습니다.
+Swift 소스 파일의 최상위-수준 코드는 비어있거나
+구문, 선언, 표현식으로 구성됩니다.
+기본적으로 소스 파일의 최상위-수준에 선언된
+변수, 상수, 다른 명명 선언은
+동일한 모듈의 일부인 모든 소스 파일 코드에서 접근할 수 있습니다.
+<doc:Declarations#접근-제어-수준-Access-Control-Levels>에서 설명한대로
+접근-수준 수정자(access-level modifier)로 선언을 표시하여
+기본 동작을 재정의할 수 있습니다.
 
-최상위-수준 선언 (top-level declarations) 과 실행 가능한 최상위-수준 코드 (executable top-level code) 인 최상위-수준 코드의 두가지 종류가 있습니다. 최상위-수준 선언은 선언으로만 구성되고 모든 Swift 소스 파일에서 허용됩니다. 실행 가능한 최상위-수준 코드는 선언 뿐만 아니라 구문과 표현식을 포함하고 프로그램에 대해 최상위-수준 진입점으로만 허용됩니다.
+최상위-수준 코드는 두 가지 종류가 있습니다:
+최상위-수준 선언(top-level declarations)과 실행 가능한 최상위-수준 코드(executable top-level code)입니다.
+최상위-수준 선언은 선언으로만 구성되고
+모든 Swift 소스 파일에서 허용됩니다.
+실행 가능한 최상위-수준 코드는 선언 뿐만 아니라
+구문과 표현식을 포함하고
+프로그램에 대해 최상위-수준 진입점으로만 허용됩니다.
 
-실행 가능하게 만들기 위해 컴파일 한 Swift 코드는 코드가 파일과 모듈로 구성되는 방식과 상관없이 최상위-수준 진입점을 나타내는 다음 접근방식 중 하나만 포함할 수 있습니다: `main` 속성, `NSApplicationMain` 속성, `UIApplicationMain` 속성, `main.swift` 파일, 또는 최상위-수준 실행 가능한 코드를 포함하는 파일.
+실행 가능하게 만들기 위해 컴파일 한 Swift 코드는
+코드가 파일과 모듈로 구성되는 방식과 상관없이
+최상위-수준 진입점을 나타내는
+다음 접근방식 중 하나만 포함할 수 있습니다:
+`main` 속성,
+`NSApplicationMain` 속성,
+`UIApplicationMain` 속성,
+`main.swift` 파일,
+최상위-수준 실행 가능한 코드를 포함하는 파일.
 
 > Grammar of a top-level declaration:
 >
-> _top-level-declaration_ → _statements?_
+> *top-level-declaration* → *statements*_?_
 
 ## 코드 블록 (Code Blocks)
 
-_코드 블록 (code block)_ 은 선언 및 제어 구조에서 구문을 그룹화 하기위해 사용됩니다. 다음의 형식을 가집니다:
+*코드 블록(code block)*은 선언 및 제어 구조에서
+구문을 그룹화 하기위해 사용됩니다.
+다음의 형식을 가집니다:
 
 ```swift
 {
@@ -48,50 +80,86 @@ _코드 블록 (code block)_ 은 선언 및 제어 구조에서 구문을 그룹
 }
 ```
 
-코드 블록 내에 _구문 (statements)_ 은 선언, 표현식, 그리고 구문의 다른 종류가 포함되고 소스 코드에 나타나는 순서대로 실행됩니다.
+코드 블록 내의 위 형식의 *구문(statements)*은
+선언, 표현식, 구문의 다른 종류가 포함되고
+소스 코드에 나타나는 순서대로 실행됩니다.
+
+<!--
+  TR: What exactly are the scope rules for Swift?
+-->
+
+<!--
+  TODO: Discuss scope.  I assume a code block creates a new scope?
+-->
 
 > Grammar of a code block:
 >
-> _code-block_ → **`{`** _statements?_ **`}`**
+> *code-block* → **`{`** *statements*_?_ **`}`**
 
 ## 가져오기 선언 (Import Declaration)
 
-_가져오기 선언 (import declaration)_ 을 사용하여 현재 파일 바깥에 선언된 기호에 접근할 수 있습니다. 기본 형식은 전체 모듈을 가져옵니다; `import` 키워드 다음에 모듈 이름이 따라오도록 구성됩니다:
+*가져오기 선언(import declaration)*은
+현재 파일 바깥에 선언된 기호에 접근할 수 있게 합니다.
+기본 형식은 전체 모듈을 가져옵니다;
+`import` 키워드 다음에 모듈 이름이 따라오도록 구성됩니다:
 
 ```swift
 import <#module#>
 ```
 
-가져올 기호에 대한 자세한 제한을 제공하면 모듈 또는 하위 모듈 내에 특정 하위 모듈 또는 특정 선언을 지정할 수 있습니다. 이런 상세한 형식이 사용되면 선언한 모듈이 아닌 가져온 기호만 현재 범위에서 사용할 수 있습니다.
+가져올 기호에 대한 자세한 제한을 제공하면
+모듈이나 하위 모듈 내의
+특정 하위 모듈이나 특정 선언을 지정할 수 있습니다.
+이런 상세한 형식이 사용하면
+가져온 기호만
+(선언한 모듈이 아닌)
+현재 범위에서 사용할 수 있습니다.
 
 ```swift
 import <#import kind#> <#module#>.<#symbol name#>
 import <#module#>.<#submodule#>
 ```
 
+<!--
+  TODO: Need to add more to this section.
+-->
+
 > Grammar of an import declaration:
 >
-> _import-declaration_ → _attributes?_ **`import`** _import-kind?_ _import-path_
+> *import-declaration* → *attributes*_?_ **`import`** *import-kind*_?_ *import-path*
 >
-> _import-kind_ → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
-> _import-path_ → _identifier_ | _identifier_ **`.`** _import-path_
+> *import-kind* → **`typealias`** | **`struct`** | **`class`** | **`enum`** | **`protocol`** | **`let`** | **`var`** | **`func`** \
+> *import-path* → *identifier* | *identifier* **`.`** *import-path*
 
 ## 상수 선언 (Constant Declaration)
 
-_상수 선언 (constant declaration)_ 은 프로그램에 명명된 상수값을 도입합니다. 상수 선언은 `let` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
+*상수 선언(constant declaration)*은 프로그램에 상수값을 도입합니다.
+상수 선언은 `let` 키워드를 사용하여 선언하고 다음의 형식을 가집니다:
 
 ```swift
 let <#constant name#>: <#type#> = <#expression#>
 ```
 
-상수 선언은 _상수 이름 (constant name)_ 과 이니셜라이저 _표현식 (expression)_ 의 값 사이의 변경 불가능한 바인딩을 정의합니다; 상수의 값이 설정된 후에 변경할 수 없습니다. 이 말은 상수가 클래스 객체로 초기화되면 이 객체 자체는 변경할 수 있지만 이 상수 이름과 참조하는 객체 간의 바인딩은 변경할 수 없습니다.
+상수 선언은 위 형식의 *상수 이름(constant name)*과
+이니셜라이저 *표현식(expression)*의 값 사이의 변경 불가능한 바인딩을 정의합니다;
+상수의 값이 설정된 후에는 변경할 수 없습니다.
+이 말은 상수가 클래스 객체로 초기화되면,
+이 객체 자체는 변경할 수 있지만
+이 상수 이름과 참조하는 객체 간의 바인딩은 변경할 수 없습니다.
 
-상수가 전역 범위로 선언되면 값으로 반드시 초기화 되어야 합니다. 상수 선언이 함수 또는 메서드의 컨텍스트에 나타나면 해당 값을 처음 읽기 전에 값을 설정한다는 보장이 있는 한 나중에 초기화 될 수 있습니다. 컴파일러가 상수의 값을 읽지 않는다는 것을 증명할 수 있으면 상수에 값을 설정하지 않아도 됩니다.
-이 분석을 *확정 초기화 (definite initialization)* 라고 불립니다 ---
+상수가 전역 범위로 선언되면,
+값으로 반드시 초기화되어야 합니다.
+상수 선언이 함수나 메서드의 컨텍스트에서 나타나면,
+해당 값을 처음 읽기 전에
+값을 설정한다는 보장이 있으면
+나중에 초기화할 수 있습니다.
+컴파일러가 상수의 값을 읽지 않는다는 것을 증명할 수 있으면,
+상수에 값을 설정하지 않아도 됩니다.
+이 분석을 *확정 초기화(definite initialization)*라고 합니다 ---
 컴파일러는 읽기 전에 확실하게 값이 설정되어 있다는 것을 증명합니다.
 
 > Note:
-> 확정 초기화 (Definite initialization) 는
+> 확정 초기화(Definite initialization)는
 > 도메인 지식을 요구하는 증명을 구성할 수 없으며,
 > 조건문에서 상태를 추적하는 것에는 제한이 있습니다.
 > 상수에 항상 값이 있다고 결정할 수 있지만,
@@ -99,15 +167,37 @@ let <#constant name#>: <#type#> = <#expression#>
 > 값을 설정하는 코드 경로를 단순화하거나,
 > 변수 선언을 사용합니다.
 
-상수 선언이 클래스 또는 구조체 선언의 컨텍스트에서 나타나면 _상수 프로퍼티 (constant property)_ 로 간주됩니다. 상수 선언은 연산 프로퍼티가 아니므로 getter 또는 setter 를 가지지 않습니다.
+<!--
+In the most general case,
+DI reduces to the halting problem,
+as shown by Rice's theorem.
+-->
 
-상수 선언의 _상수 이름 (constant name)_ 이 튜플 패턴인 경우 튜플에서 각 항목의 이름은 이니셜라이저 _표현식 (expression)_ 에서 해당 값으로 바인딩 됩니다.
+상수 선언이 클래스나 구조체 선언의 컨텍스트에서 나타나면
+*상수 프로퍼티(constant property)*로 간주됩니다.
+상수 선언은 연산 프로퍼티가 아니므로
+getter나 setter를 가지지 않습니다.
+
+상수 선언의 *상수 이름(constant name)*이 튜플 패턴인 경우,
+튜플에서 각 항목의 이름은 이니셜라이저 *표현식(expression)*에서
+해당 값으로 바인딩 됩니다.
 
 ```swift
 let (firstNumber, secondNumber) = (10, 42)
 ```
 
-이 예시에서 `firstNumber` 는 값 `10` 에 대한 명명된 상수이고 `secondNumber` 는 값 `42` 에 대한 명명된 상수 입니다. 두 상수 모두 독립적으로 사용할 수 있습니다:
+<!--
+  - test: `constant-decl`
+
+  ```swifttest
+  -> let (firstNumber, secondNumber) = (10, 42)
+  ```
+-->
+
+이 예시에서
+`firstNumber`는 값 `10`에 대한 상수이고,
+`secondNumber`는 값 `42`에 대한 상수 입니다.
+두 상수 모두 독립적으로 사용할 수 있습니다:
 
 ```swift
 print("The first number is \(firstNumber).")
@@ -116,32 +206,74 @@ print("The second number is \(secondNumber).")
 // Prints "The second number is 42."
 ```
 
-타입 주석 (`:` _타입_) 은 <doc:Types#타입-추론-Type-Inference> 에서 설명한대로 _상수 이름 (constant name)_ 의 타입이 추론될 수 있을 때 상수 선언에서 선택사항입니다.
+<!--
+  - test: `constant-decl`
 
-상수 타입 프로퍼티 (constant type property) 를 선언하려면 `static` 선언 수식어로 선언을 표시해야 합니다. 클래스의 상수 타입 프로퍼티는 암시적으로 final 입니다; `class` 또는 `final` 선언 수식어로 표시하여 서브클래스에 의한 재정의를 허용하거나 금지할 수 있습니다. 타입 프로퍼티는 <doc:Properties#타입-프로퍼티-Type-Properties> 에 설명되어 있습니다.
+  ```swifttest
+  -> print("The first number is \(firstNumber).")
+  <- The first number is 10.
+  -> print("The second number is \(secondNumber).")
+  <- The second number is 42.
+  ```
+-->
 
-상수에 대한 자세한 내용과 사용시 지침에 대한 내용은 <doc:TheBasics#상수와-변수-Constants-and-Variables> 와 <doc:Properties#저장-프로퍼티-Stored-Properties> 를 참고바랍니다.
+<doc:Types#타입-추론-Type-Inference>에서 설명한대로
+*상수 이름(constant name)*의 타입을 추론할 수 있을 때
+상수 선언의 타입 주석(`:` *타입*)은 선택 사항입니다.
+
+상수 타입 프로퍼티(constant type property)를 선언하려면
+`static` 선언 수식어로 선언을 표시해야 합니다.
+클래스의 상수 타입 프로퍼티는 암시적으로 final 입니다;
+하위 클래스에 의한 재정의를 허용하거나 금지하기 위해
+`class`나 `final` 선언 수식어로 표시할 수 없습니다.
+타입 프로퍼티는 <doc:Properties#타입-프로퍼티-Type-Properties>에 설명되어 있습니다.
+
+<!--
+  - test: `class-constants-cant-have-class-or-final`
+
+  ```swifttest
+  -> class Super { class let x = 10 }
+  !$ error: class stored properties not supported in classes; did you mean 'static'?
+  !! class Super { class let x = 10 }
+  !!               ~~~~~     ^
+  -> class S { static final let x = 10 }
+  !$ error: static declarations are already final
+  !! class S { static final let x = 10 }
+  !!                  ^~~~~~
+  !!-
+  ```
+-->
+
+상수에 대한 자세한 내용과 언제 사용해야 하는지에 대한 지침은
+<doc:TheBasics#상수와-변수-Constants-and-Variables>와 <doc:Properties#저장-프로퍼티-Stored-Properties>를 참고바랍니다.
 
 > Grammar of a constant declaration:
 >
-> _constant-declaration_ → _attributes?_ _declaration-modifiers?_ **`let`** _pattern-initializer-list_
+> *constant-declaration* → *attributes*_?_ *declaration-modifiers*_?_ **`let`** *pattern-initializer-list*
 >
-> _pattern-initializer-list_ → _pattern-initializer_ | _pattern-initializer_ **`,`** _pattern-initializer-list_ \
-> _pattern-initializer_ → _pattern_ _initializer?_ \
-> _initializer_ → **`=`** _expression_
+> *pattern-initializer-list* → *pattern-initializer* | *pattern-initializer* **`,`** *pattern-initializer-list* \
+> *pattern-initializer* → *pattern* *initializer*_?_ \
+> *initializer* → **`=`** *expression*
 
 ## 변수 선언 (Variable Declaration)
 
-_변수 선언 (variable declaration)_ 은 프로그램에 명명된 변수 값을 도입하고 `var` 키워드를 사용하여 선언됩니다.
+*변수 선언(variable declaration)*은 프로그램에 변수 값을 도입하고
+`var` 키워드를 사용하여 선언합니다.
 
-변수 선언은 명명된, 변경 가능한 값, 저장된 그리고 계산된 변수와 프로퍼티, 저장된 변수와 프로퍼티 관찰자, 그리고 정적 변수 프로퍼티의 다양한 종류의 선언 형식을 가집니다. 사용할 적절한 형식은 변수가 선언되는 범위와 선언하려는 변수의 종류에 따라 다릅니다.
+변수 선언은
+저장 및 연산 변수와 프로퍼티,
+저장 변수와 프로퍼티 관찰자, 정적 변수 프로퍼티를 포함하여
+여러 종류의 명명된 값과 변경 가능한 값을 선언하는 여러 형식을 가집니다.
+사용할 적절한 형식은
+변수가 선언되는 범위와 선언하려는 변수의 종류에 따라 다릅니다.
 
-> Note\
-> <doc:Declarations#프로토콜-프로퍼티-선언-Protocol-Property-Declaration> 에서 설명한대로 프로토콜 선언의 컨텍스트에서 프로퍼티를 선언할 수도 있습니다.
+> Note: <doc:Declarations#프로토콜-프로퍼티-선언-Protocol-Property-Declaration>에서 설명한대로
+> 프로토콜 선언의 컨텍스트에서도 프로퍼티를 선언할 수 있습니다.
 
-<doc:Inheritance#재정의-Overriding> 에서 설명한대로 `override` 선언 수식어로 서브클래스의 프로퍼티 선언을 표시하여 서브클래스에 프로퍼티를 재정의 할 수 있습니다.
+<doc:Inheritance#재정의-Overriding>에서 설명한대로 `override` 선언 수식어로
+하위 클래스의 프로퍼티 선언을 표시하여 하위 클래스에서 프로퍼티를 재정의할 수 있습니다.
 
-### 저장된 변수와 저장된 변수 프로퍼티 (Stored Variables and Stored Variable Properties)
+### 저장 변수와 저장 변수 프로퍼티 (Stored Variables and Stored Variable Properties)
 
 다음의 형식으로 저장된 변수 (stored variable) 또는 저장된 변수 프로퍼티 (stored variable property) 를 선언할 수 있습니다:
 
