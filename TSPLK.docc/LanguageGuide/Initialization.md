@@ -1110,17 +1110,17 @@ Swift는 단순한 이니셜라이저가
 
 하위 클래스의 이니셜라이저가 상위 클래스의 *지정* 이니셜라이저와 시그니처가 일치한다면,
 이는 해당 지정 이니셜라이저를 재정의하는 것입니다.
-따라서 하위 클래스의 이니셜라이저 정의 앞에 `override` 수식어를 작성해야 합니다.
+따라서 하위 클래스의 이니셜라이저 정의 앞에 `override` 수정자를 작성해야 합니다.
 <doc:Initialization#기본-이니셜라이저-Default-Initializers>에서 설명했듯이
 자동으로 제공된 기본 이니셜라이저를 재정의하는 경우에도 마찬가지입니다.
 
 프로퍼티, 메서드, 서브스크립트를 재정의할 때처럼,
-`override` 수식어가 사용되면 Swift는
+`override` 수정자가 사용되면 Swift는
 해당 상위 클래스에 재정의할 수 있는 지정 이니셜라이저가 실제로 존재하는지 확인하고,
 재정의하는 이니셜라이저의 파라미터 역시 올바르게 정의되었는지 검증합니다.
 
 > Note: 상위 클래스의 지정 이니셜라이저를 재정의할 때는,
-> 하위 클래스에서 편의 이니셜라이저로 구현하더라도 항상 `override` 수식어를 작성해야 합니다.
+> 하위 클래스에서 편의 이니셜라이저로 구현하더라도 항상 `override` 수정자를 작성해야 합니다.
 
 <!--
   - test: `youHaveToWriteOverrideWhenOverridingADesignatedInitializer`
@@ -1177,7 +1177,7 @@ Swift는 단순한 이니셜라이저가
 해당 상위 클래스의 편의 이니셜라이저를 하위 클래스에서 직접 호출할 수는 없습니다.
 따라서 하위 클래스는 상위 클래스의 이니셜라이저를 재정의하는 것이 아닙니다.
 결과적으로 상위 클래스의 편의 이니셜라이저와 시그니처가 같은 구현을 제공하더라도
-`override` 수식어를 작성하지 않습니다.
+`override` 수정자를 작성하지 않습니다.
 
 <!--
   - test: `youDoNotAndCannotWriteOverrideWhenOverridingAConvenienceInitializer`
@@ -1298,7 +1298,7 @@ class Bicycle: Vehicle {
 
 `Bicycle` 하위 클래스는 커스텀 지정 이니셜라이저인 `init()`을 정의합니다.
 이 지정 이니셜라이저는 `Bicycle`의 상위 클래스의 지정 이니셜라이저와 시그니처가 일치하므로,
-`Bicycle`에서 이 이니셜라이저를 정의할 때는 `override` 수식어를 표기해야 합니다.
+`Bicycle`에서 이 이니셜라이저를 정의할 때는 `override` 수정자를 표기해야 합니다.
 
 `Bicycle`의 `init()` 이니셜라이저는 먼저 `super.init()`을 호출하여,
 `Bicycle`의 상위 클래스인 `Vehicle`의 기본 이니셜라이저를 호출합니다.
@@ -1627,7 +1627,7 @@ class RecipeIngredient: Food {
 `RecipeIngredient`가 `init(name: String)`을 편의 이니셜라이저로 제공하지만,
 `Food`의 `init(name: String)` *지정* 이니셜라이저와 같은 파라미터를 가지고 있습니다.
 이 편의 이니셜라이저는 상위 클래스의 지정 이니셜라이저를 재정의하기 때문에,
-`override` 수식어를 붙여줘야 합니다
+`override` 수정자를 붙여줘야 합니다
 (자세한 내용은 <doc:Initialization#이니셜라이저-상속과-재정의-Initializer-Inheritance-and-Overriding>에 설명되어 있습니다).
 
 `RecipeIngredient`는
@@ -2644,7 +2644,7 @@ class UntitledDocument: Document {
 
 ## 필수 이니셜라이저 (Required Initializers)
 
-클래스 이니셜라이저 정의 앞에 `required` 수식어를 작성하여,
+클래스 이니셜라이저 정의 앞에 `required` 수정자를 작성하여,
 클래스를 상속받는 모든 하위 클래스가 해당 이니셜라이저를 구현해야 함을 나타냅니다:
 
 ```swift
@@ -2710,8 +2710,8 @@ class SomeClass {
 
 이니셜라이저 요구사항이 상속 계층의 더 아래 하위 클래스에도 적용된다는 것을 나타내기 위해
 필수 이니셜라이저를 하위 클래스에서 구현할 때에도
-반드시 이니셜라이저 정의 앞에 `required` 수식어를 작성해야 합니다.
-필수 지정 이니셜라이저를 재정의할 때 `override` 수식어를 작성하지 않습니다:
+반드시 이니셜라이저 정의 앞에 `required` 수정자를 작성해야 합니다.
+필수 지정 이니셜라이저를 재정의할 때 `override` 수정자를 작성하지 않습니다:
 
 ```swift
 class SomeSubclass: SomeClass {

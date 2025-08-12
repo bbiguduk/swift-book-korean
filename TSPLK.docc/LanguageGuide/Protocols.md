@@ -500,7 +500,7 @@ protocol SomeProtocol {
 프로토콜의 이니셜라이저 요구사항은
 준수하는 클래스에서 지정 이니셜라이저나 편의 이니셜라이저로 구현할 수 있습니다.
 이 경우 모두
-`required` 수식어를 이니셜라이저 구현에 표시해야 합니다:
+`required` 수정자를 이니셜라이저 구현에 표시해야 합니다:
 
 ```swift
 class SomeClass: SomeProtocol {
@@ -541,7 +541,7 @@ class SomeClass: SomeProtocol {
   ```
 -->
 
-`required` 수식어를 사용하면
+`required` 수정자를 사용하면
 프로토콜을 준수하는
 클래스의 모든 하위 클래스가
 이니셜라이저 요구사항을 명시적으로 구현하거나 상속받도록 보장합니다.
@@ -595,10 +595,10 @@ class SomeClass: SomeProtocol {
   ```
 -->
 
-> Note: `final` 수식어로 표시한 클래스는
+> Note: `final` 수정자로 표시한 클래스는
 > 하위 클래스가 될 수 없으므로
-> 프로토콜 이니셜라이저 구현에 `required` 수식어를 표시할 필요가 없습니다.
-> `final` 수식어에 대한 자세한 내용은 <doc:Inheritance#재정의-방지-Preventing-Overrides>를 참고바랍니다.
+> 프로토콜 이니셜라이저 구현에 `required` 수정자를 표시할 필요가 없습니다.
+> `final` 수정자에 대한 자세한 내용은 <doc:Inheritance#재정의-방지-Preventing-Overrides>를 참고바랍니다.
 
 <!--
   - test: `finalClassesDoNotNeedTheRequiredModifierForProtocolInitializerRequirements`
@@ -618,7 +618,7 @@ class SomeClass: SomeProtocol {
 
 하위 클래스가 상위 클래스의 지정 이니셜라이저를 재정의 하고
 프로토콜의 동일한 이니셜라이저 요구사항도 구현해야 하면,
-`required`와 `override` 수식어 둘 다 이니셜라이저 구현에 표시해야 합니다:
+`required`와 `override` 수정자 둘 다 이니셜라이저 구현에 표시해야 합니다:
 
 ```swift
 protocol SomeProtocol {
@@ -1955,7 +1955,7 @@ for object in objects {
 프로토콜에 *옵셔널 요구사항(optional requirements)*을 정의할 수 있습니다.
 이 요구사항은 프로토콜을 준수하는 타입이 구현할 필요가 없습니다.
 옵셔널 요구사항은 프로토콜의 정의에
-`optional` 수식어를 앞에 붙입니다.
+`optional` 수정자를 앞에 붙입니다.
 옵셔널 요구사항은 Objective-C와 상호 운용되는
 코드를 작성할 수 있습니다.
 프로토콜과 옵셔널 요구사항 모두

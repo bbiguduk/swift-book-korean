@@ -222,10 +222,10 @@ print("The second number is \(secondNumber).")
 상수 선언의 타입 주석(`:` *타입*)은 선택 사항입니다.
 
 상수 타입 프로퍼티(constant type property)를 선언하려면
-`static` 선언 수식어로 선언을 표시해야 합니다.
+`static` 선언 수정자로 선언을 표시해야 합니다.
 클래스의 상수 타입 프로퍼티는 암시적으로 final 입니다;
 하위 클래스에 의한 재정의를 허용하거나 금지하기 위해
-`class`나 `final` 선언 수식어로 표시할 수 없습니다.
+`class`나 `final` 선언 수정자로 표시할 수 없습니다.
 타입 프로퍼티는 <doc:Properties#타입-프로퍼티-Type-Properties>에 설명되어 있습니다.
 
 <!--
@@ -270,7 +270,7 @@ print("The second number is \(secondNumber).")
 > Note: <doc:Declarations#프로토콜-프로퍼티-선언-Protocol-Property-Declaration>에서 설명한대로
 > 프로토콜 선언의 컨텍스트에서도 프로퍼티를 선언할 수 있습니다.
 
-<doc:Inheritance#재정의-Overriding>에서 설명한대로 `override` 선언 수식어로
+<doc:Inheritance#재정의-Overriding>에서 설명한대로 `override` 선언 수정자로
 하위 클래스의 프로퍼티 선언을 표시하여 하위 클래스에서 프로퍼티를 재정의할 수 있습니다.
 
 ### 저장 변수와 저장 변수 프로퍼티 (Stored Variables and Stored Variable Properties)
@@ -319,19 +319,37 @@ var <#variable name#>: <#type#> {
 }
 ```
 
-이러한 형식의 변수 선언은 전역 범위, 함수의 지역 범위, 또는 클래스, 구조체, 열거형, 또는 확장 선언의 컨텍스트에서 정의합니다. 이러한 형식의 변수 선언을 전역 범위 또는 함수의 지역 범위로 선언되면 _계산된 변수 (computed variable)_ 로 참조됩니다. 클래스, 구조체, 또는 확장 선언의 컨텍스트에서 선언되면 _연산 프로퍼티 (computed property)_ 로 참조됩니다.
+이러한 형식의 변수 선언은 전역 범위, 함수의 지역 범위
+또는 클래스, 구조체, 열거형, 확장 선언의 컨텍스트에서 정의합니다.
+이러한 형식의 변수 선언을 전역 범위나 함수의 지역 범위로 선언하면
+*연산 변수(computed variable)*로 참조합니다.
+클래스, 구조체, 확장 선언의
+컨텍스트에서 선언하면
+*연산 프로퍼티(computed property)*로 참조합니다.
 
-getter 는 값을 읽기위해 사용되고 setter 는 값을 작성하기 위해 사용됩니다. setter 절은 선택사항이며 getter 만 필요하다면 <doc:Properties#읽기-전용-연산-프로퍼티-Read-Only-Computed-Properties> 에 설명한대로 getter 와 setter 절 모두 생략할 수 있고 간단하게 요구된 값을 직접적으로 반환할 수 있습니다. 그러나 setter 절을 제공하면 getter 절도 제공되어야 합니다.
+getter는 값을 읽기 위해 사용되고,
+setter는 값을 작성하기 위해 사용됩니다.
+setter 절은 선택 사항이며,
+getter만 필요하다면
+<doc:Properties#읽기-전용-연산-프로퍼티-Read-Only-Computed-Properties>에 설명한대로
+getter와 setter 절 모두 생략하고 요구된 값을 직접적으로 반환할 수 있습니다.
+그러나 setter 절을 제공하면 getter 절도 제공해야 합니다.
 
-_setter 이름 (setter name)_ 과 둘러싸인 소괄호는 선택사항입니다. setter 이름을 제공하면 setter 에 파라미터의 이름으로 사용됩니다. setter 이름을 제공하지 않으면 <doc:Properties#짧은-Setter-선언-Shorthand-Setter-Declaration> 에서 설명한대로 setter 에 기본 파라미터 이름은 `newValue` 입니다.
+위 형식의 *setter 이름(setter name)*과 둘러싸인 소괄호는 선택 사항입니다.
+setter 이름을 제공하면, setter의 파라미터 이름으로 사용됩니다.
+setter 이름을 제공하지 않으면, <doc:Properties#짧은-Setter-선언-Shorthand-Setter-Declaration>에서 설명한대로
+setter의 기본 파라미터 이름은 `newValue`입니다.
 
-저장된 명명된 값과 저장된 변수 프로퍼티와 다르게 계산된 명명된 값 또는 연산 프로퍼티의 값은 메모리에 저장되지 않습니다.
+명명된 저장 값과 저장 변수 프로퍼티와 다르게
+명명된 연산 값이나 연산 프로퍼티의 값은 메모리에 저장되지 않습니다.
 
-연산 프로퍼티의 자세한 내용과 예시는 <doc:Properties#연산-프로퍼티-Computed-Properties> 를 참고바랍니다.
+연산 프로퍼티의 자세한 내용과 예시는
+<doc:Properties#연산-프로퍼티-Computed-Properties>를 참고바랍니다.
 
-### 저장된 변수 관찰자와 프로퍼티 관찰자 (Stored Variable Observers and Property Observers)
+### 저장 변수 관찰자와 프로퍼티 관찰자 (Stored Variable Observers and Property Observers)
 
-`willSet` 과 `didSet` 관찰자를 저장된 변수 또는 프로퍼티에 선언할 수도 있습니다. 괄찰자와 함께 선언한 저장된 변수 또는 프로퍼티는 다음의 형식을 가집니다:
+`willSet`과 `didSet` 관찰자와 함께 저장 변수나 프로퍼티를 선언할 수도 있습니다.
+괄찰자와 함께 선언한 저장 변수나 프로퍼티는 다음의 형식을 가집니다:
 
 ```swift
 var <#variable name#>: <#type#> = <#expression#> {
@@ -344,21 +362,76 @@ var <#variable name#>: <#type#> = <#expression#> {
 }
 ```
 
-전역 범위, 함수의 지역 범위, 또는 클래스나 구조체 선언의 컨텍스트에서 이 형식의 변수 선언으로 정의합니다. 이 형식의 변수 선언이 전역 범위 또는 함수의 지역 범위로 선언되면 관찰자는 _저장된 변수 관찰자 (stored variable observers)_ 로 참조됩니다. 클래스나 구조체 선언의 컨텍스트에서 선언되면 관찰자는 _프로퍼티 관찰자 (property observers)_ 로 참조됩니다.
+이러한 형식의 변수 선언은 전역 범위, 함수의 지역 범위
+또는 클래스나 구조체 선언의 컨텍스트에서 정의합니다.
+이러한 형식의 변수 선언이 전역 범위나 함수의 지역 범위로 선언되면,
+관찰자는 *저장 변수 관찰자(stored variable observers)*로 참조합니다.
+클래스나 구조체 선언의 컨텍스트에서 선언되면,
+관찰자는 *프로퍼티 관찰자(property observers)*로 참조합니다.
 
-모든 저장 프로퍼티에 프로퍼티 관찰자를 추가할 수 있습니다. <doc:Inheritance#프로퍼티-관찰자-재정의-Overriding-Property-Observers> 에서 설명한대로 서브클래스 내에 프로퍼티 재정의로 저장된 또는 연산 프로퍼티와 상관없이 모든 상속된 프로퍼티에 프로퍼티 관찰자를 추가할 수도 있습니다.
+모든 저장 프로퍼티에 프로퍼티 관찰자를 추가할 수 있습니다.
+<doc:Inheritance#프로퍼티-관찰자-재정의-Overriding-Property-Observers>에서 설명한대로 하위 클래스 내에 프로퍼티 재정의로
+저장 프로퍼티나 연산 프로퍼티와 상관없이 모든 상속된 프로퍼티에 프로퍼티 관찰자를 추가할 수도 있습니다.
 
-이니셜라이저 _표현식 (expression)_ 은 클래스나 구조체 선언의 컨텍스트에서 선택사항 이지만 다른곳에선 필수입니다. 타입이 이니셜라이저 _표현식 (expression)_ 에서 유추될 수 있으면 _타입 (type)_ 주석은 선택사항 입니다. 이 표현식은 프로퍼티의 값을 처음 읽을 때 평가됩니다. 프로퍼티의 초기값을 읽지않고 재작성하면 이 표현식은 프로퍼티에 처음 쓰기 전에 평가됩니다.
+이니셜라이저 *표현식(expression)*은 클래스나 구조체 선언의 컨텍스트에서 선택 사항이지만
+다른 곳에선 필수입니다. 타입이 이니셜라이저 *표현식(expression)*에서 추론될 수 있으면,
+*타입(type)*주석은 선택 사항입니다.
+이 표현식은 프로퍼티의 값을 처음 읽을 때 평가됩니다.
+프로퍼티의 초기값을 읽지 않고 재작성하면,
+이 표현식은 프로퍼티를 처음 쓰기 전에 평가됩니다.
 
-변수 또는 프로퍼티의 값이 설정되려고 하면 `willSet` 과 `didSet` 관찰자는 관찰 및 적절한 반응을 위한 방법을 제공합니다. 관찰자는 변수 또는 프로퍼티가 처음 초기화될 때는 호출되지 않습니다. 대신에 값이 초기화 컨텍스트 바깥에서 설정될 때만 호출됩니다.
+<!--
+  - test: `overwriting-property-without-writing`
 
-`willSet` 관찰자는 변수 또는 프로퍼티의 값이 설정되기 전에만 호출됩니다. 새로운 값은 상수로 `willSet` 관찰자로 전달되고 `willSet` 절의 구현에서 변경할 수 없습니다. `didSet` 관찰자는 새로운 값이 설정된 후 바로 호출됩니다. `willSet` 관찰자와 달리 변수 또는 프로퍼티의 이전 값은 여전히 접근이 필요한 경우에 `didSet` 관찰자로 전달됩니다. 이 말은 `didSet` 관찰자 절 내에 변수 또는 프로퍼티에 값을 할당하면 할당한 새 값이 방금 설정되어 `willSet` 관찰자에 전달된 값을 대체합니다.
+  ```swifttest
+  >> func loudConst(_ x: Int) -> Int {
+  >>     print("initial value:", x)
+  >>     return x
+  >> }
+  >> var x = loudConst(10)
+  >> x = 20
+  >> print("x:", x)
+  << initial value: 10
+  << x: 20
+  >> var y = loudConst(100)
+  >> print("y:", y)
+  << initial value: 100
+  << y: 100
+  ```
+-->
 
-`willSet` 과 `didSet` 절에 _setter 이름 (setter name)_ 과 둘러싸인 소괄호는 선택사항 입니다. setter 이름을 제공한다면 `willSet` 과 `didSet` 관찰자의 파라미터 이름으로 사용됩니다. setter 이름을 제공하지 않는다면 `willSet` 관찰자에서 기본 파라미터 이름은 `newValue` 이고 `didSet` 관찰자에서 기본 파라미터 이름은 `oldValue` 입니다.
+`willSet`과 `didSet` 관찰자는 변수나 프로퍼티의 값이 설정될 때
+관찰하고 적절한 반응을 위한 방법을 제공합니다.
+관찰자는 변수나 프로퍼티가
+처음 초기화될 때는 호출되지 않습니다.
+대신에 값이 초기화 컨텍스트 바깥에서 설정될 때만 호출됩니다.
 
-`willSet` 절을 제공하면 `didSet` 절은 선택사항 입니다. 마찬가지로 `willSet` 절은 `didSet` 절이 제공되면 선택사항 입니다.
+`willSet` 관찰자는 변수나 프로퍼티의 값이 설정되기 직전에만 호출됩니다.
+새로운 값은 상수로 `willSet` 관찰자에 전달되고
+`willSet` 절의 구현에서 변경할 수 없습니다.
+`didSet` 관찰자는 새로운 값이 설정된 후 바로 호출됩니다.
+`willSet` 관찰자와 달리 변수나 프로퍼티의 이전 값은 여전히 접근이 필요한 경우에
+`didSet` 관찰자에 전달됩니다.
+이 말은 `didSet` 관찰자 절 내에 변수나 프로퍼티에 값을 할당하면,
+할당한 새 값이 방금 설정되어
+`willSet` 관찰자에 전달된 값을 대체합니다.
 
-`didSet` 관찰자의 본문은 이전 값을 참조하면 getter 는 이전 값이 사용 가능하도록 관찰자 전에 호출됩니다. 아래 예시는 슈퍼클래스에 의해 정의되고 관찰자를 추가하기 위해 서브클래스에 의해 재정의 된 연산 프로퍼티를 보여줍니다.
+`willSet`과 `didSet` 절에 위 형식의 *setter 이름(setter name)*과 둘러싸인 소괄호는 선택 사항입니다.
+setter 이름을 제공한다면,
+해당 이름은 `willSet`과 `didSet` 관찰자의 파라미터 이름으로 사용됩니다.
+setter 이름을 제공하지 않는다면,
+`willSet` 관찰자의 기본 파라미터 이름은 `newValue`이고
+`didSet` 관찰자의 기본 파라미터 이름은 `oldValue`입니다.
+
+`willSet` 절을 제공하면 `didSet` 절은 선택 사항입니다.
+마찬가지로 `didSet` 절을 제공하면 `willSet` 절은 선택 사항입니다.
+
+`didSet` 관찰자의 본문이 이전 값을 참조하면,
+관찰자 전에 getter가 호출되어
+이전 값을 사용 가능하도록 합니다.
+그렇지 않으면 상위 클래스의 getter를 호출하지 않고 새 값이 저장됩니다.
+아래 예시는 상위 클래스에 정의한 연산 프로퍼티를 보여주고
+이 연산 프로퍼티를 하위 클래스에서 관찰자를 추가하여 재정의하는 것을 보여줍니다.
 
 ```swift
 class Superclass {
@@ -397,52 +470,129 @@ newAndOld.x = 200
 // Prints "Old value 12 - new value 200"
 ```
 
-프로퍼티 관찰자를 사용하는 방법에 대한 자세한 내용과 예시는 <doc:Properties#프로퍼티-관찰자-Property-Observers> 를 참고바랍니다.
+<!--
+  - test: `didSet-calls-superclass-getter`
+
+  ```swifttest
+  -> class Superclass {
+         private var xValue = 12
+         var x: Int {
+             get { print("Getter was called"); return xValue }
+             set { print("Setter was called"); xValue = newValue }
+         }
+     }
+  ---
+  // This subclass doesn't refer to oldValue in its observer, so the
+  // superclass's getter is called only once to print the value.
+  -> class New: Superclass {
+         override var x: Int {
+             didSet { print("New value \(x)") }
+         }
+     }
+     let new = New()
+     new.x = 100
+  <- Setter was called
+  <- Getter was called
+  <- New value 100
+  ---
+  // This subclass refers to oldValue in its observer, so the superclass's
+  // getter is called once before the setter, and again to print the value.
+  -> class NewAndOld: Superclass {
+         override var x: Int {
+             didSet { print("Old value \(oldValue) - new value \(x)") }
+         }
+     }
+     let newAndOld = NewAndOld()
+     newAndOld.x = 200
+  <- Getter was called
+  <- Setter was called
+  <- Getter was called
+  <- Old value 12 - new value 200
+  ```
+-->
+
+프로퍼티 관찰자를 사용하는 방법에 대한 자세한 내용과 예시는
+<doc:Properties#프로퍼티-관찰자-Property-Observers>를 참고바랍니다.
+
+<!--
+  - test: `cant-mix-get-set-and-didSet`
+
+  ```swifttest
+  >> struct S {
+  >>     var x: Int {
+  >>         get { print("S getter"); return 12 }
+  >>         set { return }
+  >>         didSet { print("S didSet") }
+  >>     }
+  >> }
+  !$ error: 'didSet' cannot be provided together with a getter
+  !! didSet { print("S didSet") }
+  !! ^
+  ```
+-->
 
 ### 타입 변수 프로퍼티 (Type Variable Properties)
 
-타입 변수 프로퍼티 (type variable property) 를 선언하기 위해 `static` 선언 수식어와 함께 선언에 표시합니다. 클래스는 슈퍼클래스의 구현을 서브클래스가 재정의 할 수 있도록 `class` 선언 수식어와 함께 타입 연산 프로퍼티를 표시할 수 있습니다. 타입 프로퍼티는 <doc:Properties#타입-프로퍼티-Type-Properties> 에 설명되어 있습니다.
+타입 변수 프로퍼티(type variable property)를 선언하기 위해
+`static` 선언 수정자와 함께 선언에 표시합니다.
+클래스는 상위 클래스의 구현을 하위 클래스가 재정의할 수 있도록
+`class` 선언 수정자와 함께 타입 연산 프로퍼티를 표시할 수 있습니다.
+타입 프로퍼티는 <doc:Properties#타입-프로퍼티-Type-Properties>에 설명되어 있습니다.
 
 > Grammar of a variable declaration:
 >
-> _variable-declaration_ → _variable-declaration-head_ _pattern-initializer-list_ \
-> _variable-declaration_ → _variable-declaration-head_ _variable-name_ _type-annotation_ _code-block_ \
-> _variable-declaration_ → _variable-declaration-head_ _variable-name_ _type-annotation_ _getter-setter-block_ \
-> _variable-declaration_ → _variable-declaration-head_ _variable-name_ _type-annotation_ _getter-setter-keyword-block_ \
-> _variable-declaration_ → _variable-declaration-head_ _variable-name_ _initializer_ _willSet-didSet-block_ \
-> _variable-declaration_ → _variable-declaration-head_ _variable-name_ _type-annotation_ _initializer?_ _willSet-didSet-block_
+> *variable-declaration* → *variable-declaration-head* *pattern-initializer-list* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *code-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *initializer* *willSet-didSet-block* \
+> *variable-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *initializer*_?_ *willSet-didSet-block*
 >
-> _variable-declaration-head_ → _attributes?_ _declaration-modifiers?_ **`var`** \
-> _variable-name_ → _identifier_
+> *variable-declaration-head* → *attributes*_?_ *declaration-modifiers*_?_ **`var`** \
+> *variable-name* → *identifier*
 >
-> _getter-setter-block_ → _code-block_ \
-> _getter-setter-block_ → **`{`** _getter-clause_ _setter-clause?_ **`}`** \
-> _getter-setter-block_ → **`{`** _setter-clause_ _getter-clause_ **`}`** \
-> _getter-clause_ → _attributes?_ _mutation-modifier?_ **`get`** _code-block_ \
-> _setter-clause_ → _attributes?_ _mutation-modifier?_ **`set`** _setter-name?_ _code-block_ \
-> _setter-name_ → **`(`** _identifier_ **`)`**
+> *getter-setter-block* → *code-block* \
+> *getter-setter-block* → **`{`** *getter-clause* *setter-clause*_?_ **`}`** \
+> *getter-setter-block* → **`{`** *setter-clause* *getter-clause* **`}`** \
+> *getter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** *code-block* \
+> *setter-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`** *setter-name*_?_ *code-block* \
+> *setter-name* → **`(`** *identifier* **`)`**
 >
-> _getter-setter-keyword-block_ → **`{`** _getter-keyword-clause_ _setter-keyword-clause?_ **`}`** \
-> _getter-setter-keyword-block_ → **`{`** _setter-keyword-clause_ _getter-keyword-clause_ **`}`** \
-> _getter-keyword-clause_ → _attributes?_ _mutation-modifier?_ **`get`** \
-> _setter-keyword-clause_ → _attributes?_ _mutation-modifier?_ **`set`**
+> *getter-setter-keyword-block* → **`{`** *getter-keyword-clause* *setter-keyword-clause*_?_ **`}`** \
+> *getter-setter-keyword-block* → **`{`** *setter-keyword-clause* *getter-keyword-clause* **`}`** \
+> *getter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`get`** \
+> *setter-keyword-clause* → *attributes*_?_ *mutation-modifier*_?_ **`set`**
 >
-> _willSet-didSet-block_ → **`{`** _willSet-clause_ _didSet-clause?_ **`}`** \
-> _willSet-didSet-block_ → **`{`** _didSet-clause_ _willSet-clause?_ **`}`** \
-> _willSet-clause_ → _attributes?_ **`willSet`** _setter-name?_ _code-block_ \
-> _didSet-clause_ → _attributes?_ **`didSet`** _setter-name?_ _code-block_
+> *willSet-didSet-block* → **`{`** *willSet-clause* *didSet-clause*_?_ **`}`** \
+> *willSet-didSet-block* → **`{`** *didSet-clause* *willSet-clause*_?_ **`}`** \
+> *willSet-clause* → *attributes*_?_ **`willSet`** *setter-name*_?_ *code-block* \
+> *didSet-clause* → *attributes*_?_ **`didSet`** *setter-name*_?_ *code-block*
+
+<!--
+  NOTE: Type annotations are required for computed properties -- the
+  types of those properties aren't computed/inferred.
+-->
 
 ## 타입 별칭 선언 (Type Alias Declaration)
 
-_타입 별칭 선언 (type alias declaration)_ 은 프로그램에 기존 타입 명명된 별칭을 도입합니다. 타입 별칭 선언은 `typealias` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
+*타입 별칭 선언(type alias declaration)*은 프로그램의 기존 타입에 별칭을 도입합니다.
+타입 별칭 선언은 `typealias` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
 
 ```swift
 typealias <#name#> = <#existing type#>
 ```
 
-타입 별칭이 선언된 후 별칭된 _이름 (name)_ 은 프로그램에서 _기존 타입 (existing type)_ 대신에 사용될 수 있습니다. _기존 타입 (existing type)_ 은 명명된 타입 또는 복합 타입일 수 있습니다. 타입 별칭은 새로운 타입을 생성하지 않습니다; 간단하게 기존 타입을 참조하도록 이름을 허용합니다.
+타입 별칭이 선언된 후 별칭된 위 형식의 *이름(name)*은
+프로그램에서 위 형식의 *기존 타입(existing type)* 대신에 사용할 수 있습니다.
+위 형식의 *기존 타입(existing type)*은 명명 타입이나 복합 타입일 수 있습니다.
+타입 별칭은 새로운 타입을 생성하지 않습니다;
+간단하게 기존 타입을 참조하도록 이름을 허용합니다.
 
-타입 별칭 선언은 기존 제네릭 타입에 이름을 제공하기 위해 제네릭 파라미터를 사용할 수 있습니다. 타입 별칭은 기존 타입의 일부 또는 모든 제네릭 파라미터에 대한 구체적인 타입을 제공할 수 있습니다:
+타입 별칭 선언은 제네릭 파라미터를 사용하여
+기존 제네릭 타입에 이름을 제공할 수 있습니다.
+타입 별칭은 기존 타입의 제너릭 파라미터 중
+일부나 전부에 대해 구체적인 타입을 제공할 수 있습니다.
+예를 들어:
 
 ```swift
 typealias StringDictionary<Value> = Dictionary<String, Value>
@@ -452,21 +602,72 @@ var dictionary1: StringDictionary<Int> = [:]
 var dictionary2: Dictionary<String, Int> = [:]
 ```
 
-타입 별칭이 제네릭 파라미터로 선언되면 파라미터의 제약조건은 기존 타입의 제네릭 파라미터의 제약조건과 완벽하게 일치해야 합니다. 예를 들어:
+<!--
+  - test: `typealias-with-generic`
+
+  ```swifttest
+  -> typealias StringDictionary<Value> = Dictionary<String, Value>
+  ---
+  // The following dictionaries have the same type.
+  -> var dictionary1: StringDictionary<Int> = [:]
+  -> var dictionary2: Dictionary<String, Int> = [:]
+  ```
+-->
+
+타입 별칭이 제네릭 파라미터와 함께 선언될 때, 해당 파라미터의 제약조건은
+기존 타입의 제네릭 파라미터의 제약조건과 완벽하게 일치해야 합니다.
+예를 들어:
 
 ```swift
 typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
 ```
 
-타입 별칭과 기존 타입은 서로 바꿔서 사용될 수 있으므로 타입 별칭은 추가로 제네릭 제약조건을 도입할 수 없습니다.
+<!--
+  - test: `typealias-with-generic-constraint`
 
-타입 별칭은 선언에서 모든 제네릭 파라미터를 생략하여 기존 타입의 제네릭 파라미터를 전달할 수 있습니다. 예를 들어 여기 선언한 `Diccionario` 타입 별칭은 `Dictionary` 와 동일한 제네릭 파라미터와 제약조건을 가집니다.
+  ```swifttest
+  -> typealias DictionaryOfInts<Key: Hashable> = Dictionary<Key, Int>
+  ```
+-->
+
+타입 별칭과 기존 타입은 서로 바꿔서 사용될 수 있으므로,
+타입 별칭은 추가로 제네릭 제약조건을 도입할 수 없습니다.
+
+타입 별칭은 선언에서 모든 제네릭 파라미터를 생략하여
+기존 타입의 제네릭 파라미터를 전달할 수 있습니다.
+예를 들어
+여기 선언한 `Diccionario` 타입 별칭은
+`Dictionary`와 동일한 제네릭 파라미터와 제약조건을 가집니다.
 
 ```swift
 typealias Diccionario = Dictionary
 ```
 
-프로토콜 선언 내에 타입 별칭은 자주 사용되는 타입에 더 짧고 더 편리한 이름으로 제공할 수 있습니다. 예를 들어:
+<!--
+  - test: `typealias-using-shorthand`
+
+  ```swifttest
+  -> typealias Diccionario = Dictionary
+  ```
+-->
+
+<!--
+  Note that the compiler doesn't currently enforce this. For example, this works but shouldn't:
+  typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
+-->
+
+<!--
+  Things that shouldn't work:
+  typealias NotRedeclaringSomeOfTheGenericParameters = Dictionary<T, String>
+  typealias NotRedeclaringAnyOfTheGenericParameters = Dictionary
+  typealias NotProvidingTheCorrectConstraints<T> = Dictionary<T, Int>
+  typealias ProvidingMoreSpecificConstraints<T: Comparable & Hashable> = Dictionary<T, Int>
+-->
+
+프로토콜 선언 내의
+타입 별칭은 자주 사용되는 타입에
+더 짧고 편리한 이름을 제공할 수 있습니다.
+예를 들어:
 
 ```swift
 protocol Sequence {
@@ -479,19 +680,48 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
 }
 ```
 
-타입 별칭이 없다면 `sum` 함수는 `T.Element` 대신에 `T.Iterator.Element` 로 연관된 타입을 참조해야 합니다.
+<!--
+  - test: `typealias-in-protocol`
 
-<doc:Declarations#프로토콜-연관-타입-선언-Protocol-Associated-Type-Declaration> 을 참고바랍니다.
+  ```swifttest
+  -> protocol Sequence {
+         associatedtype Iterator: IteratorProtocol
+         typealias Element = Iterator.Element
+     }
+  ---
+  -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
+         // ...
+  >>     return 9000
+     }
+  ```
+-->
+
+타입 별칭이 없다면,
+`sum` 함수는 `T.Element` 대신에 `T.Iterator.Element`로
+연관 타입을 참조해야 합니다.
+
+더 자세한 내용은 <doc:Declarations#프로토콜-연관-타입-선언-Protocol-Associated-Type-Declaration>을 참고바랍니다.
 
 > Grammar of a type alias declaration:
 >
-> _typealias-declaration_ → _attributes?_ _access-level-modifier?_ **`typealias`** _typealias-name_ _generic-parameter-clause?_ _typealias-assignment_ \
-> _typealias-name_ → _identifier_ \
-> _typealias-assignment_ → **`=`** _type_
+> *typealias-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`typealias`** *typealias-name* *generic-parameter-clause*_?_ *typealias-assignment* \
+> *typealias-name* → *identifier* \
+> *typealias-assignment* → **`=`** *type*
+
+<!--
+  Old grammar:
+  typealias-declaration -> typealias-head typealias-assignment
+  typealias-head -> ``typealias`` typealias-name type-inheritance-clause-OPT
+  typealias-name -> identifier
+  typealias-assignment -> ``=`` type
+-->
 
 ## 함수 선언 (Function Declaration)
 
-_함수 선언 (function declaration)_ 은 프로그램에 함수 또는 메서드를 도입합니다. 클래스, 구조체, 열거형, 또는 프로토콜의 컨텍스트에 선언된 함수는 _메서드 (method)_ 로 참조됩니다. 함수 선언은 `func` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
+*함수 선언(function declaration)*은 프로그램의 함수나 메서드를 도입합니다.
+클래스, 구조체, 열거형, 프로토콜의 컨텍스트에 선언된 함수는
+*메서드(method)*로 참조됩니다.
+함수 선언은 `func` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
 
 ```swift
 func <#function name#>(<#parameters#>) -> <#return type#> {
@@ -499,7 +729,8 @@ func <#function name#>(<#parameters#>) -> <#return type#> {
 }
 ```
 
-함수가 `Void` 의 반환 타입을 가지면 반환 타입은 다음과 같이 생략될 수 있습니다:
+함수가 `Void`의 반환 타입을 가지면,
+반환 타입은 다음과 같이 생략할 수 있습니다:
 
 ```swift
 func <#function name#>(<#parameters#>) {
@@ -507,60 +738,130 @@ func <#function name#>(<#parameters#>) {
 }
 ```
 
-각 파라미터의 타입은 유추될 수 없으므로 반드시 도입되어야 합니다. 파라미터의 타입 앞에 `inout` 을 작성하면 파라미터는 함수의 범위 내에서 수정될 수 있습니다. In-out 파라미터는 아래 <doc:Declarations#In-Out-파라미터-In-Out-Parameters> 에서 자세하게 설명되어 있습니다.
+각 파라미터의 타입은 추론될 수 없으므로
+반드시 포함되어야 합니다.
+파라미터의 타입 앞에 `inout`을 작성하면,
+파라미터는 함수의 범위 내에서 수정될 수 있습니다.
+In-out 파라미터는 아래
+<doc:Declarations#In-Out-파라미터-In-Out-Parameters>에서 자세하게 설명되어 있습니다.
 
-_구문 (statements)_ 에 단일 표현식만 포함된 함수 선언은 해당 표현식의 값을 반환하는 것으로 이해됩니다. 이 암시적 반환 구문은 표현식의 타입과 함수의 반환 타입이 `Void` 가 아니고 어떠한 케이스가 아닌 `Never` 와 같은 열거형이 아닌 경우에만 간주됩니다.
+함수 선어에서 *구문(statements)*에
+단일 표현식만 포함된 경우
+해당 표현식의 값을 반환하는 것으로 이해합니다.
+이 암시적 반환 구문은
+표현식의 타입과 함수의 반환 타입이
+`Void`가 아니고
+케이스가 없는 `Never`와 같은 열거형이 아닌 경우에만 간주됩니다.
 
-함수는 함수의 반환 타입으로 튜플 타입을 사용하여 여러 값을 반환할 수 있습니다.
+<!--
+  As of Swift 5.3,
+  the only way to make an uninhabited type is to create an empty enum,
+  so just say that directly instead of using & defining the compiler jargon.
+-->
 
-함수 정의는 다른 함수 선언 안에 나타날 수 있습니다. 이러한 함수를 _중첩 함수 (nested function)_ 라 합니다.
+함수는 함수의 반환 타입으로
+튜플 타입을 사용하여 여러 값을 반환할 수 있습니다.
 
-중첩 함수는 in-out 파라미터와 같이 절대 탈출되지 않는 값을 캡처하거나 비탈출 함수 인자로 전달된 경우 비탈출 입니다. 그렇지 않으면 중첩 함수는 탈출 함수 입니다.
+<!--
+  TODO: ^-- Add some more here.
+-->
 
-중첩된 함수에 대한 내용은 <doc:Functions#중첩-함수-Nested-Functions> 를 참고바랍니다.
+함수 정의는 다른 함수 선언 내에 나타날 수 있습니다.
+이러한 함수를 *중첩 함수(nested function)*라고 합니다.
+
+중첩 함수는 in-out 파라미터와 같이
+절대 탈출하지 않는 값을 캡처하거나
+비탈출 함수 인자로 전달된 경우
+비탈출 입니다.
+그렇지 않으면 중첩 함수는 탈출 함수 입니다.
+
+중첩된 함수에 대한 내용은
+<doc:Functions#중첩-함수-Nested-Functions>를 참고바랍니다.
 
 ### 파라미터 이름 (Parameter Names)
 
-함수 파라미터는 각 파라미터가 여러 형식 중 하나를 갖는 콤마로 구분된 리스트입니다. 함수 호출에서 인자의 순서는 함수의 선언 내에 파라미터의 순서와 일치해야 합니다. 파라미터 리스트에서 가장 간단한 형식은 다음과 같습니다:
+함수 파라미터는 각 파라미터가 여러 형식 중 하나를 갖는
+콤마로 구분된 목록입니다.
+함수 호출에서 인자의 순서는
+함수의 선언 내에 파라미터의 순서와 일치해야 합니다.
+파라미터 목록에서 가장 간단한 형식은 다음과 같습니다:
 
 ```swift
 <#parameter name#>: <#parameter type#>
 ```
 
-파라미터는 함수 본문 내에서 사용되는 이름 뿐만 아니라 함수 또는 메서드 호출할 때 사용되는 인자 레이블이 있습니다. 기본적으로 파라미터 이름은 인자 레이블로도 사용됩니다. 예를 들어:
+파라미터는 함수 본문 내에서 사용되는
+이름 뿐만 아니라
+함수나 메서드 호출할 때 사용되는
+인자 레이블이 있습니다.
+기본적으로
+파라미터 이름은 인자 레이블로도 사용됩니다.
+예를 들어:
 
 ```swift
 func f(x: Int, y: Int) -> Int { return x + y }
 f(x: 1, y: 2) // both x and y are labeled
 ```
 
-다음의 형식 중 하나로 인자 레이블의 기본 동작을 재정의 할 수 있습니다:
+<!--
+  - test: `default-parameter-names`
+
+  ```swifttest
+  -> func f(x: Int, y: Int) -> Int { return x + y }
+  >> let r0 =
+  -> f(x: 1, y: 2) // both x and y are labeled
+  >> assert(r0 == 3)
+  ```
+-->
+
+<!--
+  Rewrite the above to avoid bare expressions.
+  Tracking bug is <rdar://problem/35301593>
+-->
+
+다음의 형식 중 하나로
+인자 레이블의 기본 동작을 재정의할 수 있습니다:
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter type#>
 _ <#parameter name#>: <#parameter type#>
 ```
 
-파라미터 이름 전에 이름은 파라미터 이름과 다를 수 있는 명시적 인자 레이블을 파라미터에 제공합니다. 해당 인자는 함수 또는 메서드 호출에서 주어진 인자 레이블을 사용해야 합니다.
+파라미터 이름 전에 이름은
+파라미터에 명시적 인자 레이블을 부여하고,
+이것은 파라미터 이름과 다를 수 있습니다.
+해당 인자는 함수나 메서드 호출에서
+주어진 인자 레이블을 사용해야 합니다.
 
-파라미터 이름 전에 언더바 (`_`) 는 인자 레이블을 숨깁니다. 해당 인자는 함수 또는 메서드 호출에서 레이블이 없어야 합니다.
+파라미터 이름 전에 언더바(`_`)는
+인자 레이블을 숨깁니다.
+해당 인자는 함수나 메서드 호출에서 레이블이 없어야 합니다.
 
 ```swift
 func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
 repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
 ```
 
-### 파라미터 수식어 (Parameter Modifiers)
+<!--
+  - test: `overridden-parameter-names`
 
-*파라미터 수식어 (parameter modifier)* 는 함수에 전달된 인자를 변경합니다.
+  ```swifttest
+  -> func repeatGreeting(_ greeting: String, count n: Int) { /* Greet n times */ }
+  -> repeatGreeting("Hello, world!", count: 2) //  count is labeled, greeting is not
+  ```
+-->
+
+### 파라미터 수정자 (Parameter Modifiers)
+
+*파라미터 수정자(parameter modifier)*는 인자가 함수에 전달되는 방식을 변경합니다.
 
 ```swift
 <#argument label#> <#parameter name#>: <#parameter modifier#> <#parameter type#>
 ```
 
-파라미터 수식어를 사용하려면,
-인자의 타입 전에
-`inout`, `borrowing`, 또는 `consuming` 을 작성합니다.
+파라미터 수정자를 사용하려면,
+인자의 타입 앞에
+`inout`, `borrowing`, `consuming`을 작성합니다.
 
 ```swift
 func someFunction(a: inout A, b: consuming B, c: C) { ... }
@@ -568,10 +869,11 @@ func someFunction(a: inout A, b: consuming B, c: C) { ... }
 
 #### In-Out 파라미터 (In-Out Parameters)
 
-기본적으로, Swift 에서 함수 인자는 값으로 전달됩니다:
-함수에서 수정된 것은 호출자에게 보여지지 않습니다.
-대신 in-out 파라미터를 만드려면,
-`inout` 파라미터 수식어를 적용합니다.
+기본적으로, Swift에서 함수 인자는 값으로 전달됩니다:
+함수 내에서 수정된 것은 호출자에게 보이지 않습니다.
+in-out 파라미터를 만드려면,
+`inout` 파라미터 수정자를 적용합니다.
+
 
 ```swift
 func someFunction(a: inout Int) {
@@ -581,7 +883,7 @@ func someFunction(a: inout Int) {
 
 in-out 파라미터를 포함하는 함수를 호출할 때,
 인자의 값이 변경될 수 있는 함수 호출인 것을 나타내기위해
-in-out 인자는 앰퍼샌드 (`&`) 를 앞에 붙여야 합니다.
+in-out 인자는 앰퍼샌드(`&`)를 앞에 붙여야 합니다.
 
 ```swift
 var x = 7
@@ -591,15 +893,36 @@ print(x)  // Prints "8"
 
 In-out 파라미터는 다음과 같이 전달됩니다:
 
-1. 함수가 호출될 때 인자의 값은 복사됩니다.
-2. 함수의 본문 내에서 복사본은 수정됩니다.
-3. 함수가 반환될 때 복사본의 값은 기존 인자에 할당됩니다.
+1. 함수가 호출될 때,
+   인자의 값은 복사됩니다.
+2. 함수의 본문 내에서
+   복사본은 수정됩니다.
+3. 함수가 반환될 때,
+   복사본의 값은 기존 인자에 할당됩니다.
 
-이 동작은 _copy-in copy-out_ 또는 _call by value 결과_ 라고 합니다. 예를 들어 연산 프로퍼티 또는 관찰자가 있는 프로퍼티가 in-out 파라미터로 전달되는 경우 getter 는 함수 호출의 부분으로 호출되고 setter 는 함수 반환의 부분으로 호출됩니다.
+이 동작은 *copy-in copy-out*이나
+*call by value 결과*라고 합니다.
+예를 들어
+연산 프로퍼티나 관찰자가 있는 프로퍼티가
+in-out 파라미터로 전달되는 경우
+getter는 함수 호출의 부분으로 호출되고
+setter는 함수 반환의 부분으로 호출됩니다.
 
-최적화로 인자가 메모리의 물리적 주소에 저장된 값인 경우 동일한 메모리 위치가 함수 본문 내부 및 외부에서 사용됩니다. 이런 최적화 동작을 _call by reference_ 라고 합니다; copy-in copy-out 모델의 모든 요구사항을 충족하는 동시에 복사의 오버헤드를 제거합니다. call-by-reference 최적화에 의존하지 않고 copy-in copy-out 에 의해 주어진 모델을 사용하여 작성하면 최적화에 상관없이 올바르게 작동되도록 합니다.
+최적화로
+인자가 메모리의 물리적 주소에 저장된 값인 경우
+동일한 메모리 위치가 함수 본문 내부 및 외부에서 모두 사용됩니다.
+이런 최적화 동작을 *call by reference*라고 합니다;
+이것은 copy-in copy-out 모델의
+모든 요구사항을 충족하는 동시에
+복사의 오버헤드를 제거합니다.
+call-by-reference 최적화에 의존하지 않고
+copy-in copy-out에 의해 주어진 모델을 사용하여 작성하면,
+최적화에 상관없이 올바르게 작동되도록 합니다.
 
-함수 내에서 기존값이 현재 범위에서 사용가능 하더라도 in-out 인자로 전달된 값은 접근하면 안됩니다. 기존값에 접근하는 것은 값에 대한 동시 접근이며 메모리 독점성을 위반합니다.
+함수 내에서 기존값이 현재 범위에서 사용가능 하더라도
+in-out 인자로 전달된 값은 접근하면 안됩니다.
+기존값에 접근하는 것은 값에 대한 동시 접근이며
+메모리 독점성을 위반합니다.
 
 ```swift
 var someValue: Int
@@ -611,7 +934,8 @@ func someFunction(a: inout Int) {
 someFunction(&someValue)
 ```
 
-같은 이유로 여러개의 in-out 파라미터에 동일한 값을 전달할 수 없습니다.
+같은 이유로
+여러 개의 in-out 파라미터에 동일한 값을 전달할 수 없습니다.
 
 ```swift
 var someValue: Int
@@ -624,9 +948,22 @@ func someFunction(a: inout Int, b: inout Int) {
 someFunction(&someValue, &someValue)
 ```
 
-메모리 안정성과 메모리 독점성에 대한 자세한 내용은 <doc:MemorySafety> 을 참고바랍니다.
+메모리 안정성과 메모리 독점성에 대한 자세한 내용은
+<doc:MemorySafety>을 참고바랍니다.
 
-in-out 파라미터를 캡처하는 클로저 또는 중첩 함수는 비탈출 이어야 합니다. in-out 파라미터를 변경하지 않고 캡처 해야하는 경우 캡처 리스트를 사용하여 파라미터를 변경하지 않고 명시적으로 캡처해야 합니다.
+<!--
+  When the call-by-reference optimization is in play,
+  it would happen to do what you want.
+  But you still shouldn't do that --
+  as noted above, you're not allowed to depend on
+  behavioral differences that happen because of call by reference.
+-->
+
+in-out 파라미터를 캡처하는 클로저나 중첩 함수는
+비탈출 이어야 합니다.
+in-out 파라미터를 변경하지 않고
+캡처 해야하는 경우,
+캡처 리스트를 사용하여 파라미터를 변경하지 않고 명시적으로 캡처해야 합니다.
 
 ```swift
 func someFunction(a: inout Int) -> () -> Int {
@@ -634,7 +971,27 @@ func someFunction(a: inout Int) -> () -> Int {
 }
 ```
 
-in-out 파라미터를 캡처하고 변경이 필요한 경우 함수가 반환하기 전에 모든 변경이 완료되었는지 확인하는 멀티 스레드 코드와 같이 명시적으로 지역 복사 (local copy) 를 사용합니다.
+<!--
+  - test: `explicit-capture-for-inout`
+
+  ```swifttest
+  -> func someFunction(a: inout Int) -> () -> Int {
+         return { [a] in return a + 1 }
+     }
+  >> class C { var x = 100 }
+  >> let c = C()
+  >> let f = someFunction(a: &c.x)
+  >> c.x = 200
+  >> let r = f()
+  >> print(r, r == c.x)
+  << 101 false
+  ```
+-->
+
+in-out 파라미터를 캡처하고 변경이 필요한 경우,
+함수가 반환하기 전에 모든 변경이 완료되었는지 확인하는
+멀티 스레드 코드와 같이
+명시적으로 지역 복사(local copy)를 사용합니다.
 
 ```swift
 func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
@@ -648,7 +1005,60 @@ func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
 }
 ```
 
-in-out 파라미터에 대한 자세한 설명과 예시는 <doc:Functions#In-Out-파라미터-In-Out-Parameters> 를 참고바랍니다.
+<!--
+  - test: `cant-pass-inout-aliasing`
+
+  ```swifttest
+  >> import Dispatch
+  >> func someMutatingOperation(_ a: inout Int) {}
+  -> func multithreadedFunction(queue: DispatchQueue, x: inout Int) {
+        // Make a local copy and manually copy it back.
+        var localX = x
+        defer { x = localX }
+
+        // Operate on localX asynchronously, then wait before returning.
+        queue.async { someMutatingOperation(&localX) }
+        queue.sync {}
+     }
+  ```
+-->
+
+in-out 파라미터에 대한 자세한 설명과 예시는
+<doc:Functions#In-Out-파라미터-In-Out-Parameters>를 참고바랍니다.
+
+<!--
+  - test: `escaping-cant-capture-inout`
+
+  ```swifttest
+  -> func outer(a: inout Int) -> () -> Void {
+         func inner() {
+             a += 1
+         }
+         return inner
+     }
+  !$ error: escaping local function captures 'inout' parameter 'a'
+  !! return inner
+  !! ^
+  !$ note: parameter 'a' is declared 'inout'
+  !! func outer(a: inout Int) -> () -> Void {
+  !! ^
+  !$ note: captured here
+  !! a += 1
+  !! ^
+  -> func closure(a: inout Int) -> () -> Void {
+         return { a += 1 }
+     }
+  !$ error: escaping closure captures 'inout' parameter 'a'
+  !! return { a += 1 }
+  !! ^
+  !$ note: parameter 'a' is declared 'inout'
+  !! func closure(a: inout Int) -> () -> Void {
+  !! ^
+  !$ note: captured here
+  !! return { a += 1 }
+  !! ^
+  ```
+-->
 
 #### 파라미터 차용과 소비 (Borrowing and Consuming Parameters)
 
@@ -657,17 +1067,17 @@ in-out 파라미터에 대한 자세한 설명과 예시는 <doc:Functions#In-Ou
 필요할 때 값을 복사합니다.
 기본 규칙은 대부분 상황에서 오버헤드를 최소화 하도록 설계되어 있습니다 ---
 특별한 제어를 원하면,
-`borrowing` 또는 `consuming` 파라미터 수식어를 적용할 수 있습니다.
+`borrowing` 또는 `consuming` 파라미터 수정자를 적용할 수 있습니다.
 이 경우에,
 복사 작업을 명시적으로 표시하려면 `copy` 를 사용합니다.
 
 기본 규칙을 사용하는 것과 상관없이,
 Swift 는 객체 생명주기와 소유권이
 모든 상황에서 올바르게 관리되도록 보장합니다.
-이 파라미터 수식어는 정확성이 아닌 특정 사용 패턴에
+이 파라미터 수정자는 정확성이 아닌 특정 사용 패턴에
 상대적 효율성에만 영향을 줍니다.
 
-`borrowing` 수식어는 함수가
+`borrowing` 수정자는 함수가
 파라미터의 값을 유지하지 않음을 나타냅니다.
 이 경우에, 호출자는 객체의 소유권과
 객체의 생명주기에 대한 책임을 유지합니다.
@@ -698,7 +1108,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 ```
 
 반대로,
-`consuming` 파라미터 수식어는
+`consuming` 파라미터 수정자는
 함수가 값의 소유권을 가지고 있고,
 함수가 반환하기 전에 값을 저장하거나 파기하는 책임이 있음을
 나타냅니다.
@@ -802,11 +1212,11 @@ f(7)      // Invalid, missing argument label
 
 ### 특별한 종류의 메서드 (Special Kinds of Methods)
 
-`self` 를 수정하는 열거형 또는 구조체에 메서드는 `mutating` 선언 수식어로 표시되어야 합니다.
+`self` 를 수정하는 열거형 또는 구조체에 메서드는 `mutating` 선언 수정자로 표시되어야 합니다.
 
-슈퍼클래스 메서드를 재정의한 메서드는 `override` 선언 수식어로 표시되어야 합니다. `override` 수식어 없이 메서드를 재정의하거나 슈퍼클래스 메서드를 재정의 하지 않는 메서드에 `override` 수식어를 사용하면 컴파일 오류가 발생합니다.
+슈퍼클래스 메서드를 재정의한 메서드는 `override` 선언 수정자로 표시되어야 합니다. `override` 수정자 없이 메서드를 재정의하거나 슈퍼클래스 메서드를 재정의 하지 않는 메서드에 `override` 수정자를 사용하면 컴파일 오류가 발생합니다.
 
-타입의 인스턴스가 아닌 타입과 관련된 메서드는 열거형과 구조체의 경우 `static` 선언 수식어나 클래스의 경우 `static` 또는 `class` 선언 수식어로 표시되어야 합니다. `class` 선언 수식어로 표시된 클래스 타입 메서드는 서브클래스 구현에 의해 재정의 될 수 있습니다; `class final` 또는 `static` 으로 표시된 클래스 타입 메서드는 재정의 될 수 없습니다.
+타입의 인스턴스가 아닌 타입과 관련된 메서드는 열거형과 구조체의 경우 `static` 선언 수정자나 클래스의 경우 `static` 또는 `class` 선언 수정자로 표시되어야 합니다. `class` 선언 수정자로 표시된 클래스 타입 메서드는 서브클래스 구현에 의해 재정의 될 수 있습니다; `class final` 또는 `static` 으로 표시된 클래스 타입 메서드는 재정의 될 수 없습니다.
 
 ### 특별한 이름의 메서드 (Methods with Special Names)
 
@@ -1019,7 +1429,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
 
 열거형은 재귀적 구조체를 가질 수 있습니다. 이 말은 열거형 타입 자체의 인스턴스 인 연관값을 사용하는 케이스를 가질 수 있다는 의미입니다. 그러나 열거형 타입의 인스턴스는 메모리에 고정된 레이아웃이 있음을 의미하는 값 의미를 가지고 있습니다. 재귀를 지원하려면 컴파일러는 간접 레이어를 삽입해야 합니다.
 
-특정 열거형 케이스에 대해 간접을 사용하려면 `indirect` 선언 수식어로 표시해야 합니다. 간접 케이스는 연관값을 가지고 있어야 합니다.
+특정 열거형 케이스에 대해 간접을 사용하려면 `indirect` 선언 수정자로 표시해야 합니다. 간접 케이스는 연관값을 가지고 있어야 합니다.
 
 ```swift
 enum Tree<T> {
@@ -1028,9 +1438,9 @@ enum Tree<T> {
 }
 ```
 
-연관값을 가진 열거형의 모든 케이스에 대해 간접을 사용하려면 전체 열거형을 `indirect` 수식어로 표시합니다 — 이것은 열거형이 케이스 `indirect` 수식어를 표시해야 될 케이스를 많이 포함하는 경우 편리합니다.
+연관값을 가진 열거형의 모든 케이스에 대해 간접을 사용하려면 전체 열거형을 `indirect` 수정자로 표시합니다 — 이것은 열거형이 케이스 `indirect` 수정자를 표시해야 될 케이스를 많이 포함하는 경우 편리합니다.
 
-`indirect` 수식어로 표시된 열거형은 연관값을 가진 케이스와 그렇지 않은 케이스를 포함할 수 있습니다. 이 말은 `indirect` 수식어로 표시된 케이스는 포함할 수 없다는 의미입니다.
+`indirect` 수정자로 표시된 열거형은 연관값을 가진 케이스와 그렇지 않은 케이스를 포함할 수 있습니다. 이 말은 `indirect` 수정자로 표시된 케이스는 포함할 수 없다는 의미입니다.
 
 ### 원시값 타입의 케이스를 가진 열거형 (Enumerations with Cases of a Raw-Value Type)
 
@@ -1152,9 +1562,9 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 
 <doc:Declarations#이니셜라이저-선언-Initializer-Declaration> 에서 설명한대로 클래스는 지정된 이니셜라이저 (designated initializers) 과 편의 이니셜라이저 (convenience initializers) 을 가질 수 있습니다. 클래스의 지정된 이니셜라이저는 모든 클래스의 선언된 프로퍼티가 초기화 되어야 하고 슈퍼클래스의 지정된 이니셜라이저를 호출하기 전에 수행되어야 합니다.
 
-클래스는 슈퍼클래스의 프로퍼티, 메서드, 서브스크립트, 그리고 이니셜라이저를 재정의 할 수 있습니다. 프로퍼티, 메서드, 서브스크립트, 그리고 지정된 이니셜라이저 재정의는 `override` 선언 수식어로 표시되어야 합니다.
+클래스는 슈퍼클래스의 프로퍼티, 메서드, 서브스크립트, 그리고 이니셜라이저를 재정의 할 수 있습니다. 프로퍼티, 메서드, 서브스크립트, 그리고 지정된 이니셜라이저 재정의는 `override` 선언 수정자로 표시되어야 합니다.
 
-서브클래스가 슈퍼클래스의 이니셜라이저 구현을 요구하려면 슈퍼클래스의 이니셜라이저를 `required` 선언 수식어로 표시해야 합니다. 해당 이니셜라이저의 서브클래스의 구현도 `required` 선언 수식어로 표시되어야 합니다.
+서브클래스가 슈퍼클래스의 이니셜라이저 구현을 요구하려면 슈퍼클래스의 이니셜라이저를 `required` 선언 수정자로 표시해야 합니다. 해당 이니셜라이저의 서브클래스의 구현도 `required` 선언 수정자로 표시되어야 합니다.
 
 _슈퍼클래스 (superclass)_ 에 선언된 프로퍼티와 메서드가 현재 클래스에 의해 상속되더라도 _슈퍼클래스 (superclass)_ 에 선언된 지정된 이니셜라이저는 <doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance> 에서 설명한대로 서브클래스가 조건이 충족될 때만 상속됩니다. Swift 클래스는 범용 기본 클래스는 상속하지 않습니다.
 
@@ -1245,7 +1655,7 @@ protocol <#protocol name#>: <#inherited protocols#> {
 
 해당 타입에 확장 선언에서 프로토콜을 채택하기 위해 이전에 선언된 타입에 프로토콜 준수를 추가할 수 있습니다. 확장에서 채택된 프로토콜의 모든 요구사항을 구현해야 합니다. 타입이 이미 모든 요구사항을 구현한 경우 빈 확장 선언의 본문으로 남겨둘 수 있습니다.
 
-기본적으로 프로토콜을 준수하는 타입은 프로토콜에 선언된 모든 프로퍼티, 메서드, 그리고 서브스크립트를 구현해야 합니다. 이 말은 준수하는 타입에 의한 구현이 옵셔널로 지정하기 위해선 `optional` 선언 수식어로 프로토콜 멤버 선언을 표시해야 한다는 의미입니다. `optional` 수식어는 `objc` 속성으로 표시된 멤버와 `objc` 속성으로 표시된 프로토콜의 멤버에만 적용될 수 있습니다. 결과적으로 클래스 타입만 옵셔널 멤버 요구사항을 포함한 프로토콜을 채택하고 준수할 수 있습니다. optional 선언 수식어 사용에 대한 자세한 내용과 옵셔널 프로토콜 멤버에 어떻게 접근하는지에 대한 가이드 — 예를 들어 타입이 이를 구현하는지 확실하지 않은 경우 — 는 <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements> 을 참고바랍니다.
+기본적으로 프로토콜을 준수하는 타입은 프로토콜에 선언된 모든 프로퍼티, 메서드, 그리고 서브스크립트를 구현해야 합니다. 이 말은 준수하는 타입에 의한 구현이 옵셔널로 지정하기 위해선 `optional` 선언 수정자로 프로토콜 멤버 선언을 표시해야 한다는 의미입니다. `optional` 수정자는 `objc` 속성으로 표시된 멤버와 `objc` 속성으로 표시된 프로토콜의 멤버에만 적용될 수 있습니다. 결과적으로 클래스 타입만 옵셔널 멤버 요구사항을 포함한 프로토콜을 채택하고 준수할 수 있습니다. optional 선언 수정자 사용에 대한 자세한 내용과 옵셔널 프로토콜 멤버에 어떻게 접근하는지에 대한 가이드 — 예를 들어 타입이 이를 구현하는지 확실하지 않은 경우 — 는 <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements> 을 참고바랍니다.
 
 열거형의 케이스는 타입 멤버에 대해 프로토콜 요구사항을 충족할 수 있습니다. 특히, 연관값이 없는 열거형 케이스는 `Self` 타입의 get-only 타입 변수에 대해 프로토콜 요구사항을 충족하고 연관값이 있는 열거형 케이스는 파라미터와 인자 레이블이 케이스의 연관값과 일치하게 `Self` 를 반환하는 함수에 대해 프로토콜 요구사항을 충족합니다. 예를 들어:
 
@@ -1317,7 +1727,7 @@ getter 와 setter 요구사항은 다양한 방법으로 준수하는 타입으�
 
 프로토콜은 준수하는 타입이 프로토콜 선언 본문에 프로토콜 메서드 선언을 포함하기 위해 메서드를 구현해야 함을 선언합니다. 프로토콜 메서드 선언은 두가지를 제외하고 함수 선언과 동일한 형식을 가집니다: 함수 본문과 함수 선언의 일부로 기본 파라미터 값을 제공할 수 없습니다. 프로토콜의 메서드 요구사항을 구현하는 준수하는 타입에 대한 예시는 <doc:Protocols#메서드-요구사항-Method-Requirements> 을 참고바랍니다.
 
-프로토콜 선언에 클래스 또는 정적 메서드 요구사항을 선언하려면 `static` 선언 수식어로 메서드 선언을 표시합니다. 프로토콜을 준수하는 구조체와 열거형은 `static` 키워드로 메서드를 선언하고 프로토콜을 준수하는 클래스는 `static` 또는 `class` 키워드로 메서드를 선언합니다. 구조체, 열거형, 또는 클래스에 프로토콜 준수를 추가하는 확장은 확장하는 타입과 동일한 키워드를 사용합니다. 타입 메서드 요구사항에 대한 기본 구현을 제공하는 확장은 `static` 키워드를 사용합니다.
+프로토콜 선언에 클래스 또는 정적 메서드 요구사항을 선언하려면 `static` 선언 수정자로 메서드 선언을 표시합니다. 프로토콜을 준수하는 구조체와 열거형은 `static` 키워드로 메서드를 선언하고 프로토콜을 준수하는 클래스는 `static` 또는 `class` 키워드로 메서드를 선언합니다. 구조체, 열거형, 또는 클래스에 프로토콜 준수를 추가하는 확장은 확장하는 타입과 동일한 키워드를 사용합니다. 타입 메서드 요구사항에 대한 기본 구현을 제공하는 확장은 `static` 키워드를 사용합니다.
 
 <doc:Declarations#함수-선언-Function-Declaration> 도 참고바랍니다.
 
@@ -1331,7 +1741,7 @@ getter 와 setter 요구사항은 다양한 방법으로 준수하는 타입으�
 
 준수하는 타입은 실패할 수 없는 이니셜라이저 (nonfailable initializer) 또는 `init!` 실패 가능한 이니셜라이저 (failable initializer) 을 구현하여 실패할 수 없는 프로토콜 이니셜라이저 요구사항을 충족할 수 있습니다. 준수하는 타입은 모든 종류의 이니셜라이저 구현으로 실패 가능한 프로토콜 이니셜라이저 요구사항을 충족할 수 있습니다.
 
-클래스는 프로토콜의 이니셜라이저 요구사항을 충족하기 위해 이니셜라이저를 구현할 때 이니셜라이저이 `final` 선언 수식어로 표시되어 있지 않다면 `required` 선언 수식어로 표시되어야 합니다.
+클래스는 프로토콜의 이니셜라이저 요구사항을 충족하기 위해 이니셜라이저를 구현할 때 이니셜라이저이 `final` 선언 수정자로 표시되어 있지 않다면 `required` 선언 수정자로 표시되어야 합니다.
 
 <doc:Declarations#이니셜라이저-선언-Initializer-Declaration> 도 참고바랍니다.
 
@@ -1350,7 +1760,7 @@ subscript (<#parameters#>) -> <#return type#> { get set }
 
 서브스크립트 선언은 프로토콜을 준수하는 타입에 대해 최소한의 getter 와 setter 구현 요구사항만 선언합니다. 서브스크립트 선언이 `get` 과 `set` 키워드 모두 포함한다면 준수하는 타입은 getter 와 setter 절 모두 구현해야 합니다. 서브스크립트 선언이 `get` 키워드만 포함한다면 준수하는 타입은 _적어도_ getter 절은 구현해야 하고 선택적으로 setter 절을 구현할 수 있습니다.
 
-프로토콜 선언에서 정적 서브스크립트 요구사항을 선언하려면 `static` 선언 수식어로 서브스크립트 선언을 표시합니다. 프로토콜은 준수하는 구조체와 열거형은 `static` 키워드로 서브스크립트를 선언하고 프로토콜을 준수하는 클래스는 `static` 또는 `class` 키워드로 서브스크립트를 선언합니다. 구조체, 열거형, 또는 클래스에 프로토콜 준수를 추가하는 확장은 확장하는 타입과 동일한 키워드를 사용합니다. 정적 서브스크립트 요구사항에 대한 기본 구현을 제공하는 확장은 `static` 키워드를 사용합니다.
+프로토콜 선언에서 정적 서브스크립트 요구사항을 선언하려면 `static` 선언 수정자로 서브스크립트 선언을 표시합니다. 프로토콜은 준수하는 구조체와 열거형은 `static` 키워드로 서브스크립트를 선언하고 프로토콜을 준수하는 클래스는 `static` 또는 `class` 키워드로 서브스크립트를 선언합니다. 구조체, 열거형, 또는 클래스에 프로토콜 준수를 추가하는 확장은 확장하는 타입과 동일한 키워드를 사용합니다. 정적 서브스크립트 요구사항에 대한 기본 구현을 제공하는 확장은 `static` 키워드를 사용합니다.
 
 <doc:Declarations#서브스크립트-선언-Subscript-Declaration> 도 참고바랍니다.
 
@@ -1404,7 +1814,7 @@ init(<#parameters#>) {
 
 구조체와 열거형에 이니셜라이저는 선언된 다른 이니셜라이저를 호출하여 초기화 프로세스의 일부 또는 전체를 위임할 수 있습니다.
 
-클래스에 편의 이니셜라이저를 선언하려면 `convenience` 선언 수식어로 이니셜라이저 선언을 표시합니다.
+클래스에 편의 이니셜라이저를 선언하려면 `convenience` 선언 수정자로 이니셜라이저 선언을 표시합니다.
 
 ```swift
 convenience init(<#parameters#>) {
@@ -1414,14 +1824,14 @@ convenience init(<#parameters#>) {
 
 편의 이니셜라이저는 초기화 프로세스를 다른 편의 이니셜라이저 또는 클래스의 지정된 이니셜라이저 중 하나로 위임할 수 있습니다. 이 말은 초기화 프로세스는 궁극적으로 클래스의 프로퍼티를 초기화 하는 지정된 이니셜라이저를 호출로 끝나야 한다는 의미입니다. 편의 이니셜라이저는 슈퍼클래스의 이니셜라이저를 호출할 수 없습니다.
 
-모든 서브클래스에 이니셜라이저 구현을 요청하기 위해 `required` 선언 수식어로 지정된 이니셜라이저과 편의 이니셜라이저를 표시할 수 있습니다. 해당 이니셜라이저의 서브클래스의 구현도 `required` 선언 수식어로 표시되어야 합니다.
+모든 서브클래스에 이니셜라이저 구현을 요청하기 위해 `required` 선언 수정자로 지정된 이니셜라이저과 편의 이니셜라이저를 표시할 수 있습니다. 해당 이니셜라이저의 서브클래스의 구현도 `required` 선언 수정자로 표시되어야 합니다.
 
 기본적으로 슈퍼클래스에 선언된 이니셜라이저는 서브클래스에 의해 상속되지 않습니다. 이 말은 서브클래스는 기본값으로 모든 저장 프로퍼티를 초기화 하고 자체 이니셜라이저를 정의하지 않으면 모든 슈퍼클래스의 이니셜라이저를 상속합니다. 서브클래스가 모든 슈퍼클래스의 지정된 이니셜라이저를 재정의하면 슈퍼클래스의 편의 이니셜라이저를 상속합니다.
 
-메서드, 프로퍼티, 그리고 서브스크립트와 마찬가지로 `override` 선언 수식어로 재정의된 지정된 이니셜라이저를 표시해야 합니다.
+메서드, 프로퍼티, 그리고 서브스크립트와 마찬가지로 `override` 선언 수정자로 재정의된 지정된 이니셜라이저를 표시해야 합니다.
 
 > Note\
-> `required` 선언 수식어로 이니셜라이저를 표시하면 서브클래스에서 필수 이니셜라이저를 재정의 할 때 `override` 수식어로 이니셜라이저를 표시하지 않아도 됩니다.
+> `required` 선언 수정자로 이니셜라이저를 표시하면 서브클래스에서 필수 이니셜라이저를 재정의 할 때 `override` 수정자로 이니셜라이저를 표시하지 않아도 됩니다.
 
 함수와 메서드처럼 이니셜라이저는 오류를 던지거나 다시 던질 수 있습니다. 그리고 함수와 메서드처럼 적절한 동작을 나타내기 위해 이니셜라이저의 파라미터 뒤에 `throws` 또는 `rethrows` 키워드를 사용합니다. 마찬가지로 이니셜라이저는 비동기일 수 있으며 이것을 나타내기위해 `async` 키워드를 사용합니다.
 
@@ -1705,7 +2115,7 @@ _파라미터 (parameters)_ 는 서브스크립트 표현식에서 해당 타입
 
 _setter 이름 (setter name)_ 과 둘러싸인 소괄호는 선택사항입니다. setter 이름을 제공하면 setter 의 파라미터의 이름으로 사용됩니다. setter 이름을 제공하지 않으면 setter 의 기본 파라미터 이름은 `value` 입니다. setter 의 파라미터의 타입은 _반환 타입 (return type)_ 과 동일합니다.
 
-_파라미터 (parameters)_ 또는 _반환 타입 (return type)_ 이 오버로딩 중인 것과 다르면 선언된 타입의 서브스크립트 선언을 오버로드 할 수 있습니다. 슈퍼클래스에서 상속된 서브스크립트 선언을 재정의 할 수도 있습니다. 재정의 하면 `override` 선언 수식어로 재정의된 서브스크립트 선언을 표시해야 합니다.
+_파라미터 (parameters)_ 또는 _반환 타입 (return type)_ 이 오버로딩 중인 것과 다르면 선언된 타입의 서브스크립트 선언을 오버로드 할 수 있습니다. 슈퍼클래스에서 상속된 서브스크립트 선언을 재정의 할 수도 있습니다. 재정의 하면 `override` 선언 수정자로 재정의된 서브스크립트 선언을 표시해야 합니다.
 
 서브스크립트 파라미터는 두가지를 제외하고 함수 파라미터와 동일한 규칙을 따릅니다. 기본 적으로 서브스크립트에서 사용하는 파라미터는 함수, 메서드, 그리고 이니셜라이저과 다르게 인자 레이블을 가지지 않습니다. 그러나 함수, 메서드, 그리고 이니셜라이저에서 사용하는 동일한 구문을 사용하여 명시적으로 인자 레이블을 제공할 수 있습니다. 또한 서브스크립트는 in-out 파라미터를 가질 수 없습니다. 서브스크립트 파라미터는 <doc:Declarations#특별한-종류의-파라미터-Special-Kinds-of-Parameters> 에서 설명 한 구문을 사용하여 기본값을 가질 수 있습니다.
 
@@ -1715,7 +2125,7 @@ _파라미터 (parameters)_ 또는 _반환 타입 (return type)_ 이 오버로�
 
 ### 타입 서브스크립트 선언 (Type Subscript Declarations)
 
-타입의 인스턴스가 아닌 타입에 의해 노출되는 서브스크립트를 선언하려면 `static` 선언 수식어로 서브스크립트 선언을 표시합니다. 클래스는 대신 `class` 선언 수식어로 타입 연산 프로퍼티를 표시하여 서브클래스가 슈퍼클래스의 구현을 재정의 할 수 있습니다. 클래스 선언에서 `static` 키워드는 `class` 와 `final` 선언 수식어 모두 선언에 표시하는 것과 동일한 효과를 가집니다.
+타입의 인스턴스가 아닌 타입에 의해 노출되는 서브스크립트를 선언하려면 `static` 선언 수정자로 서브스크립트 선언을 표시합니다. 클래스는 대신 `class` 선언 수정자로 타입 연산 프로퍼티를 표시하여 서브클래스가 슈퍼클래스의 구현을 재정의 할 수 있습니다. 클래스 선언에서 `static` 키워드는 `class` 와 `final` 선언 수정자 모두 선언에 표시하는 것과 동일한 효과를 가집니다.
 
 > Grammar of a subscript declaration:
 >
@@ -1756,7 +2166,7 @@ _연산자 선언 (operator declaration)_ 은 프로그램에 새로운 중위 (
 
 중위, 접두사, 그리고 접미사의 세가지 수정사항의 연산자를 선언할 수 있습니다. 연산자의 _고정성 (fixity)_ 은 연산자의 피연산자의 상대 위치를 지정합니다.
 
-연산자 선언에는 세가지 기본 형식이 있으며 각 고정성 마다 하나씩 있습니다. 연산자의 고정성은 `operator` 키워드 전에 `infix`, `prefix`, 또는 `postfix` 선언 수식어로 연산자의 선언을 표시하여 지정합니다. 각 형식에서 연산자의 이름은 <doc:LexicalStructure#연산자-Operators> 에서 정의된 연산자 문자만 포함 할 수 있습니다.
+연산자 선언에는 세가지 기본 형식이 있으며 각 고정성 마다 하나씩 있습니다. 연산자의 고정성은 `operator` 키워드 전에 `infix`, `prefix`, 또는 `postfix` 선언 수정자로 연산자의 선언을 표시하여 지정합니다. 각 형식에서 연산자의 이름은 <doc:LexicalStructure#연산자-Operators> 에서 정의된 연산자 문자만 포함 할 수 있습니다.
 
 다음 형식은 새로운 중위 연산자를 선언합니다:
 
@@ -1788,7 +2198,7 @@ _접미사 연산자 (postfix operator)_ 는 표현식 `a!` 에서 접미사 강
 
 접두사 연산와 같이 접미사 연산자 선언은 우선순위를 지정하지 않습니다. 접미사 연산자는 비연관성 (nonassociative) 입니다.
 
-새로운 연산자를 선언한 후에 연산자와 같은 이름을 가지는 정적 메서드를 선언하여 구현합니다. 정적 메서드는 연산자가 값을 인자로 가지는 타입 중 하나의 멤버입니다 — 예를 들어 `Double` 에 `Int` 를 곱하는 연산자는 `Double` 또는 `Int` 구조체에서 정적 메서드로 구현됩니다. 접두사 또는 접미사 연산자를 구현하면 해당하는 `prefix` 또는 `postfix` 선언 수식어를 사용하여 메서드 선언을 표시해야 합니다. 새로운 연산자를 어떻게 생성하고 구현하는지에 대한 예시는 <doc:AdvancedOperators#사용자-정의-연산자-Custom-Operators> 를 참고바랍니다.
+새로운 연산자를 선언한 후에 연산자와 같은 이름을 가지는 정적 메서드를 선언하여 구현합니다. 정적 메서드는 연산자가 값을 인자로 가지는 타입 중 하나의 멤버입니다 — 예를 들어 `Double` 에 `Int` 를 곱하는 연산자는 `Double` 또는 `Int` 구조체에서 정적 메서드로 구현됩니다. 접두사 또는 접미사 연산자를 구현하면 해당하는 `prefix` 또는 `postfix` 선언 수정자를 사용하여 메서드 선언을 표시해야 합니다. 새로운 연산자를 어떻게 생성하고 구현하는지에 대한 예시는 <doc:AdvancedOperators#사용자-정의-연산자-Custom-Operators> 를 참고바랍니다.
 
 > Grammar of an operator declaration:
 >
@@ -1848,45 +2258,45 @@ Swift 는 표준 라이브러리에서 제공된 연산자와 함께 사용할 �
 > _precedence-group-names_ → _precedence-group-name_ | _precedence-group-name_ **`,`** _precedence-group-names_ \
 > _precedence-group-name_ → _identifier_
 
-## 선언 수식어 (Declaration Modifiers)
+## 선언 수정자 (Declaration Modifiers)
 
-_선언 수식어 (Declaration modifiers)_ 는 선언의 동작이나 의미를 수정하는 키워드 또는 상황에 맞는 키워드 입니다. 선언의 속성이 있는 경우 선언의 속성과 선언을 도입하는 키워드 사이에 적절한 키워드 또는 상황에 맞는 키워드를 작성하여 선언 수식어를 지정합니다.
+_선언 수정자 (Declaration modifiers)_ 는 선언의 동작이나 의미를 수정하는 키워드 또는 상황에 맞는 키워드 입니다. 선언의 속성이 있는 경우 선언의 속성과 선언을 도입하는 키워드 사이에 적절한 키워드 또는 상황에 맞는 키워드를 작성하여 선언 수정자를 지정합니다.
 
 `class`
 
-이 수식어를 클래스의 멤버에 적용하여 멤버가 클래스의 인스턴스의 멤버가 아니라 클래스 자체의 멤버임을 나타냅니다. 이 수식어를 가지고 `final` 수식어를 가지지 않는 슈퍼클래스의 멤버는 서브클래스에 의해 재정의될 수 있습니다.
+이 수정자를 클래스의 멤버에 적용하여 멤버가 클래스의 인스턴스의 멤버가 아니라 클래스 자체의 멤버임을 나타냅니다. 이 수정자를 가지고 `final` 수정자를 가지지 않는 슈퍼클래스의 멤버는 서브클래스에 의해 재정의될 수 있습니다.
 
 `dynamic`
 
-Objective-C 에 의해 표현될 수 있는 클래스의 모든 멤버에 이 수식어를 적용합니다. `dynamic` 수식어로 멤버 선언을 표시하면 해당 멤버에 대한 접근이 항상 Objective-C 런타임을 사용하여 동적으로 전달됩니다. 해당 멤버에 대한 접근은 컴파일러에 의해 인라인되거나 가상화 되지 않습니다.
+Objective-C 에 의해 표현될 수 있는 클래스의 모든 멤버에 이 수정자를 적용합니다. `dynamic` 수정자로 멤버 선언을 표시하면 해당 멤버에 대한 접근이 항상 Objective-C 런타임을 사용하여 동적으로 전달됩니다. 해당 멤버에 대한 접근은 컴파일러에 의해 인라인되거나 가상화 되지 않습니다.
 
-`dynamic` 수식어로 표시된 선언은 Objective-C 런타임을 사용하여 전달되므로 `objc` 속성으로 표시되어야 합니다.
+`dynamic` 수정자로 표시된 선언은 Objective-C 런타임을 사용하여 전달되므로 `objc` 속성으로 표시되어야 합니다.
 
 `final`
 
-이 수식어를 클래스나 프로퍼티, 메서드, 또는 클래스의 서브스크립트 멤버에 적용합니다. 클래스가 서브클래스화 될 수 없음을 나타내기 위해 클래스에 적용됩니다. 클래스 멤버가 모든 서브클래스에 재정의될 수 없음을 나타내기 위해 프로퍼티, 메서드, 또는 클래스의 서브스크립트에 적용됩니다. `final` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Inheritance#재정의-방지-Preventing-Overrides> 를 참고바랍니다.
+이 수정자를 클래스나 프로퍼티, 메서드, 또는 클래스의 서브스크립트 멤버에 적용합니다. 클래스가 서브클래스화 될 수 없음을 나타내기 위해 클래스에 적용됩니다. 클래스 멤버가 모든 서브클래스에 재정의될 수 없음을 나타내기 위해 프로퍼티, 메서드, 또는 클래스의 서브스크립트에 적용됩니다. `final` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Inheritance#재정의-방지-Preventing-Overrides> 를 참고바랍니다.
 
 `lazy`
 
-이 수식어는 클래스 또는 구조체의 저장된 변수 프로퍼티에 적용하여 프로퍼티의 초기값이 프로퍼티에 처음 접근할 때 최대 한번만 계산되고 저장됨을 나타냅니다. `lazy` 수식어를 어떻게 사용하는지에 대한 예시는 <doc:Properties#지연-저장-프로퍼티-Lazy-Stored-Properties> 를 참고바랍니다.
+이 수정자는 클래스 또는 구조체의 저장된 변수 프로퍼티에 적용하여 프로퍼티의 초기값이 프로퍼티에 처음 접근할 때 최대 한번만 계산되고 저장됨을 나타냅니다. `lazy` 수정자를 어떻게 사용하는지에 대한 예시는 <doc:Properties#지연-저장-프로퍼티-Lazy-Stored-Properties> 를 참고바랍니다.
 
 `optional`
 
-프로토콜의 프로퍼티, 메서드, 또는 서브스크립트 멤버에 수식어를 적용하여 준수하는 타입에 이 멤버의 구현이 필수가 아님을 나타냅니다.
+프로토콜의 프로퍼티, 메서드, 또는 서브스크립트 멤버에 수정자를 적용하여 준수하는 타입에 이 멤버의 구현이 필수가 아님을 나타냅니다.
 
-`objc` 로 표시된 프로토콜에만 `optional` 수식어를 적용할 수 있습니다. 결과적으로 클래스 타입만 선택적 멤버 요구사항을 포함하는 프로토콜을 채택하고 준수할 수 있습니다. `optional` 수식어를 어떻게 사용하는지에 대한 자세한 내용과 예를 들어 준수하는 타입이 이를 구현하는지 확실하지 않을 때 선택적 프로토콜 멤버에 접근하는 방법에 대한 가이드는 <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements> 을 참고바랍니다.
+`objc` 로 표시된 프로토콜에만 `optional` 수정자를 적용할 수 있습니다. 결과적으로 클래스 타입만 선택적 멤버 요구사항을 포함하는 프로토콜을 채택하고 준수할 수 있습니다. `optional` 수정자를 어떻게 사용하는지에 대한 자세한 내용과 예를 들어 준수하는 타입이 이를 구현하는지 확실하지 않을 때 선택적 프로토콜 멤버에 접근하는 방법에 대한 가이드는 <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements> 을 참고바랍니다.
 
 `required`
 
-이니셜라이저를 구현해야 하는 모든 서브클래스를 나타내기 위해 클래스의 지정된 이니셜라이저이나 편리한 이니셜라이저에 이 수식어를 적용합니다. 이니셜라이저의 서브클래스의 구현은 `required` 수식어로 표시되어야 합니다.
+이니셜라이저를 구현해야 하는 모든 서브클래스를 나타내기 위해 클래스의 지정된 이니셜라이저이나 편리한 이니셜라이저에 이 수정자를 적용합니다. 이니셜라이저의 서브클래스의 구현은 `required` 수정자로 표시되어야 합니다.
 
 `static`
 
-이 수식어는 구조체, 클래스, 열거형, 또는 프로토콜의 멤버에 적용하여 멤버가 해당 타입의 인스턴스 멤버가 아닌 타입의 멤버 임을 나타냅니다. 클래스 선언의 범위에서 멤버 선언에 `static` 수식어를 작성하여 멤버 선언에 `class` 와 `final` 수식어를 작성한 것과 같은 효과를 가집니다. 그러나 클래스의 상수 타입 프로퍼티는 예외입니다: `static` 은 해당 선언에 `class` 나 `final` 을 작성할 수 없으므로 클래스가 아닐 때 보통의 의미를 가집니다.
+이 수정자는 구조체, 클래스, 열거형, 또는 프로토콜의 멤버에 적용하여 멤버가 해당 타입의 인스턴스 멤버가 아닌 타입의 멤버 임을 나타냅니다. 클래스 선언의 범위에서 멤버 선언에 `static` 수정자를 작성하여 멤버 선언에 `class` 와 `final` 수정자를 작성한 것과 같은 효과를 가집니다. 그러나 클래스의 상수 타입 프로퍼티는 예외입니다: `static` 은 해당 선언에 `class` 나 `final` 을 작성할 수 없으므로 클래스가 아닐 때 보통의 의미를 가집니다.
 
 `unowned`
 
-이 수식어를 저장된 변수, 상수, 또는 저장 프로퍼티에 적용하여 변수 또는 프로퍼티가 해당 값으로 저장된 객체에 미소유 참조가 있다는 것을 나타냅니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 런타임 오류가 발생합니다. 약한 참조와 마찬가지로 프로퍼티 또는 값의 타입은 클래스 타입이어야 합니다; 약한 참조와 다르게 타입은 옵셔널이 아닙니다. `unowned` 수식어에 대한 자세한 내용은 <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References> 를 참고바랍니다.
+이 수정자를 저장된 변수, 상수, 또는 저장 프로퍼티에 적용하여 변수 또는 프로퍼티가 해당 값으로 저장된 객체에 미소유 참조가 있다는 것을 나타냅니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 런타임 오류가 발생합니다. 약한 참조와 마찬가지로 프로퍼티 또는 값의 타입은 클래스 타입이어야 합니다; 약한 참조와 다르게 타입은 옵셔널이 아닙니다. `unowned` 수정자에 대한 자세한 내용은 <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References> 를 참고바랍니다.
 
 `unowned(safe)`
 
@@ -1894,35 +2304,35 @@ Objective-C 에 의해 표현될 수 있는 클래스의 모든 멤버에 이 �
 
 `unowned(unsafe)`
 
-이 수식어를 저장된 변수, 상수, 또는 저장 프로퍼티에 적용하여 변수나 프로퍼티에 해당 값으로 저장된 객체에 미소유 참조를 가집니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 객체가 사용된 메모리 위치에 접근하는데 이것은 안전하지 않은 메모리 (memory-unsafe) 동작입니다. 약한 참조와 마찬가지로 프로퍼티나 값의 타입은 클래스 타입이어야 합니다; 약한 참조와 다르게 타입은 옵셔널이 아닙니다. `unowned` 수식어에 대한 예시와 자세한 내용은 <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References> 를 참고바랍니다.
+이 수정자를 저장된 변수, 상수, 또는 저장 프로퍼티에 적용하여 변수나 프로퍼티에 해당 값으로 저장된 객체에 미소유 참조를 가집니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 객체가 사용된 메모리 위치에 접근하는데 이것은 안전하지 않은 메모리 (memory-unsafe) 동작입니다. 약한 참조와 마찬가지로 프로퍼티나 값의 타입은 클래스 타입이어야 합니다; 약한 참조와 다르게 타입은 옵셔널이 아닙니다. `unowned` 수정자에 대한 예시와 자세한 내용은 <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References> 를 참고바랍니다.
 
 `weak`
 
-이 수식어를 저장된 변수나 저장된 변수 프로퍼티에 적용하면 변수 또는 프로퍼티에 해당 값으로 저장된 객체에 약한 참조를 가짐을 나타냅니다. 변수나 프로퍼티의 타입은 옵셔널 클래스 타입이어야 합니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 해당 값은 `nil` 입니다. `weak` 수식어에 대한 예시와 자세한 내용은 <doc:AutomaticReferenceCounting#약한-참조-Weak-References> 를 참고바랍니다.
+이 수정자를 저장된 변수나 저장된 변수 프로퍼티에 적용하면 변수 또는 프로퍼티에 해당 값으로 저장된 객체에 약한 참조를 가짐을 나타냅니다. 변수나 프로퍼티의 타입은 옵셔널 클래스 타입이어야 합니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 해당 값은 `nil` 입니다. `weak` 수정자에 대한 예시와 자세한 내용은 <doc:AutomaticReferenceCounting#약한-참조-Weak-References> 를 참고바랍니다.
 
 ### 접근 제어 수준 (Access Control Levels)
 
-Swift 는 다섯 수준의 접근 제어를 제공합니다: open, public, internal, file private, 그리고 private 입니다. 선언의 접근 수준을 지정하기 위해 접근-수준 수식어 중 하나로 선언을 표시할 수 있습니다. 접근 제어는 <doc:AccessControl> 에 자세히 설명되어 있습니다.
+Swift 는 다섯 수준의 접근 제어를 제공합니다: open, public, internal, file private, 그리고 private 입니다. 선언의 접근 수준을 지정하기 위해 접근-수준 수정자 중 하나로 선언을 표시할 수 있습니다. 접근 제어는 <doc:AccessControl> 에 자세히 설명되어 있습니다.
 
 `open`
 
-이 수식어를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근되고 서브클래스화 될 수 있음을 나타냅니다. `open` 접근-수준 수식어로 표시된 선언은 해당 선언을 포함하는 모듈을 가져오는 모듈의 코드에서 접근되고 서브클래스화 될 수 있습니다.
+이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근되고 서브클래스화 될 수 있음을 나타냅니다. `open` 접근-수준 수정자로 표시된 선언은 해당 선언을 포함하는 모듈을 가져오는 모듈의 코드에서 접근되고 서브클래스화 될 수 있습니다.
 
 `public`
 
-이 수식어를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근되고 서브클래스화 될 수 있음을 나타냅니다. `public` 접근-수준 수식어로 표시된 선언은 해당 선언을 포함하는 모듈을 가져오는 모듈의 코드에서 접근되지만 서브클래스화 될 수 없습니다.
+이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근되고 서브클래스화 될 수 있음을 나타냅니다. `public` 접근-수준 수정자로 표시된 선언은 해당 선언을 포함하는 모듈을 가져오는 모듈의 코드에서 접근되지만 서브클래스화 될 수 없습니다.
 
 `internal`
 
-이 수식어를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근될 수 있습니다. 기본적으로 대부분 선언은 암시적으로 `internal` 접근-수준 수식어로 표시됩니다.
+이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근될 수 있습니다. 기본적으로 대부분 선언은 암시적으로 `internal` 접근-수준 수정자로 표시됩니다.
 
 `fileprivate`
 
-이 수식어를 선언에 적용하여 선언과 동일한 소스 파일의 코드로만 선언에 접근될 수 있습니다.
+이 수정자를 선언에 적용하여 선언과 동일한 소스 파일의 코드로만 선언에 접근될 수 있습니다.
 
 `private`
 
-이 수식어를 선언에 적용하여 선언의 직접 둘러싸인 범위 내의 코드로만 선언에 접근될 수 있습니다.
+이 수정자를 선언에 적용하여 선언의 직접 둘러싸인 범위 내의 코드로만 선언에 접근될 수 있습니다.
 
 접근 제어를 위해
 확장은 다음과 같이 동작합니다:
@@ -1941,9 +2351,9 @@ Swift 는 다섯 수준의 접근 제어를 제공합니다: open, public, inter
   다른 확장과 확장된 타입의 선언에서
   접근할 수 있습니다.
 
-위의 각 접근-수준 수식어는 괄호로 둘러싸인 `set` 키워드로 구성된 선택적으로 단일 인자를 허용합니다 ---
+위의 각 접근-수준 수정자는 괄호로 둘러싸인 `set` 키워드로 구성된 선택적으로 단일 인자를 허용합니다 ---
 예를 들어 `private(set)`.
-<doc:AccessControl#Getter와-Setter-Getters-and-Setters> 에서 설명한대로 변수 또는 서브스크립트에 대한 접근 수준보다 작거나 같은 변수 또는 서브스크립트의 setter 에 대한 접근 수준을 지정하려면 이 형식의 접근-수준 수식어를 사용합니다.
+<doc:AccessControl#Getter와-Setter-Getters-and-Setters> 에서 설명한대로 변수 또는 서브스크립트에 대한 접근 수준보다 작거나 같은 변수 또는 서브스크립트의 setter 에 대한 접근 수준을 지정하려면 이 형식의 접근-수준 수정자를 사용합니다.
 
 > Grammar of a declaration modifier:
 >

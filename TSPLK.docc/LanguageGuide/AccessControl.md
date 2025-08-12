@@ -169,7 +169,7 @@ file private이나 private로 코드의 어떤 부분을 표기할 수 있습니
 ## 접근 제어 문법 (Access Control Syntax)
 
 엔티티의 선언 앞에
-`open`, `public`, `internal`, `fileprivate`, `private` 수식어 중 하나를
+`open`, `public`, `internal`, `fileprivate`, `private` 수정자 중 하나를
 위치시켜 엔티티에 대한 접근 수준을 정의합니다.
 
 ```swift
@@ -207,7 +207,7 @@ private func somePrivateFunction() {}
 지정하지 않으면 <doc:AccessControl#기본-접근-수준-Default-Access-Levels>에서 설명한대로
 internal입니다.
 `SomeInternalClass`와 `someInternalConstant`는
-명시적으로 접근 수준 수식어 없이 작성될 수 있으며,
+명시적으로 접근 수준 수정자 없이 작성될 수 있으며,
 internal의 접근 수준을 가진다는 의미입니다:
 
 ```swift
@@ -426,7 +426,7 @@ func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 
 함수의 반환 타입은 private이므로,
 함수 선언이 유효하려면
-`private` 수식어와 함께 함수의 전체 접근 수준을 표시해야 합니다:
+`private` 수정자와 함께 함수의 전체 접근 수준을 표시해야 합니다:
 
 ```swift
 private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
@@ -448,7 +448,7 @@ private func someFunction() -> (SomeInternalClass, SomePrivateClass) {
 `someFunction()` 함수가
 public이나 internal인 경우에는
 함수의 반환 타입에 접근할 수 없기 때문에
-함수 정의에 `public`이나 `internal` 수식어로 표시하거나
+함수 정의에 `public`이나 `internal` 수정자로 표시하거나
 기본 접근 제어 수준을 사용하는 것은 유효하지 않습니다.
 
 ### 열거형 타입 (Enumeration Types)
@@ -860,10 +860,10 @@ struct TrackedString {
 `value` 프로퍼티에 새로운 값이 설정될 때마다 `numberOfEdits`가 증가합니다.
 
 `TrackedString` 구조체와 `value` 프로퍼티는
-명시적으로 접근 수준 수식어를 제공하지 않으므로,
+명시적으로 접근 수준 수정자를 제공하지 않으므로,
 internal의 기본 접근 수준을 받습니다.
 그러나 `numberOfEdits`에 대한 접근 수준은
-`private(set)` 수식어로 표기되고,
+`private(set)` 수정자로 표기되고,
 이것은
 프로퍼티의 getter는 여전히 internal의 기본 접근 수준을 가지지만
 프로퍼티는 `TrackedString` 구조체의 코드 내에서만
@@ -933,7 +933,7 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 기본적으로 internal 접근 수준을 가집니다.
 `numberOfEdits` 프로퍼티 getter를 public으로
 setter를 private로 만들 수 있으며,
-이것은 `public`과 `private(set)` 접근 수준 수식어를 함께 사용하면 됩니다:
+이것은 `public`과 `private(set)` 접근 수준 수정자를 함께 사용하면 됩니다:
 
 ```swift
 public struct TrackedString {
@@ -1296,14 +1296,14 @@ fileprivate 타입을 확장하면,
 private 타입을 확장하면,
 추가한 모든 새로운 타입 멤버는 private의 기본 접근 수준을 가집니다.
 
-단, 확장에 명시적으로 접근 수준 수식어를 붙이면
+단, 확장에 명시적으로 접근 수준 수정자를 붙이면
 (예: `private`)
 확장 내에서 정의된 모든 멤버는 새로운 기본 접근 수준으로 설정됩니다.
 이 새로운 기본 접근 수준은 확장 내에서
 개별 타입 멤버에 의해 재정의될 수 있습니다.
 
 확장을 사용하여 프로토콜 준수성을 추가하는 경우
-확장에 명시적 접근 수준 수식어를 제공할 수 없습니다.
+확장에 명시적 접근 수준 수정자를 제공할 수 없습니다.
 대신 프로토콜의 자체 접근 수준은
 확장 내 각 구현의 기본 접근 수준으로 적용됩니다.
 

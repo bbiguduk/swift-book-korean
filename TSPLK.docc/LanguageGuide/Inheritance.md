@@ -503,7 +503,7 @@ print("AutomaticCar: \(automatic.description)")
 *final* 표시를 통해
 실수로 메서드, 프로퍼티, 서브스크립트를 재정의 하는 것을 방지할 수 있습니다.
 재정의를 방지하려면
-메서드, 프로퍼티, 서브스크립트의 키워드 앞에 `final` 수식어를 작성합니다
+메서드, 프로퍼티, 서브스크립트의 키워드 앞에 `final` 수정자를 작성합니다
 (`final var`, `final func`, `final class func`, `final subscript` 와 같이 작성).
 
 서브클래스에서 final 메서드, final 프로퍼티, final 서브스크립트를 재정의 하면

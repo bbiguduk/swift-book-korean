@@ -166,7 +166,7 @@ rangeOfFourItems.firstValue = 6
 *지연 저장 프로퍼티(lazy stored property)*는 처음 사용될 때까지
 초기값이 계산되지 않는 프로퍼티입니다.
 지연 저장 프로퍼티는
-선언 앞에 `lazy` 수식어를 붙여 나타냅니다.
+선언 앞에 `lazy` 수정자를 붙여 나타냅니다.
 
 > Note: 인스턴스 초기화가 완료된 후에
 > 초기값을 가져올 수도 있기 때문에
@@ -274,7 +274,7 @@ manager.data.append("Some more data")
 대신에 `DataImporter` 인스턴스를 처음 사용하는 경우에
 생성하는 것이 더 적절합니다.
 
-`lazy` 수식어가 붙어 있으므로,
+`lazy` 수정자가 붙어 있으므로,
 `importer` 프로퍼티의 `DataImporter` 인스턴스는
 `filename` 프로퍼티를 조회할 때처럼
 `importer` 프로퍼티에 처음 접근할 때 생성됩니다:
@@ -295,7 +295,7 @@ print(manager.importer.filename)
   ```
 -->
 
-> Note: `lazy` 수식어가 표시된 프로퍼티는
+> Note: `lazy` 수정자가 표시된 프로퍼티는
 > 여러 스레드에서 동시에 접근되고
 > 프로퍼티가 아직 초기화되지 않은 경우
 > 프로퍼티가 한 번만 초기화된다는 보장이 없습니다.
@@ -1678,7 +1678,7 @@ struct SizedRectangle {
 > Note: 전역 상수와 변수는 항상 지연 방식으로 계산되며,
 > 이는 <doc:Properties#지연-저장-프로퍼티-Lazy-Stored-Properties>에서 설명과 유사합니다.
 > 지연 저장 프로퍼티와 다르게
-> 전역 상수와 변수는 `lazy` 수식어가 필요하지 않습니다.
+> 전역 상수와 변수는 `lazy` 수정자가 필요하지 않습니다.
 >
 > 지역 상수와 변수는 절대 지연 방식으로 계산되지 않습니다.
 
@@ -1772,7 +1772,7 @@ func someFunction() {
 > 저장 타입 프로퍼티는 처음 접근될 때 지연 초기화됩니다.
 > 여러 스레드에서 동시에 접근할 때도
 > 한 번만 초기화되는 것이 보장되고,
-> `lazy` 수식어가 필요하지 않습니다.
+> `lazy` 수정자가 필요하지 않습니다.
 
 ### 타입 프로퍼티 문법 (Type Property Syntax)
 

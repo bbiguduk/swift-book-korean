@@ -764,7 +764,7 @@ let combinedVector = vector + anotherVector
 대상의 뒤(`b!`)에 오면 *접미(postfix)* 연산자 입니다.
 
 접두 단항 연산자나 접미 단항 연산자를 구현하려면
-`prefix`나 `postfix` 수식어를
+`prefix`나 `postfix` 수정자를
 `func` 키워드 앞에 작성하여 연산자 메서드를 선언합니다:
 
 ```swift
@@ -790,7 +790,7 @@ extension Vector2D {
 위의 예시는 `Vector2D` 인스턴스에 대한
 단항 뺄셈 연산자(`-a`)를 구현합니다.
 이 단항 뺄셈 연산자는 접두 연산자이므로
-이 메서드는 `prefix` 수식어를 지정해야 합니다.
+이 메서드는 `prefix` 수정자를 지정해야 합니다.
 
 간단한 숫자값에 대해 단항 뺄셈 연산자는
 양수를 음수로 음수를 양수로 변환합니다.
@@ -980,7 +980,7 @@ Swift에서 제공하는 표준 연산자 외에
 <doc:LexicalStructure#연산자-Operators>를 참고바랍니다.
 
 새로운 연산자는 `operator` 키워드를 사용하여 전역으로 선언되고,
-`prefix`, `infix`, `postfix` 수식어를 사용하여 표기할 수 있습니다:
+`prefix`, `infix`, `postfix` 수정자를 사용하여 표기할 수 있습니다:
 
 ```swift
 prefix operator +++
