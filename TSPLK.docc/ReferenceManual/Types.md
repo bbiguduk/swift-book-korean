@@ -384,8 +384,8 @@ var operation: (Int, Int) -> Int               // OK
 암시적으로 `Error` 프로토콜을 준수해야 합니다.
 
 던지는 함수와 다시 던지는 함수는
-<doc:Declarations#함수와-메서드-던지기-Throwing-Functions-and-Methods>와
-<doc:Declarations#다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>에 설명되어 있습니다.
+<doc:Declarations#오류를-던지는-함수와-메서드-Throwing-Functions-and-Methods>와
+<doc:Declarations#오류를-다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>에 설명되어 있습니다.
 
 비동기 함수의 함수 타입은
 `async` 키워드로 표시되어야 합니다.

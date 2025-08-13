@@ -745,7 +745,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
   제네릭 파라미터에 의해 전파되는 오류의 경우입니다.
   특정 오류 타입을 전파하는 것과
   `rethrows`를 사용하는 것에 대한 비교는
-  <doc:Declarations:다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>를 참고바랍니다.
+  <doc:Declarations:오류를-다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>를 참고바랍니다.
 
 예를 들어,
 평점을 요약하고

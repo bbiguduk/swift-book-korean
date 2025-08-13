@@ -275,7 +275,7 @@ guard 구문을 둘러싼 범위 밖으로 프로그램 제어를 전달해야 �
 
 제어 전송 구문은 아래 <doc:Statements#제어-전송-구문-Control-Transfer-Statements>에 설명되어 있습니다.
 `Never` 반환 타입이 가진 함수에 자세한 내용은
-<doc:Declarations#반환되지-않는-함수-Functions-that-Never-Return>를 참고바랍니다.
+<doc:Declarations#반환하지-않는-함수-Functions-that-Never-Return>를 참고바랍니다.
 
 > Grammar of a guard statement:
 >

@@ -1060,29 +1060,36 @@ in-out 파라미터에 대한 자세한 설명과 예시는
   ```
 -->
 
-#### 파라미터 차용과 소비 (Borrowing and Consuming Parameters)
+#### Borrowing 파라미터와 Consuming 파라미터 (Borrowing and Consuming Parameters)
 
-기본적으로, Swift 는 일련의 규칙을 사용해,
-함수 호출에서 객체의 생명주기를 자동으로 관리하고,
-필요할 때 값을 복사합니다.
-기본 규칙은 대부분 상황에서 오버헤드를 최소화 하도록 설계되어 있습니다 ---
-특별한 제어를 원하면,
-`borrowing` 또는 `consuming` 파라미터 수정자를 적용할 수 있습니다.
-이 경우에,
-복사 작업을 명시적으로 표시하려면 `copy` 를 사용합니다.
+기본적으로 Swift는
+함수 호출 전반에 걸쳐 객체의 수명을 자동으로 관리하고,
+필요할 때 값을 복사하는 규칙을 사용합니다.
+기본 규칙은 대부분 상황에서 오버헤드를 최소화하도록 설계되어 있습니다 ---
+더 구체적인 제어를 원하면,
+`borrowing`이나 `consuming` 파라미터 수정자를 적용할 수 있습니다.
+이 경우에
+`copy`를 사용해 복사 작업을 명시적으로 표시합니다.
 
 기본 규칙을 사용하는 것과 상관없이,
-Swift 는 객체 생명주기와 소유권이
+Swift는 객체 수명과 소유권이
 모든 상황에서 올바르게 관리되도록 보장합니다.
-이 파라미터 수정자는 정확성이 아닌 특정 사용 패턴에
+이 파라미터 수정자는 정확성이 아닌 특정 사용 패턴의
 상대적 효율성에만 영향을 줍니다.
 
+<!--
+TODO: Describe the default rules.
+Essentially, inits and property setters are consuming,
+and everything else is borrowing.
+Where are copies implicitly inserted?
+-->
+
 `borrowing` 수정자는 함수가
-파라미터의 값을 유지하지 않음을 나타냅니다.
-이 경우에, 호출자는 객체의 소유권과
-객체의 생명주기에 대한 책임을 유지합니다.
-`borrowing` 을 사용하여 함수가
-객체를 일시적으로만 사용할 때 오버헤드를 최소화 합니다.
+파라미터 값을 유지하지 않음을 나타냅니다.
+이 경우에 호출자는 객체의 소유권과
+객체의 수명에 대한 책임을 유지합니다.
+`borrowing`을 사용하면 함수가
+객체를 일시적으로만 사용할 때 오버헤드를 최소화합니다.
 
 ```swift
 // `isLessThan` does not keep either argument
@@ -1093,7 +1100,7 @@ func isLessThan(lhs: borrowing A, rhs: borrowing A) -> Bool {
 
 예를 들어, 전역 변수에 값을 저장하기 위해
 함수가 파라미터의 값을 유지해야 하는 경우 ---
-값을 명시적으로 복사하기 위해 `copy` 를 사용합니다.
+값을 명시적으로 복사하기 위해 `copy`를 사용합니다.
 
 ```swift
 // As above, but this `isLessThan` also wants to record the smallest value
@@ -1120,16 +1127,17 @@ func store(a: consuming A) {
 }
 ```
 
-`consuming` 을 사용하면 호출자가 함수 호출 후에 더이상 객체를 사용할 필요가 없을 때
-오버헤드를 최소화 합니다.
+`consuming`을 사용하면 호출자가 함수 호출 후에 더 이상 객체를 사용할 필요가 없을 때
+오버헤드를 최소화합니다.
 
 ```swift
 // Usually, this is the last thing you do with a value
 store(a: value)
 ```
 
-함수 호출 후에 복사가능한 객체 사용을 유지하려면,
-컴파일러는 자동으로 함수 호출 전에 객체의 복사본을 만듭니다.
+함수 호출 후에 복사 가능한 객체를 사용하려면,
+컴파일러는 자동으로 함수 호출 전에
+객체의 복사본을 만듭니다.
 
 ```swift
 // The compiler inserts an implicit copy here
@@ -1137,8 +1145,8 @@ store(a: someValue)  // This function consumes someValue
 print(someValue)  // This uses the copy of someValue
 ```
 
-`inout` 과 다르게, `borrowing` 과
-`consuming` 파라미터는 함수 호출할 때
+`inout`과 다르게, `borrowing`과
+`consuming` 파라미터는 함수를 호출할 때
 특별한 표기법이 필요하지 않습니다:
 
 ```swift
@@ -1147,10 +1155,12 @@ func someFunction(a: borrowing A, b: consuming B) { ... }
 someFunction(a: someA, b: someB)
 ```
 
-`borrowing` 또는 `consuming` 를 명시적으로 사용하는 것은
+`borrowing`이나 `consuming`를 명시적으로 사용하는 것은
 런타임 소유권 관리의 오버헤드를 더 엄격하게 관리하려는
 의도를 나타냅니다.
-복사는 예기치 않은 런타임 소유권 동작을 야기할 수 있으므로,
+복사는 예기치 않은 런타임 소유권 동작을
+야기할 수 있으므로,
+이 수정자 중 하나로 표시된 파라미터는
 명시적인 `copy` 키워드를 사용하지 않으면
 복사할 수 없습니다:
 
@@ -1187,9 +1197,19 @@ func consumingFunction3(a: consuming A) {
 }
 ```
 
+<!--
+  TODO: `borrowing` and `consuming` keywords with noncopyable argument types
+-->
+<!--
+  TODO: Any change of parameter modifier is ABI-breaking
+-->
+
 ### 특별한 종류의 파라미터 (Special Kinds of Parameters)
 
-파라미터는 무시될 수 있고 다음의 형식을 사용하여 가변의 값을 가지고 기본값을 제공할 수 있습니다:
+파라미터는 무시될 수 있고
+다음의 형식을 사용하여
+가변값을 가지거나
+기본값을 제공할 수 있습니다:
 
 ```swift
 _ : <#parameter type#>
@@ -1197,11 +1217,24 @@ _ : <#parameter type#>
 <#parameter name#>: <#parameter type#> = <#default argument value#>
 ```
 
-언더바 (`_`) 파라미터는 명시적으로 무시되고 함수의 본문 내에서 접근될 수 없습니다.
+언더바(`_`) 파라미터는
+명시적으로 무시되고 함수의 본문 내에서 접근할 수 없습니다.
 
-기본 타입 이름 바로 뒤에 세 개의 점 (`...`) 이 오는 파라미터는 가변 파라미터 (variadic parameter) 입니다. 가변 파라미터 뒤에 오는 파라미터는 인자 레이블이 있어야 합니다. 함수는 여러개 가변 파라미터를 가질 수 있습니다. 가변 파라미터는 기본 타입 이름의 요소를 포함한 배열로 처리됩니다. 예를 들어 가변 파라미터 `Int...` 는 `[Int]` 로 처리됩니다. 가변 파라미터를 사용하는 예시는 <doc:Functions#가변-파라미터-Variadic-Parameters> 를 참고바랍니다.
+기본 타입 이름 바로 뒤에 세 개의 점(`...`)이 오는 파라미터는
+가변 파라미터(variadic parameter)입니다.
+가변 파라미터 다음에 오는 파라미터는
+인자 레이블이 있어야 합니다.
+함수는 여러 개의 가변 파라미터를 가질 수 있습니다.
+가변 파라미터는 기본 타입 이름의 요소를 포함하는 배열로 처리합니다.
+예를 들어 가변 파라미터 `Int...`는 `[Int]`로 처리됩니다.
+가변 파라미터 사용 예시는
+<doc:Functions#가변-파라미터-Variadic-Parameters>를 참고바랍니다.
 
-등호 (`=`) 가 있는 파라미터와 타입 뒤의 표현식은 주어진 표현식의 기본값을 가지는 것으로 간주됩니다. 함수가 호출될 때 주어진 표현식은 평가됩니다. 함수를 호출할 때 파라미터가 생략되면 기본값이 대신 사용됩니다.
+파라미터 타입 뒤에 등호(`=`)와 표현식은
+주어진 표현식의 기본값을 가지는 것으로 간주됩니다.
+함수가 호출될 때 주어진 표현식은 평가됩니다.
+함수를 호출할 때 파라미터가 생략되면
+기본값이 대신 사용됩니다.
 
 ```swift
 func f(x: Int = 42) -> Int { return x }
@@ -1210,21 +1243,135 @@ f(x: 7)   // Valid, uses the value provided
 f(7)      // Invalid, missing argument label
 ```
 
+<!--
+  - test: `default-args-and-labels`
+
+  ```swifttest
+  -> func f(x: Int = 42) -> Int { return x }
+  >> let _ =
+  -> f()       // Valid, uses default value
+  >> let _ =
+  -> f(x: 7)   // Valid, uses the value provided
+  >> let _ =
+  -> f(7)      // Invalid, missing argument label
+  !$ error: missing argument label 'x:' in call
+  !! f(7)      // Invalid, missing argument label
+  !!   ^
+  !!   x:
+  ```
+-->
+
+<!--
+  Rewrite the above to avoid discarding the function's return value.
+  Tracking bug is <rdar://problem/35301593>
+-->
+
+<!--
+  - test: `default-args-evaluated-at-call-site`
+
+  ```swifttest
+  -> func shout() -> Int {
+        print("evaluated")
+        return 10
+     }
+  -> func foo(x: Int = shout()) { print("x is \(x)") }
+  -> foo(x: 100)
+  << x is 100
+  -> foo()
+  << evaluated
+  << x is 10
+  -> foo()
+  << evaluated
+  << x is 10
+  ```
+-->
+
 ### 특별한 종류의 메서드 (Special Kinds of Methods)
 
-`self` 를 수정하는 열거형 또는 구조체에 메서드는 `mutating` 선언 수정자로 표시되어야 합니다.
+열거형이나 구조체 메서드에서
+`self`를 수정하는 메서드는 `mutating` 선언 수정자로 표시되어야 합니다.
 
-슈퍼클래스 메서드를 재정의한 메서드는 `override` 선언 수정자로 표시되어야 합니다. `override` 수정자 없이 메서드를 재정의하거나 슈퍼클래스 메서드를 재정의 하지 않는 메서드에 `override` 수정자를 사용하면 컴파일 오류가 발생합니다.
+상위 클래스 메서드를 재정의한 메서드는
+`override` 선언 수정자로 표시되어야 합니다.
+`override` 수정자 없이 메서드를 재정의하거나
+상위 클래스 메서드를 재정의하지 않는 메서드에
+`override` 수정자를 사용하면 컴파일 오류가 발생합니다.
 
-타입의 인스턴스가 아닌 타입과 관련된 메서드는 열거형과 구조체의 경우 `static` 선언 수정자나 클래스의 경우 `static` 또는 `class` 선언 수정자로 표시되어야 합니다. `class` 선언 수정자로 표시된 클래스 타입 메서드는 서브클래스 구현에 의해 재정의 될 수 있습니다; `class final` 또는 `static` 으로 표시된 클래스 타입 메서드는 재정의 될 수 없습니다.
+타입의 인스턴스가 아닌
+타입과 관련된 메서드는
+열거형과 구조체의 경우 `static` 선언 수정자로 표시되어야 하고
+클래스의 경우 `static`이나 `class` 선언 수정자로 표시되어야 합니다.
+`class` 선언 수정자로 표시된 클래스 타입 메서드는
+하위 클래스 구현에서 재정의할 수 있습니다;
+`class final`이나 `static`으로 표시된 클래스 타입 메서드는 재정의할 수 없습니다.
+
+<!--
+  - test: `overriding-class-methods-err`
+
+  ```swifttest
+  -> class S { class final func f() -> Int { return 12 } }
+  -> class SS: S { override class func f() -> Int { return 120 } }
+  !$ error: class method overrides a 'final' class method
+  !! class SS: S { override class func f() -> Int { return 120 } }
+  !!                                  ^
+  !$ note: overridden declaration is here
+  !! class S { class final func f() -> Int { return 12 } }
+  !!                           ^
+  -> class S2 { static func f() -> Int { return 12 } }
+  -> class SS2: S2 { override static func f() -> Int { return 120 } }
+  !$ error: cannot override static method
+  !! class SS2: S2 { override static func f() -> Int { return 120 } }
+  !! ^
+  !$ note: overridden declaration is here
+  !! class S2 { static func f() -> Int { return 12 } }
+  !! ^
+  ```
+-->
+
+<!--
+  - test: `overriding-class-methods`
+
+  ```swifttest
+  -> class S3 { class func f() -> Int { return 12 } }
+  -> class SS3: S3 { override class func f() -> Int { return 120 } }
+  -> print(SS3.f())
+  <- 120
+  ```
+-->
 
 ### 특별한 이름의 메서드 (Methods with Special Names)
 
-특별한 이름을 가지는 메서드는 함수 호출 구문에 대해 구문 설탕 (syntactic sugar) 을 활성화 합니다. 이러한 메서드 중 하나로 타입을 정의하면 타입의 인스턴스는 함수 호출 구문에서 사용될 수 있습니다. 함수 호출은 해당 인스턴스에서 특별하게 명명된 메서드 중 하나로 호출됩니다.
+특별한 이름을 가지는 메서드는
+함수 호출 구문을 위한 편의 문법(syntactic sugar)을 가능하게 합니다.
+타입을 이러한 메서드 중 하나를 정의하면,
+타입의 인스턴스를 함수 호출 구문에서 사용할 수 있습니다.
+이런 함수 호출은 해당 인스턴스의
+특별한 이름을 가진 메서드 중 하나를 호출합니다.
 
-클래스, 구조체, 또는 열거형 타입은 <doc:Attributes#dynamicCallable> 에서 설명한대로 `dynamicallyCall(withArguments:)` 메서드 또는 `dynamicallyCall(withKeywordArguments:)` 메서드를 정의하거나 아래에서 설명한대로 call-as-function 메서드를 정의하여 함수 호출 구문을 제공할 수 있습니다. 타입이 call-as-function 메서드와 `dynamicCallable` 속성에 의해 사용되는 메서드 중 하나를 모두 정의하면 컴파일러는 두 메서드를 사용할 수 있는 환경에서 call-as-function 메서드를 더 선호합니다.
+클래스, 구조체, 열거형 타입은
+<doc:Attributes#dynamicCallable>에서 설명한대로
+`dynamicallyCall(withArguments:)` 메서드나
+`dynamicallyCall(withKeywordArguments:)` 메서드를 정의하거나,
+아래에서 설명한대로 call-as-function 메서드를 정의하여
+함수 호출 구문을 제공할 수 있습니다.
+타입이
+call-as-function 메서드와
+`dynamicCallable` 속성에 의해 사용되는 메서드 중 하나를 모두 정의하면,
+컴파일러는 두 메서드를 사용할 수 있는 환경에서
+call-as-function 메서드를 우선시합니다.
 
-call-as-function 메서드의 이름은 `callAsFunction()` 또는 `callAsFunction(` 으로 시작하고 레이블이 있거나 없는 인자를 추가하는 이름이 있습니다 — 예를 들어 `callAsFunction(_:_:)` 와 `callAsFunction(something:)` 도 call-as-function 메서드 이름으로 유효합니다.
+call-as-function 메서드의 이름은 `callAsFunction()`이나
+레이블이 없어도 되지만 추가해도 되는
+`callAsFunction(`으로 시작하는 다른 이름도 있습니다 —--
+예를 들어 `callAsFunction(_:_:)`와 `callAsFunction(something:)`도
+call-as-function 메서드 이름으로 유효합니다.
+
+<!--
+  Above, callAsFunction( is in code voice even though
+  it's not actually a symbol that exists in the reader's code.
+  Per discussion with Chuck, this is the closest typographic convention
+  to what we're trying to express here.
+-->
 
 다음의 함수 호출은 동일합니다:
 
@@ -1241,20 +1388,76 @@ callable.callAsFunction(4, scale: 2)
 // Both function calls print 208.
 ```
 
-call-as-function 메서드와 `dynamicCallable` 속성의 메서드는 타입 시스템으로 인코딩하는 정보의 양과 런타임에 가능한 동적 동작의 양 사이에 서로 다른 절충안을 만듭니다. call-as-function 메서드를 선언할 때 인자의 숫자와 각 인자의 타입과 레이블을 지정합니다. `dynamicCallable` 속성의 메서드는 인자의 배열을 보유하기 위해 사용된 타입만 지정합니다.
+<!--
+  - test: `call-as-function`
 
-call-as-function 메서드 또는 `dynamicCallable` 속성의 메서드를 정의해도 함수 호출 표현식이 아닌 다른 컨텍스트에서 함수처럼 해당 타입의 인스턴스로 사용할 수 없습니다. 예를 들어:
+  ```swifttest
+  -> struct CallableStruct {
+         var value: Int
+         func callAsFunction(_ number: Int, scale: Int) {
+             print(scale * (number + value))
+         }
+     }
+  -> let callable = CallableStruct(value: 100)
+  -> callable(4, scale: 2)
+  -> callable.callAsFunction(4, scale: 2)
+  // Both function calls print 208.
+  << 208
+  << 208
+  ```
+-->
+
+call-as-function 메서드와
+`dynamicCallable` 속성의 메서드는
+타입 시스템에 얼마나 많은 정보를 인코딩하는지와
+런타임에 얼마나 많은 동적 동작이 가능한지에 대해
+서로 다른 장단점을 가집니다.
+call-as-function 메서드를 선언할 때,
+인자의 수와
+인자의 타입과 레이블을 지정합니다.
+`dynamicCallable` 속성의 메서드는
+인자의 배열을 보유하기 위해 사용된 타입만 지정합니다.
+
+call-as-function 메서드나
+`dynamicCallable` 속성의 메서드를 정의하는 것은
+함수 호출 표현식 외 다른 컨텍스트에서
+타입의 인스턴스를 함수처럼 사용할 수 없습니다.
+예를 들어:
 
 ```swift
 let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
 let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
 ```
 
-`subscript(dynamicMemberLookup:)` 서브스크립트는 <doc:Attributes#dynamicMemberLookup> 에서 설명한대로 멤버 조회를 위한 구문 설탕을 활성화 합니다.
+<!--
+  - test: `call-as-function-err`
 
-### 함수와 메서드 던지기 (Throwing Functions and Methods)
+  ```swifttest
+  >> struct CallableStruct {
+  >>     var value: Int
+  >>     func callAsFunction(_ number: Int, scale: Int) { }
+  >> }
+  >> let callable = CallableStruct(value: 100)
+  -> let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+  -> let someFunction2: (Int, Int) -> Void = callable.callAsFunction(_:scale:)
+  >> _ = someFunction1 // suppress unused-constant warning
+  >> _ = someFunction2 // suppress unused-constant warning
+  !$ error: cannot find 'callable(_:scale:)' in scope
+  !! let someFunction1: (Int, Int) -> Void = callable(_:scale:)  // Error
+  !! ^~~~~~~~~~~~~~~~~~
+  ```
+-->
 
-오류를 던질 수 있는 함수와 메서드는 `throws` 키워드로 표시되어야 합니다. 이러한 함수와 메서드는 _던지는 함수 (throwing functions)_ 와 _던지는 메서드 (throwing methods)_ 라고 합니다. 다음의 형식을 가집니다:
+`subscript(dynamicMember:)` 서브스크립트는
+<doc:Attributes#dynamicMemberLookup>에서 설명한대로
+멤버 조회를 위한 편의 문법을 활성화 합니다.
+
+### 오류를 던지는 함수와 메서드 (Throwing Functions and Methods)
+
+오류를 던질 수 있는 함수와 메서드는 `throws` 키워드로 표시되어야 합니다.
+이러한 함수와 메서드를 *던지는 함수(throwing functions)*와
+*던지는 메서드(throwing methods)*라고 합니다.
+형식은 다음과 같습니다:
 
 ```swift
 func <#function name#>(<#parameters#>) throws -> <#return type#> {
@@ -1270,24 +1473,35 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 }
 ```
 
-던지는 함수 또는 메서드 호출은 `try` 또는 `try!` 표현식 (`try` 또는 `try!` 연산자의 범위 내) 으로 래핑되어야 합니다.
+오류를 던지는 함수나 메서드 호출은 `try`이나 `try!` 표현식으로 래핑되어야 합니다
+(즉, `try`이나 `try!` 연산자의 범위).
 
-함수의 타입은 오류를 던질 수 있고
-무슨 타입의 오류를 던지는지 포함합니다.
-예를 들어, 이러한 서브타입 관계는 오류를 던질 수 있는 컨텍스트에서
+함수의 타입에는 오류를 던질 수 있는지와
+어떤 타입의 오류를 던지는지 포함합니다.
+예를 들어, 이러한 하위 타입 관계는 오류를 던지는 함수가 예상되는 컨텍스트에서
 오류를 던지지 않는 함수를 사용할 수 있다는 의미입니다.
-던지는 함수에 대한 자세한 내용은
-<doc:Types#함수-타입-Function-Type> 을 참고바랍니다.
-명시적 타입을 가지는 오류 동작의 예시는
-<doc:ErrorHandling#오류-타입-지정-Specifying-the-Error-Type> 을 참고바랍니다.
+던지는 함수의 타입에 대한 자세한 내용은
+<doc:Types#함수-타입-Function-Type>을 참고바랍니다.
+명시적 타입의 오류를 다루는 예시는
+<doc:ErrorHandling#오류-타입-지정-Specifying-the-Error-Type>을 참고바랍니다.
 
-함수가 오류를 발생할 수 있는지 여부를 기준으로 함수를 오버로드 할 수 없습니다. 이 말은 함수 파라미터 (parameter) 가 오류를 발생할 수 있는 여부에 따라 함수를 오버로드 할 수 있습니다.
+함수가 오류를 던질 수 있는지 여부만으로 함수를 오버로드할 수 없습니다.
+이 말은
+함수 파라미터가 오류를 던질 수 있는 여부에 따라 함수를 오버로드 할 수는 있습니다.
 
-던지는 메서드는 던지지 않는 메서드를 재정의할 수 없고 던지는 메서드는 던지지 않는 메서드에 대해 프로토콜 요구사항을 충족할 수 없습니다. 이 말은 던지지 않는 메서드는 던지는 메서드를 재정의할 수 있고 던지지 않는 함수는 던지는 메서드에 대한 프로토콜 요구사항을 충족할 수 있습니다.
+오류를 던지는 메서드는 오류를 던지지 않는 메서드를 재정의할 수 없고,
+오류를 던지는 메서드는 오류를 던지지 않는 메서드에 대한 프로토콜 요구사항을 충족할 수 없습니다.
+이 말은 오류를 던지지 않는 메서드는 오류를 던지는 메서드를 재정의할 수 있고,
+오류를 던지지 않는 메서드는 오류를 던지는 메서드에 대한 프로토콜 요구사항을 충족할 수 있습니다.
 
-### 다시 던지는 함수와 메서드 (Rethrowing Functions and Methods)
+### 오류를 다시 던지는 함수와 메서드 (Rethrowing Functions and Methods)
 
-함수 또는 메서드는 함수 파라미터 중 하나만 오류를 발생하는 것을 나타내기 위해 `rethrows` 키워드로 선언될 수 있습니다. 이러한 함수와 메서드는 _다시 던지는 함수 (rethrowing functions)_ 와 _다시 던지는 메서드 (rethrowing methods)_ 라고 합니다. 다시 던지는 함수와 메서드는 적어도 하나의 던지는 함수 파라미터를 가져야 합니다.
+함수나 메서드는 함수 파라미터 중 하나만 오류를 발생하는 것을 나타내기 위해
+`rethrows` 키워드로 선언할 수 있습니다.
+이러한 함수와 메서드를 *다시 던지는 함수(rethrowing functions)*와
+*다시 던지는 메서드(rethrowing methods)*라고 합니다.
+다시 던지는 함수와 메서드는
+적어도 하나의 던지는 함수 파라미터를 가져야 합니다.
 
 ```swift
 func someFunction(callback: () throws -> Void) rethrows {
@@ -1295,7 +1509,27 @@ func someFunction(callback: () throws -> Void) rethrows {
 }
 ```
 
-다시 던지는 함수 또는 메서드는 `catch` 절 안에만 `throw` 구문을 포함할 수 있습니다. 이렇게 하면 `do`-`catch` 구문 내에서 던지는 함수를 호출하고 다른 오류를 발생시켜 `catch` 절의 오류를 처리할 수 있습니다. 또한 `catch` 절은 다시 던지는 함수의 던지는 파라미터 중 하나에서 발생한 오류만 처리해야 합니다. 예를 들어 다음은 `catch` 절이 `alwaysThrows()` 에서 던져진 오류를 처리하므로 유효하지 않습니다.
+<!--
+  - test: `rethrows`
+
+  ```swifttest
+  -> func someFunction(callback: () throws -> Void) rethrows {
+         try callback()
+     }
+  ```
+-->
+
+오류를 다시 던지는 함수나 메서드는
+`catch` 절 안에만 `throw` 구문을 포함할 수 있습니다.
+이렇게 하면 `do`-`catch` 구문 내에서 오류를 던지는 함수를 호출하고
+`catch` 절에서 다른 오류를 발생시켜 오류를 처리할 수 있습니다.
+또한
+`catch` 절은
+다시 던지는 함수의 파라미터 중
+하나에서 발생한 오류만 처리해야 합니다.
+예를 들어 다음은
+`catch` 절이 `alwaysThrows()`에서
+던져진 오류를 처리하므로 유효하지 않습니다.
 
 ```swift
 func alwaysThrows() throws {
@@ -1311,9 +1545,56 @@ func someFunction(callback: () throws -> Void) rethrows {
 }
 ```
 
-던지는 메서드는 다시 던지는 메서드를 재정의할 수 없고 던지는 메서드는 다시 던지는 메서드에 대한 프로토콜 요구사항을 충족할 수 없습니다. 이 말은 다시 던지는 메서드는 던지는 메서드를 재정의할 수 있고 다시 던지는 메서드는 던지는 메서드에 대해 프로토콜 요구사항을 충족할 수 있습니다.
+<!--
+  - test: `double-negative-rethrows`
 
-다시 오류를 던지는 방법은 제네릭 코드에서 특정 오류 타입을 던지는 것입니다.
+  ```swifttest
+  >> enum SomeError: Error { case error }
+  >> enum AnotherError: Error { case error }
+  -> func alwaysThrows() throws {
+         throw SomeError.error
+     }
+  -> func someFunction(callback: () throws -> Void) rethrows {
+        do {
+           try callback()
+           try alwaysThrows()  // Invalid, alwaysThrows() isn't a throwing parameter
+        } catch {
+           throw AnotherError.error
+        }
+     }
+  !$ error: a function declared 'rethrows' may only throw if its parameter does
+  !!               throw AnotherError.error
+  !!               ^
+  ```
+-->
+
+<!--
+  - test: `throwing-in-rethrowing-function`
+
+  ```swifttest
+  -> enum SomeError: Error { case c, d }
+  -> func f1(callback: () throws -> Void) rethrows {
+         do {
+             try callback()
+         } catch {
+             throw SomeError.c  // OK
+         }
+     }
+  -> func f2(callback: () throws -> Void) rethrows {
+         throw SomeError.d  // Error
+     }
+  !$ error: a function declared 'rethrows' may only throw if its parameter does
+  !! throw SomeError.d  // Error
+  !! ^
+  ```
+-->
+
+오류를 던지는 메서드는 오류를 다시 던지는 메서드를 재정의할 수 없고,
+오류를 던지는 메서드는 오류를 다시 던지는 메서드에 대한 프로토콜 요구사항을 충족할 수 없습니다.
+이 말은 오류를 다시 던지는 메서드는 오류를 던지는 메서드를 재정의할 수 있고,
+오류를 다시 던지는 메서드는 오류를 던지는 메서드에 대한 프로토콜 요구사항을 충족할 수 있습니다.
+
+오류를 다시 던지는 것의 대안은 제네릭 코드에서 특정 오류 타입을 던지는 것입니다.
 예를 들어:
 
 ```swift
@@ -1324,13 +1605,23 @@ func someFunction<E: Error>(callback: () throws(E) -> Void) throws(E) {
 
 오류를 전파하는 이러한 방식은
 오류에 대한 타입 정보를 유지합니다.
-그러나, `rethrows` 함수와 다르게,
-이 접근방식은 동일한 타입의 오류를 던지도록
+그러나 `rethrows` 함수와 다르게,
+이 방식은 동일한 타입의 오류를 던지도록
 함수를 보호하지 않습니다.
+
+<!--
+TODO: Revisit the comparison between rethrows and throws(E) above,
+since it seems likely that the latter will generally replace the former.
+
+See also rdar://128972373
+-->
 
 ### 비동기 함수와 메서드 (Asynchronous Functions and Methods)
 
-비동기적으로 실행되는 함수와 메서드는 `async` 키워드로 표시되어야 합니다. 이 함수와 메서드는 _비동기 함수 (asynchronous functions)_ 와 _비동기 메서드 (asynchronous methods)_ 라고 합니다. 이 형태는 다음과 같습니다:
+비동기적으로 실행되는 함수와 메서드는 `async` 키워드로 표시되어야 합니다.
+이 함수와 메서드를 *비동기 함수(asynchronous functions)*와
+*비동기 메서드(asynchronous methods)*라고 합니다.
+형식은 다음과 같습니다:
 
 ```swift
 func <#function name#>(<#parameters#>) async -> <#return type#> {
@@ -1338,15 +1629,44 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
 }
 ```
 
-비동기 함수 또는 메서드에 대한 호출은 `await` 표현식으로 래핑되어야 합니다 — 즉, `await` 연산자 범위 안에 있어야 합니다.
+비동기 함수나 메서드에 대한 호출은
+`await` 표현식으로 래핑되어야 합니다 —--
+즉, `await` 연산자 범위 안에 있어야 합니다.
 
-`async` 키워드는 함수 타입의 부분이고 동기 함수는 비동기 함수의 하위 타입입니다. 결과적으로 비동기 함수가 필요한 컨텍스트에서 동기 함수를 사용할 수 있습니다. 예를 들어 비동기 메서드를 동기 메서드로 재정의 할 수 있으며 동기 메서드는 비동기 메서드가 필요한 프로토콜 요구사항을 충족할 수 있습니다.
+`async` 키워드는 함수 타입의 일부이고,
+동기 함수는 비동기 함수의 하위 타입입니다.
+결과적으로 비동기 함수 컨텍스트에서
+동기 함수를 사용할 수 있습니다.
+예를 들어
+비동기 메서드를 동기 메서드로 재정의할 수 있으며,
+동기 메서드는 비동기 메서드가 필요한
+프로토콜 요구사항을 충족할 수 있습니다.
 
-함수가 비동기인지 아닌지에 따라 함수를 오버로드 할 수 있습니다. 호출 부분에서 컨텍스트는 사용될 오버로드를 결정합니다: 비동기 컨텍스트에서는 비동기 함수가 사용되고 동기 컨텍스트에서는 동기 함수가 사용됩니다.
+비동기 함수인지 아닌지에 따라 함수를 오버로드할 수 있습니다.
+호출 부분에서 컨텍스트에 따라 사용될 오버로드를 결정합니다:
+비동기 컨텍스트에서는 비동기 함수가 사용되고,
+동기 컨텍스트에서는 동기 함수가 사용됩니다.
 
-비동기 메서드는 동기 메서드를 재정의할 수 없으며 비동기 메서드는 동기 메서드에 대한 프로토콜 요구사항을 충족시킬 수 없습니다. 이 말은, 동기 메서드는 비동기 메서드를 재정의할 수 있으며 동기 메서드는 비동기 메서드에 대한 프로토콜 요구사항을 충족할 수 있습니다.
+비동기 메서드는 동기 메서드를 재정의할 수 없으며,
+비동기 메서드는 동기 메서드에 대한 프로토콜 요구사항을 충족할 수 없습니다.
+이 말은, 동기 메서드는 비동기 메서드를 재정의할 수 있으며,
+동기 메서드는 비동기 메서드에 대한 프로토콜 요구사항을 충족할 수 있습니다.
 
-### 반환되지 않는 함수 (Functions that Never Return)
+<!--
+  - test: `sync-satisfy-async-protocol-requirements`
+
+  ```swifttest
+  >> protocol P { func f() async -> Int }
+  >> class Super: P {
+  >>     func f() async -> Int { return 12 }
+  >> }
+  >> class Sub: Super {
+  >>     func f() -> Int { return 120 }
+  >> }
+  ```
+-->
+
+### 반환하지 않는 함수 (Functions that Never Return)
 
 Swift 는 함수 또는 메서드가 호출자에게 반환하지 않음을 나타내는 [`Never`][] 타입을 정의합니다. `Never` 반환 타입이 있는 함수와 메서드는 _비반환 (nonreturning)_ 이라고 합니다. 비반환 함수와 메서드는 복구할 수 없는 오류를 발생하거나 무한으로 계속되는 작업을 시작합니다. 이것은 호출 직후 코드가 실행되지 않음을 뜻합니다. 던지고 다시 던지는 함수는 비반환인 경우에도 적절한 `catch` 블록으로 프로그램 제어를 전송할 수 있습니다.
 

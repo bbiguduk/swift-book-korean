@@ -1615,7 +1615,7 @@ struct SizedRectangle {
 -->
 
 프로퍼티 래퍼 문법은 getter와 setter가 있는
-프로퍼티를 위한 문법적 설탕(syntactic sugar)이기 때문에
+프로퍼티를 위한 편의 문법(syntactic sugar)이기 때문에
 `height`와 `width` 접근하는 방식은
 다른 일반적인 프로퍼티에 접근하는 것과 동일하게 동작합니다.
 예를 들어
