@@ -1181,7 +1181,7 @@ struct SmallNumber {
   so it's clearer to make each init stand on its own.
 -->
 
-`SmallNumber`의 정의는 세 가지 이니셜라이저이 포함되어 있으며 ---
+`SmallNumber`의 정의는 세 가지 이니셜라이저가 포함되어 있으며 ---
 `init()`, `init(wrappedValue:)`, `init(wrappedValue:maximum:)` 가 포함되어 있으며 ---
 아래 예시에서는
 이 이니셜라이저를 사용해 래핑된 값과 최대값을 설정합니다.
@@ -1767,7 +1767,7 @@ func someFunction() {
 > Note: 저장 인스턴스 프로퍼티와 다르게
 > 저장 타입 프로퍼티에는 반드시 기본값을 제공해야 합니다.
 > 이는 타입 자체에는 저장 타입 프로퍼티를 초기화할 수 있는
-> 이니셜라이저이 존재하지 않기 때문입니다.
+> 이니셜라이저가 존재하지 않기 때문입니다.
 >
 > 저장 타입 프로퍼티는 처음 접근될 때 지연 초기화됩니다.
 > 여러 스레드에서 동시에 접근할 때도

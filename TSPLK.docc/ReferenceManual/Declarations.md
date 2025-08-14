@@ -273,9 +273,9 @@ print("The second number is \(secondNumber).")
 <doc:Inheritance#재정의-Overriding>에서 설명한대로 `override` 선언 수정자로
 하위 클래스의 프로퍼티 선언을 표시하여 하위 클래스에서 프로퍼티를 재정의할 수 있습니다.
 
-### 저장 변수와 저장 변수 프로퍼티 (Stored Variables and Stored Variable Properties)
+### 저장 변수와 변수 저장 프로퍼티 (Stored Variables and Stored Variable Properties)
 
-다음의 형식으로 저장 변수(stored variable)나 저장 변수 프로퍼티(stored variable property)를 선언할 수 있습니다:
+다음의 형식으로 저장 변수(stored variable)나 변수 저장 프로퍼티(stored variable property)를 선언할 수 있습니다:
 
 ```swift
 var <#variable name#>: <#type#> = <#expression#>
@@ -286,7 +286,7 @@ var <#variable name#>: <#type#> = <#expression#>
 이러한 형식의 변수 선언이 전역 범위나
 함수의 지역 범위로 선언되면 *저장 변수(stored variable)*로 참조됩니다.
 클래스나 구조체 선언의 컨텍스트에서 선언되면
-*저장 변수 프로퍼티(stored variable property)*로 참조됩니다.
+*변수 저장 프로퍼티(stored variable property)*로 참조됩니다.
 
 이니셜라이저 *표현식(expression)*은 프로토콜 선언에 있을 수 없지만
 다른 모든 컨텍스트에서는 이니셜라이저 *표현식(expression)*이 선택 사항입니다.
@@ -301,7 +301,7 @@ var <#variable name#>: <#type#> = <#expression#>
 튜플에서 각 항목에 이름은 이니셜라이저 *표현식(expression)*의
 해당 값에 바인딩 됩니다.
 
-이름에서 알 수 있듯이, 저장 변수나 저장 변수 프로퍼티의 값은
+이름에서 알 수 있듯이, 저장 변수나 변수 저장 프로퍼티의 값은
 메모리에 저장됩니다.
 
 ### 연산 변수와 연산 프로퍼티 (Computed Variables and Computed Properties)
@@ -340,7 +340,7 @@ setter 이름을 제공하면, setter의 파라미터 이름으로 사용됩니�
 setter 이름을 제공하지 않으면, <doc:Properties#짧은-Setter-선언-Shorthand-Setter-Declaration>에서 설명한대로
 setter의 기본 파라미터 이름은 `newValue`입니다.
 
-명명된 저장 값과 저장 변수 프로퍼티와 다르게
+명명된 저장 값과 변수 저장 프로퍼티와 다르게
 명명된 연산 값이나 연산 프로퍼티의 값은 메모리에 저장되지 않습니다.
 
 연산 프로퍼티의 자세한 내용과 예시는
@@ -1668,55 +1668,93 @@ func <#function name#>(<#parameters#>) async -> <#return type#> {
 
 ### 반환하지 않는 함수 (Functions that Never Return)
 
-Swift 는 함수 또는 메서드가 호출자에게 반환하지 않음을 나타내는 [`Never`][] 타입을 정의합니다. `Never` 반환 타입이 있는 함수와 메서드는 _비반환 (nonreturning)_ 이라고 합니다. 비반환 함수와 메서드는 복구할 수 없는 오류를 발생하거나 무한으로 계속되는 작업을 시작합니다. 이것은 호출 직후 코드가 실행되지 않음을 뜻합니다. 던지고 다시 던지는 함수는 비반환인 경우에도 적절한 `catch` 블록으로 프로그램 제어를 전송할 수 있습니다.
+Swift는 [`Never`][] 타입을 정의하여
+함수나 메서드가 호출자에게 반환하지 않음을 나타냅니다.
+`Never` 반환 타입이 있는 함수와 메서드는 *비반환(nonreturning)*이라고 합니다.
+비반환 함수와 메서드는 복구할 수 없는 오류를 발생하거나
+무한으로 계속되는 작업을 시작합니다.
+이것은
+호출 직후에 실행될 코드가 실행되지 않음을 뜻합니다.
+비반환 함수나 메서드인 경우에도
+적절한 `catch` 블록으로 프로그램 제어를 전달할 수 있습니다.
 
 [`Never`]: https://developer.apple.com/documentation/swift/never
 
-비반환 함수 또는 메서드는 <doc:Statements#Guard-구문-Guard-Statement> 에서 설명한대로 guard 구문의 `else` 절을 끝낼 수 있습니다.
+비반환 함수나 메서드는
+<doc:Statements#Guard-구문-Guard-Statement>에서 설명한대로
+guard 구문의 `else` 절을 끝낼 수 있습니다.
 
-비반환 메서드를 재정의할 수 있지만 새로운 메서드는 반환 타입과 비반환 동작을 유지해야 합니다.
+비반환 메서드를 재정의할 수 있지만
+새로운 메서드는 반환 타입과 비반환 동작을 유지해야 합니다.
 
 > Grammar of a function declaration:
 >
-> _function-declaration_ → _function-head_ _function-name_ _generic-parameter-clause?_ _function-signature_ _generic-where-clause?_ _function-body?_
+> *function-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_ *function-body*_?_
 >
-> _function-head_ → _attributes?_ _declaration-modifiers?_ **`func`** \
-> _function-name_ → _identifier_ | _operator_
+> *function-head* → *attributes*_?_ *declaration-modifiers*_?_ **`func`** \
+> *function-name* → *identifier* | *operator*
 >
 > *function-signature* → *parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ \
-> _function-signature_ → _parameter-clause_ **`async`**_?_ **`rethrows`** _function-result?_ \
-> _function-result_ → **`->`** _attributes?_ _type_ \
-> _function-body_ → _code-block_
+> *function-signature* → *parameter-clause* **`async`**_?_ **`rethrows`** *function-result*_?_ \
+> *function-result* → **`->`** *attributes*_?_ *type* \
+> *function-body* → *code-block*
 >
-> _parameter-clause_ → **`(`** **`)`** | **`(`** _parameter-list_ **`)`** \
-> _parameter-list_ → _parameter_ | _parameter_ **`,`** _parameter-list_ \
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
+> *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* **`...`**
-> 
-> _external-parameter-name_ → _identifier_ \
-> _local-parameter-name_ → _identifier_ \
+>
+> *external-parameter-name* → *identifier* \
+> *local-parameter-name* → *identifier* \
 > *parameter-type-annotation* → **`:`** *attributes*_?_ *parameter-modifier*_?_ *type* \
-> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`** \
-> _default-argument-clause_ → **`=`** _expression_
+> *parameter-modifier* → **`inout`** | **`borrowing`** | **`consuming`**
+> *default-argument-clause* → **`=`** *expression*
+
+<!--
+  NOTE: Code block is optional in the context of a protocol.
+  Everywhere else, it's required.
+  We could refactor to have a separation between function definition/declaration.
+  There's also the low-level "asm name" FFI
+  which is a definition and declaration corner case.
+  Let's just deal with this difference in prose.
+-->
 
 ## 열거형 선언 (Enumeration Declaration)
 
-_열거형 선언 (enumeration declaration)_ 은 프로그램에 명명된 열거형 타입을 도입합니다.
+*열거형 선언(enumeration declaration)*은 프로그램에 열거형 타입을 도입합니다.
 
-열거형 선언은 두 가지 기본 형식을 가지고 있고 `enum` 키워드를 사용하여 선언됩니다. 두 형식 중 하나를 사용하여 선언된 열거형의 본문은 열거형 케이스 (enumeration cases) 라고 불리는 없거나 더 많은 값과 연산 프로퍼티, 인스턴스 메서드, 타입 메서드, 이니셜라이저, 타입 별칭, 그리고 다른 열거형, 구조체, 클래스 그리고 액터 선언을 포함합니다. 열거형 선언은 디이니셜라이저 또는 프로토콜 선언을 포함할 수 없습니다.
+열거형 선언은 두 가지 기본 형식을 가지고 있고 `enum` 키워드를 사용하여 선언합니다.
+두 형식 중 하나를 사용하여 선언된 열거형의 본문은
+열거형 케이스(enumeration case)라고 불리는 0개 이상의 값과
+연산 프로퍼티,
+인스턴스 메서드, 타입 메서드, 이니셜라이저, 타입 별칭,
+다른 열거형, 구조체, 클래스, 액터
+선언을 포함할 수 있습니다.
+열거형 선언은 디이니셜라이저나 프로토콜 선언을 포함할 수 없습니다.
 
-열거형 타입은 여러 프로토콜을 채택할 수 있지만 클래스, 구조체, 또는 다른 열거형을 상속할 수 없습니다.
+열거형 타입은 여러 프로토콜을 채택할 수 있지만
+클래스, 구조체, 다른 열거형을 상속할 수 없습니다.
 
-클래스와 구조체와 다르게 열거형 타입은 암시적으로 제공된 기본 이니셜라이저를 가지지 않습니다; 모든 이니셜라이저는 명시적으로 선언되어야 합니다. 이니셜라이저는 열거형 내에 다른 이니셜라이저으로 위임할 수 있지만 초기화 프로세스는 이니셜라이저이 열거형 케이스 중 하나를 `self` 에 할당 한 후에만 완료됩니다.
+클래스나 구조체와 다르게
+열거형 타입은 암시적으로 제공된 기본 이니셜라이저를 가지지 않습니다;
+모든 이니셜라이저는 명시적으로 선언해야 합니다.
+이니셜라이저는 열거형 내에 다른 이니셜라이저로 위임할 수 있지만,
+초기화 과정은 이니셜라이저에서 열거형 케이스 중 하나를 `self`에 할당한 후에 완료되어야만 합니다.
 
-구조체와 비슷하지만 클래스와 달리 열거형은 값 타입입니다; 열거형의 인스턴스는 변수 또는 상수에 할당될 때나 함수 호출에 인자로 전달될 때 복사됩니다. 값 타입에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 을 참고바랍니다.
+구조체와 비슷하지만 클래스와 달리 열거형은 값 타입입니다;
+열거형의 인스턴스는 변수나 상수에 할당될 때나
+함수 호출의 인자로 전달될 때 복사됩니다.
+값 타입에 대한 자세한 내용은
+<doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types>을 참고바랍니다.
 
-<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명한대로 확장 선언으로 열거형 타입의 동작을 확장할 수 있습니다.
+<doc:Declarations#확장-선언-Extension-Declaration>에서 설명한대로
+확장 선언으로 열거형 타입의 동작을 확장할 수 있습니다.
 
-### 모든 타입의 케이스가 있는 열거형 (Enumerations with Cases of Any Type)
+### 임의의 타입을 가지는 케이스가 있는 열거형 (Enumerations with Cases of Any Type)
 
-다음의 형식은 모든 타입의 열거형 케이스를 포함하는 열거형 타입을 선언합니다:
+다음의 형식은 임의의 타입을 가지는 열거형 케이스를
+포함하는 열거형 타입을 선언합니다:
 
 ```swift
 enum <#enumeration name#>: <#adopted protocols#> {
@@ -1725,11 +1763,20 @@ enum <#enumeration name#>: <#adopted protocols#> {
 }
 ```
 
-이 형식으로 선언된 열거형은 다른 프로그래밍 언어에서 _구별된 공용체 (discriminated unions)_ 라고도 합니다.
+이 형식으로 선언된 열거형을
+다른 프로그래밍 언어에서는 *태그된 유니온(discriminated unions)*이라고 합니다.
 
-이 형식에서 각 케이스 블록은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 각 케이스의 이름은 고유해야 합니다. 각 케이스는 주어진 타입의 값을 저장하도록 지정할 수도 있습니다. 이러한 타입은 케이스의 이름 바로 다음에 _연관값 타입 (associated value types)_ 튜플로 지정됩니다.
+이 형식에서 각 케이스 블록은 `case` 키워드 다음에
+콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다.
+각 케이스의 이름은 고유해야 합니다.
+각 케이스는 주어진 타입의 값을 저장하도록 지정할 수도 있습니다.
+이러한 타입은 케이스의 이름 바로 다음에
+*연관값 타입(associated value type)* 튜플로 지정합니다.
 
-연관값을 저장하는 열거형 케이스는 지정된 연관값을 사용하여 열거형의 인스턴스를 생성하는 함수로 사용될 수 있습니다. 함수와 마찬가지로 코드에 열거형 케이스에 대한 참조를 가져오고 적용할 수 있습니다.
+연관값을 저장하는 열거형 케이스는 지정된 연관값을 사용하여 열거형의 인스턴스를 생성하는
+함수로 사용할 수 있습니다.
+함수와 마찬가지로
+코드에 열거형 케이스에 대한 참조를 가져오고 적용할 수 있습니다.
 
 ```swift
 enum Number {
@@ -1743,13 +1790,52 @@ let f = Number.integer
 let evenInts: [Number] = [0, 2, 4, 6].map(f)
 ```
 
-연관값 타입을 사용하는 케이스의 자세한 내용과 예시는 <doc:Enumerations#연관된-값-Associated-Values> 을 참고바랍니다.
+<!--
+  - test: `enum-case-as-function`
 
-#### 간접 열거형 (Enumerations with Indirection)
+  ```swifttest
+  -> enum Number {
+        case integer(Int)
+        case real(Double)
+     }
+  -> let f = Number.integer
+  -> // f is a function of type (Int) -> Number
+  ---
+  -> // Apply f to create an array of Number instances with integer values
+  -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
+  ```
+-->
 
-열거형은 재귀적 구조체를 가질 수 있습니다. 이 말은 열거형 타입 자체의 인스턴스 인 연관값을 사용하는 케이스를 가질 수 있다는 의미입니다. 그러나 열거형 타입의 인스턴스는 메모리에 고정된 레이아웃이 있음을 의미하는 값 의미를 가지고 있습니다. 재귀를 지원하려면 컴파일러는 간접 레이어를 삽입해야 합니다.
+<!--
+  No expectation for evenInts because there isn't a good way to spell one.
+  Using print() puts a module prefix like tmpabc in front of Number
+  so the expectation would need to be a regex (which we don't have),
+  and assert() would require Number to conform to Equatable.
+-->
 
-특정 열거형 케이스에 대해 간접을 사용하려면 `indirect` 선언 수정자로 표시해야 합니다. 간접 케이스는 연관값을 가지고 있어야 합니다.
+연관값 타입을 사용하는 케이스의 자세한 내용과 예시는
+<doc:Enumerations#연관값-Associated-Values>을 참고바랍니다.
+
+#### 간접 참조 열거형 (Enumerations with Indirection)
+
+열거형은 재귀적 구조를 가질 수 있습니다.
+이 말은 열거형 타입 자체의 인스턴스인
+연관값을 사용하는 케이스를 가질 수 있다는 의미입니다.
+그러나 열거형 타입의 인스턴스는 값 시맨틱(value semantic)을 가집니다.
+이것은 메모리에 고정된 레이아웃을 가지고 있다는 의미입니다.
+재귀를 지원하려면
+컴파일러는 간접 참조 계층을 삽입해야 합니다.
+
+특정 열거형 케이스에 대한 간접 참조를 사용하려면,
+`indirect` 선언 수정자로 표시해야 합니다.
+간접 케이스는 연관값을 가지고 있어야 합니다.
+
+<!--
+  TODO The word "enable" is kind of a weasel word.
+  Better to have a more concrete discussion of exactly when
+  it is and isn't used.
+  For example, does "indirect enum { X(Int) } mark X as indirect?
+-->
 
 ```swift
 enum Tree<T> {
@@ -1758,13 +1844,64 @@ enum Tree<T> {
 }
 ```
 
-연관값을 가진 열거형의 모든 케이스에 대해 간접을 사용하려면 전체 열거형을 `indirect` 수정자로 표시합니다 — 이것은 열거형이 케이스 `indirect` 수정자를 표시해야 될 케이스를 많이 포함하는 경우 편리합니다.
+<!--
+  - test: `indirect-enum`
 
-`indirect` 수정자로 표시된 열거형은 연관값을 가진 케이스와 그렇지 않은 케이스를 포함할 수 있습니다. 이 말은 `indirect` 수정자로 표시된 케이스는 포함할 수 없다는 의미입니다.
+  ```swifttest
+  -> enum Tree<T> {
+        case empty
+        indirect case node(value: T, left: Tree, right: Tree)
+     }
+  >> let l1 = Tree.node(value: 10, left: Tree.empty, right: Tree.empty)
+  >> let l2 = Tree.node(value: 100, left: Tree.empty, right: Tree.empty)
+  >> let t = Tree.node(value: 50, left: l1, right: l2)
+  ```
+-->
+
+연관값을 가진
+열거형의 모든 케이스에 대해 간접 참조를 사용하려면
+전체 열거형을 `indirect` 수정자로 표시합니다 —--
+이것은 열거형 케이스에 각각 `indirect` 수정자를 표시해야 될
+케이스를 많이 포함하는 경우 편리합니다.
+
+`indirect` 수정자로 표시된 열거형은
+연관값을 가진 케이스와 연관값을 가지지 않는 케이스를 혼합해 포함할 수 있습니다.
+이 말은
+`indirect` 수정자로 표시된 케이스는 포함할 수 없다는 의미입니다.
+
+<!--
+  It really should be an associated value **that includes the enum type**
+  but right now the compiler is satisfied with any associated value.
+  Alex emailed Joe Groff 2015-07-08 about this.
+-->
+
+<!--
+  assertion indirect-in-indirect
+
+  -> indirect enum E { indirect case c(E) }
+  !! <REPL Input>:1:19: error: enum case in 'indirect' enum cannot also be 'indirect'
+  !! indirect enum E { indirect case c(E) }
+  !!                   ^
+-->
+
+<!--
+  assertion indirect-without-recursion
+
+  -> enum E { indirect case c }
+  !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
+  !! enum E { indirect case c }
+  !!          ^
+  ---
+  -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
+  -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
+  ---
+  -> indirect enum E3 { case x }
+-->
 
 ### 원시값 타입의 케이스를 가진 열거형 (Enumerations with Cases of a Raw-Value Type)
 
-다음의 형식은 동일한 기본 타입의 열거형 케이스를 포함하는 열거형 타입을 선언합니다:
+다음의 형식은 동일한 기본 타입의 열거형 케이스를
+포함하는 열거형 타입을 선언합니다:
 
 ```swift
 enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
@@ -1773,12 +1910,32 @@ enum <#enumeration name#>: <#raw-value type#>, <#adopted protocols#> {
 }
 ```
 
-이 형식에서 각 케이스 블록은 `case` 키워드 다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다. 첫번째 형식의 케이스와 달리 각 케이스는 동일한 기본 타입의 _원시값 (raw value)_ 인 기본값을 가집니다. 이러한 값의 타입은 _원시값 타입 (raw-value type)_ 으로 지정되고 정수, 부동소수점 숫자, 문자열 또는 단일 문자로 표현되어야 합니다. 특히 _원시값 타입 (raw-value type)_ 은 `Equatable` 프로토콜과 다음 프로토콜 중 하나를 준수해야 합니다:\
-정수 리터럴에 대한 `ExpressibleByIntegerLiteral`,\
-부동소수점 리터럴에 대한 `ExpressibleByFloatLiteral`,\
-문자의 모든 숫자를 포함하는 문자열 리터럴에 대한 `ExpressibleByStringLiteral`, 그리고 단일 문자만 포함하는 문자열 리터럴에 대한 `ExpressibleByUnicodeScalarLiteral` 또는 `ExpressibleByExtendedGraphemeClusterLiteral`. 각 케이스는 고유한 이름을 가지고 고유한 원시값이 할당 되어야 합니다.
+이 형식에서 각 케이스 블록은 `case` 키워드
+다음에 콤마로 구분된 하나 이상의 열거형 케이스로 구성됩니다.
+첫 번째 형식의 케이스와 달리 각 케이스는
+동일한 기본 타입의 *원시값(raw value)*이라는 기본값을 가집니다.
+이러한 값의 타입은 *원시값 타입(raw-value type)*으로 지정되고
+정수, 부동소수점 숫자, 문자열, 단일 문자를 나타내야 합니다.
+특히 *원시값 타입(raw-value type)*은 `Equatable` 프로토콜과
+다음 프로토콜 중 하나를 준수해야 합니다:
+정수 리터럴에 대한 `ExpressibleByIntegerLiteral`,
+부동소수점 리터럴에 대한 `ExpressibleByFloatLiteral`,
+여러 문자를 포함하는 문자열 리터럴에 대한 `ExpressibleByStringLiteral`,
+단일 문자만 포함하는 문자열 리터럴에 대한
+`ExpressibleByUnicodeScalarLiteral`
+또는 `ExpressibleByExtendedGraphemeClusterLiteral`.
+각 케이스는 고유한 이름을 가지고 고유한 원시값이 할당되어야 합니다.
 
-원시값 타입이 `Int` 로 지정되고 케이스에 명시적으로 값을 할당하지 않으면 암시적으로 값 `0`, `1`, `2`, 등으로 할당됩니다. 타입 `Int` 의 각 할당되지 않은 케이스는 이전 케이스의 원시값에서 자동으로 증가된 원시값으로 할당됩니다.
+<!--
+  The list of ExpressibleBy... protocols above also appears in LexicalStructure_Literals.
+  This list is shorter because these five protocols are explicitly supported in the compiler.
+-->
+
+원시값 타입이 `Int`로 지정되고
+케이스에 명시적으로 값을 할당하지 않으면,
+이것은 암시적으로 값 `0`, `1`, `2` 등으로 할당합니다.
+타입 `Int`의 각 할당되지 않은 케이스는
+이전 케이스의 원시값에서 자동으로 증가된 원시값으로 할당됩니다.
 
 ```swift
 enum ExampleEnum: Int {
@@ -1786,9 +1943,24 @@ enum ExampleEnum: Int {
 }
 ```
 
-위의 예시에서 `ExampleEnum.a` 의 원시값은 `0` 이고 `ExampleEnum.b` 의 값은 `1` 입니다. 그리고 `ExampleEnum.c` 의 값이 명시적으로 `5` 로 설정되어 있으므로 `ExampleEnum.d` 의 값은 `5` 에서 자동적으로 증가되어 `6` 입니다.
+<!--
+  - test: `raw-value-enum`
 
-원시값 타입이 `String` 으로 지정되고 명시적으로 케이스에 값을 할당하지 않으면 각 할당되지 않은 케이스는 암시적으로 케이스의 이름과 동일한 텍스트 문자열로 할당됩니다.
+  ```swifttest
+  -> enum ExampleEnum: Int {
+        case a, b, c = 5, d
+     }
+  ```
+-->
+
+위의 예시에서 `ExampleEnum.a`의 원시값은 `0`이고
+`ExampleEnum.b`의 값은 `1`입니다.
+그리고 `ExampleEnum.c`의 값은 명시적으로 `5`로 설정되어 있으므로
+`ExampleEnum.d`의 값은 `5`에서 자동으로 증가되어 `6`입니다.
+
+원시값 타입이 `String`으로 지정되고
+명시적으로 케이스에 값을 할당하지 않으면,
+각 할당되지 않은 케이스는 암시적으로 케이스의 이름과 동일한 텍스트 문자열로 할당됩니다.
 
 ```swift
 enum GamePlayMode: String {
@@ -1796,42 +1968,110 @@ enum GamePlayMode: String {
 }
 ```
 
-위의 예시에서 `GamePlayMode.cooperative` 의 원시값은 `"cooperative"`, `GamePlayMode.individual` 의 원시값은 `"individual"`, 그리고 `GamePlayMode.competitive` 는 `"competitive"` 입니다.
+<!--
+  - test: `raw-value-enum-implicit-string-values`
 
-암시적으로 원시값 타입의 케이스를 가지는 열거형은 Swift 표준 라이브러리에 정의된 `RawRepresentable` 프로토콜을 준수합니다. 결과적으로 `rawValue` 프로퍼티를 가지고 있고 `init?(rawValue: RawValue)` 인 실패 가능한 이니셜라이저를 가집니다. `ExampleEnum.b.rawValue` 처럼 열거형 케이스의 원시값에 접근하기 위해 `rawValue` 프로퍼티를 사용할 수 있습니다. 옵셔널 케이스를 반환하는 `ExampleEnum(rawValue: 5)` 와 같이 열거형의 실패 가능한 이니셜라이저를 호출하여 해당 케이스를 찾기위해 원시값을 사용할 수도 있습니다. 원시값 타입이 있는 케이스의 자세한 내용과 예시는 <doc:Enumerations#원시값-Raw-Values> 을 참고바랍니다.
+  ```swifttest
+  -> enum GamePlayMode: String {
+        case cooperative, individual, competitive
+     }
+  ```
+-->
+
+위의 예시에서 `GamePlayMode.cooperative`의 원시값은 `"cooperative"`,
+`GamePlayMode.individual`의 원시값은 `"individual"`,
+`GamePlayMode.competitive`의 원시값은 `"competitive"`입니다.
+
+암시적으로 원시값 타입의 케이스를 가지는 열거형은
+Swift 표준 라이브러리에 정의된 `RawRepresentable` 프로토콜을 준수합니다.
+결과적으로 `rawValue` 프로퍼티를 가지고 있고
+`init?(rawValue: RawValue)`인 실패 가능한 이니셜라이저를 가집니다.
+`ExampleEnum.b.rawValue`처럼
+열거형 케이스의 원시값에 접근하기 위해 `rawValue` 프로퍼티를 사용할 수 있습니다.
+옵셔널 케이스를 반환하는 `ExampleEnum(rawValue: 5)`와 같이
+열거형의 실패 가능한 이니셜라이저를 호출하여
+해당 케이스를 찾기 위해 원시값을 사용할 수도 있습니다.
+원시값 타입이 있는 케이스의 자세한 내용과 예시는
+<doc:Enumerations#원시값-Raw-Values>을 참고바랍니다.
 
 ### 열거형 케이스 접근 (Accessing Enumeration Cases)
 
-열거형 타입의 케이스를 참조하기 위해 `EnuerationType.enumerationCase` 와 같이 점 (`.`) 구문을 사용합니다. 열거형 타입이 컨텍스트에서 유추될 수 있으면 <doc:Enumerations#열거형-구문-Enumeration-Syntax> 과 <doc:Expressions#암시적-멤버-표현식-Implicit-Member-Expression> 에서 설명한대로 점은 그대로 유지한 채 생략할 수 있습니다.
+열거형 타입의 케이스를 참조하기 위해
+`EnuerationType.enumerationCase`와 같이 점(`.`) 구문을 사용합니다.
+열거형 타입을 컨텍스트에서 추론할 수 있으면 <doc:Enumerations#열거형-구문-Enumeration-Syntax>과
+<doc:Expressions#암시적-멤버-표현식-Implicit-Member-Expression>에서 설명한대로
+점은 그대로 유지한 채 생략할 수 있습니다.
 
-열거형 케이스의 값을 검사하려면 <doc:Enumerations#스위치-구문에서-열거형-값-일치-Matching-Enumeration-Values-with-a-Switch-Statement> 에서 봤듯이 `switch` 구문을 사용합니다. 열거형 타입은 <doc:Patterns#열거형-케이스-패턴-Enumeration-Case-Pattern> 에서 설명한대로 `switch` 구문의 케이스 블록에서 열거형 케이스 패턴에 대해 일치합니다.
+열거형 케이스의 값을 확인하려면 <doc:Enumerations#스위치-구문에서-열거형-값-일치-Matching-Enumeration-Values-with-a-Switch-Statement>에서 보았듯이
+`switch` 구문을 사용합니다.
+열거형 타입은 <doc:Patterns#열거형-케이스-패턴-Enumeration-Case-Pattern>에서 설명한대로
+`switch` 구문의 케이스 블록에서
+열거형 케이스 패턴과 일치됩니다.
+
+<!--
+  FIXME: Or use if-case:
+  enum E { case c(Int) }
+  let e = E.c(100)
+  if case E.c(let i) = e { print(i) }
+  // prints 100
+-->
+
+<!--
+  NOTE: Note that you can require protocol adoption,
+  by using a protocol type as the raw-value type,
+  but you do need to make it be one of the types
+  that support = in order for you to specify the raw values.
+  You can have: <#raw-value type, protocol conformance#>.
+  UPDATE: You can only have one raw-value type specified.
+  I changed the grammar to be more restrictive in light of this.
+-->
+
+<!--
+  NOTE: Per Doug and Ted, "('->' type)?" isn't part of the grammar.
+  We removed it from our grammar, below.
+-->
 
 > Grammar of an enumeration declaration:
 >
-> _enum-declaration_ → _attributes?_ _access-level-modifier?_ _union-style-enum_ \
-> _enum-declaration_ → _attributes?_ _access-level-modifier?_ _raw-value-style-enum_
+> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *union-style-enum* \
+> *enum-declaration* → *attributes*_?_ *access-level-modifier*_?_ *raw-value-style-enum*
 >
-> _union-style-enum_ → **`indirect`**_?_ **`enum`** _enum-name_ _generic-parameter-clause?_ _type-inheritance-clause?_ _generic-where-clause?_ **`{`** _union-style-enum-members?_ **`}`** \
-> _union-style-enum-members_ → _union-style-enum-member_ _union-style-enum-members?_ \
-> _union-style-enum-member_ → _declaration_ | _union-style-enum-case-clause_ | _compiler-control-statement_ \
-> _union-style-enum-case-clause_ → _attributes?_ **`indirect`**_?_ **`case`** _union-style-enum-case-list_ \
-> _union-style-enum-case-list_ → _union-style-enum-case_ | _union-style-enum-case_ **`,`** _union-style-enum-case-list_ \
-> _union-style-enum-case_ → _enum-case-name_ _tuple-type?_ \
-> _enum-name_ → _identifier_ \
-> _enum-case-name_ → _identifier_
+> *union-style-enum* → **`indirect`**_?_ **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ **`{`** *union-style-enum-members*_?_ **`}`** \
+> *union-style-enum-members* → *union-style-enum-member* *union-style-enum-members*_?_ \
+> *union-style-enum-member* → *declaration* | *union-style-enum-case-clause* | *compiler-control-statement* \
+> *union-style-enum-case-clause* → *attributes*_?_ **`indirect`**_?_ **`case`** *union-style-enum-case-list* \
+> *union-style-enum-case-list* → *union-style-enum-case* | *union-style-enum-case* **`,`** *union-style-enum-case-list* \
+> *union-style-enum-case* → *enum-case-name* *tuple-type*_?_ \
+> *enum-name* → *identifier* \
+> *enum-case-name* → *identifier*
 >
-> _raw-value-style-enum_ → **`enum`** _enum-name_ _generic-parameter-clause?_ _type-inheritance-clause_ _generic-where-clause?_ **`{`** _raw-value-style-enum-members_ **`}`** \
-> _raw-value-style-enum-members_ → _raw-value-style-enum-member_ _raw-value-style-enum-members?_ \
-> _raw-value-style-enum-member_ → _declaration_ | _raw-value-style-enum-case-clause_ | _compiler-control-statement_ \
-> _raw-value-style-enum-case-clause_ → _attributes?_ **`case`** _raw-value-style-enum-case-list_ \
-> _raw-value-style-enum-case-list_ → _raw-value-style-enum-case_ | _raw-value-style-enum-case_ **`,`** _raw-value-style-enum-case-list_ \
-> _raw-value-style-enum-case_ → _enum-case-name_ _raw-value-assignment?_ \
-> _raw-value-assignment_ → **`=`** _raw-value-literal_ \
-> _raw-value-literal_ → _numeric-literal_ | _static-string-literal_ | _boolean-literal_
+> *raw-value-style-enum* → **`enum`** *enum-name* *generic-parameter-clause*_?_ *type-inheritance-clause* *generic-where-clause*_?_ **`{`** *raw-value-style-enum-members* **`}`** \
+> *raw-value-style-enum-members* → *raw-value-style-enum-member* *raw-value-style-enum-members*_?_ \
+> *raw-value-style-enum-member* → *declaration* | *raw-value-style-enum-case-clause* | *compiler-control-statement* \
+> *raw-value-style-enum-case-clause* → *attributes*_?_ **`case`** *raw-value-style-enum-case-list* \
+> *raw-value-style-enum-case-list* → *raw-value-style-enum-case* | *raw-value-style-enum-case* **`,`** *raw-value-style-enum-case-list* \
+> *raw-value-style-enum-case* → *enum-case-name* *raw-value-assignment*_?_ \
+> *raw-value-assignment* → **`=`** *raw-value-literal* \
+> *raw-value-literal* → *numeric-literal* | *static-string-literal* | *boolean-literal*
+
+<!--
+  NOTE: The two types of enums are sufficiently different enough to warrant separating
+  the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
+  I'm not sure I'm happy with the names I've chosen for two kinds of enums,
+  so please let me know if you can think of better names (Tim and Dave are OK with them)!
+  I chose union-style-enum, because this kind of enum behaves like a discriminated union,
+  not like an ordinary enum type. They're a kind of "sum" type in the language
+  of ADTs (Algebraic Data Types). Functional languages, like F# for example,
+  actually have both types (discriminated unions and enumeration types),
+  because they behave differently. I'm not sure why we've blended them together,
+  especially given that they have distinct syntactic declaration requirements
+  and they behave differently.
+-->
 
 ## 구조체 선언 (Structure Declaration)
 
-_구조체 선언 (structure declaration)_ 은 프로그램에 명명된 구조체 타입을 도입합니다. 구조체 선언은 `struct` 키워드를 사용하여 선언되고 아래의 형식을 가집니다:
+*구조체 선언(structure declaration)*은 프로그램에 구조체 타입을 도입합니다.
+구조체 선언은 `struct` 키워드를 사용하여 선언하고 아래의 형식을 가집니다:
 
 ```swift
 struct <#structure name#>: <#adopted protocols#> {
@@ -1839,36 +2079,57 @@ struct <#structure name#>: <#adopted protocols#> {
 }
 ```
 
-구조체의 본문은 _선언 (declarations)_ 이 없거나 많이 포함합니다. 이러한 _선언 (declarations)_ 은 저장 프로퍼티와 연산 프로퍼티, 타입 프로퍼티, 인스턴스 메서드, 타입 메서드, 이니셜라이저, 서브스크립트, 타입 별칭, 그리고 다른 구조체, 클래스, 액터 그리고 열거형 선언을 포함할 수 있습니다. 구조체 선언은 디이니셜라이저 또는 프로토콜 선언을 포함할 수 없습니다. 여러 종류의 선언을 포함한 구조체에 대한 자세한 내용과 예시는 <doc:ClassesAndStructures> 를 참고바랍니다.
+구조체의 본문은 0개 이상의 *선언(declarations)*을 포함합니다.
+이러한 위 형식의 *선언(declarations)*은 저장 프로퍼티와 연산 프로퍼티,
+타입 프로퍼티, 인스턴스 메서드, 타입 메서드, 이니셜라이저, 서브스크립트,
+타입 별칭, 다른 구조체, 클래스, 액터, 열거형 선언을 포함할 수 있습니다.
+구조체 선언은 디이니셜라이저나 프로토콜 선언을 포함할 수 없습니다.
+여러 종류의 선언을 포함한
+구조체에 대한 자세한 내용과 예시는
+<doc:ClassesAndStructures>를 참고바랍니다.
 
-구조체 타입은 여러 프로토콜을 채택할 수 있지만 클래스, 열거형, 또는 다른 구조체를 상속할 수 없습니다.
+구조체 타입은 여러 프로토콜을 채택할 수 있지만
+클래스, 열거형, 다른 구조체를 상속할 수 없습니다.
 
-이전에 선언된 구조체의 인스턴스를 생성하는 방법은 세가지가 있습니다:
+이전에 선언된 구조체의 인스턴스를 생성하는 방법은 세 가지가 있습니다:
 
-* <doc:Initialization#이니셜라이저-Initializers> 에서 설명한대로 구조체 내에 선언된 이니셜라이저 중 하나를 호출해야 합니다.
-* 선언된 이니셜라이저이 없는 경우 <doc:Initialization#구조체의-멤버별-이니셜라이저-Memberwise-Initializers-for-Structure-Types> 에서 설명한대로 구조체의 멤버별 이니셜라이저를 호출합니다.
-* 선언된 이니셜라이저이 없고 구조체 선언의 모든 프로퍼티에 초기값이 주어진 경우 <doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명한대로 구조체의 기본 이니셜라이저를 호출합니다.
+- <doc:Initialization#이니셜라이저-Initializers>에서 설명한대로
+  구조체 내 선언된 이니셜라이저 중 하나를 호출합니다.
+- 선언된 이니셜라이저가 없는 경우
+  <doc:Initialization#구조체의-멤버별-이니셜라이저-Memberwise-Initializers-for-Structure-Types>에서 설명한대로
+  구조체의 멤버별 이니셜라이저를 호출합니다.
+- 선언된 이니셜라이저가 없고
+  구조체 선언의 모든 프로퍼티에 초기값이 주어진 경우
+  <doc:Initialization#기본-이니셜라이저-Default-Initializers>에서 설명한대로
+  구조체의 기본 이니셜라이저를 호출합니다.
 
-구조체에 선언된 프로퍼티 초기화 프로세스는 <doc:Initialization> 에 설명되어 있습니다.
+구조체에 선언된 프로퍼티 초기화 과정은
+<doc:Initialization>에 설명되어 있습니다.
 
-구조체 인스턴스의 프로퍼티는 <doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties> 에서 설명한대로 점 (`.`) 구문을 사용하여 접근할 수 있습니다.
+구조체 인스턴스의 프로퍼티는 <doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties>에서 설명한대로
+점(`.`) 구문을 사용하여 접근할 수 있습니다.
 
-구조체는 값 타입 입니다; 변수나 상수에 할당될 때나 함수 호출에 대해 인자로 전달될 때 구조체의 인스턴스는 복사됩니다. 값 타입에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 을 참고바랍니다.
+구조체는 값 타입 입니다; 변수나 상수에 할당되거나
+함수 호출의 인자로 전달될 때 구조체의 인스턴스는 복사됩니다.
+값 타입에 대한 자세한 내용은
+<doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types>을 참고바랍니다.
 
-<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명한대로 확장 선언으로 구조체 타입의 동작을 확장 할 수 있습니다.
+<doc:Declarations#확장-선언-Extension-Declaration>에서 설명한대로
+확장 선언으로 구조체 타입의 동작을 확장할 수 있습니다.
 
 > Grammar of a structure declaration:
 >
-> _struct-declaration_ → _attributes?_ _access-level-modifier?_ **`struct`** _struct-name_ _generic-parameter-clause?_ _type-inheritance-clause?_ _generic-where-clause?_ _struct-body_ \
-> _struct-name_ → _identifier_ \
-> _struct-body_ → **`{`** _struct-members?_ **`}`**
+> *struct-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`struct`** *struct-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *struct-body* \
+> *struct-name* → *identifier* \
+> *struct-body* → **`{`** *struct-members*_?_ **`}`**
 >
-> _struct-members_ → _struct-member_ _struct-members?_ \
-> _struct-member_ → _declaration_ | _compiler-control-statement_
+> *struct-members* → *struct-member* *struct-members*_?_ \
+> *struct-member* → *declaration* | *compiler-control-statement*
 
 ## 클래스 선언 (Class Declaration)
 
-_클래스 선언 (class declaration)_ 은 프로그램에 명명된 클래스 타입을 도입합니다. 클래스 선언은 `class` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
+*클래스 선언(class declaration)*은 프로그램에 클래스 타입을 도입합니다.
+클래스 선언은 `class` 키워드를 사용하여 선언하고 다음의 형식을 가집니다:
 
 ```swift
 class <#class name#>: <#superclass#>, <#adopted protocols#> {
@@ -1876,42 +2137,90 @@ class <#class name#>: <#superclass#>, <#adopted protocols#> {
 }
 ```
 
-클래스의 본문은 선언이 없거나 하나 이상의 _선언 (declarations)_ 을 포함합니다. 이러한 _선언 (declarations)_ 은 저장 프로퍼티와 연산 프로퍼티, 인스턴스 메서드, 타입 메서드, 이니셜라이저, 하나의 디이니셜라이저, 서브스크립트, 타입 별칭, 그리고 다른 클래스, 구조체, 액터 그리고 열거형 선언을 포함할 수 있습니다. 클래스 선언은 프로토콜 선언을 포함할 수 없습니다. 여러종류의 선언을 포함하는 클래스의 자세한 설명과 예시는 <doc:ClassesAndStructures> 를 참고바랍니다.
+클래스의 본문은 0개 이상의 *선언(declarations)*을 포함합니다.
+이러한 위 형식의 *선언(declarations)*은 저장 프로퍼티와 연산 프로퍼티,
+인스턴스 메서드, 타입 메서드, 이니셜라이저,
+하나의 디이니셜라이저, 서브스크립트, 타입 별칭,
+다른 클래스, 구조체, 액터, 열거형 선언을 포함할 수 있습니다.
+클래스 선언은 프로토콜 선언을 포함할 수 없습니다.
+여러 종류의 선언을 포함하는
+클래스의 자세한 설명과 예시는
+<doc:ClassesAndStructures>를 참고바랍니다.
 
-클래스 타입은 _슈퍼클래스 (superclass)_ 로 하나의 부모 클래스만 상속할 수 있지만 프로토콜은 여러개 채택할 수 있습니다. _슈퍼클래스 (superclass)_ 는 _클래스 이름 (class name)_ 과 콜론 다음에 첫번째로 나타나고 다음으로 _채택된 프로토콜 (adopted protocols)_ 이 나타납니다. 제네릭 클래스 (generic class) 는 다른 제네릭과 제네릭이 아닌 클래스를 상속할 수 있지만 제네릭이 아닌 클래스 (nongeneric class) 는 다른 제네릭이 아닌 클래스만 상속할 수 있습니다. 콜론 뒤에 상위 제네릭 클래스의 이름을 작성할 때 제네릭 파라미터 절을 포함하는 제네릭 클래스의 전체 이름을 포함해야 합니다.
+클래스 타입은 *상위 클래스(superclass)*로 하나의 부모 클래스만 상속할 수 있지만,
+프로토콜은 여러 개 채택할 수 있습니다.
+*상위 클래스(superclass)*는 위 형식의 *클래스 이름(class name)*과 콜론 다음에
+첫 번째로 나타나고 다음으로 *채택된 프로토콜(adopted protocols)*이 나타납니다.
+제네릭 클래스(generic class)는 다른 제네릭 클래스와 제네릭이 아닌 클래스를 상속할 수 있지만,
+제네릭이 아닌 클래스(nongeneric class)는 다른 제네릭이 아닌 클래스에서만 상속할 수 있습니다.
+콜론 뒤에 상위 제네릭 클래스의 이름을 작성할 때,
+제네릭 파라미터 절을 포함하는
+제네릭 클래스의 전체 이름을 포함해야 합니다.
 
-<doc:Declarations#이니셜라이저-선언-Initializer-Declaration> 에서 설명한대로 클래스는 지정된 이니셜라이저 (designated initializers) 과 편의 이니셜라이저 (convenience initializers) 을 가질 수 있습니다. 클래스의 지정된 이니셜라이저는 모든 클래스의 선언된 프로퍼티가 초기화 되어야 하고 슈퍼클래스의 지정된 이니셜라이저를 호출하기 전에 수행되어야 합니다.
+<doc:Declarations#이니셜라이저-선언-Initializer-Declaration>에서 설명한대로
+클래스는 지정 이니셜라이저(designated initializers)와 편의 이니셜라이저(convenience initializers)를 가질 수 있습니다.
+클래스의 지정 이니셜라이저는 모든 클래스의 선언된 프로퍼티가 초기화되어야 하고,
+상위 클래스의 지정 이니셜라이저를
+호출하기 전에 수행되어야 합니다.
 
-클래스는 슈퍼클래스의 프로퍼티, 메서드, 서브스크립트, 그리고 이니셜라이저를 재정의 할 수 있습니다. 프로퍼티, 메서드, 서브스크립트, 그리고 지정된 이니셜라이저 재정의는 `override` 선언 수정자로 표시되어야 합니다.
+클래스는 상위 클래스의 프로퍼티, 메서드, 서브스크립트, 이니셜라이저를 재정의할 수 있습니다.
+재정의한 프로퍼티, 메서드, 서브스크립트,
+지정 이니셜라이저는 `override` 선언 수정자로 표시되어야 합니다.
 
-서브클래스가 슈퍼클래스의 이니셜라이저 구현을 요구하려면 슈퍼클래스의 이니셜라이저를 `required` 선언 수정자로 표시해야 합니다. 해당 이니셜라이저의 서브클래스의 구현도 `required` 선언 수정자로 표시되어야 합니다.
+<!--
+  - test: `designatedInitializersRequireOverride`
 
-_슈퍼클래스 (superclass)_ 에 선언된 프로퍼티와 메서드가 현재 클래스에 의해 상속되더라도 _슈퍼클래스 (superclass)_ 에 선언된 지정된 이니셜라이저는 <doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance> 에서 설명한대로 서브클래스가 조건이 충족될 때만 상속됩니다. Swift 클래스는 범용 기본 클래스는 상속하지 않습니다.
+  ```swifttest
+  -> class C { init() {} }
+  -> class D: C { override init() { super.init() } }
+  ```
+-->
 
-이전에 선언된 클래스의 인스턴스를 생성하는 두가지 방법이 있습니다:
+하위 클래스가 상위 클래스의 이니셜라이저 구현을 요구하려면
+상위 클래스의 이니셜라이저를 `required` 선언 수정자로 표시해야 합니다.
+하위 클래스의 해당 이니셜라이저 구현도
+`required` 선언 수정자로 표시되어야 합니다.
 
-* <doc:Initialization#이니셜라이저-Initializers> 에서 설명한대로 클래스 내에 선언된 이니셜라이저 중 하나를 호출 합니다.
-* 선언된 이니셜라이저이 없고 클래스 선언에 모든 프로퍼티에 기본값이 주어진 경우 <doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명한대로 클래스의 기본 이니셜라이저를 호출합니다.
+*상위 클래스(superclass)*에 선언된 프로퍼티와 메서드가 현재 클래스에 의해 상속되더라도
+*상위 클래스(superclass)*에 선언된 지정 이니셜라이저는
+<doc:Initialization#자동-이니셜라이저-상속-Automatic-Initializer-Inheritance>에서 설명한대로
+하위 클래스가 조건이 충족될 때만 상속됩니다.
+Swift 클래스는 범용 기본 클래스는 상속하지 않습니다.
 
-<doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties> 에 설명한대로 점 (`.`) 구문으로 클래스 인스턴스의 프로퍼티에 접근 할 수 있습니다.
+이전에 선언된 클래스의 인스턴스를 생성하는 두 가지 방법이 있습니다:
 
-클래스는 참조 타입입니다; 클래스의 인스턴스는 변수나 상수에 할당되거나 함수 호출에 인자로 전달될 때 복사가 아닌 참조됩니다. 참조 타입에 대한 자세한 내용은 <doc:ClassesAndStructures#구조체와-열거형은-값-타입-Structures-and-Enumerations-Are-Value-Types> 을 참고바랍니다.
+- <doc:Initialization#이니셜라이저-Initializers>에서 설명한대로
+  클래스 내 선언된 이니셜라이저 중 하나를 호출합니다.
+- 선언된 이니셜라이저가 없고
+  클래스 선언에 모든 프로퍼티에 기본값이 주어진 경우
+  <doc:Initialization#기본-이니셜라이저-Default-Initializers>에서 설명한대로
+  클래스의 기본 이니셜라이저를 호출합니다.
 
-<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명한대로 확장 선언으로 클래스 타입의 동작을 확장할 수 있습니다.
+<doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties>에 설명한대로
+점(`.`) 구문으로 클래스 인스턴스의 프로퍼티에 접근할 수 있습니다.
+
+클래스는 참조 타입입니다; 클래스의 인스턴스는 변수나 상수에 할당되거나
+함수 호출의 인자로 전달될 때 복사가 아닌 참조됩니다.
+참조 타입에 대한 자세한 내용은
+<doc:ClassesAndStructures#클래스는-참조-타입-Classes-Are-Reference-Types>을 참고바랍니다.
+
+<doc:Declarations#확장-선언-Extension-Declaration>에서 설명한대로
+확장 선언으로 클래스 타입의 동작을 확장할 수 있습니다.
 
 > Grammar of a class declaration:
 >
-> _class-declaration_ → _attributes?_ _access-level-modifier?_ **`final`**_?_ **`class`** _class-name_ _generic-parameter-clause?_ _type-inheritance-clause?_ _generic-where-clause?_ _class-body_ \
-> _class-declaration_ → _attributes?_ **`final`** _access-level-modifier?_ **`class`** _class-name_ _generic-parameter-clause?_ _type-inheritance-clause?_ _generic-where-clause?_ _class-body_ \
-> _class-name_ → _identifier_ \
-> _class-body_ → **`{`** _class-members?_ **`}`**
+> *class-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`final`**_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
+> *class-declaration* → *attributes*_?_ **`final`** *access-level-modifier*_?_ **`class`** *class-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *class-body* \
+> *class-name* → *identifier* \
+> *class-body* → **`{`** *class-members*_?_ **`}`**
 >
-> _class-members_ → _class-member_ _class-members?_ \
-> _class-member_ → _declaration_ | _compiler-control-statement_
+> *class-members* → *class-member* *class-members*_?_ \
+> *class-member* → *declaration* | *compiler-control-statement*
 
 ## 액터 선언 (Actor Declaration)
 
-_액터 선언 (actor declaration)_ 은 프로그램에 액터 타입으로 명명되어 도입됩니다. 액터 선언은 `actor` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
+*액터 선언(actor declaration)*은 프로그램에 액터 타입을 도입됩니다.
+액터 선언은 `actor` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
 
 ```swift
 actor <#actor name#>: <#adopted protocols#> {
@@ -1919,41 +2228,85 @@ actor <#actor name#>: <#adopted protocols#> {
 }
 ```
 
-액터의 본문에는 0개 이상의 _선언 (declarations)_ 이 포함되어 있습니다. 이 선언은 저장 프로퍼티와 연산 프로퍼티, 인스턴스 메서드, 타입 메서드, 이니셜라이저, 하나의 디이니셜라이저, 서브스크립트, 타입 별칭, 그리고 기타 클래스, 구조체, 그리고 열거형 선언을 모두 포함할 수 있습니다. 액터에 대한 설명과 몇가지 예시는 <doc:Concurrency#액터-Actors> 를 참조 바랍니다.
+액터의 본문에는 0개 이상의 *선언(declarations)*을 포함합니다.
+이러한 위 형식의 *선언(declarations)*은 저장 프로퍼티와 연산 프로퍼티,
+인스턴스 메서드, 타입 메서드, 이니셜라이저,
+하나의 디이니셜라이저, 서브스크립트, 타입 별칭,
+다른 클래스, 구조체, 열거형 선언을 포함할 수 있습니다.
+여러 종류의 선언을 포함하는
+액터의 자세한 설명과 예시는
+<doc:Concurrency#액터-Actors>를 참고바랍니다.
 
-액터 타입은 프로토콜을 채택할 수 있지만 클래스, 열거형, 구조체, 또는 다른 액터를 상속할 수 없습니다. 그러나 `@objc` 속성으로 표시된 액터는 암시적으로 `NSObjectProtocol` 프로토콜을 준수하고 `NSObject` 의 하위 타입으로 Objective-C 런타임에 노출됩니다.
+액터 타입은 프로토콜을 채택할 수 있지만,
+클래스, 열거형, 구조체, 다른 액터를 상속할 수 없습니다.
+그러나 `@objc` 속성으로 표시된 액터는
+암시적으로 `NSObjectProtocol` 프로토콜을 준수하고
+`NSObject`의 하위 타입으로 Objective-C 런타임에 노출됩니다.
 
-이전에 선언된 액터의 인스턴스를 만드는 방법에는 두가지 방법이 있습니다:
+이전에 선언된 액터의 인스턴스를 생성하는 두 가지 방법이 있습니다:
 
-* <doc:Initialization#이니셜라이저-Initializers> 에 설명된 대로 액터 내에서 선언된 이니셜라이저 중 하나를 호출합니다.
-* 이니셜라이저이 선언되지 않고 액터 선언의 모든 프로퍼티에 초기값이 제공된 경우 <doc:Initialization#기본-이니셜라이저-Default-Initializers> 에서 설명한대로 액터의 기본 이니셜라이저를 호출합니다.
+- <doc:Initialization#이니셜라이저-Initializers>에서 설명한대로
+  액터 내 선언한 이니셜라이저 중 하나를 호출합니다.
+- 선언된 이니셜라이저가 없고
+  액터 선언의 모든 프로퍼티에 초기값이 제공된 경우
+  <doc:Initialization#기본-이니셜라이저-Default-Initializers>에서 설명한대로
+  액터의 기본 이니셜라이저를 호출합니다.
 
-기본적으로 액터의 멤버는 해당 액터와 분리됩니다. 메서드의 본문이나 프로퍼티에 대한 getter 와 같은 코드는 해당 액터에서 실행됩니다. 액터 내의 코드는 해당 코드는 이미 동일한 액터에서 실행되고 있기 때문에 동기적으로 상호 작용할 수 있지만 액터 외부의 코드는 이 코드가 다른 액터에서 비동기적으로 코드를 실행하고 있음을 나타내기 위해 `await` 로 표시해야 합니다. 키 경로는 액터의 분리된 멤버를 참조할 수 없습니다. 분리된 액터 저장 프로퍼티 (Actor-isolated stored properties) 는 동기 함수에 in-out 파라미터로 전달할 수 있지만 비동기 함수에는 전달할 수 없습니다.
+기본적으로 액터의 멤버는 해당 액터와 분리됩니다.
+메서드의 본문이나 프로퍼티의 getter와 같은 코드는
+해당 액터에서 실행됩니다.
+액터 내의 코드는 이미 동일한 액터에서 실행되고 있기 때문에
+동기적으로 상호 작용할 수 있지만,
+액터 외부의 코드는 이 코드가 다른 액터에서 비동기적으로 코드를 실행하고 있음을 나타내기 위해
+`await`로 표시해야 합니다.
+키 경로는 액터의 격리된 멤버를 참조할 수 없습니다.
+액터에 격리된 저장 프로퍼티(Actor-isolated stored properties)는 동기 함수에
+in-out 파라미터로 전달할 수 있지만,
+비동기 함수에는 전달할 수 없습니다.
 
-액터는 선언이 `nonisolated` 키워드로 표시된 분리되지 않은 멤버 (nonisolated members) 를 가질 수도 있습니다. 분리되지 않은 멤버는 액터 외부의 코드처럼 실행됩니다: 액터의 분리상태와 상호작용 할 수 없으며 호출자는 이를 사용할 때 `await` 로 표시하지 않습니다.
+액터는 `nonisolated` 키워드로 선언된
+비격리 멤버(nonisolated members)를 가질 수도 있습니다.
+비격리 멤버는 액터 외부의 코드처럼 실행됩니다:
+액터의 격리된 상태와 상호 작용할 수 없으며
+호출자는 이를 사용할 때 `await`로 표시하지 않습니다.
 
-액터의 멤버는 분리되지 않거나 비동기 일때만 `@objc` 속성으로 표시될 수 있습니다.
+액터의 멤버는 비격리 멤버이거나 비동기 멤버인 경우에만
+`@objc` 속성으로 표시할 수 있습니다.
 
-액터의 선언된 프로퍼티를 초기화 하는 과정은 <doc:Initialization> 에 설명되어 있습니다.
+액터의 선언된 프로퍼티를 초기화하는 과정은
+<doc:Initialization>에 설명되어 있습니다.
 
-액터 인스턴스의 프로퍼티는 <doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties> 에서 설명한대로 점 (`.`) 구문을 사용하여 접근될 수 있습니다.
+액터 인스턴스의 프로퍼티는 <doc:ClassesAndStructures#프로퍼티-접근-Accessing-Properties>에서 설명한대로
+점(`.`) 구문을 사용하여 접근할 수 있습니다.
 
-액터는 참조 타입입니다; 액터의 인스턴스는 변수나 상수에 할당되거나 함수 호출에 인자로 전달될 때 복사되지 않고 참조됩니다. 참조 타입에 대한 자세한 내용은 <doc:ClassesAndStructures#클래스는-참조-타입-Classes-Are-Reference-Types> 을 참조 바랍니다.
+액터는 참조 타입입니다; 액터의 인스턴스는
+변수나 상수에 할당되거나 함수 호출의 인자로 전달될 때 복사되지 않고 참조됩니다.
+참조 타입에 대한 자세한 내용은
+<doc:ClassesAndStructures#클래스는-참조-타입-Classes-Are-Reference-Types>을 참고바랍니다.
 
-<doc:Declarations#확장-선언-Extension-Declaration> 에서 설명한 대로 확장 선언을 사용하여 액터 타입의 동작을 확장할 수 있습니다.
+<doc:Declarations#확장-선언-Extension-Declaration>에서 설명한대로
+확장 선언을 사용하여 액터 타입의 동작을 확장할 수 있습니다.
+
+<!--
+  TODO Additional bits from the SE-0306 actors proposal:
+
+  Partial applications of isolated functions are only permitted
+  when the expression is a direct argument
+  whose corresponding parameter is non-escaping and non-Sendable.
+-->
 
 > Grammar of an actor declaration:
 >
-> _actor-declaration_ → _attributes?_ _access-level-modifier?_ **`actor`** _actor-name_ _generic-parameter-clause?_ _type-inheritance-clause?_ _generic-where-clause?_ _actor-body_ \
-> _actor-name_ → _identifier_ \
-> _actor-body_ → **`{`** _actor-members?_ **`}`**
+> *actor-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`actor`** *actor-name* *generic-parameter-clause*_?_ *type-inheritance-clause*_?_ *generic-where-clause*_?_ *actor-body* \
+> *actor-name* → *identifier* \
+> *actor-body* → **`{`** *actor-members*_?_ **`}`**
 >
-> _actor-members_ → _actor-member_ _actor-members?_ \
-> _actor-member_ → _declaration_ | _compiler-control-statement_
+> *actor-members* → *actor-member* *actor-members*_?_ \
+> *actor-member* → *declaration* | *compiler-control-statement*
 
 ## 프로토콜 선언 (Protocol Declaration)
 
-_프로토콜 선언 (protocol declaration)_ 은 프로그램에 명명된 프로토콜 타입을 도입합니다.
+*프로토콜 선언(protocol declaration)*은 프로그램에 프로토콜 타입을 도입합니다.
 프로토콜 선언은 `protocol` 키워드를 사용하여
 전역에 선언되고 다음의 형식을 가집니다:
 
@@ -1963,21 +2316,71 @@ protocol <#protocol name#>: <#inherited protocols#> {
 }
 ```
 
-프로토콜 선언은 전역이나
-제네릭이 아닌 타입이나 제네릭이 아닌 함수 내에 중첩되어 나타날 수 있습니다.
+프로토콜 선언은 전역 범위에서 나타나거나
+제네릭이 아닌 타입이나 제네릭이 아닌 함수 내에 중첩될 수 있습니다.
 
-프로토콜의 본문은 프로토콜을 채택하는 모든 타입이 충족해야 하는 준수성 요구사항을 설명하는 _프로토콜 멤버 선언 (protocol member declarations)_ 이 없거나 하나 이상의 _프로토콜 멤버 선언 (protocol member declarations)_ 을 포함합니다. 특히 프로토콜은 준수하는 타입이 특정 프로퍼티, 메서드, 이니셜라이저, 그리고 서브스크립트를 구현해야 한다고 선언할 수 있습니다. 프로토콜은 프로토콜의 여러 선언의 관계를 지정할 수 있는 _연관된 타입 (associated types)_ 이라는 특별한 종류의 타입 별칭도 선언할 수 있습니다. 프로토콜 선언은 클래스, 구조체, 열거형, 또는 다른 프로토콜 선언을 포함할 수 없습니다. _프로토콜 멤버 선언 (protocol member declarations)_ 은 아래 자세하게 설명되어 있습니다.
+프로토콜의 본문은 0개 이상의 *프로토콜 멤버 선언(protocol member declarations)*을 포함하고,
+이것은 프로토콜을 채택하는 모든 타입이 충족해야 하는 준수 요구사항을 설명합니다.
+특히 프로토콜은 준수하는 타입이
+특정 프로퍼티, 메서드, 이니셜라이저, 서브스크립트를 구현해야 한다고 선언할 수 있습니다.
+프로토콜은 *연관 타입(associated types)*이라는
+특별한 종류의 타입 별칭도 선언할 수 있으며,
+이것은 프로토콜의 다양한 선언의 관계를 명시할 수 있습니다.
+프로토콜 선언은
+클래스, 구조체, 열거형, 다른 프로토콜 선언을 포함할 수 없습니다.
+*프로토콜 멤버 선언(protocol member declarations)*은 아래에 자세하게 설명되어 있습니다.
 
-프로토콜 타입은 다른 프로토콜을 상속할 수 있습니다. 프로토콜 타입이 다른 프로토콜을 상속할 때 다른 프로토콜의 요구사항이 집계되고 현재 프로토콜에서 상속한 모든 타입은 모든 요구사항을 준수해야 합니다. 프로토콜 상속 사용법에 대한 예시는 <doc:Protocols#프로토콜-상속-Protocol-Inheritance> 을 참고바랍니다.
+프로토콜 타입은 다른 프로토콜을 상속할 수 있습니다.
+프로토콜 타입이 다른 프로토콜을 상속할 때,
+다른 프로토콜의 요구사항이 통합되고
+현재 프로토콜을 상속하는 모든 타입은 이 모든 요구사항을 준수해야 합니다.
+프로토콜 상속을 사용하는 방법에 대한 예시는
+<doc:Protocols#프로토콜-상속-Protocol-Inheritance>을 참고바랍니다.
 
-> Note\
-> <doc:Types#프로토콜-합성-타입-Protocol-Composition-Type> 과 <doc:Protocols#프로토콜-합성-Protocol-Composition> 에서 설명한대로 프로토콜 구성 타입을 사용하여 여러개 프로토콜의 준수성 요구사항을 집계할 수도 있습니다.
+> Note: <doc:Types#프로토콜-합성-타입-Protocol-Composition-Type>과
+> <doc:Protocols#프로토콜-합성-Protocol-Composition>에서 설명한대로
+> 프로토콜 합성 타입을 사용하여
+> 여러 프로토콜의 준수 요구사항을 통합할 수도 있습니다.
 
-해당 타입에 확장 선언에서 프로토콜을 채택하기 위해 이전에 선언된 타입에 프로토콜 준수를 추가할 수 있습니다. 확장에서 채택된 프로토콜의 모든 요구사항을 구현해야 합니다. 타입이 이미 모든 요구사항을 구현한 경우 빈 확장 선언의 본문으로 남겨둘 수 있습니다.
+이전에 선언된 타입의 확장 선언을 사용하여 프로토콜을 채택하고
+프로토콜 준수를 추가할 수 있습니다.
+확장에서 채택된 프로토콜의 모든 요구사항을 구현해야 합니다.
+타입이 이미 모든 요구사항을 구현한 경우,
+확장 선언의 본문을 비워둘 수 있습니다.
 
-기본적으로 프로토콜을 준수하는 타입은 프로토콜에 선언된 모든 프로퍼티, 메서드, 그리고 서브스크립트를 구현해야 합니다. 이 말은 준수하는 타입에 의한 구현이 옵셔널로 지정하기 위해선 `optional` 선언 수정자로 프로토콜 멤버 선언을 표시해야 한다는 의미입니다. `optional` 수정자는 `objc` 속성으로 표시된 멤버와 `objc` 속성으로 표시된 프로토콜의 멤버에만 적용될 수 있습니다. 결과적으로 클래스 타입만 옵셔널 멤버 요구사항을 포함한 프로토콜을 채택하고 준수할 수 있습니다. optional 선언 수정자 사용에 대한 자세한 내용과 옵셔널 프로토콜 멤버에 어떻게 접근하는지에 대한 가이드 — 예를 들어 타입이 이를 구현하는지 확실하지 않은 경우 — 는 <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements> 을 참고바랍니다.
+기본적으로 프로토콜을 준수하는 타입은 프로토콜에 선언된
+모든 프로퍼티, 메서드, 서브스크립트를 구현해야 합니다.
+그러나 이 프로토콜 멤버 선언을 `optional` 선언 수정자로 표시하여
+준수하는 타입의 구현이 선택 사항임을 명시할 수 있습니다.
+`optional` 수정자는
+`objc` 속성으로 표시된 멤버와
+`objc` 속성으로 표시된 프로토콜의 멤버에만 적용할 수 있습니다.
+결과적으로 클래스 타입만 이 옵셔널 멤버 요구사항을 포함한
+프로토콜을 채택하고 준수할 수 있습니다.
+`optional` 선언 수정자 사용에 대한 자세한 내용과
+옵셔널 프로토콜 멤버에 접근하는 방법에 대한 자침 —--
+예를 들어 타입이 이를 구현하는지 확실하지 않은 경우 —--
+는 <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements>을 참고바랍니다.
 
-열거형의 케이스는 타입 멤버에 대해 프로토콜 요구사항을 충족할 수 있습니다. 특히, 연관값이 없는 열거형 케이스는 `Self` 타입의 get-only 타입 변수에 대해 프로토콜 요구사항을 충족하고 연관값이 있는 열거형 케이스는 파라미터와 인자 레이블이 케이스의 연관값과 일치하게 `Self` 를 반환하는 함수에 대해 프로토콜 요구사항을 충족합니다. 예를 들어:
+<!--
+  TODO: Currently, you can't check for an optional initializer,
+  so we're leaving those out of the documentation, even though you can mark
+  an initializer with the @optional attribute. It's still being decided by the
+  compiler team. Update this section if they decide to make everything work
+  properly for optional initializer requirements.
+-->
+
+열거형의 케이스는
+타입 멤버에 대해 프로토콜 요구사항을 충족할 수 있습니다.
+구체적으로
+연관값이 없는 열거형 케이스는
+`Self` 타입의 get-only 타입 변수에 대한
+프로토콜 요구사항을 충족하고,
+연관값이 있는 열거형 케이스는
+파라미터와 인자 레이블이
+케이스의 연관값과 일치하는
+`Self`를 반환하는 함수에 대한 프로토콜 요구사항을 충족합니다.
+예를 들어:
 
 ```swift
 protocol SomeProtocol {
@@ -1990,7 +2393,25 @@ enum MyEnum: SomeProtocol {
 }
 ```
 
-클래스 타입에 대해서만 프로토콜의 채택을 제한하려면 콜론 뒤에 _상속된 프로토콜 (inherited protocols)_ 리스트에 `AnyObject` 프로토콜을 추가해야 합니다. 예를 들어 다음의 프로토콜은 클래스 타입에 의해서만 채택될 수 있습니다:
+<!--
+  - test: `enum-case-satisfy-protocol-requirement`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+         static var someValue: Self { get }
+         static func someFunction(x: Int) -> Self
+     }
+  -> enum MyEnum: SomeProtocol {
+         case someValue
+         case someFunction(x: Int)
+     }
+  ```
+-->
+
+프로토콜의 채택을 클래스 타입으로만 제한하려면
+콜론 뒤에
+*상속된 프로토콜(inherited protocols)* 목록에 `AnyObject` 프로토콜을 추가해야 합니다.
+예를 들어 다음의 프로토콜은 클래스 타입에 의해서만 채택될 수 있습니다:
 
 ```swift
 protocol SomeProtocol: AnyObject {
@@ -1998,101 +2419,232 @@ protocol SomeProtocol: AnyObject {
 }
 ```
 
-`AnyObject` 요구사항으로 표시된 프로토콜을 상속하는 모든 프로토콜은 마찬가지로 클래스 타입에 의해서만 채택될 수 있습니다.
+<!--
+  - test: `protocol-declaration`
 
-> Note\
-> `objc` 속성으로 표시된 프로토콜은 해당 프로토콜에 암시적으로 `AnyObject` 요구사항이 적용됩니다; 명시적으로 `AnyObject` 요구사항을 프로토콜에 표시할 필요가 없습니다.
+  ```swifttest
+  -> protocol SomeProtocol: AnyObject {
+         /* Protocol members go here */
+     }
+  ```
+-->
 
-프로토콜은 명명된 타입 이므로 <doc:Protocols#프로토콜을-타입으로-사용-Protocols-as-Types> 에서 설명한대로 다른 명명된 타입으로 코드의 동일한 위치에 나타날 수 있습니다. 그러나 프로토콜은 실제로 지정하는 요구사항에 대해 구현을 제공하지 않으므로 프로토콜의 인스턴스를 구성할 수 없습니다.
+`AnyObject` 요구사항으로 표시된 프로토콜을 상속하는 모든 프로토콜은
+마찬가지로 클래스 타입만 채택할 수 있습니다.
 
-<doc:Protocols#위임-Delegation> 에서 설명한대로 프로토콜을 사용하여 클래스 또는 구조체의 위임이 구현해야 하는 메서드를 선언할 수 있습니다.
+> Note: `objc` 속성으로 표시된 프로토콜은
+> 해당 프로토콜에 암시적으로 `AnyObject` 요구사항을 적용합니다;
+> 명시적으로 `AnyObject` 요구사항을 프로토콜에 표시할 필요가 없습니다.
+
+프로토콜은 명명 타입 이므로 <doc:Protocols#프로토콜을-타입으로-사용-Protocols-as-Types>에서 설명한대로
+다른 명명 타입과 동일한 위치의 코드에 나타날 수 있습니다.
+그러나
+프로토콜은 지정하는
+요구사항에 대한 구현을 실제로 제공하지 않으므로,
+프로토콜의 인스턴스를 생성할 수 없습니다.
+
+<doc:Protocols#위임-Delegation>에서 설명한대로
+프로토콜을 사용하여 클래스나 구조체의 위임이 구현해야 하는 메서드를 선언할 수 있습니다.
 
 > Grammar of a protocol declaration:
 >
-> _protocol-declaration_ → _attributes?_ _access-level-modifier?_ **`protocol`** _protocol-name_ _type-inheritance-clause?_ _generic-where-clause?_ _protocol-body_ \
-> _protocol-name_ → _identifier_ \
-> _protocol-body_ → **`{`** _protocol-members?_ **`}`**
+> *protocol-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`protocol`** *protocol-name* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *protocol-body* \
+> *protocol-name* → *identifier* \
+> *protocol-body* → **`{`** *protocol-members*_?_ **`}`**
 >
-> _protocol-members_ → _protocol-member_ _protocol-members?_ \
-> _protocol-member_ → _protocol-member-declaration_ | _compiler-control-statement_
+> *protocol-members* → *protocol-member* *protocol-members*_?_ \
+> *protocol-member* → *protocol-member-declaration* | *compiler-control-statement*
 >
-> _protocol-member-declaration_ → _protocol-property-declaration_ \
-> _protocol-member-declaration_ → _protocol-method-declaration_ \
-> _protocol-member-declaration_ → _protocol-initializer-declaration_ \
-> _protocol-member-declaration_ → _protocol-subscript-declaration_ \
-> _protocol-member-declaration_ → _protocol-associated-type-declaration_ \
-> _protocol-member-declaration_ → _typealias-declaration_
+> *protocol-member-declaration* → *protocol-property-declaration* \
+> *protocol-member-declaration* → *protocol-method-declaration* \
+> *protocol-member-declaration* → *protocol-initializer-declaration* \
+> *protocol-member-declaration* → *protocol-subscript-declaration* \
+> *protocol-member-declaration* → *protocol-associated-type-declaration* \
+> *protocol-member-declaration* → *typealias-declaration*
 
 ### 프로토콜 프로퍼티 선언 (Protocol Property Declaration)
 
-프로토콜은 프로토콜 선언 본문에 _프로토콜 프로퍼티 선언 (protocol property declaration)_ 을 포함하여 준수 타입이 프로퍼티를 구현해야 된다고 선언합니다. 프로토콜 프로퍼티 선언은 변수 선언에 특별한 형식을 가집니다:
+프로토콜은 프로토콜 선언 본문에
+*프로토콜 프로퍼티 선언(protocol property declaration)*을 포함하여
+준수하는 타입이 프로퍼티를 구현해야 한다고 선언합니다.
+프로토콜 프로퍼티 선언은 변수 선언의
+특별한 형식을 가집니다:
 
 ```swift
 var <#property name#>: <#type#> { get set }
 ```
 
-다른 프로토콜 멤버 선언과 마찬가지로 이러한 프로퍼티 선언은 프로토콜을 준수하는 타입에 대한 getter 와 setter 요구사항만 선언합니다. 결과적으로 선언된 프로토콜 내에 직접적으로 getter 와 setter 를 구현할 수 없습니다.
+다른 프로토콜 멤버 선언과 마찬가지로 이러한 프로퍼티 선언은
+프로토콜을 준수하는 타입에 대한 getter와 setter 요구사항만 선언합니다.
+결과적으로 선언된 프로토콜 내에 직접적으로
+getter와 setter를 구현하지 않습니다.
 
-getter 와 setter 요구사항은 다양한 방법으로 준수하는 타입으로 충족될 수 있습니다. 프로퍼티 선언이 `get` 과 `set` 키워드를 모두 포함하면 준수하는 타입은 저장된 변수 프로퍼티나 getter 와 setter 모두 구현하는 속성과 같이 읽고 쓰기가 모두 가능한 연산 프로퍼티로 구현할 수 있습니다. 그러나 프로퍼티 선언은 상수 프로퍼티나 읽기-전용 연산 프로퍼티로 구현될 수 없습니다. 프로퍼티 선언이 `get` 키워드만 포함한다면 모든 종류의 프로퍼티로 구현할 수 있습니다. 프로토콜의 프로퍼티 요구사항을 준수하는 타입의 예시는 <doc:Protocols#프로퍼티-요구사항-Property-Requirements> 을 참고바랍니다.
+getter와 setter 요구사항은 다양한 방법으로 준수하는 타입에서 충족될 수 있습니다.
+프로퍼티 선언이 `get`과 `set` 키워드를 모두 포함하면,
+준수하는 타입은 변수 저장 프로퍼티나
+읽기와 쓰기가 모두 가능한 연산 프로퍼티
+(즉, getter와 setter를 모두 구현하는 프로퍼티)로 구현할 수 있습니다.
+그러나 해당 프로퍼티 선언은 상수 프로퍼티나
+읽기-전용 연산 프로퍼티로 구현될 수 없습니다.
+프로퍼티 선언이 `get` 키워드만 포함한다면, 모든 종류의 프로퍼티로 구현할 수 있습니다.
+프로토콜의 프로퍼티 요구사항을 구현하는 준수 타입의 예시는
+<doc:Protocols#프로퍼티-요구사항-Property-Requirements>을 참고바랍니다.
 
-프로토콜 선언에 타입 프로퍼티 요구사항을 선언하려면 `static` 키워드로 프로퍼티 선언을 표시합니다. 프로토콜을 준수하는 구조체와 열거형은 `static` 키워드로 프로퍼티를 선언하고 프로토콜을 준수하는 클래스는 `static` 또는 `class` 키워드로 프로퍼티를 선언합니다. 구조체, 열거형, 또는 클래스에 프로토콜 준수를 추가하는 확장은 확장하는 타입과 동일한 키워드를 사용합니다. 타입 프로퍼티 요구사항에 대해 기본 구현을 제공하는 확장은 `static` 키워드를 사용합니다.
+프로토콜 선언에 타입 프로퍼티 요구사항을 선언하려면
+`static` 키워드로 프로퍼티 선언을 표시합니다.
+프로토콜을 준수하는 구조체와 열거형은
+`static` 키워드로 프로퍼티를 선언하고
+프로토콜을 준수하는 클래스는
+`static`이나 `class` 키워드로 프로퍼티를 선언합니다.
+구조체, 열거형, 클래스에 프로토콜 준수를 추가하는 확장은
+확장하는 타입이 사용하는 것과 동일한 키워드를 사용합니다.
+타입 프로퍼티 요구사항에 대해 기본 구현을 제공하는 확장은
+`static` 키워드를 사용합니다.
 
-<doc:Declarations#변수-선언-Variable-Declaration> 도 참고바랍니다.
+<!--
+  - test: `protocols-with-type-property-requirements`
+
+  ```swifttest
+  -> protocol P { static var x: Int { get } }
+  -> protocol P2 { class var x: Int { get } }
+  !$ error: class properties are only allowed within classes; use 'static' to declare a requirement fulfilled by either a static or class property
+  !! protocol P2 { class var x: Int { get } }
+  !!              ~~~~~ ^
+  !!              static
+  -> struct S: P { static var x = 10 }
+  -> class C1: P { static var x = 20 }
+  -> class C2: P { class var x = 30 }
+  !$ error: class stored properties not supported in classes; did you mean 'static'?
+  !! class C2: P { class var x = 30 }
+  !!               ~~~~~     ^
+  ```
+-->
+
+<!--
+  - test: `protocol-type-property-default-implementation`
+
+  ```swifttest
+  -> protocol P { static var x: Int { get } }
+  -> extension P { static var x: Int { return 100 } }
+  -> struct S1: P { }
+  -> print(S1.x)
+  <- 100
+  -> struct S2: P { static var x = 10 }
+  -> print(S2.x)
+  <- 10
+  ```
+-->
+
+<doc:Declarations#변수-선언-Variable-Declaration>도 참고바랍니다.
 
 > Grammar of a protocol property declaration:
 >
-> _protocol-property-declaration_ → _variable-declaration-head_ _variable-name_ _type-annotation_ _getter-setter-keyword-block_
+> *protocol-property-declaration* → *variable-declaration-head* *variable-name* *type-annotation* *getter-setter-keyword-block*
 
 ### 프로토콜 메서드 선언 (Protocol Method Declaration)
 
-프로토콜은 준수하는 타입이 프로토콜 선언 본문에 프로토콜 메서드 선언을 포함하기 위해 메서드를 구현해야 함을 선언합니다. 프로토콜 메서드 선언은 두가지를 제외하고 함수 선언과 동일한 형식을 가집니다: 함수 본문과 함수 선언의 일부로 기본 파라미터 값을 제공할 수 없습니다. 프로토콜의 메서드 요구사항을 구현하는 준수하는 타입에 대한 예시는 <doc:Protocols#메서드-요구사항-Method-Requirements> 을 참고바랍니다.
+프로토콜은 프로토콜 선언 본문에 프로토콜 메서드 선언을 포함하여
+준수하는 타입이 메서드를 구현해야 한다고 선언합니다.
+프로토콜 메서드 선언은 두 가지를 제외하고
+함수 선언과 동일한 형식을 가집니다: 함수 본문과
+함수 선언의 일부로 기본 파라미터 값을 제공할 수 없습니다.
+프로토콜의 메서드 요구사항을 구현하는 준수 타입에 대한 예시는
+<doc:Protocols#메서드-요구사항-Method-Requirements>을 참고바랍니다.
 
-프로토콜 선언에 클래스 또는 정적 메서드 요구사항을 선언하려면 `static` 선언 수정자로 메서드 선언을 표시합니다. 프로토콜을 준수하는 구조체와 열거형은 `static` 키워드로 메서드를 선언하고 프로토콜을 준수하는 클래스는 `static` 또는 `class` 키워드로 메서드를 선언합니다. 구조체, 열거형, 또는 클래스에 프로토콜 준수를 추가하는 확장은 확장하는 타입과 동일한 키워드를 사용합니다. 타입 메서드 요구사항에 대한 기본 구현을 제공하는 확장은 `static` 키워드를 사용합니다.
+프로토콜 선언에 클래스 메서드나 정적 메서드 요구사항을 선언하려면
+`static` 선언 수정자로 메서드 선언을 표시합니다.
+프로토콜을 준수하는 구조체와 열거형은
+`static` 키워드로 메서드를 선언하고
+프로토콜을 준수하는 클래스는
+`static`이나 `class` 키워드로 메서드를 선언합니다.
+구조체, 열거형, 클래스에 프로토콜 준수를 추가하는 확장은
+확장하는 타입이 사용하는 것과 동일한 키워드를 사용합니다.
+타입 메서드 요구사항에 대한 기본 구현을 제공하는 확장은
+`static` 키워드를 사용합니다.
 
-<doc:Declarations#함수-선언-Function-Declaration> 도 참고바랍니다.
+<doc:Declarations#함수-선언-Function-Declaration>도 참고바랍니다.
+
+<!--
+  TODO: Talk about using ``Self`` in parameters and return types.
+-->
 
 > Grammar of a protocol method declaration:
 >
-> _protocol-method-declaration_ → _function-head_ _function-name_ _generic-parameter-clause?_ _function-signature_ _generic-where-clause?_
+> *protocol-method-declaration* → *function-head* *function-name* *generic-parameter-clause*_?_ *function-signature* *generic-where-clause*_?_
 
 ### 프로토콜 이니셜라이저 선언 (Protocol Initializer Declaration)
 
-프로토콜은 준수하는 타입이 프로토콜 선언 본문에 프로토콜 이니셜라이저 선언을 포함하기 위해 이니셜라이저 구현을 선언합니다. 프로토콜 이니셜라이저 선언은 이니셜라이저의 본문을 포함하지 않는다는 점을 제외하고 이니셜라이저 선언과 동일한 형식을 가집니다.
+프로토콜은 프로토콜 선언 본문에 프로토콜 이니셜라이저 선언을 포함하여
+준수하는 타입이 이니셜라이저를 구현해야 한다고 선언합니다.
+프로토콜 이니셜라이저 선언은
+이니셜라이저의 본문을 포함하지 않는다는 점을 제외하고 이니셜라이저 선언과 동일한 형식을 가집니다.
 
-준수하는 타입은 실패할 수 없는 이니셜라이저 (nonfailable initializer) 또는 `init!` 실패 가능한 이니셜라이저 (failable initializer) 을 구현하여 실패할 수 없는 프로토콜 이니셜라이저 요구사항을 충족할 수 있습니다. 준수하는 타입은 모든 종류의 이니셜라이저 구현으로 실패 가능한 프로토콜 이니셜라이저 요구사항을 충족할 수 있습니다.
+준수하는 타입은 실패하지 않는 이니셜라이저(nonfailable initializer)나 `init!` 실패 가능한 이니셜라이저(failable initializer)를 구현하여
+실패하지 않는 프로토콜 이니셜라이저 요구사항을 충족할 수 있습니다.
+준수하는 타입은 모든 종류의 이니셜라이저 구현으로
+실패 가능한 프로토콜 이니셜라이저 요구사항을 충족할 수 있습니다.
 
-클래스는 프로토콜의 이니셜라이저 요구사항을 충족하기 위해 이니셜라이저를 구현할 때 이니셜라이저이 `final` 선언 수정자로 표시되어 있지 않다면 `required` 선언 수정자로 표시되어야 합니다.
+클래스가 프로토콜의 이니셜라이저 요구사항을 충족하기 위해 이니셜라이저를 구현할 때,
+클래스에 `final` 선언 수정자로 표시되어 있지 않다면
+이니셜라이저는 `required` 선언 수정자로 표시되어야 합니다.
 
-<doc:Declarations#이니셜라이저-선언-Initializer-Declaration> 도 참고바랍니다.
+<doc:Declarations#이니셜라이저-선언-Initializer-Declaration>도 참고바랍니다.
 
 > Grammar of a protocol initializer declaration:
 >
-> _protocol-initializer-declaration_ → _initializer-head_ _generic-parameter-clause?_ _parameter-clause_ **`throws`**_?_ _generic-where-clause?_ \
-> _protocol-initializer-declaration_ → _initializer-head_ _generic-parameter-clause?_ _parameter-clause_ **`rethrows`** _generic-where-clause?_
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* *throws-clause*_?_ *generic-where-clause*_?_ \
+> *protocol-initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`rethrows`** *generic-where-clause*_?_
 
 ### 프로토콜 서브스크립트 선언 (Protocol Subscript Declaration)
 
-프롵콜은 준수하는 타입이 프로토콜 선언 본문에 프로토콜 서브스크립트 선언을 포함하기 위해 서브스크립트 구현을 선언합니다. 프로토콜 서브스크립트 선언은 서브스크립트 선언의 특별한 형식을 가집니다:
+프로토콜은 프로토콜 선언 본문에 프로토콜 서브스크립트 선언을 포함하여
+준수하는 타입이 서브스크립트를 구현해야 한다고 선언합니다.
+프로토콜 서브스크립트 선언은 서브스크립트 선언의 특별한 형식을 가집니다:
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> { get set }
 ```
 
-서브스크립트 선언은 프로토콜을 준수하는 타입에 대해 최소한의 getter 와 setter 구현 요구사항만 선언합니다. 서브스크립트 선언이 `get` 과 `set` 키워드 모두 포함한다면 준수하는 타입은 getter 와 setter 절 모두 구현해야 합니다. 서브스크립트 선언이 `get` 키워드만 포함한다면 준수하는 타입은 _적어도_ getter 절은 구현해야 하고 선택적으로 setter 절을 구현할 수 있습니다.
+서브스크립트 선언은 프로토콜을 준수하는 타입에 대한
+최소한의 getter와 setter 구현 요구사항만 선언합니다.
+서브스크립트 선언에 `get`과 `set` 키워드 모두 포함하면,
+준수하는 타입은 getter와 setter 절 모두 구현해야 합니다.
+서브스크립트 선언이 `get` 키워드만 포함하면,
+준수하는 타입은 *최소한* getter 절은 구현해야 하고
+선택적으로 setter 절을 구현할 수 있습니다.
 
-프로토콜 선언에서 정적 서브스크립트 요구사항을 선언하려면 `static` 선언 수정자로 서브스크립트 선언을 표시합니다. 프로토콜은 준수하는 구조체와 열거형은 `static` 키워드로 서브스크립트를 선언하고 프로토콜을 준수하는 클래스는 `static` 또는 `class` 키워드로 서브스크립트를 선언합니다. 구조체, 열거형, 또는 클래스에 프로토콜 준수를 추가하는 확장은 확장하는 타입과 동일한 키워드를 사용합니다. 정적 서브스크립트 요구사항에 대한 기본 구현을 제공하는 확장은 `static` 키워드를 사용합니다.
+프로토콜 선언에서 정적 서브스크립트 요구사항을 선언하려면
+`static` 선언 수정자로 서브스크립트 선언을 표시합니다.
+프로토콜은 준수하는 구조체와 열거형은
+`static` 키워드로 서브스크립트를 선언하고
+프로토콜을 준수하는 클래스는
+`static`이나 `class` 키워드로 서브스크립트를 선언합니다.
+구조체, 열거형, 클래스에 프로토콜 준수를 추가하는 확장은
+확장하는 타입이 사용하는 것과 동일한 키워드를 사용합니다.
+정적 서브스크립트 요구사항에 대한 기본 구현을 제공하는 확장은
+`static` 키워드를 사용합니다.
 
-<doc:Declarations#서브스크립트-선언-Subscript-Declaration> 도 참고바랍니다.
+<doc:Declarations#서브스크립트-선언-Subscript-Declaration>도 참고바랍니다.
 
 > Grammar of a protocol subscript declaration:
 >
-> _protocol-subscript-declaration_ → _subscript-head_ _subscript-result_ _generic-where-clause?_ _getter-setter-keyword-block_
+> *protocol-subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block*
 
-### 프로토콜 연관된 타입 선언 (Protocol Associated Type Declaration)
+### 프로토콜 연관 타입 선언 (Protocol Associated Type Declaration)
 
-프로토콜은 `associatedtype` 키워드를 사용하여 연관된 타입을 선언합니다. 연관된 타입은 프로토콜 선언의 일부분으로 사용되는 타입에 대한 별칭을 제공합니다. 연관된 타입은 제네릭 파라미터 절에서 타입 파라미터와 유사하지만 선언된 프로토콜에서 `Self` 와 연관됩니다. 해당 컨텍스트에서 `Self` 는 프로토콜을 준수하는 최종 타입을 참조합니다. 더 자세한 내용과 예시는 <doc:Generics#연관-타입-Associated-Types> 을 참고바랍니다.
+프로토콜은 `associatedtype` 키워드를 사용하여 연관 타입을 선언합니다.
+연관 타입은 프로토콜 선언의 일부분으로 사용되는
+타입에 대한 별칭을 제공합니다.
+연관 타입은 제네릭 파라미터 절의 타입 파라미터와 유사하지만
+선언된 프로토콜의 `Self`와 연관됩니다.
+해당 컨텍스트에서 `Self`는 프로토콜을 준수하는 최종 타입을 참조합니다.
+더 자세한 내용과 예시는
+<doc:Generics#연관-타입-Associated-Types>을 참고바랍니다.
 
-연관된 타입을 재선언 하지 않고 다른 프로토콜에서 상속된 연관된 타입에 제약사항을 추가하려면 프로토콜 선언에 제네릭 `where` 절을 사용합니다. 예를 들어 아래 `SubProtocol` 의 선언은 동일합니다:
+프로토콜 선언에 제네릭 `where` 절을 사용하여
+연관 타입을 재선언하지 않고
+다른 프로토콜에서 상속된 연관 타입에 제약사항을 추가할 수 있습니다.
+예를 들어 아래 `SubProtocol`의 선언은 동일합니다:
 
 ```swift
 protocol SomeProtocol {
@@ -2108,11 +2660,105 @@ protocol SubProtocolA: SomeProtocol {
 protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
 ```
 
-<doc:Declarations#타입-별칭-선언-Type-Alias-Declaration> 도 참고바랍니다.
+<!--
+  - test: `protocol-associatedtype`
+
+  ```swifttest
+  -> protocol SomeProtocol {
+         associatedtype SomeType
+     }
+  ---
+  -> protocol SubProtocolA: SomeProtocol {
+         // This syntax produces a warning.
+         associatedtype SomeType: Equatable
+     }
+  !$ warning: redeclaration of associated type 'SomeType' from protocol 'SomeProtocol' is better expressed as a 'where' clause on the protocol
+  !! associatedtype SomeType: Equatable
+  !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+  !!-
+  !$ note: 'SomeType' declared here
+  !! associatedtype SomeType
+  !! ^
+  ---
+  // This syntax is preferred.
+  -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
+  ```
+-->
+
+<!--
+  TODO: Finish writing this section after WWDC.
+-->
+
+<!--
+  NOTE:
+  What are associated types? What are they "associated" with? Is "Self"
+  an implicit associated type of every protocol? [...]
+
+  Here's an initial stab:
+  An Associated Type is associated with an implementation of that protocol.
+  The protocol declares it, and is defined as part of the protocol's implementation.
+
+  "The ``Self`` type allows you to refer to the eventual type of ``self``
+  (where ``self`` is the type that conforms to the protocol).
+  In addition to ``Self``, a protocol's operations often need to refer to types
+  that are related to the type of ``Self``, such as a type of data stored in a
+  collection or the node and edge types of a graph." Is this still true?
+
+    -> If we expand the discussion here,
+    -> add a link from Types_SelfType
+    -> to give more details about Self in protocols.
+
+  NOTES from Doug:
+  At one point, Self was an associated type, but that's the wrong modeling of
+  the problem.  Self is the stand-in type for the thing that conforms to the
+  protocol.  It's weird to think of it as an associated type because it's the
+  primary thing.  It's certainly not an associated type.  In many ways, you
+  can think of associated types as being parameters that get filled in by the
+  conformance of a specific concrete type to that protocol.
+
+  There's a substitution mapping here.  The parameters are associated with
+  Self because they're derived from Self.  When you have a concrete type that
+  conforms to a protocol, it supplies concrete types for Self and all the
+  associated types.
+
+  The associated types are like parameters, but they're associated with Self in
+  the protocol.  Self is the eventual type of the thing that conforms to the
+  protocol -- you have to have a name for it so you can do things with it.
+
+  We use "associated" in contrast with generic parameters in interfaces in C#.
+  The interesting thing there is that they don't have a name like Self for the
+  actual type, but you can name any of these independent types.    In theory,
+  they're often independent but in practice they're often not -- you have an
+  interface parameterized on T, where all the uses of the thing are that T are
+  the same as Self.  Instead of having these independent parameters to an
+  interface, we have a named thing (Self) and all these other things that hand
+  off of it.
+
+  Here's a stupid simple way to see the distinction:
+
+  C#:
+
+  interface Sequence <Element> {}
+
+  class String : Sequence <UnicodeScalar>
+  class String : Sequence <GraphemeCluster>
+
+  These are both fine in C#
+
+  Swift:
+
+  protocol Sequence { typealias Element }
+
+  class String : Sequence { typealias Element = ... }
+
+  Here you have to pick one or the other -- you can't have both.
+-->
+
+<doc:Declarations#타입-별칭-선언-Type-Alias-Declaration>도 참고바랍니다.
 
 > Grammar of a protocol associated type declaration:
 >
-> _protocol-associated-type-declaration_ → _attributes?_ _access-level-modifier?_ **`associatedtype`** _typealias-name_ _type-inheritance-clause?_ _typealias-assignment?_ _generic-where-clause?_
+> *protocol-associated-type-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`associatedtype`** *typealias-name* *type-inheritance-clause*_?_ *typealias-assignment*_?_ *generic-where-clause*_?_
 
 ## 이니셜라이저 선언 (Initializer Declaration)
 
@@ -2159,7 +2805,7 @@ convenience init(<#parameters#>) {
 
 ### 실패 가능한 이니셜라이저 (Failable Initializers)
 
-_실패 가능한 이니셜라이저 (failable initializer)_ 은 이니셜라이저이 선언된 타입의 옵셔널 인스턴스 또는 암시적 언래핑된 옵셔널 인스턴스를 생성하는 이니셜라이저의 타입입니다. 결과적으로 실패 가능한 이니셜라이저는 초기화 실패를 나타내는 `nil` 을 반환할 수 있습니다.
+_실패 가능한 이니셜라이저 (failable initializer)_ 은 이니셜라이저가 선언된 타입의 옵셔널 인스턴스 또는 암시적 언래핑된 옵셔널 인스턴스를 생성하는 이니셜라이저의 타입입니다. 결과적으로 실패 가능한 이니셜라이저는 초기화 실패를 나타내는 `nil` 을 반환할 수 있습니다.
 
 옵셔널 인스턴스를 생성하는 실패 가능한 이니셜라이저를 선언하려면 이니셜라이저 선언에서 `init` 키워드 뒤에 물음표를 붙입니다 (`init?`). 암시적 언래핑 옵셔널 인스턴스를 생성하는 실패 가능한 이니셜라이저를 선언하려면 뒤에 느낌표를 붙입니다 (`init!`). 아래의 예시는 구조체의 옵셔널 인스턴스를 생성하는 실패 가능한 이니셜라이저 `init?` 을 보여줍니다.
 
@@ -2189,9 +2835,9 @@ if let actualInstance = SomeStruct(input: "Hello") {
 
 실패 가능한 이니셜라이저는 이니셜라이저의 본문의 구현에 어느 위치에서든 `nil` 을 반환할 수 있습니다.
 
-실패 가능한 이니셜라이저는 여러 종류의 이니셜라이저에 위임할 수 있습니다. 실패없는 이니셜라이저는 다른 실패없는 이니셜라이저이나 `init!` 실패 가능한 이니셜라이저으로 위임할 수 있습니다. 실패없는 이니셜라이저는 예를 들어 `super.init()!` 처럼 슈퍼클래스의 이니셜라이저에 강제 언래핑한 결과로 `init?` 실패 가능한 이니셜라이저으로 위임할 수 있습니다.
+실패 가능한 이니셜라이저는 여러 종류의 이니셜라이저에 위임할 수 있습니다. 실패없는 이니셜라이저는 다른 실패없는 이니셜라이저가나 `init!` 실패 가능한 이니셜라이저으로 위임할 수 있습니다. 실패없는 이니셜라이저는 예를 들어 `super.init()!` 처럼 슈퍼클래스의 이니셜라이저에 강제 언래핑한 결과로 `init?` 실패 가능한 이니셜라이저으로 위임할 수 있습니다.
 
-초기화 실패는 이니셜라이저 위임으로 전파됩니다. 특히, 실패 가능한 이니셜라이저이 실패하고 `nil` 을 반환하는 이니셜라이저에 위임하면 위임된 이니셜라이저도 실패하고 암시적으로 `nil` 을 반환합니다. 실패없는 이니셜라이저이 실패하고 `nil` 을 반환하는 `init!` 실패 가능한 이니셜라이저에 위임하면 `nil` 값을 가지는 옵셔널을 언래핑 하기위해 `!` 연산자를 사용하는 것과 같이 런타임 오류가 발생합니다.
+초기화 실패는 이니셜라이저 위임으로 전파됩니다. 특히, 실패 가능한 이니셜라이저가 실패하고 `nil` 을 반환하는 이니셜라이저에 위임하면 위임된 이니셜라이저도 실패하고 암시적으로 `nil` 을 반환합니다. 실패없는 이니셜라이저가 실패하고 `nil` 을 반환하는 `init!` 실패 가능한 이니셜라이저에 위임하면 `nil` 값을 가지는 옵셔널을 언래핑 하기위해 `!` 연산자를 사용하는 것과 같이 런타임 오류가 발생합니다.
 
 실패 가능한 지정된 이니셜라이저는 모든 종류의 지정된 이니셜라이저에 의해 서브클래스에서 재정의 될 수 있습니다. 실패없는 지정된 이니셜라이저는 실패없는 지정된 이니셜라이저에 의해서만 서브클래스에서 재정의 될 수 있습니다.
 
@@ -2218,11 +2864,11 @@ deinit {
 
 디이니셜라이저는 클래스 객체에 어떠한 참조도 없으면 클래스 객체가 할당 해제되기 직전에 자동으로 호출됩니다. 디이니셜라이저는 클래스 선언의 본문 내에만 선언될 수 있지만 클래스의 확장에는 선언될 수 없고 각 클래스는 하나만 가질 수 있습니다.
 
-서브클래스는 서브클래스 객체가 할당 해제되기 직전에 암시적으로 호출되는 슈퍼클래스의 디이니셜라이저를 상속합니다. 서브클래스 객체는 상속 체인의 모든 디이니셜라이저이 실행을 완료할 때까지 할당 해제되지 않습니다.
+서브클래스는 서브클래스 객체가 할당 해제되기 직전에 암시적으로 호출되는 슈퍼클래스의 디이니셜라이저를 상속합니다. 서브클래스 객체는 상속 체인의 모든 디이니셜라이저가 실행을 완료할 때까지 할당 해제되지 않습니다.
 
 디이니셜라이저는 직접적으로 호출되지 않습니다.
 
-클래스 선언에서 디이니셜라이저이 어떻게 사용되는지에 대한 예시는 <doc:Deinitialization> 를 참고바랍니다.
+클래스 선언에서 디이니셜라이저가 어떻게 사용되는지에 대한 예시는 <doc:Deinitialization> 를 참고바랍니다.
 
 > Grammar of a deinitializer declaration:
 >
@@ -2608,7 +3254,7 @@ Objective-C 에 의해 표현될 수 있는 클래스의 모든 멤버에 이 �
 
 `required`
 
-이니셜라이저를 구현해야 하는 모든 서브클래스를 나타내기 위해 클래스의 지정된 이니셜라이저이나 편리한 이니셜라이저에 이 수정자를 적용합니다. 이니셜라이저의 서브클래스의 구현은 `required` 수정자로 표시되어야 합니다.
+이니셜라이저를 구현해야 하는 모든 서브클래스를 나타내기 위해 클래스의 지정된 이니셜라이저가나 편리한 이니셜라이저에 이 수정자를 적용합니다. 이니셜라이저의 서브클래스의 구현은 `required` 수정자로 표시되어야 합니다.
 
 `static`
 
