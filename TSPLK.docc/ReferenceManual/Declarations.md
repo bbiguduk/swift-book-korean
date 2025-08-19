@@ -2886,7 +2886,7 @@ struct SomeStruct {
 -->
 
 결과의 선택성을 다루는 것을 제외하고
-실패없는 이니셜라이저 호출과 동일하게 `init?`로 실패 가능한 이니셜라이저를 호출합니다.
+일반 이니셜라이저 호출과 동일하게 `init?`로 실패 가능한 이니셜라이저를 호출합니다.
 
 ```swift
 if let actualInstance = SomeStruct(input: "Hello") {
@@ -2896,28 +2896,58 @@ if let actualInstance = SomeStruct(input: "Hello") {
 }
 ```
 
-실패 가능한 이니셜라이저는 이니셜라이저의 본문의 구현에 어느 위치에서든 `nil` 을 반환할 수 있습니다.
+<!--
+  - test: `failable`
 
-실패 가능한 이니셜라이저는 여러 종류의 이니셜라이저에 위임할 수 있습니다. 실패없는 이니셜라이저는 다른 실패없는 이니셜라이저가나 `init!` 실패 가능한 이니셜라이저으로 위임할 수 있습니다. 실패없는 이니셜라이저는 예를 들어 `super.init()!` 처럼 슈퍼클래스의 이니셜라이저에 강제 언래핑한 결과로 `init?` 실패 가능한 이니셜라이저으로 위임할 수 있습니다.
+  ```swifttest
+  -> if let actualInstance = SomeStruct(input: "Hello") {
+         // do something with the instance of 'SomeStruct'
+  >>     _ = actualInstance
+     } else {
+         // initialization of 'SomeStruct' failed and the initializer returned 'nil'
+     }
+  ```
+-->
 
-초기화 실패는 이니셜라이저 위임으로 전파됩니다. 특히, 실패 가능한 이니셜라이저가 실패하고 `nil` 을 반환하는 이니셜라이저에 위임하면 위임된 이니셜라이저도 실패하고 암시적으로 `nil` 을 반환합니다. 실패없는 이니셜라이저가 실패하고 `nil` 을 반환하는 `init!` 실패 가능한 이니셜라이저에 위임하면 `nil` 값을 가지는 옵셔널을 언래핑 하기위해 `!` 연산자를 사용하는 것과 같이 런타임 오류가 발생합니다.
+실패 가능한 이니셜라이저는 이니셜라이저 구현의 어느 위치에서든
+`nil`을 반환할 수 있습니다.
 
-실패 가능한 지정된 이니셜라이저는 모든 종류의 지정된 이니셜라이저에 의해 서브클래스에서 재정의 될 수 있습니다. 실패없는 지정된 이니셜라이저는 실패없는 지정된 이니셜라이저에 의해서만 서브클래스에서 재정의 될 수 있습니다.
+실패 가능한 이니셜라이저는 모든 종류의 이니셜라이저에 위임할 수 있습니다.
+일반 이니셜라이저는 다른 일반 이니셜라이저가나
+`init!` 실패 가능한 이니셜라이저로 위임할 수 있습니다.
+일반 이니셜라이저는 `super.init()!`처럼
+상위 클래스 이니셜라이저의 결과를 강제 언래핑함으로써
+`init?` 실패 가능한 이니셜라이저에 위임할 수 있습니다.
 
-실패 가능한 이니셜라이저에 대한 자세한 내용과 예시는 <doc:Initialization#실패-가능한-이니셜라이저-Failable-Initializers> 을 참고바랍니다.
+초기화 실패는 이니셜라이저 위임으로 전파됩니다.
+특히
+실패 가능한 이니셜라이저가 실패하고 `nil`을 반환하는 이니셜라이저에 위임하면,
+위임된 이니셜라이저도 실패하고 암시적으로 `nil`을 반환합니다.
+일반 이니셜라이저가 실패하고 `nil`을 반환하는 `init!` 실패 가능한 이니셜라이저에 위임하면,
+런타임 오류가 발생합니다
+(`nil` 값을 가지는 옵셔널을 언래핑하기 위해 `!` 연산자를 사용하는 것과 동일합니다).
+
+실패 가능한 지정 이니셜라이저는 하위 클래스에서
+모든 종류의 지정 이니셜라이저로 재정의될 수 있습니다.
+일반 지정 이니셜라이저는 하위 클래스에서
+일반 지정 이니셜라이저로만 재정의될 수 있습니다.
+
+실패 가능한 이니셜라이저에 대한 자세한 내용과 예시는
+<doc:Initialization#실패-가능한-이니셜라이저-Failable-Initializers>을 참고바랍니다.
 
 > Grammar of an initializer declaration:
 >
-> _initializer-declaration_ → _initializer-head_ _generic-parameter-clause?_ _parameter-clause_ **`async`**_?_ **`throws`**_?_ _generic-where-clause?_ _initializer-body_ \
-> _initializer-declaration_ → _initializer-head_ _generic-parameter-clause?_ _parameter-clause_ **`async`**_?_ **`rethrows`** _generic-where-clause?_ _initializer-body_ \
-> _initializer-head_ → _attributes?_ _declaration-modifiers?_ **`init`** \
-> _initializer-head_ → _attributes?_ _declaration-modifiers?_ **`init`** **`?`** \
-> _initializer-head_ → _attributes?_ _declaration-modifiers?_ **`init`** **`!`** \
-> _initializer-body_ → _code-block_
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ *throws-clause*_?_ *generic-where-clause*_?_ *initializer-body* \
+> *initializer-declaration* → *initializer-head* *generic-parameter-clause*_?_ *parameter-clause* **`async`**_?_ **`rethrows`** *generic-where-clause*_?_ *initializer-body* \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`?`** \
+> *initializer-head* → *attributes*_?_ *declaration-modifiers*_?_ **`init`** **`!`** \
+> *initializer-body* → *code-block*
 
 ## 디이니셜라이저 선언 (Deinitializer Declaration)
 
-_디이니셜라이저 선언 (deinitializer declaration)_ 은 클래스 타입에 대한 디이니셜라이저를 선언합니다. 디이니셜라이저는 파라미터를 가지지 않고 다음의 형식을 가집니다:
+*디이니셜라이저 선언(deinitializer declaration)*은 클래스 타입에 대한 디이니셜라이저를 선언합니다.
+디이니셜라이저는 파라미터를 가지지 않고 다음의 형식을 가집니다:
 
 ```swift
 deinit {
@@ -2925,21 +2955,32 @@ deinit {
 }
 ```
 
-디이니셜라이저는 클래스 객체에 어떠한 참조도 없으면 클래스 객체가 할당 해제되기 직전에 자동으로 호출됩니다. 디이니셜라이저는 클래스 선언의 본문 내에만 선언될 수 있지만 클래스의 확장에는 선언될 수 없고 각 클래스는 하나만 가질 수 있습니다.
+디이니셜라이저는 클래스 객체에 어떠한 참조도 없으면,
+클래스 객체가 할당 해제되기 직전에 자동으로 호출됩니다.
+디이니셜라이저는 클래스 선언의 본문 내에만 선언될 수 있고 ---
+클래스의 확장에는 선언될 수 없습니다 ---
+그리고 각 클래스는 디이니셜라이저를 하나만 가질 수 있습니다.
 
-서브클래스는 서브클래스 객체가 할당 해제되기 직전에 암시적으로 호출되는 슈퍼클래스의 디이니셜라이저를 상속합니다. 서브클래스 객체는 상속 체인의 모든 디이니셜라이저가 실행을 완료할 때까지 할당 해제되지 않습니다.
+하위 클래스는 하위 클래스 객체가 할당 해제되기 직전에
+암시적으로 호출되는 상위 클래스의 디이니셜라이저를 상속합니다.
+하위 클래스 객체는 상속 체인의 모든 디이니셜라이저가 실행을 완료할 때까지
+할당 해제되지 않습니다.
 
-디이니셜라이저는 직접적으로 호출되지 않습니다.
+디이니셜라이저는 직접 호출할 수 없습니다.
 
-클래스 선언에서 디이니셜라이저가 어떻게 사용되는지에 대한 예시는 <doc:Deinitialization> 를 참고바랍니다.
+클래스 선언에서 디이니셜라이저가 어떻게 사용되는지에 대한 예시는
+<doc:Deinitialization>를 참고바랍니다.
 
 > Grammar of a deinitializer declaration:
 >
-> _deinitializer-declaration_ → _attributes?_ **`deinit`** _code-block_
+> *deinitializer-declaration* → *attributes*_?_ **`deinit`** *code-block*
 
 ## 확장 선언 (Extension Declaration)
 
-_확장 선언 (extension declaration)_ 은 기존 타입의 동작을 확장할 수 있습니다. 확장 선언은 `extension` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
+*확장 선언(extension declaration)*은
+기존 타입의 동작을 확장할 수 있습니다.
+확장 선언은 `extension` 키워드를 사용하여 선언하고
+다음의 형식을 가집니다:
 
 ```swift
 extension <#type name#> where <#requirements#> {
@@ -2947,17 +2988,39 @@ extension <#type name#> where <#requirements#> {
 }
 ```
 
-확장 선언의 본문은 _선언 (declarations)_ 이 하나도 없거나 하나 이상의 _선언 (declarations)_ 을 포함합니다. 이러한 _선언 (declaration)_ 스캔은 연산 프로퍼티, 계산된 타입 프로퍼티, 인스턴스 메서드, 타입 메서드, 이니셜라이저, 서브스크립트 선언, 그리고 클래스, 구조체, 그리고 열거형 선언도 포함합니다. 확장 선언은 디이니셜라이저 또는 프로토콜 선언, 저장 프로퍼티, 프로퍼티 관찰자, 또는 다른 확장 선언은 포함할 수 없습니다. 프로토콜 확장에서 선언은 `final` 로 표시될 수 없습니다. 여러 종류의 선언을 포함한 확장에 대한 내용과 예시는 <doc:Extensions> 을 참고바랍니다.
+확장 선언의 본문은 0개 이상의 *선언(declarations)*을 포함합니다.
+위 형식의 *선언(declaration)은 연산 프로퍼티, 연산 타입 프로퍼티,
+인스턴스 메서드, 타입 메서드, 이니셜라이저, 서브스크립트 선언,
+클래스, 구조체, 열거형 선언을 포함할 수 있습니다.
+확장 선언은 디이니셜라이저나 프로토콜 선언,
+저장 프로퍼티, 프로퍼티 관찰자, 다른 확장 선언은 포함할 수 없습니다.
+프로토콜 확장에서 선언은 `final`로 표시할 수 없습니다.
+여러 종류의 선언을 포함한 확장에 대한 내용과 예시는
+<doc:Extensions>을 참고바랍니다.
 
-_타입 이름 (type name)_ 이 클래스, 구조체, 또는 열거형 타입 이면 확장은 해당 타입을 확장합니다. _타입 이름 (type name)_ 이 프로토콜 타입 이면 확장은 해당 프로토콜을 준수하는 모든 타입을 확장합니다.
+위 형식의 *타입 이름(type name)*이 클래스, 구조체, 열거형 타입이면,
+확장은 해당 타입을 확장합니다.
+위 형식의 *타입 이름(type name)*이 프로토콜 타입이면,
+확장은 해당 프로토콜을 준수하는 모든 타입을 확장합니다.
 
-제네릭 타입 또는 연관된 타입이 있는 프로토콜을 확장하는 확장 선언은 _요구사항 (requirements)_ 을 포함할 수 있습니다. 확장된 타입 또는 확장된 프로토콜을 준수하는 타입의 인스턴스가 _요구사항 (requirements)_ 을 충족하면 인스턴스는 선언에 지정된 동작을 얻습니다.
+제네릭 타입이나
+연관 타입이 있는 프로토콜을 확장하는 확장 선언은
+위 형식의 *요구사항(requirements)*을 포함할 수 있습니다.
+확장된 타입이나
+확장된 프로토콜을 준수하는 타입의 인스턴스가
+위 형식의 *요구사항(requirements)*을 충족하면
+인스턴스는 선언에 지정된 동작을 얻습니다.
 
-확장 선언은 이니셜라이저 선언을 포함할 수 있습니다. 이 말은 확장하려는 타입이 다른 모듈에 정의되면 이니셜라이저 선언은 해당 타입의 멤버가 올바르게 초기화 되도록 해당 모듈에 이미 정의된 이니셜라이저으로 위임해야 합니다.
+확장 선언은 이니셜라이저 선언을 포함할 수 있습니다.
+이 말은 확장하려는 타입이 다른 모듈에 정의되어 있으면,
+이니셜라이저 선언은 해당 타입의 멤버가 올바르게 초기화되도록
+해당 모듈에 이미 정의된 이니셜라이저로 위임해야 합니다.
 
-기존 타입의 프로퍼티, 메서드, 그리고 이니셜라이저는 해당 타입의 확장에서 재정의 될 수 없습니다.
+기존 타입의 프로퍼티, 메서드, 이니셜라이저는
+해당 타입의 확장에서 재정의될 수 없습니다.
 
-확장 선언은 _채택된 프로토콜 (adopted protocols)_ 을 지정하여 기존 클래스, 구조체, 또는 열거형 타입에 프로토콜 준수를 추가할 수 있습니다:
+확장 선언은 아래 형식의 *채택된 프로토콜(adopted protocols)*을 지정하여
+기존 클래스, 구조체, 열거형 타입에 프로토콜 준수를 추가할 수 있습니다:
 
 ```swift
 extension <#type name#>: <#adopted protocols#> where <#requirements#> {
@@ -2965,15 +3028,33 @@ extension <#type name#>: <#adopted protocols#> where <#requirements#> {
 }
 ```
 
-확장 선언은 기존 클래스에 클래스 상속을 추가할 수 없으므로 _타입 이름 (type name)_ 과 콜론 뒤에 프로토콜의 리스트만 지정할 수 있습니다.
+확장 선언은 기존 클래스에 클래스 상속을 추가할 수 없으므로
+위 형식의 *타입 이름(type name)*과 콜론 뒤에 프로토콜의 리스트만 지정할 수 있습니다.
 
 ### 조건부 준수성 (Conditional Conformance)
 
-조건부로 프로토콜을 준수하기 위해 제네릭 타입을 확장할 수 있기 때문에 타입의 인스턴스가 특정 요구사항만 충족되면 프로토콜을 준수하도록 할 수 있습니다. 확장 선언에 _요구사항 (requirements)_ 을 추가하여 조건부 프로토콜 준수성을 추가합니다.
+요구사항이 충족될 때만
+해당 타입의 인스턴스가 프로토콜을 준수하도록
+제네릭 타입을 확장하여
+조건부로 프로토콜을 준수하게 할 수 있습니다.
+확장 선언에 *요구사항(requirements)*을 추가하여
+조건부 프로토콜 준수를 추가합니다.
 
-#### 재정의한 요구사항은 일부 제네릭 컨텍스트에서 사용되지 않음 (Overridden Requirements Aren’t Used in Some Generic Contexts)
+#### 일부 제네릭 컨텍스트에서 재정의된 요구사항이 사용되지 않는 경우 (Overridden Requirements Aren’t Used in Some Generic Contexts)
 
-일부 제네릭 컨텍스트에서 조건부 프로토콜 준수성에서 동작을 가져오는 타입은 해당 프로토콜의 요구사항의 특별한 구현을 항상 사용하지 않습니다. 이 동작을 설명하기 위해 다음 예시는 두 프로토콜 모두 조건부로 준수하는 두 프로토콜과 제네릭 타입을 정의합니다.
+일부 제네릭 컨텍스트에서
+조건부 프로토콜 준수에서 동작을 가져오는 타입은
+항상 해당 프로토콜 요구사항의
+구현을 사용하지 않습니다.
+이 동작을 설명하기 위해
+다음 예시는 두 프로토콜과
+두 프로토콜을 조건부로 준수하는 제네릭 타입을 정의합니다.
+
+<!--
+  This test needs to be compiled so that it will recognize Pair's
+  CustomStringConvertible conformance -- the deprecated REPL doesn't
+  seem to use the description property at all.
+-->
 
 ```swift
 protocol Loggable {
@@ -3016,7 +3097,59 @@ extension String: TitledLoggable {
 }
 ```
 
-`Pair` 구조체는 제네릭 타입이 `Loggable` 또는 `TitledLoggable` 을 각각 준수할 때마다 `Loggable` 과 `TitledLoggable` 을 준수합니다. 아래 예시에서 `oneAndTwo` 는 `String` 이 `TitledLoggable` 을 준수하기 때문에 `TitledLoggable` 을 준수하는 `Pair<String>` 의 인스턴스 입니다. `oneAndTwo` 에서 `log()` 메서드를 직접 호출하면 타이틀 문자열을 포함하는 특별한 버전이 사용됩니다.
+<!--
+  - test: `conditional-conformance`
+
+  ```swifttest
+  -> protocol Loggable {
+         func log()
+     }
+     extension Loggable {
+         func log() {
+             print(self)
+         }
+     }
+  ---
+     protocol TitledLoggable: Loggable {
+         static var logTitle: String { get }
+     }
+     extension TitledLoggable {
+         func log() {
+             print("\(Self.logTitle): \(self)")
+         }
+     }
+  ---
+     struct Pair<T>: CustomStringConvertible {
+         let first: T
+         let second: T
+         var description: String {
+             return "(\(first), \(second))"
+         }
+     }
+  ---
+     extension Pair: Loggable where T: Loggable { }
+     extension Pair: TitledLoggable where T: TitledLoggable {
+         static var logTitle: String {
+             return "Pair of '\(T.logTitle)'"
+         }
+     }
+  ---
+     extension String: TitledLoggable {
+        static var logTitle: String {
+           return "String"
+        }
+     }
+  ```
+-->
+
+`Pair` 구조체는 제네릭 타입이 `Loggable`이나 `TitledLoggable`을 각각 준수할 때마다
+`Loggable`과 `TitledLoggable`을 준수합니다.
+아래 예시에서
+`oneAndTwo`는 `Pair<String>`의 인스턴스이고,
+`String`이 `TitledLoggable`을 준수하기 때문에
+해당 인스턴스는 `TitledLoggable`을 준수합니다.
+`oneAndTwo`에서 `log()` 메서드를 직접 호출하면,
+타이틀 문자열을 포함하는 특별한 버전이 사용됩니다.
 
 ```swift
 let oneAndTwo = Pair(first: "one", second: "two")
@@ -3024,7 +3157,23 @@ oneAndTwo.log()
 // Prints "Pair of 'String': (one, two)"
 ```
 
-그러나 `oneAndTwo` 제네릭 컨텍스트에서 사용되거나 `Loggable` 프로토콜의 인스턴스로 사용되면 특별한 버전이 사용되지 않습니다. Swift 는 `Pair` 가 `Loggable` 준수하는데 필요한 최소 요구사항만 참조하여 호출하기 위한 `log()` 의 구현을 선택합니다. 이러한 이유로 `Loggable` 프로토콜에 의해 제공된 기본 구현이 대신 사용됩니다.
+<!--
+  - test: `conditional-conformance`
+
+  ```swifttest
+  -> let oneAndTwo = Pair(first: "one", second: "two")
+  -> oneAndTwo.log()
+  <- Pair of 'String': (one, two)
+  ```
+-->
+
+그러나 `oneAndTwo` 제네릭 컨텍스트에서 사용되거나
+`Loggable` 프로토콜의 인스턴스로 사용되면,
+특별한 버전이 사용되지 않습니다.
+Swift는 `Pair`가 `Loggable` 준수하는데 필요한 최소 요구사항만 참조하여
+`log()`의 어떤 구현을 호출할지 선택합니다.
+이러한 이유로
+`Loggable` 프로토콜에 의해 제공된 기본 구현이 대신 사용됩니다.
 
 ```swift
 func doSomething<T: Loggable>(with x: T) {
@@ -3034,15 +3183,44 @@ doSomething(with: oneAndTwo)
 // Prints "(one, two)"
 ```
 
-`log()` 가 `doSomething(_:)` 에 전달된 인스턴스에서 호출되면 커스텀된 타이틀은 로깅 된 문자열에서 생략됩니다.
+<!--
+  - test: `conditional-conformance`
 
-### 프로토콜 준수성은 중복되지 않아야 함 (Protocol Conformance Must Not Be Redundant)
+  ```swifttest
+  -> func doSomething<T: Loggable>(with x: T) {
+        x.log()
+     }
+     doSomething(with: oneAndTwo)
+  <- (one, two)
+  ```
+-->
 
-구체적인 타입은 특정 프로토콜을 한 번만 준수 할 수 있습니다. Swift 는 중복 프로토콜 준수를 오류로 표시합니다. 두 가지 상황에서 이러한 오류가 발생할 수 있습니다. 첫번째 상황은 동일한 프로토콜을 여러번 명시적으로 준수하지만 요구사항이 다른 경우입니다. 두번째 상황은 암시적으로 동일한 프로토콜에서 여러번 상속할 때 입니다. 이러한 상황은 아래 섹션에 설명되어 있습니다.
+`log()`가 `doSomething(_:)`에 전달된 인스턴스에서 호출되면,
+커스텀된 타이틀은 로깅된 문자열에서 생략됩니다.
+
+### 프로토콜 준수는 중복되지 않아야 함 (Protocol Conformance Must Not Be Redundant)
+
+구체적인 타입은 특정 프로토콜을 한 번만 준수할 수 있습니다.
+Swift는 중복 프로토콜 준수를 오류로 표시합니다.
+이러한 오류는
+두 가지 상황에서 발생할 수 있습니다.
+첫 번째 상황은
+동일한 프로토콜을 여러 번 명시적으로 준수하지만
+요구사항이 다른 경우입니다.
+두 번째 상황은
+암시적으로 동일한 프로토콜을 여러 번 상속할 때 입니다.
+이러한 상황은 아래 섹션에 설명되어 있습니다.
 
 #### 명시적 중복 해결 (Resolving Explicit Redundancy)
 
-구체적인 타입에 여러 확장은 확장의 요구사항이 독립적이더라도 동일한 프로토콜에 대한 준수성을 추가할 수 없습니다. 이 제한은 아래 예시에서 설명됩니다. 두 확장 선언은 `Int` 요소가 있는 배열에 대해서와 `String` 요소가 있는 배열에 대해 `Serializable` 프로토콜의 조건부 준수성을 추가를 시도합니다.
+구체적인 타입에 여러 확장은
+확장의 요구사항이 독립적이더라도
+동일한 프로토콜에 대한 준수를 추가할 수 없습니다.
+이 제한은 아래 예시에서 설명됩니다.
+두 확장 선언은
+`Int` 요소가 있는 배열과
+`String` 요소가 있는 배열에 대해
+`Serializable` 프로토콜의 조건부 준수를 추가합니다.
 
 ```swift
 protocol Serializable {
@@ -3062,7 +3240,39 @@ extension Array: Serializable where Element == String {
 // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
 ```
 
-여러 구체적인 타입을 기반으로 조건부 준수성을 추가하려면 각 타입이 준수하는 새로운 프로토콜을 생성하고 조건부 준수를 선언할 때 요구사항으로 해당 프로토콜을 사용합니다.
+<!--
+  - test: `multiple-conformances`
+
+  ```swifttest
+  -> protocol Serializable {
+        func serialize() -> Any
+     }
+  ---
+     extension Array: Serializable where Element == Int {
+         func serialize() -> Any {
+             // implementation
+  >>         return 0
+  ->     }
+     }
+     extension Array: Serializable where Element == String {
+         func serialize() -> Any {
+             // implementation
+  >>         return 0
+  ->     }
+     }
+  // Error: redundant conformance of 'Array<Element>' to protocol 'Serializable'
+  !$ error: conflicting conformance of 'Array<Element>' to protocol 'Serializable'; there cannot be more than one conformance, even with different conditional bounds
+  !! extension Array: Serializable where Element == String {
+  !! ^
+  !$ note: 'Array<Element>' declares conformance to protocol 'Serializable' here
+  !! extension Array: Serializable where Element == Int {
+  !! ^
+  ```
+-->
+
+여러 구체적인 타입을 기반으로 조건부 준수를 추가하려면,
+각 타입이 준수하는 새로운 프로토콜을 생성하고
+조건부 준수를 선언할 때 해당 프로토콜을 요구사항으로 사용합니다.
 
 ```swift
 protocol SerializableInArray { }
@@ -3076,13 +3286,40 @@ extension Array: Serializable where Element: SerializableInArray {
 }
 ```
 
+<!--
+  - test: `multiple-conformances-success`
+
+  ```swifttest
+  >> protocol Serializable { }
+  -> protocol SerializableInArray { }
+     extension Int: SerializableInArray { }
+     extension String: SerializableInArray { }
+  ---
+  -> extension Array: Serializable where Element: SerializableInArray {
+         func serialize() -> Any {
+             // implementation
+  >>         return 0
+  ->     }
+     }
+  ```
+-->
+
 #### 암시적 중복 해결 (Resolving Implicit Redundancy)
 
-구체적인 타입이 프로토콜을 조건적으로 준수하면 해당 타입은 동일한 요구사항을 가진 모든 부모 프로토콜을 암시적으로 준수합니다.
+구체적인 타입이 프로토콜을 조건부로 준수하면,
+해당 타입은 동일한 요구사항을 가진
+모든 부모 프로토콜을 암시적으로 준수합니다.
 
-단일 부모에서 상속하는 두 프로토콜을 조건부로 준수하는 타입이 필요한 경우 명시적으로 부모 프로토콜에 준수성을 선언합니다. 이것은 요구사항이 다른 부모 프로토콜을 암시적으로 두번 준수하는 것을 방지합니다.
+단일 부모에서 상속하는
+두 프로토콜을 조건부로 준수하는 타입이 필요한 경우,
+명시적으로 부모 프로토콜에 대한 준수를 선언합니다.
+이것은 요구사항이 다른 부모 프로토콜을
+암시적으로 두 번 준수하는 것을 방지합니다.
 
-다음 예시는 `TitledLoggable` 과 새로운 `MarkedLoggable` 프로토콜을 조건부 준수를 선언할 때 충돌을 막기 위해 `Array` 의 조건부 준수를 `Loggable` 로 명시적으로 선언합니다.
+다음 예시는 `TitledLoggable`과 새로운 `MarkedLoggable` 프로토콜을
+조건부 준수를 선언할 때 충돌을 막기 위해
+`Array`의 조건부 준수를 `Loggable`로
+명시적으로 선언합니다.
 
 ```swift
 protocol MarkedLoggable: Loggable {
@@ -3105,7 +3342,35 @@ extension Array: TitledLoggable where Element: TitledLoggable {
 extension Array: MarkedLoggable where Element: MarkedLoggable { }
 ```
 
-`Loggable` 에 대한 조건부 준수성을 명시적으로 선언하는 확장이 없으면 다른 `Array` 확장이 암시적으로 이러한 선언을 생성하여 오류가 발생합니다:
+<!--
+  - test: `conditional-conformance`
+
+  ```swifttest
+  -> protocol MarkedLoggable: Loggable {
+        func markAndLog()
+     }
+  ---
+     extension MarkedLoggable {
+        func markAndLog() {
+           print("----------")
+           log()
+        }
+     }
+  ---
+     extension Array: Loggable where Element: Loggable { }
+     extension Array: TitledLoggable where Element: TitledLoggable {
+        static var logTitle: String {
+           return "Array of '\(Element.logTitle)'"
+        }
+     }
+     extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  ```
+-->
+
+`Loggable`에 대한 조건부 준수성을 명시적으로 선언하는
+확장이 없으면
+다른 `Array` 확장이 암시적으로 이러한 선언을 생성하여
+오류가 발생합니다:
 
 ```swift
 extension Array: Loggable where Element: TitledLoggable { }
@@ -3113,17 +3378,102 @@ extension Array: Loggable where Element: MarkedLoggable { }
 // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
 ```
 
+<!--
+  - test: `conditional-conformance-implicit-overlap`
+
+  ```swifttest
+  >> protocol Loggable { }
+  >> protocol MarkedLoggable : Loggable { }
+  >> protocol TitledLoggable : Loggable { }
+  -> extension Array: Loggable where Element: TitledLoggable { }
+     extension Array: Loggable where Element: MarkedLoggable { }
+  // Error: redundant conformance of 'Array<Element>' to protocol 'Loggable'
+  !$ error: conflicting conformance of 'Array<Element>' to protocol 'Loggable'; there cannot be more than one conformance, even with different conditional bounds
+  !! extension Array: Loggable where Element: MarkedLoggable { }
+  !! ^
+  !$ note: 'Array<Element>' declares conformance to protocol 'Loggable' here
+  !! extension Array: Loggable where Element: TitledLoggable { }
+  !! ^
+  ```
+-->
+
+<!--
+  - test: `types-cant-have-multiple-implicit-conformances`
+
+  ```swifttest
+  >> protocol Loggable { }
+     protocol TitledLoggable: Loggable { }
+     protocol MarkedLoggable: Loggable { }
+     extension Array: TitledLoggable where Element: TitledLoggable {
+         // ...
+     }
+     extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  !$ error: conditional conformance of type 'Array<Element>' to protocol 'TitledLoggable' does not imply conformance to inherited protocol 'Loggable'
+  !! extension Array: TitledLoggable where Element: TitledLoggable {
+  !! ^
+  !$ note: did you mean to explicitly state the conformance like 'extension Array: Loggable where ...'?
+  !! extension Array: TitledLoggable where Element: TitledLoggable {
+  !! ^
+  !$ error: type 'Array<Element>' does not conform to protocol 'MarkedLoggable'
+  !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  !! ^
+  !$ error: type 'Element' does not conform to protocol 'TitledLoggable'
+  !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  !! ^
+  !$ error: 'MarkedLoggable' requires that 'Element' conform to 'TitledLoggable'
+  !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  !! ^
+  !$ note: requirement specified as 'Element' : 'TitledLoggable'
+  !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  !! ^
+  !$ note: requirement from conditional conformance of 'Array<Element>' to 'Loggable'
+  !! extension Array: MarkedLoggable where Element: MarkedLoggable { }
+  !! ^
+  ```
+-->
+
+<!--
+  - test: `extension-can-have-where-clause`
+
+  ```swifttest
+  >> extension Array where Element: Equatable {
+         func f(x: Array) -> Int { return 7 }
+     }
+  >> let x = [1, 2, 3]
+  >> let y = [10, 20, 30]
+  >> let r0 = x.f(x: y)
+  >> assert(r0 == 7)
+  ```
+-->
+
+<!--
+  - test: `extensions-can-have-where-clause-and-inheritance-together`
+
+  ```swifttest
+  >> protocol P { func foo() -> Int }
+  >> extension Array: P where Element: Equatable {
+  >>    func foo() -> Int { return 0 }
+  >> }
+  >> let r0 = [1, 2, 3].foo()
+  >> assert(r0 == 0)
+  ```
+-->
+
 > Grammar of an extension declaration:
 >
-> _extension-declaration_ → _attributes?_ _access-level-modifier?_ **`extension`** _type-identifier_ _type-inheritance-clause?_ _generic-where-clause?_ _extension-body_ \
-> _extension-body_ → **`{`** _extension-members?_ **`}`**
+> *extension-declaration* → *attributes*_?_ *access-level-modifier*_?_ **`extension`** *type-identifier* *type-inheritance-clause*_?_ *generic-where-clause*_?_ *extension-body* \
+> *extension-body* → **`{`** *extension-members*_?_ **`}`**
 >
-> _extension-members_ → _extension-member_ _extension-members?_ \
-> _extension-member_ → _declaration_ | _compiler-control-statement_
+> *extension-members* → *extension-member* *extension-members*_?_ \
+> *extension-member* → *declaration* | *compiler-control-statement*
 
 ## 서브스크립트 선언 (Subscript Declaration)
 
-_서브스크립트 (subscript)_ 선언은 특정 타입에 대한 서브스크립트를 지원을 추가할 수 있고 일반적으로 컬렉션, 리스트, 또는 시퀀스에서 요소의 접근에 대한 편리한 구문을 제공하기 위해 사용됩니다. 서브스크립트 선언은 `subscript` 키워드를 사용하여 선언되고 다음의 형식을 가집니다:
+*서브스크립트(subscript)* 선언은 특정 타입에 대한 서브스크립트 지원을 추가할 수 있고,
+일반적으로 컬렉션, 리스트, 시퀀스의 요소에 접근하기 위한
+편리한 구문을 제공하기 위해 사용됩니다.
+서브스크립트 선언은 `subscript` 키워드를 사용하여 선언되고
+다음의 형식을 가집니다:
 
 ```swift
 subscript (<#parameters#>) -> <#return type#> {
@@ -3136,50 +3486,109 @@ subscript (<#parameters#>) -> <#return type#> {
 }
 ```
 
-서브스크립트 선언은 클래스, 구조체, 열거형, 확장, 또는 프로토콜 선언의 컨텍스트에서만 나타날 수 있습니다.
+서브스크립트 선언은 클래스, 구조체,
+열거형, 확장, 프로토콜 선언의 컨텍스트에서만 나타날 수 있습니다.
 
-_파라미터 (parameters)_ 는 서브스크립트 표현식에서 해당 타입의 요소에 접근하기 위해 사용되는 하나 이상의 인덱스를 지정합니다 (예를 들어 표현식 `object[i]` 에서 `i`). 요소에 접근하기 위해 사용되는 인덱스는 모든 타입이 될 수 있지만 각 파라미터는 각 인덱스의 타입을 지정하기 위해 타입 주석을 포함해야 합니다. _반환 타입 (return type)_ 은 접근하는 요소의 타입을 지정합니다.
+위 형식의 *파라미터(parameters)*는 서브스크립트 표현식에서 해당 타입의 요소에 접근하기 위해 사용되는 하나 이상의 인덱스를 지정합니다
+(예를 들어 표현식 `object[i]`에서 `i`).
+요소에 접근하기 위해 사용되는 인덱스는 모든 타입이 될 수 있지만,
+각 파라미터는 각 인덱스의 타입을 지정하기 위해 타입 주석을 포함해야 합니다.
+위 형식의 *반환 타입(return type)*은 접근하는 요소의 타입을 지정합니다.
 
-연산 프로퍼티와 마찬가지로 서브스크립트 선언은 접근한 요소의 값을 읽고 쓰기를 제공합니다. getter 는 값을 읽기 위해 사용되고 setter 는 값을 쓰기 위해 사용됩니다. setter 절은 선택사항이며 getter 만 필요하다면 모든 절을 생략할 수 있고 직접적으로 요청된 값을 간단하게 반환합니다. 이 말은 setter 절을 제공하면 getter 절을 제공해야만 한다는 의미입니다.
+연산 프로퍼티와 마찬가지로
+서브스크립트 선언은 접근한 요소의 값을 읽고 쓰기를 제공합니다.
+getter는 값을 읽기 위해 사용되고,
+setter는 값을 쓰기 위해 사용됩니다.
+setter 절은 선택 사항이며,
+getter만 필요하다면, 모든 절을 생략할 수 있고
+요청된 값을 직접 반환할 수 있습니다.
+이 말은 setter 절을 제공하면 getter 절을 제공해야 한다는 의미입니다.
 
-_setter 이름 (setter name)_ 과 둘러싸인 소괄호는 선택사항입니다. setter 이름을 제공하면 setter 의 파라미터의 이름으로 사용됩니다. setter 이름을 제공하지 않으면 setter 의 기본 파라미터 이름은 `value` 입니다. setter 의 파라미터의 타입은 _반환 타입 (return type)_ 과 동일합니다.
+위 형식의 *setter 이름(setter name)*과 둘러싸인 소괄호는 선택 사항입니다.
+setter 이름을 제공하면, setter의 파라미터 이름으로 사용됩니다.
+setter 이름을 제공하지 않으면, setter의 기본 파라미터 이름은 `value`입니다.
+setter의 파라미터 타입은 위 형식의 *반환 타입(return type)*과 동일합니다.
 
-_파라미터 (parameters)_ 또는 _반환 타입 (return type)_ 이 오버로딩 중인 것과 다르면 선언된 타입의 서브스크립트 선언을 오버로드 할 수 있습니다. 슈퍼클래스에서 상속된 서브스크립트 선언을 재정의 할 수도 있습니다. 재정의 하면 `override` 선언 수정자로 재정의된 서브스크립트 선언을 표시해야 합니다.
+*파라미터(parameters)*나 *반환 타입(return type)*이 오버로드 하려는 것과 다르면,
+선언된 타입의 서브스크립트 선언을 오버로드할 수 있습니다.
+상위 클래스에서 상속된 서브스크립트 선언을 재정의할 수도 있습니다.
+재정의하면 `override` 선언 수정자로 재정의된 서브스크립트 선언을 표시해야 합니다.
 
-서브스크립트 파라미터는 두가지를 제외하고 함수 파라미터와 동일한 규칙을 따릅니다. 기본 적으로 서브스크립트에서 사용하는 파라미터는 함수, 메서드, 그리고 이니셜라이저과 다르게 인자 레이블을 가지지 않습니다. 그러나 함수, 메서드, 그리고 이니셜라이저에서 사용하는 동일한 구문을 사용하여 명시적으로 인자 레이블을 제공할 수 있습니다. 또한 서브스크립트는 in-out 파라미터를 가질 수 없습니다. 서브스크립트 파라미터는 <doc:Declarations#특별한-종류의-파라미터-Special-Kinds-of-Parameters> 에서 설명 한 구문을 사용하여 기본값을 가질 수 있습니다.
+서브스크립트 파라미터는 두 가지를 제외하고
+함수 파라미터와 동일한 규칙을 따릅니다.
+기본적으로 서브스크립트에서 사용하는 파라미터는 함수, 메서드, 이니셜라이저와 다르게
+인자 레이블을 가지지 않습니다.
+그러나 함수, 메서드, 이니셜라이저에서 사용하는 동일한 구문을 사용하여
+명시적으로 인자 레이블을 제공할 수 있습니다.
+또한 서브스크립트는 in-out 파라미터를 가질 수 없습니다.
+서브스크립트 파라미터는 <doc:Declarations#특별한-종류의-파라미터-Special-Kinds-of-Parameters>에서 설명한 구문을 사용하여
+기본값을 가질 수 있습니다.
 
-<doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration> 에서 설명한대로 프로토콜 선언의 컨텍스트에서 서브스크립트를 선언할 수도 있습니다.
+<doc:Declarations#프로토콜-서브스크립트-선언-Protocol-Subscript-Declaration>에서 설명한대로
+프로토콜 선언의 컨텍스트에서 서브스크립트를 선언할 수도 있습니다.
 
-서브스크립트에 대한 자세한 내용과 서브스크립트 선언의 예시는 <doc:Subscripts> 를 참고바랍니다.
+서브스크립트에 대한 자세한 내용과 서브스크립트 선언의 예시는
+<doc:Subscripts>를 참고바랍니다.
 
 ### 타입 서브스크립트 선언 (Type Subscript Declarations)
 
-타입의 인스턴스가 아닌 타입에 의해 노출되는 서브스크립트를 선언하려면 `static` 선언 수정자로 서브스크립트 선언을 표시합니다. 클래스는 대신 `class` 선언 수정자로 타입 연산 프로퍼티를 표시하여 서브클래스가 슈퍼클래스의 구현을 재정의 할 수 있습니다. 클래스 선언에서 `static` 키워드는 `class` 와 `final` 선언 수정자 모두 선언에 표시하는 것과 동일한 효과를 가집니다.
+타입의 인스턴스가 아닌
+타입에 의해 노출되는 서브스크립트를 선언하려면
+`static` 선언 수정자로 서브스크립트 선언을 표시합니다.
+클래스는 대신 `class` 선언 수정자로 타입 연산 프로퍼티를 표시하여
+하위 클래스가 상위 클래스의 구현을 재정의할 수 있습니다.
+클래스 선언에서
+`static` 키워드는 `class`와 `final` 선언 수정자 모두 선언에 표시하는 것과
+동일한 효과를 가집니다.
+
+<!--
+  - test: `cant-override-static-subscript-in-subclass`
+
+  ```swifttest
+  -> class Super { static subscript(i: Int) -> Int { return 10 } }
+  -> class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+  !$ error: cannot override static subscript
+  !! class Sub: Super { override static subscript(i: Int) -> Int { return 100 } }
+  !!                                    ^
+  !$ note: overridden declaration is here
+  !! class Super { static subscript(i: Int) -> Int { return 10 } }
+  !!                      ^
+  ```
+-->
 
 > Grammar of a subscript declaration:
 >
-> _subscript-declaration_ → _subscript-head_ _subscript-result_ _generic-where-clause?_ _code-block_ \
-> _subscript-declaration_ → _subscript-head_ _subscript-result_ _generic-where-clause?_ _getter-setter-block_ \
-> _subscript-declaration_ → _subscript-head_ _subscript-result_ _generic-where-clause?_ _getter-setter-keyword-block_ \
-> _subscript-head_ → _attributes?_ _declaration-modifiers?_ **`subscript`** _generic-parameter-clause?_ _parameter-clause_ \
-> _subscript-result_ → **`->`** _attributes?_ _type_
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *code-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-block* \
+> *subscript-declaration* → *subscript-head* *subscript-result* *generic-where-clause*_?_ *getter-setter-keyword-block* \
+> *subscript-head* → *attributes*_?_ *declaration-modifiers*_?_ **`subscript`** *generic-parameter-clause*_?_ *parameter-clause* \
+> *subscript-result* → **`->`** *attributes*_?_ *type*
 
 ## 매크로 선언 (Macro Declaration)
 
-_매크로 선언 (macro declaration)_ 은 새로운 매크로를 도입합니다. `macro` 키워드로 시작하고 다음의 형식을 가집니다:
+*매크로 선언(macro declaration)*은 새로운 매크로를 도입합니다.
+`macro` 키워드로 시작하고
+다음의 형식을 가집니다:
 
 ```swift
 macro <#name#> = <#macro implementation#>
 ```
 
-_매크로 구현 (macro implementation)_ 은 또다른 매크로이며, 매크로의 확장을 수행하는 코드의 위치를 나타냅니다.
-매크로 확장을 수행하는 코드는 Swift 코드와 상호작용 하기위해
-[SwiftSyntax][http://github.com/apple/swift-syntax/] 모듈을 사용하는 별도의 Swift 프로그램 입니다.
-매크로의 구현을 포함하는 타입의 이름과 해당 타입을 포함하는 모듈의 이름을 전달하여 Swift 표준 라이브러리에서 `externalMacro(module:type:)` 매크로를 호출합니다.
+위 형식의 *매크로 구현(macro implementation)*은 또 다른 매크로이며,
+매크로의 확장을 수행하는 코드의 위치를 나타냅니다.
+매크로 확장을 수행하는 코드는 Swift 코드와 상호 작용하기 위해
+[SwiftSyntax][] 모듈을 사용하는 별도의 Swift 프로그램 입니다.
+Swift 표준 라이브러리의 `externalMacro(module:type:)` 매크로를 호출하고,
+해당 매크로를 호출할 때 매크로의 구현을 포함하는 타입의 이름과
+해당 타입을 포함하는 모듈의 이름을 전달합니다.
 
-함수에서 사용하는 동일한 모델에 따라 매크로는 오버로드 될 수 있습니다. 매크로 선언은 파일 범위에서만 나타납니다.
+[SwiftSyntax]: http://github.com/apple/swift-syntax/
 
-Swift 에서 매크로의 개요는 <doc:Macros> 를 참고바랍니다.
+매크로는 함수에서 사용하는 동일한 모델에 따라
+오버로드될 수 있습니다.
+매크로 선언은 파일 범위에서만 나타납니다.
+
+Swift에서 매크로 개요는 <doc:Macros>를 참고바랍니다.
 
 > Grammar of a macro declaration:
 >
@@ -3191,11 +3600,21 @@ Swift 에서 매크로의 개요는 <doc:Macros> 를 참고바랍니다.
 
 ## 연산자 선언 (Operator Declaration)
 
-_연산자 선언 (operator declaration)_ 은 프로그램에 새로운 중위 (infix), 접두사 (prefix), 그리고 접미사 (postfix) 연산자를 도입하고 `operator` 키워드를 사용하여 선언됩니다.
+*연산자 선언(operator declaration)*은 프로그램에
+새로운 중위(infix) 연산자, 접두(prefix) 연산자, 접미(postfix) 연산자를 도입하고
+`operator` 키워드를 사용하여 선언합니다.
 
-중위, 접두사, 그리고 접미사의 세가지 수정사항의 연산자를 선언할 수 있습니다. 연산자의 _고정성 (fixity)_ 은 연산자의 피연산자의 상대 위치를 지정합니다.
+세 가지 다른 고정성(fixity)을 가진 연산자를 선언할 수 있습니다:
+중위 연산자, 접두 연산자, 접미 연산자입니다.
+연산자의 *고정성(fixity)*은 피연산자에 대한
+연산자의 상대적인 위치를 지정합니다.
 
-연산자 선언에는 세가지 기본 형식이 있으며 각 고정성 마다 하나씩 있습니다. 연산자의 고정성은 `operator` 키워드 전에 `infix`, `prefix`, 또는 `postfix` 선언 수정자로 연산자의 선언을 표시하여 지정합니다. 각 형식에서 연산자의 이름은 <doc:LexicalStructure#연산자-Operators> 에서 정의된 연산자 문자만 포함 할 수 있습니다.
+각 고정성에 대해
+연산자 선언의 세 가지 기본 형식이 있습니다.
+연산자의 고정성은 `operator` 키워드 전에
+`infix`, `prefix`, `postfix` 선언 수정자로 연산자의 선언을 표시하여 지정합니다.
+각 형식에서 연산자의 이름은 <doc:LexicalStructure#연산자-Operators>에서 정의된
+연산자 문자만 포함할 수 있습니다.
 
 다음 형식은 새로운 중위 연산자를 선언합니다:
 
@@ -3203,45 +3622,67 @@ _연산자 선언 (operator declaration)_ 은 프로그램에 새로운 중위 (
 infix operator <#operator name#>: <#precedence group#>
 ```
 
-_중위 연산자 (infix operator)_ 는 표현식 `1 + 2` 에서 덧셈 연산자 (`+`) 와 같이 두 피연산자 사이에 작성되는 이진 연산자 입니다.
+*중위 연산자(infix operator)*는 표현식 `1 + 2`에서 덧셈 연산자(`+`)와 같이
+두 피연산자 사이에 작성되는 이진 연산자 입니다.
 
-중위 연산자는 선택적으로 우선순위 그룹을 지정할 수 있습니다. 연산자에 대해 우선순위 그룹을 생략하면 Swift 는 `TernaryPrecedence` 보다 더 높은 우선순위를 지정하는 `DefaultPrecedence` 기본 우선순위 그룹을 사용합니다. 더 자세한 내용은 <doc:Declarations#우선순위-그룹-선언-Precedence-Group-Declaration> 을 참고바랍니다.
+중위 연산자는 선택적으로 우선순위 그룹을 지정할 수 있습니다.
+연산자에 대해 우선순위 그룹을 생략하면,
+Swift는 기본 우선순위인 `DefaultPrecedence`를 사용하고,
+이것은 `TernaryPrecedence`보다 약간 높은 우선순위입니다.
+더 자세한 내용은 <doc:Declarations#우선순위-그룹-선언-Precedence-Group-Declaration>을 참고바랍니다.
 
-다음 형식은 새로운 접두사 연산자를 선언합니다:
+다음 형식은 새로운 접두 연산자를 선언합니다:
 
 ```swift
 prefix operator <#operator name#>
 ```
 
-_접두사 연산자 (prefix operator)_ 는 표현식 `!a` 에서 접두사 논리적 NOT 연산자 (`!`) 와 같은 피연산자 직전에 작성되는 단항 연산자 (unary operator) 입니다.
+*접두 연산자(prefix operator)*는 표현식 `!a`에서 접두 논리적 NOT 연산자(`!`)와 같은
+피연산자 직전에 작성되는 단항 연산자(unary operator)입니다.
 
-접두사 연산자 선언은 우선순위를 지정하지 않습니다. 접두사 연산자는 비연관성 (nonassociative) 입니다.
+접두 연산자 선언은 우선순위를 지정하지 않습니다.
+접두 연산자는 비결합적(nonassociative)입니다.
 
-다음 형식은 접미사 연산자를 선언합니다:
+다음 형식은 접미 연산자를 선언합니다:
 
 ```swift
 postfix operator <#operator name#>
 ```
 
-_접미사 연산자 (postfix operator)_ 는 표현식 `a!` 에서 접미사 강제 언래핑 연산자 (`!`) 와 같이 피연산자 바로 뒤에 작성되는 단항 연산자 (unary operator) 입니다.
+*접미 연산자(postfix operator)*는 표현식 `a!`에서 접미 강제 언래핑 연산자(`!`)와 같이
+피연산자 바로 뒤에 작성되는 단항 연산자(unary operator)입니다.
 
-접두사 연산와 같이 접미사 연산자 선언은 우선순위를 지정하지 않습니다. 접미사 연산자는 비연관성 (nonassociative) 입니다.
+접두 연산자와 같이 접미 연산자 선언은 우선순위를 지정하지 않습니다.
+접미 연산자는 비결합적(nonassociative)입니다.
 
-새로운 연산자를 선언한 후에 연산자와 같은 이름을 가지는 정적 메서드를 선언하여 구현합니다. 정적 메서드는 연산자가 값을 인자로 가지는 타입 중 하나의 멤버입니다 — 예를 들어 `Double` 에 `Int` 를 곱하는 연산자는 `Double` 또는 `Int` 구조체에서 정적 메서드로 구현됩니다. 접두사 또는 접미사 연산자를 구현하면 해당하는 `prefix` 또는 `postfix` 선언 수정자를 사용하여 메서드 선언을 표시해야 합니다. 새로운 연산자를 어떻게 생성하고 구현하는지에 대한 예시는 <doc:AdvancedOperators#사용자-정의-연산자-Custom-Operators> 를 참고바랍니다.
+새로운 연산자를 선언한 후에
+연산자와 같은 이름을 가지는 정적 메서드를 선언하여 구현합니다.
+정적 메서드는
+연산자가 값을 인자로 가지는 타입 중 하나의 멤버입니다 —--
+예를 들어 `Double`에 `Int`를 곱하는 연산자는
+`Double`이나 `Int` 구조체에 정적 메서드로 구현됩니다.
+접두 연산자나 접미 연산자를 구현하면,
+해당 메서드 선언에 `prefix`나 `postfix` 선언 수정자를
+표시해야 합니다.
+새로운 연산자를 어떻게 생성하고 구현하는지에 대한 예시는
+<doc:AdvancedOperators#커스텀-연산자-Custom-Operators>를 참고바랍니다.
 
 > Grammar of an operator declaration:
 >
-> _operator-declaration_ → _prefix-operator-declaration_ | _postfix-operator-declaration_ | _infix-operator-declaration_
+> *operator-declaration* → *prefix-operator-declaration* | *postfix-operator-declaration* | *infix-operator-declaration*
 >
-> _prefix-operator-declaration_ → **`prefix`** **`operator`** _operator_ \
-> _postfix-operator-declaration_ → **`postfix`** **`operator`** _operator_ \
-> _infix-operator-declaration_ → **`infix`** **`operator`** _operator_ _infix-operator-group?_
+> *prefix-operator-declaration* → **`prefix`** **`operator`** *operator* \
+> *postfix-operator-declaration* → **`postfix`** **`operator`** *operator* \
+> *infix-operator-declaration* → **`infix`** **`operator`** *operator* *infix-operator-group*_?_
 >
-> _infix-operator-group_ → **`:`** _precedence-group-name_
+> *infix-operator-group* → **`:`** *precedence-group-name*
 
 ## 우선순위 그룹 선언 (Precedence Group Declaration)
 
-_우선순위 그룹 선언 (precedence group declaration)_ 은 프로그램에서 중위 연산자 우선순위에 대한 새로운 그룹화을 도입합니다. 연산자의 우선순위는 그룹화 괄호가 없을 때 연산자가 피연산자에 얼마나 밀접하게 바인딩 되는지 지정합니다.
+*우선순위 그룹 선언(precedence group declaration)*은
+프로그램에서 중위 연산자 우선순위에 대한 새로운 그룹화을 도입합니다.
+연산자의 우선순위는 그룹화 괄호가 없을 때
+연산자가 피연산자와 어떻게 결합하는지 지정합니다.
 
 우선순위 그룹 선언은 다음의 형식을 가집니다:
 
@@ -3254,122 +3695,257 @@ precedencegroup <#precedence group name#> {
 }
 ```
 
-_하위 그룹 이름 (lower group names)_ 과 _상위 그룹 이름 (higher group names)_ 리스트는 기존 우선순위 그룹에 새로운 우선순위 그룹의 관계를 지정합니다. `lowerThan` 우선순위 그룹 속성은 현재 모듈의 외부에 선언된 우선순위 그룹을 참조하는 데만 사용됩니다. 표현식 `2 + 3 * 5` 에서와 같이 두 연산자가 피연산자에 대해 서로 경쟁할 때 상대적으로 우선순위가 높은 연산자가 피연산자에 더 밀접하게 바인딩 됩니다.
+위 형식의 *하위 그룹 이름(lower group names)*과 위 형식의 *상위 그룹 이름(higher group names)* 목록은
+기존 우선순위 그룹에 새로운 우선순위 그룹의 관계를 지정합니다.
+`lowerThan` 우선순위 그룹 속성은
+현재 모듈의 외부에 선언된 우선순위 그룹을 참조하는 데만 사용됩니다.
+표현식 `2 + 3 * 5`에서와 같이
+두 연산자가 피연산자에 대해 서로 경쟁할 때
+상대적으로 우선순위가 높은 연산자가
+피연산자와 더 밀접하게 결합합니다.
 
-> Note\
-> _하위 그룹 이름 (lower group names)_ 과 _상위 그룹 이름 (higher group names)_ 을 사용하는 서로 관련된 우선순위 그룹은 단일 관계형 계층 (single relational hierarchy) 에 적합해야 하지만 선형 계층 (linear hierarchy) 을 형성할 필요는 없습니다. 이것은 상대적 우선순위가 정의되지 않은 우선순위 그룹일 수 있다는 의미입니다.\
-> 이러한 우선순위 연산자는 그룹화 괄호없이 나란히 사용할 수 없습니다.
+> Note: 위 형식의 *하위 그룹 이름(lower group names)*과 위 형식의 *상위 그룹 이름(higher group names)*을 사용하는
+> 서로 관련된 우선순위 그룹은
+> 단일 관계 계층(single relational hierarchy)에 적합해야 하지만
+> 선형 계층(linear hierarchy)을 형성할 필요는 없습니다.
+> 이것은 상대적 우선순위가 정의되지 않은
+> 우선순위 그룹일 수 있다는 의미입니다.
+> 이러한 우선순위 연산자는
+> 그룹화 괄호없이 나란히 사용할 수 없습니다.
 
-Swift 는 표준 라이브러리에서 제공된 연산자와 함께 사용할 수많은 우선순위 그룹을 정의합니다. 예를 들어 덧셈 (`+`) 과 뺄셈 (`-`) 연산자는 `AdditionPrecedence` 그룹에 속하고 곱셈 (`*`) 과 나눗셈 (`/`) 연산자는 `MultiplicationPrecedence` 그룹에 속합니다. Swift 표준 라이브러리에서 제공하는 우선순위 그룹의 완벽한 리스트는 [연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator\_declarations) 을 참고바랍니다.
+Swift는 표준 라이브러리에서 제공된 연산자와 함께 사용할
+수많은 우선순위 그룹을 정의합니다.
+예를 들어 덧셈(`+`)과 뺄셈(`-`) 연산자는
+`AdditionPrecedence` 그룹에 속하고
+곱셈(`*`)과 나눗셈(`/`) 연산자는
+`MultiplicationPrecedence` 그룹에 속합니다.
+Swift 표준 라이브러리에서 제공하는
+우선순위 그룹의 전체 목록은
+[연산자 선언 (Operator Declarations)](https://developer.apple.com/documentation/swift/operator_declarations)을 참고바랍니다.
 
-연산자의 _연관성 (associativity)_ 은 그룹화 괄호가 없을 때 동일한 우선순위 수준을 가진 일련의 연산자가 함께 그룹화 되는 방식을 지정합니다. 상황에 맞는 키워드 `left`, `right`, 또는 `none` 중 하나를 작성하여 연산자의 연관성을 지정합니다 — 연관성을 생략하면 기본적으로 `none` 입니다. 왼쪽 연관성 (left-associative) 연산자는 왼쪽에서 오른쪽으로 그룹화 합니다. 예를 들어 뺄셈 연산자 (`-`) 는 표현식 `4 - 5 - 6` 은 `(4 - 5) - 6` 으로 그룹화 되고 `-7` 로 평가되므로 왼쪽 연관성 (left-associative) 입니다. 오른쪽 연관성 (right-associative) 연산자는 오른쪽에서 왼쪽으로 그룹화 하고 `none` 의 연관성으로 지정된 연산자는 전혀 연관되지 않습니다. 동일한 우선순위 수준의 비연관성 연산자는 서로 인접하게 표시될 수 없습니다. 예를 들어 `<` 연산자는 `none` 의 연관성을 가집니다. 이것은 `1 < 2 < 3` 은 유효하지 않은 표현식이라는 의미입니다.
+연산자의 *결합방향(associativity)*은 그룹화 괄호가 없을 때 동일한 우선순위 수준을 가진
+일련의 연산자가 함께 그룹화되는 방식을 지정합니다.
+상황에 맞는 키워드 `left`, `right`, `none` 중 하나를 작성하여
+연산자의 결합방향을 지정합니다 —--
+결합방향을 생략하면 기본적으로 `none`입니다.
+왼쪽 걸합방향(left-associative) 연산자는 왼쪽에서 오른쪽으로 그룹화합니다.
+예를 들어
+뺄셈 연산자(`-`)는
+표현식 `4 - 5 - 6`을 `(4 - 5) - 6`으로 그룹화하고
+`-7`로 평가되므로 왼쪽 걸합방향(left-associative)입니다.
+오른쪽 걸합방향(right-associative) 연산자는 오른쪽에서 왼쪽으로 그룹화하고,
+`none`의 결합방향으로 지정된 연산자는
+전혀 결합되지 않습니다.
+동일한 우선순위 수준의 비결합성 연산자는
+서로 인접하게 표시될 수 없습니다.
+예를 들어
+`<` 연산자는 `none`의 결합방향을 가집니다.
+이것은 `1 < 2 < 3`은 유효하지 않은 표현식이라는 의미입니다.
 
-우선순위 그룹의 _할당 (assignment)_ 은 옵셔널 체이닝을 포함하는 동작을 사용할 때 연산자의 우선순위를 지정합니다. `true` 로 설정하면 해당 우선순위 그룹에서 연산자는 옵셔널 체이닝 중에 Swift 표준 라이브러리의 할당 연산자와 동일한 그룹화 규칙을 사용합니다. 그렇지 않으면 `false` 로 설정하거나 생략된 경우 우선순위 그룹에서 연산자는 할당을 수행하지 않은 연산자와 동일한 옵셔널 체이닝 규칙을 따릅니다.
+우선순위 그룹의 *할당(assignment)*은 옵셔널 체이닝을 포함하는 연산에서
+연산자의 우선순위를 지정합니다.
+`true`로 설정하면, 해당 우선순위 그룹의 연산자는
+Swift 표준 라이브러리의 할당 연산자와 동일한 그룹화 규칙을
+옵셔널 체이닝 중에 사용합니다.
+그렇지 않으면 `false`로 설정하거나 생략된 경우,
+우선순위 그룹에서 연산자는 할당을 수행하지 않는 연산자와
+동일한 옵셔널 체이닝 규칙을 따릅니다.
 
 > Grammar of a precedence group declaration:
 >
-> _precedence-group-declaration_ → **`precedencegroup`** _precedence-group-name_ **`{`** _precedence-group-attributes?_ **`}`**
+> *precedence-group-declaration* → **`precedencegroup`** *precedence-group-name* **`{`** *precedence-group-attributes*_?_ **`}`**
 >
-> _precedence-group-attributes_ → _precedence-group-attribute_ _precedence-group-attributes?_ \
-> _precedence-group-attribute_ → _precedence-group-relation_ \
-> _precedence-group-attribute_ → _precedence-group-assignment_ \
-> _precedence-group-attribute_ → _precedence-group-associativity_
+> *precedence-group-attributes* → *precedence-group-attribute* *precedence-group-attributes*_?_ \
+> *precedence-group-attribute* → *precedence-group-relation* \
+> *precedence-group-attribute* → *precedence-group-assignment* \
+> *precedence-group-attribute* → *precedence-group-associativity*
 >
-> _precedence-group-relation_ → **`higherThan`** **`:`** _precedence-group-names_ \
-> _precedence-group-relation_ → **`lowerThan`** **`:`** _precedence-group-names_
+> *precedence-group-relation* → **`higherThan`** **`:`** *precedence-group-names* \
+> *precedence-group-relation* → **`lowerThan`** **`:`** *precedence-group-names*
 >
-> _precedence-group-assignment_ → **`assignment`** **`:`** _boolean-literal_
+> *precedence-group-assignment* → **`assignment`** **`:`** *boolean-literal*
 >
-> _precedence-group-associativity_ → **`associativity`** **`:`** **`left`** \
-> _precedence-group-associativity_ → **`associativity`** **`:`** **`right`** \
-> _precedence-group-associativity_ → **`associativity`** **`:`** **`none`**
+> *precedence-group-associativity* → **`associativity`** **`:`** **`left`** \
+> *precedence-group-associativity* → **`associativity`** **`:`** **`right`** \
+> *precedence-group-associativity* → **`associativity`** **`:`** **`none`**
 >
-> _precedence-group-names_ → _precedence-group-name_ | _precedence-group-name_ **`,`** _precedence-group-names_ \
-> _precedence-group-name_ → _identifier_
+> *precedence-group-names* → *precedence-group-name* | *precedence-group-name* **`,`** *precedence-group-names* \
+> *precedence-group-name* → *identifier*
 
 ## 선언 수정자 (Declaration Modifiers)
 
-_선언 수정자 (Declaration modifiers)_ 는 선언의 동작이나 의미를 수정하는 키워드 또는 상황에 맞는 키워드 입니다. 선언의 속성이 있는 경우 선언의 속성과 선언을 도입하는 키워드 사이에 적절한 키워드 또는 상황에 맞는 키워드를 작성하여 선언 수정자를 지정합니다.
+*선언 수정자(Declaration modifiers)*는 선언의 동작이나 의미를 수정하는
+키워드나 문맥에 맞는 키워드입니다.
+선언의 속성이 있는 경우 선언의 속성과 선언을 도입하는 키워드 사이에
+적절한 키워드나 문맥에 맞는 키워드를 작성하여 선언 수정자를 지정합니다.
 
-`class`
+- `class`:
+  이 수정자를 클래스의 멤버에 적용하여
+  해당 멤버가 클래스 인스턴스의 멤버가 아니라,
+  클래스 자체의 멤버임을 나타냅니다.
+  이 수정자를 가지고
+  `final` 수정자를 가지지 않는 상위 클래스의 멤버는
+  하위 클래스에 의해 재정의될 수 있습니다.
 
-이 수정자를 클래스의 멤버에 적용하여 멤버가 클래스의 인스턴스의 멤버가 아니라 클래스 자체의 멤버임을 나타냅니다. 이 수정자를 가지고 `final` 수정자를 가지지 않는 슈퍼클래스의 멤버는 서브클래스에 의해 재정의될 수 있습니다.
+- `dynamic`:
+  Objective-C로 표현될 수 있는 클래스의 모든 멤버에 이 수정자를 적용합니다.
+  `dynamic` 수정자로 멤버 선언을 표시하면,
+  해당 멤버에 대한 접근이 항상 Objective-C 런타임을 사용하여 동적으로 디스패치됩니다.
+  해당 멤버에 대한 접근은 컴파일러에 의해 인라인되거나 가상화되지 않습니다.
 
-`dynamic`
+  `dynamic` 수정자로 표시된 선언은
+  Objective-C 런타임을 사용하여 디스패치되므로
+  `objc` 속성으로 표시되어야 합니다.
 
-Objective-C 에 의해 표현될 수 있는 클래스의 모든 멤버에 이 수정자를 적용합니다. `dynamic` 수정자로 멤버 선언을 표시하면 해당 멤버에 대한 접근이 항상 Objective-C 런타임을 사용하여 동적으로 전달됩니다. 해당 멤버에 대한 접근은 컴파일러에 의해 인라인되거나 가상화 되지 않습니다.
+- `final`:
+  이 수정자를 클래스나 클래스의 프로퍼티, 메서드,
+  서브스크립트 멤버에 적용합니다. 클래스에 적용되면 해당 클래스를 상속할 수 없음을 나타냅니다.
+  클래스의 프로퍼티, 메서드, 서브스크립트에 적용되면
+  클래스 멤버가 모든 하위 클래스에 재정의될 수 없음을 나타냅니다.
+  `final` 속성을 어떻게 사용하는지에 대한 예시는
+  <doc:Inheritance#재정의-방지-Preventing-Overrides>를 참고바랍니다.
 
-`dynamic` 수정자로 표시된 선언은 Objective-C 런타임을 사용하여 전달되므로 `objc` 속성으로 표시되어야 합니다.
+- `lazy`:
+  이 수정자는 클래스나 구조체의 변수 저장 프로퍼티에 적용하여
+  프로퍼티의 초기값이 프로퍼티에 처음 접근할 때
+  한 번만 계산되고 저장됨을 나타냅니다.
+  `lazy` 수정자를 어떻게 사용하는지에 대한 예시는
+  <doc:Properties#지연-저장-프로퍼티-Lazy-Stored-Properties>를 참고바랍니다.
 
-`final`
+- `optional`:
+  프로토콜의 프로퍼티, 메서드, 서브스크립트 멤버에 수정자를 적용하여
+  준수하는 타입에
+  이 멤버의 구현이 필수가 아님을 나타냅니다.
 
-이 수정자를 클래스나 프로퍼티, 메서드, 또는 클래스의 서브스크립트 멤버에 적용합니다. 클래스가 서브클래스화 될 수 없음을 나타내기 위해 클래스에 적용됩니다. 클래스 멤버가 모든 서브클래스에 재정의될 수 없음을 나타내기 위해 프로퍼티, 메서드, 또는 클래스의 서브스크립트에 적용됩니다. `final` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Inheritance#재정의-방지-Preventing-Overrides> 를 참고바랍니다.
+  `objc` 속성으로 표시된 프로토콜에만 `optional` 수정자를 적용할 수 있습니다.
+  결과적으로 클래스 타입만 선택적 멤버 요구사항을 포함하는
+  프로토콜을 채택하고 준수할 수 있습니다.
+  `optional` 수정자를 어떻게 사용하는지에 대한 자세한 내용과 ---
+  예를 들어 준수하는 타입이 이를 구현하는지 확실하지 않을 때와 같이 ---
+  선택적 프로토콜 멤버에 접근하는 방법에 대한 지침은
+  <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements>을 참고바랍니다.
 
-`lazy`
+<!--
+  TODO: Currently, you can't check for an optional initializer,
+  so we're leaving those out of the documentation, even though you can mark
+  an initializer with the @optional attribute. It's still being decided by the
+  compiler team. Update this section if they decide to make everything work
+  properly for optional initializer requirements.
+-->
 
-이 수정자는 클래스 또는 구조체의 저장된 변수 프로퍼티에 적용하여 프로퍼티의 초기값이 프로퍼티에 처음 접근할 때 최대 한번만 계산되고 저장됨을 나타냅니다. `lazy` 수정자를 어떻게 사용하는지에 대한 예시는 <doc:Properties#지연-저장-프로퍼티-Lazy-Stored-Properties> 를 참고바랍니다.
+- `required`:
+  클래스의 지정 이니셜라이저나 편의 이니셜라이저에 이 수정자를 적용하여
+  모든 하위 클래스가 해당 이니셜라이저를 구현해야 함을 나타냅니다.
+  하위 클래스의 해당 이니셜라이저의 구현도
+  `required` 수정자로 표시되어야 합니다.
 
-`optional`
+- `static`:
+  이 수정자는 구조체, 클래스, 열거형, 프로토콜의 멤버에 적용하여
+  멤버가 해당 타입의 인스턴스 멤버가 아닌
+  타입의 멤버 임을 나타냅니다.
+  클래스 선언의 범위에서
+  멤버 선언에 `static` 수정자를 작성하는 것은
+  멤버 선언에
+  `class`와 `final` 수정자를 작성한 것과 같은 효과를 가집니다.
+  그러나 클래스의 상수 타입 프로퍼티는 예외입니다:
+  `static`은 해당 선언에 `class`나 `final`을 작성할 수 없으므로
+  비클래스 의미를 가집니다.
 
-프로토콜의 프로퍼티, 메서드, 또는 서브스크립트 멤버에 수정자를 적용하여 준수하는 타입에 이 멤버의 구현이 필수가 아님을 나타냅니다.
+- `unowned`:
+  이 수정자를 저장 변수, 상수, 저장 프로퍼티에 적용하여
+  변수나 프로퍼티가 해당 값으로 저장된 객체에 대해
+  미소유 참조가 있다는 것을 나타냅니다.
+  객체가 할당 해제된 후에
+  변수나 프로퍼티에 접근하려고 하면
+  런타임 오류가 발생합니다.
+  약한 참조와 마찬가지로
+  프로퍼티나 값의 타입은 클래스 타입이어야 합니다;
+  약한 참조와 다르게
+  타입은 옵셔널이 아닙니다.
+  `unowned` 수정자에 대한 예시와 자세한 내용은
+  <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References>를 참고바랍니다.
 
-`objc` 로 표시된 프로토콜에만 `optional` 수정자를 적용할 수 있습니다. 결과적으로 클래스 타입만 선택적 멤버 요구사항을 포함하는 프로토콜을 채택하고 준수할 수 있습니다. `optional` 수정자를 어떻게 사용하는지에 대한 자세한 내용과 예를 들어 준수하는 타입이 이를 구현하는지 확실하지 않을 때 선택적 프로토콜 멤버에 접근하는 방법에 대한 가이드는 <doc:Protocols#옵셔널-프로토콜-요구사항-Optional-Protocol-Requirements> 을 참고바랍니다.
+- `unowned(safe)`:
+  `unowned`의 명시적 표기입니다.
 
-`required`
+- `unowned(unsafe)`:
+  이 수정자를 저장 변수, 상수, 저장 프로퍼티에 적용하여
+  변수나 프로퍼티에 해당 값으로 저장된 객체에 대해
+  미소유 참조를 가집니다.
+  객체가 할당 해제된 후에
+  변수나 프로퍼티에 접근하려고 하면
+  객체가 사용한 메모리 위치에 접근하는데
+  이것은 안전하지 않은 메모리(memory-unsafe)동작입니다.
+  약한 참조와 마찬가지로
+  프로퍼티나 값의 타입은 클래스 타입이어야 합니다;
+  약한 참조와 다르게
+  타입은 옵셔널이 아닙니다.
+  `unowned` 수정자에 대한 예시와 자세한 내용은
+  <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References>를 참고바랍니다.
 
-이니셜라이저를 구현해야 하는 모든 서브클래스를 나타내기 위해 클래스의 지정된 이니셜라이저가나 편리한 이니셜라이저에 이 수정자를 적용합니다. 이니셜라이저의 서브클래스의 구현은 `required` 수정자로 표시되어야 합니다.
-
-`static`
-
-이 수정자는 구조체, 클래스, 열거형, 또는 프로토콜의 멤버에 적용하여 멤버가 해당 타입의 인스턴스 멤버가 아닌 타입의 멤버 임을 나타냅니다. 클래스 선언의 범위에서 멤버 선언에 `static` 수정자를 작성하여 멤버 선언에 `class` 와 `final` 수정자를 작성한 것과 같은 효과를 가집니다. 그러나 클래스의 상수 타입 프로퍼티는 예외입니다: `static` 은 해당 선언에 `class` 나 `final` 을 작성할 수 없으므로 클래스가 아닐 때 보통의 의미를 가집니다.
-
-`unowned`
-
-이 수정자를 저장된 변수, 상수, 또는 저장 프로퍼티에 적용하여 변수 또는 프로퍼티가 해당 값으로 저장된 객체에 미소유 참조가 있다는 것을 나타냅니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 런타임 오류가 발생합니다. 약한 참조와 마찬가지로 프로퍼티 또는 값의 타입은 클래스 타입이어야 합니다; 약한 참조와 다르게 타입은 옵셔널이 아닙니다. `unowned` 수정자에 대한 자세한 내용은 <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References> 를 참고바랍니다.
-
-`unowned(safe)`
-
-`unowned` 의 명시적 철자입니다.
-
-`unowned(unsafe)`
-
-이 수정자를 저장된 변수, 상수, 또는 저장 프로퍼티에 적용하여 변수나 프로퍼티에 해당 값으로 저장된 객체에 미소유 참조를 가집니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 객체가 사용된 메모리 위치에 접근하는데 이것은 안전하지 않은 메모리 (memory-unsafe) 동작입니다. 약한 참조와 마찬가지로 프로퍼티나 값의 타입은 클래스 타입이어야 합니다; 약한 참조와 다르게 타입은 옵셔널이 아닙니다. `unowned` 수정자에 대한 예시와 자세한 내용은 <doc:AutomaticReferenceCounting#미소유-참조-Unowned-References> 를 참고바랍니다.
-
-`weak`
-
-이 수정자를 저장된 변수나 저장된 변수 프로퍼티에 적용하면 변수 또는 프로퍼티에 해당 값으로 저장된 객체에 약한 참조를 가짐을 나타냅니다. 변수나 프로퍼티의 타입은 옵셔널 클래스 타입이어야 합니다. 객체가 할당 해제된 후에 변수나 프로퍼티에 접근하려고 하면 해당 값은 `nil` 입니다. `weak` 수정자에 대한 예시와 자세한 내용은 <doc:AutomaticReferenceCounting#약한-참조-Weak-References> 를 참고바랍니다.
+- `weak`:
+  이 수정자를 저장 변수나 변수 저장 프로퍼티에 적용하면
+  변수나 프로퍼티에 해당 값으로 저장된 객체에 대해
+  약한 참조를 가집니다.
+  변수나 프로퍼티의 타입은 옵셔널 클래스 타입이어야 합니다.
+  객체가 할당 해제된 후에
+  변수나 프로퍼티에 접근하려고 하면
+  해당 값은 `nil`입니다.
+  `weak` 수정자에 대한 예시와 자세한 내용은
+  <doc:AutomaticReferenceCounting#약한-참조-Weak-References>를 참고바랍니다.
 
 ### 접근 제어 수준 (Access Control Levels)
 
-Swift 는 다섯 수준의 접근 제어를 제공합니다: open, public, internal, file private, 그리고 private 입니다. 선언의 접근 수준을 지정하기 위해 접근-수준 수정자 중 하나로 선언을 표시할 수 있습니다. 접근 제어는 <doc:AccessControl> 에 자세히 설명되어 있습니다.
+Swift는 다섯 가지 접근 제어 수준을 제공합니다: open, public, internal, file private, private입니다.
+선언에 접근 수준을 지정하기 위해
+접근-수준 수정자 중 하나로 선언을 표시할 수 있습니다.
+접근 제어는 <doc:AccessControl>에 자세히 설명되어 있습니다.
 
-`open`
+- `open`:
+  이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드에서
+  선언에 접근하고 하위 클래스화될 수 있음을 나타냅니다.
+  `open` 접근-수준 수정자로 표시된 선언은 해당 선언을 포함하는
+  모듈을 가져오는 모듈의 코드에서 접근되고 하위 클래스화될 수 있습니다.
 
-이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근되고 서브클래스화 될 수 있음을 나타냅니다. `open` 접근-수준 수정자로 표시된 선언은 해당 선언을 포함하는 모듈을 가져오는 모듈의 코드에서 접근되고 서브클래스화 될 수 있습니다.
+- `public`:
+  이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드에서
+  선언에 접근하고 하위 클래스화될 수 있음을 나타냅니다.
+  `public` 접근-수준 수정자로 표시된 선언은 해당 선언을 포함하는
+  모듈을 가져오는 모듈의 코드에서 접근되지만 하위 클래스화될 수 없습니다.
 
-`public`
+- `package`:
+  이 수정자를 선언에 적용하여
+  선언과 동일한 패키지의 코드에 의해서만
+  접근될 수 있음을 나타냅니다.
+  패키지는 사용 중인 빌드 시스템에서 정의하는
+  코드 배포 단위입니다.
+  빌드 시스템이 코드를 컴파일할 때
+  Swift 컴파일러에 `-package-name` 플래그를 전달하여
+  패키지 이름을 지정합니다.
+  두 모듈이 빌드 시스템이 동일한 패키지 이름을 지정하여 빌드하면
+  동일한 패키지의 일부입니다.
 
-이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근되고 서브클래스화 될 수 있음을 나타냅니다. `public` 접근-수준 수정자로 표시된 선언은 해당 선언을 포함하는 모듈을 가져오는 모듈의 코드에서 접근되지만 서브클래스화 될 수 없습니다.
+- `internal`:
+  이 수정자를 선언에 적용하여
+  선언과 동일한 모듈의 코드에 의해서만 접근될 수 있음을 나타냅니다.
+  기본적으로
+  대부분 선언은 암시적으로 `internal` 접근-수준 수정자로 표시됩니다.
 
-`internal`
+- `fileprivate`:
+  이 수정자를 선언에 적용하여
+  선언과 동일한 소스 파일의 코드에서만 선언에 접근될 수 있음을 나타냅니다.
 
-이 수정자를 선언에 적용하여 선언과 동일한 모듈의 코드로 선언에 접근될 수 있습니다. 기본적으로 대부분 선언은 암시적으로 `internal` 접근-수준 수정자로 표시됩니다.
+- `private`:
+  이 수정자를 선언에 적용하여
+  선언을 직접 둘러싸는 범위 내의 코드에서만 선언에 접근될 수 있음을 나타냅니다.
 
-`fileprivate`
-
-이 수정자를 선언에 적용하여 선언과 동일한 소스 파일의 코드로만 선언에 접근될 수 있습니다.
-
-`private`
-
-이 수정자를 선언에 적용하여 선언의 직접 둘러싸인 범위 내의 코드로만 선언에 접근될 수 있습니다.
-
-접근 제어를 위해
+접근 제어의 목적을 위해
 확장은 다음과 같이 동작합니다:
 
 - 동일한 파일에 여러 확장이 있고,
   이 확장이 동일한 타입을 확장한다면,
   이 모든 확장은 동일한 접근 제어를 가집니다.
-  해당 타입과 확장은 다른 파일에 있을 수 있습니다.
+  확장과 확장하는 타입은 다른 파일에 있을 수 있습니다.
 
 - 확장이 확장하는 타입과 동일한 파일에 있으면,
   확장은 확장하는 타입과 동일한 접근 제어를 가집니다.
@@ -3380,24 +3956,39 @@ Swift 는 다섯 수준의 접근 제어를 제공합니다: open, public, inter
   다른 확장과 확장된 타입의 선언에서
   접근할 수 있습니다.
 
-위의 각 접근-수준 수정자는 괄호로 둘러싸인 `set` 키워드로 구성된 선택적으로 단일 인자를 허용합니다 ---
-예를 들어 `private(set)`.
-<doc:AccessControl#Getter와-Setter-Getters-and-Setters> 에서 설명한대로 변수 또는 서브스크립트에 대한 접근 수준보다 작거나 같은 변수 또는 서브스크립트의 setter 에 대한 접근 수준을 지정하려면 이 형식의 접근-수준 수정자를 사용합니다.
+위의 각 접근-수준 수정자는 선택적으로 괄호로 둘러싸인 `set` 키워드로 구성된
+단일 인자를 허용합니다 ---
+예를 들어 `private(set)`입니다.
+<doc:AccessControl#Getter와-Setter-Getters-and-Setters>에서 설명한대로
+변수나 서브스크립트에 대한 접근 수준보다
+작거나 같은 변수나 서브스크립트의 setter에 대한 접근 수준을 지정하려면
+이 형식의 접근-수준 수정자를 사용합니다.
 
 > Grammar of a declaration modifier:
 >
-> _declaration-modifier_ → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
-> _declaration-modifier_ → _access-level-modifier_ \
-> _declaration-modifier_ → _mutation-modifier_ \
-> _declaration-modifier_ → _actor-isolation-modifier_ \
-> _declaration-modifiers_ → _declaration-modifier_ _declaration-modifiers?_
+> *declaration-modifier* → **`class`** | **`convenience`** | **`dynamic`** | **`final`** | **`infix`** | **`lazy`** | **`optional`** | **`override`** | **`postfix`** | **`prefix`** | **`required`** | **`static`** | **`unowned`** | **`unowned`** **`(`** **`safe`** **`)`** | **`unowned`** **`(`** **`unsafe`** **`)`** | **`weak`** \
+> *declaration-modifier* → *access-level-modifier* \
+> *declaration-modifier* → *mutation-modifier* \
+> *declaration-modifier* → *actor-isolation-modifier* \
+> *declaration-modifiers* → *declaration-modifier* *declaration-modifiers*_?_
 >
-> _access-level-modifier_ → **`private`** | **`private`** **`(`** **`set`** **`)`** \
-> _access-level-modifier_ → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
-> _access-level-modifier_ → **`internal`** | **`internal`** **`(`** **`set`** **`)`** \
-> _access-level-modifier_ → **`public`** | **`public`** **`(`** **`set`** **`)`** \
-> _access-level-modifier_ → **`open`** | **`open`** **`(`** **`set`** **`)`**
+> *access-level-modifier* → **`private`** | **`private`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`fileprivate`** | **`fileprivate`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`internal`** | **`internal`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`package`** | **`package`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`public`** | **`public`** **`(`** **`set`** **`)`** \
+> *access-level-modifier* → **`open`** | **`open`** **`(`** **`set`** **`)`**
 >
-> _mutation-modifier_ → **`mutating`** | **`nonmutating`**
+> *mutation-modifier* → **`mutating`** | **`nonmutating`**
 >
-> _actor-isolation-modifier_ → **`nonisolated`**
+> *actor-isolation-modifier* → **`nonisolated`**
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
