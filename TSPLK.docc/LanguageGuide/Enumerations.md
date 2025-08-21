@@ -614,7 +614,7 @@ let sunsetDirection = CompassPoint.west.rawValue
 ### 원시값으로 초기화 (Initializing from a Raw Value)
 
 원시값 타입으로 열거형을 정의하면,
-열거형은 원시값의 타입(`rawValue`라는 파라미터)을 사용하는
+열거형은 원시값의 타입(`rawValue`라는 매개변수)을 사용하는
 이니셜라이저를 제공하고
 열거형 케이스나 `nil`을 반환합니다.
 이 이니셜라이저를 사용하여 열거형의 새 인스턴스를 생성할 수 있습니다.

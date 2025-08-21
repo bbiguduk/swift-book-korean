@@ -111,8 +111,8 @@ https://github.com/apple/swift-book/issues/71
 https://github.com/apple/swift-markdown/issues/93
 -->
 
-명시적으로 파라미터 이름이 없는 클로저 내의
-파라미터는 암시적으로 `$0`, `$1`, `$2` 등으로 지정됩니다.
+명시적으로 매개변수 이름이 없는 클로저 내의
+매개변수는 암시적으로 `$0`, `$1`, `$2` 등으로 지정됩니다.
 이 이름은 클로저의 범위 내에서 유효한 식별자입니다.
 
 프로퍼티 래퍼(property wrapper)의 프로젝션(projection)을 위해 컴파일러는
@@ -178,7 +178,7 @@ https://github.com/apple/swift-markdown/issues/93
 `inout`, `var`, `let` 이외의 키워드는
 백틱을 사용하지 않고도
 함수 선언이나 함수 호출에서
-파라미터 이름으로 사용할 수 있습니다.
+매개변수 이름으로 사용할 수 있습니다.
 멤버가 키워드와 이름이 같은 경우
 해당 멤버에 대한 참조는
 멤버 참조와 키워드 사용 사이에

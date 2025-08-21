@@ -507,7 +507,7 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
 `dynamicallyCall(withArguments:)` 메서드의 선언은
 위의 예시에서 `[Int]`와 같이
 [`ExpressibleByArrayLiteral`](https://developer.apple.com/documentation/swift/expressiblebyarrayliteral) 프로토콜을
-준수하는 단일 파라미터만 가져야 합니다.
+준수하는 단일 매개변수만 가져야 합니다.
 반환 타입은 모든 타입이 가능합니다.
 
 `dynamicallyCall(withKeywordArguments:)` 메서드를 구현하면,
@@ -562,14 +562,14 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 `dynamicallyCall(withKeywordArguments:)` 메서드의 선언은
 [`ExpressibleByDictionaryLiteral`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral)
 프로토콜을
-준수하는 단일 파라미터를 가지고
+준수하는 단일 매개변수를 가지고
 반환 타입은 모든 타입이 가능합니다.
-파라미터의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key)는
+매개변수의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key)는
 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral)을
 준수해야 합니다.
-이전 예시는 파라미터 타입으로
+이전 예시는 매개변수 타입으로
 [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs)를 사용하므로
-호출자는 중복 파라미터 레이블을 포함할 수 있습니다 —--
+호출자는 중복 매개변수 레이블을 포함할 수 있습니다 —--
 `a`와 `b`는 `repeat`을 호출하는데 여러 번 나타납니다.
 
 `dynamicallyCall` 메서드 모두 구현하면,
@@ -621,7 +621,7 @@ repeatLabels(a: "four") // Error
 표현식은 타입의 `subscript(dynamicMemberLookup:)` 서브스크립트를
 호출하는 것으로 이해하고
 멤버에 대한 정보를 인자로 전달합니다.
-서브스크립트는 키 경로나 멤버 이름 중 하나인 파라미터를 사용할 수 있습니다;
+서브스크립트는 키 경로나 멤버 이름 중 하나인 매개변수를 사용할 수 있습니다;
 두 서브스크립트를 모두 구현하면
 키 경로 인자를 가지는 서브스크립트가 사용됩니다.
 
@@ -1436,7 +1436,7 @@ Swift는 프로퍼티 래퍼의 초기화에 대해
 래핑값의 정의에서 할당 문법을 사용하여
 할당의 오른쪽에 있는 표현식을
 프로퍼티 래퍼 이니셜라이저의
-`wrappedValue` 파라미터로 전달할 수 있습니다.
+`wrappedValue` 매개변수로 전달할 수 있습니다.
 또한 프로퍼티에 속성을 적용할 때
 인자를 제공할 수도 있으며
 이 인자는 프로퍼티 래퍼의 이니셜라이저로 전달됩니다.
@@ -2353,12 +2353,12 @@ struct ArrayBuilder {
   결과 빌더는 함수의 본문을 구축합니다.
 - getter를 포함하는 변수나 서브스크립트 선언에 적용하면,
   결과 빌더는 getter의 본문을 구축합니다.
-- 함수 선언의 파라미터에 적용하면,
+- 함수 선언의 매개변수에 적용하면,
   결과 빌더는 해당 인자로 전달되는
   클로저의 본문을 구축합니다.
 
 결과 빌더 속성을 적용하는 것은 ABI 호환성에 영향을 주지 않습니다.
-파라미터에 결과 빌더 속성을 적용하는 것은
+매개변수에 결과 빌더 속성을 적용하는 것은
 해당 속성을 함수의 인터페이스의 부분으로 만들고
 이것은 소스 호환성에 영향을 줄 수 있습니다.
 
@@ -2532,9 +2532,9 @@ Objective-C와 동일합니다.
 
 이 속성을 적용하여 인자를 받지 않는 클로저로 표현식을 자동으로 감싸서
 해당 표현식의 평가를 지연시킵니다.
-이 속성은 함수나 메서드 선언의 파라미터 타입에 적용하여
+이 속성은 함수나 메서드 선언의 매개변수 타입에 적용하여
 인자를 받지 않고
-표현식의 타입과 같은 값을 반환하는 함수 타입의 파라미터에 사용합니다. 
+표현식의 타입과 같은 값을 반환하는 함수 타입의 매개변수에 사용합니다. 
 `autoclosure` 속성을 어떻게 사용하는지에 대한 예시는
 <doc:Closures#자동-클로저-Autoclosures>와 <doc:Types#함수-타입-Function-Type>을 참고바랍니다.
 
@@ -2574,10 +2574,10 @@ C 호출 규약으로 변환될 수 없습니다.
 
 ### escaping
 
-이 속성을 함수나 메서드 선언의 파라미터 타입에 적용하여
-해당 파라미터의 값이 나중에 실행하기 위해 저장될 수 있음을 나타냅니다.
+이 속성을 함수나 메서드 선언의 매개변수 타입에 적용하여
+해당 매개변수의 값이 나중에 실행하기 위해 저장될 수 있음을 나타냅니다.
 이는 값이 호출 수명보다 오래 지속될 수 있음을 의미합니다.
-`escaping` 타입 속성을 가지는 함수 타입 파라미터는
+`escaping` 타입 속성을 가지는 함수 타입 매개변수는
 프로퍼티나 메서드에 대해 `self.`를 명시적으로 사용해야 합니다.
 `escaping` 속성을 어떻게 사용하는지에 대한 예시는
 <doc:Closures#탈출-클로저-Escaping-Closures>를 참고바랍니다.

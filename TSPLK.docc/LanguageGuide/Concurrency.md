@@ -105,7 +105,7 @@ listPhotos(inGallery: "Summer Vacation") { photoNames in
 
 함수나 메서드가 비동기임을 나타내려면
 던지는 함수(throwing function)를 나타내기 위해 `throws` 사용하는 것과 유사하게
-파라미터 뒤의 선언에 `async` 키워드를 작성합니다.
+매개변수 뒤의 선언에 `async` 키워드를 작성합니다.
 함수나 메서드가 값을 반환한다면,
 반환 화살표(`->`) 앞에 `async`를 작성합니다.
 예를 들어

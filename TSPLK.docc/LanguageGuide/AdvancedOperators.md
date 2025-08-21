@@ -716,10 +716,10 @@ extension Vector2D {
 이 타입 메서드는 `Vector2D`의 메인 구조체 선언이 아닌
 `Vector2D`의 확장에 정의합니다.
 산술 덧셈 연산자는 이항 연산자이므로,
-이 연산자 메서드는 `Vector2D` 타입의 두 입력 파라미터와
+이 연산자 메서드는 `Vector2D` 타입의 두 입력 매개변수와
 `Vector2D` 타입의 하나의 반환하는 출력값을 가집니다.
 
-이 구현에서 입력 파라미터는 `left`와 `right`의 이름을 가지고
+이 구현에서 입력 매개변수는 `left`와 `right`의 이름을 가지고
 이것은 `+` 연산자의 왼쪽과 오른쪽인
 `Vector2D` 인스턴스를 나타냅니다.
 이 메서드는 새로운 `Vector2D` 인스턴스를 반환하고,
@@ -824,8 +824,8 @@ let alsoPositive = -negative
 *복합 할당 연산자(Compound assignment operators)*는 할당 연산자(`=`)와 다른 연산을 결합합니다.
 예를 들어 덧셈 할당 연산자(`+=`)는
 단일 연산으로 덧셈과 할당을 결합합니다.
-복합 할당 연산자의 왼쪽 입력 파라미터 타입을 `inout`으로 표시해야 하며,
-이것은 파라미터의 값은 연산자 메서드 내에서 직접적으로 수정되기 때문입니다.
+복합 할당 연산자의 왼쪽 입력 매개변수 타입을 `inout`으로 표시해야 하며,
+이것은 매개변수의 값은 연산자 메서드 내에서 직접적으로 수정되기 때문입니다.
 
 아래 예시는
 `Vector2D` 인스턴스에 대해 덧셈 할당 연산자 메서드를 구현합니다:
@@ -1301,7 +1301,7 @@ struct DrawingBuilder {
 `buildEither(first:)`와 `buildEither(second:)` 메서드는
 `if`-`else`에 대한 지원을 추가합니다.
 
-`@DrawingBuilding`을 함수의 파라미터로 적용하여
+`@DrawingBuilding`을 함수의 매개변수로 적용하여
 함수에 전달된 클로저를
 결과 빌더가 해당 클로저에서 생성하는 값으로 바꿀 수 있습니다.
 예를 들어:
@@ -1376,7 +1376,7 @@ print(personalGreeting.draw())
   ```
 -->
 
-`makeGreeting(for:)` 함수는 `name` 파라미터를 가지고 와서
+`makeGreeting(for:)` 함수는 `name` 매개변수를 가지고 와서
 개인화 인사말을 그리는데 사용됩니다.
 `draw(_:)`와 `caps(_:)` 함수는
 모두 `@DrawingBuilder` 속성으로 표시된

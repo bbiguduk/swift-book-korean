@@ -272,8 +272,8 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 이 메서드는 일반 인스턴스 메서드와 타입 메서드를 정의하는 방식과 동일하게
 프로토콜의 정의에 작성되지만
 중괄호나 메서드 본문 없이 작성합니다.
-가변 파라미터(variadic parameter)도 일반 메서드와 같은 규칙에 따라 사용할 수 있습니다.
-그러나 프로토콜의 정의 내에서 메서드 파라미터에 대해 기본값은 지정할 수 없습니다.
+가변 매개변수(variadic parameter)도 일반 메서드와 같은 규칙에 따라 사용할 수 있습니다.
+그러나 프로토콜의 정의 내에서 메서드 매개변수에 대해 기본값은 지정할 수 없습니다.
 
 타입 프로퍼티 요구사항과 마찬가지로
 프로토콜에 타입 메서드 요구사항을 정의할 때
@@ -904,7 +904,7 @@ class DiceGame {
 이 위임자 호출은 무시됩니다.
 `delegate` 프로퍼티가 `nil`이 아니면
 이 위임자 메서드가 호출되고,
-파라미터로 `DiceGame` 인스턴스를 전달합니다.
+매개변수로 `DiceGame` 인스턴스를 전달합니다.
 
 다음 예시는 `DiceGame.Delegate` 프로토콜을 채택하는
 `DiceGameTracker`라는 클래스는 나타냅니다:
@@ -1074,7 +1074,7 @@ print(game.textualDescription)
 
 ### 조건부 프로토콜 준수 (Conditionally Conforming to a Protocol)
 
-제네릭 타입은 타입의 제네릭 파라미터가 프로토콜을 준수하는 경우와 같이
+제네릭 타입은 타입의 제네릭 매개변수가 프로토콜을 준수하는 경우와 같이
 특정 조건에서만
 프로토콜의 요구사항을 충족시킬 수 있습니다.
 확장에서 제약조건을 명시하여
@@ -1619,7 +1619,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 필수 상위 클래스를 지정할 수도 있습니다.
 
 다음은 `Named`와 `Aged`라는 두 프로토콜을
-함수 파라미터에 단일 요구사항으로 결합한 예입니다:
+함수 매개변수에 단일 요구사항으로 결합한 예입니다:
 
 ```swift
 protocol Named {
@@ -1671,7 +1671,7 @@ wishHappyBirthday(to: birthdayPerson)
 두 프로토콜 모두 `Person` 구조체에서 채택합니다.
 
 예시는 `wishHappyBirthday(to:)` 함수도 정의합니다.
-`celebrator` 파라미터의 타입은 "`Named`와 `Aged` 프로토콜 모두 준수하는 타입"이라는 의미인
+`celebrator` 매개변수의 타입은 "`Named`와 `Aged` 프로토콜 모두 준수하는 타입"이라는 의미인
 `Named & Aged`입니다.
 요구된 프로토콜 모두 준수하는 한
 함수에 전달하는 특정 타입은 중요하지 않습니다.
@@ -1742,7 +1742,7 @@ beginConcert(in: seattle)
 `beginConcert(in:)` 함수는
 "`Location`의 하위 클래스이면서
 `Named` 프로토콜을 준수하는 모든 타입"이라는 의미의
-`Location & Named` 타입의 파라미터를 가집니다.
+`Location & Named` 타입의 매개변수를 가집니다.
 이 경우 `City`는 이 요구사항에 충족합니다.
 
 `Person`은 `Location`의 하위 클래스가 아니므로,

@@ -212,21 +212,21 @@ print(myNumber)
 장기 접근은
 다른 장기 접근이나 즉시 접근과 겹칠 수 있습니다.
 
-겹치는 접근은 함수와 메서드의 in-out 파라미터를 사용하거나
+겹치는 접근은 함수와 메서드의 in-out 매개변수를 사용하거나
 구조체의 mutating 메서드를 사용하는
 코드에서 주로 나타납니다.
 Swift 코드에서 장기 접근이 사용되는 구체적인 경우는
 아래에서 설명합니다.
 
-## In-Out 파라미터에 대한 접근 충돌 (Conflicting Access to In-Out Parameters)
+## In-Out 매개변수에 대한 접근 충돌 (Conflicting Access to In-Out Parameters)
 
-함수는 모든 in-out 파라미터에 대해
+함수는 모든 in-out 매개변수에 대해
 장기 쓰기 접근을 가지고 있습니다.
-in-out 파라미터에 대한 쓰기 접근은
-모든 일반 파라미터가 평가된 후에 시작되고,
+in-out 매개변수에 대한 쓰기 접근은
+모든 일반 매개변수가 평가된 후에 시작되고,
 해당 함수 호출이 끝날 때까지 지속됩니다.
-In-out 파라미터가 여러 개인 경우
-쓰기 접근은 파라미터가 나타나는 순서와 동일한 순서로 시작됩니다.
+In-out 매개변수가 여러 개인 경우
+쓰기 접근은 매개변수가 나타나는 순서와 동일한 순서로 시작됩니다.
 
 이 장기 쓰기 접근의 결과 중 하나는
 범위 규칙과 접근 제어가 허용하더라도
@@ -316,11 +316,11 @@ stepSize = copyOfStepSize
 읽기 접근은 쓰기 접근이 시작되기 전에 끝나므로
 충돌이 일어나지 않습니다.
 
-in-out 파라미터에 대한
+in-out 매개변수에 대한
 장기 쓰기 접근의 또 다른 결과는
 단일 변수를
 같은 함수의
-여러 in-out 파라미터에 전달하면
+여러 in-out 매개변수에 전달하면
 충돌이 발생한다는 것입니다.
 예를 들어:
 
@@ -368,19 +368,19 @@ balance(&playerOneScore, &playerOneScore)
 
 위의 `balance(_:_:)` 함수는
 총 값을 균등하게 나누기 위해
-두 파라미터를 수정합니다.
+두 매개변수를 수정합니다.
 `playerOneScore`와 `playerTwoScore`를 전달하면
 두 쓰기 접근은 동시에 실행되지만
 메모리의 다른 위치를 접근하므로
 충돌이 발생하지 않습니다.
 반대로
-두 파라미터 모두에 대해 값으로 `playerOneScore`를 전달하면
+두 매개변수 모두에 대해 값으로 `playerOneScore`를 전달하면
 동시에 메모리의 같은 위치를
 두 쓰기 접근이 수행되므로
 충돌이 일어납니다.
 
 > Note: 연산자는 함수이므로
-> in-out 파라미터에 장기 접근을 할 수 있습니다.
+> in-out 매개변수에 장기 접근을 할 수 있습니다.
 > 예를 들어 `balance(_:_:)`가 `<^>`라는 연산자 함수라면
 > `playerOneScore <^> playerOneScore`를 작성하면
 > `balance(&playerOneScore, &playerOneScore)`와
@@ -449,7 +449,7 @@ struct Player {
 `Player` 인스턴스의 프로퍼티에 중복 접근하는
 다른 코드는 없습니다.
 아래의 `shareHealth(with:)` 메서드는
-in-out 파라미터로 다른 `Player` 인스턴스를 가지고 있으며
+in-out 매개변수로 다른 `Player` 인스턴스를 가지고 있으며
 중복 접근에 대한 가능성을 만듭니다.
 
 ```swift
@@ -487,7 +487,7 @@ Oscar 플레이어의 체력을 Maria 플레이어와 함께 공유하기 위해
 `oscar`는 mutating 메서드에서 `self`의 값이기 때문에
 해당 메서드 호출 동안
 `oscar`에 대한 쓰기 접근이 발생하고,
-`maria`는 in-out 파라미터로 전달되기 때문에
+`maria`는 in-out 매개변수로 전달되기 때문에
 `maria`에 대한 쓰기 접근이 발생합니다.
 아래 그림과 같이
 이 접근은 메모리의 다른 위치를 접근합니다.
@@ -528,7 +528,7 @@ oscar.shareHealth(with: &oscar)
 
 mutating 메서드는 `self`에 대한
 쓰기 접근이 필요하고
-동시에 in-out 파라미터는 `teammate`에
+동시에 in-out 매개변수는 `teammate`에
 쓰기 접근이 필요합니다.
 메서드 내에서
 `self`와 `teammate` 모두는
@@ -584,7 +584,7 @@ balance(&playerInformation.health, &playerInformation.energy)
 `playerInformation.health`와 `playerInformation.energy`는
 `balance(_:_:)` 함수를 호출할 때
 쓰기 접근이 필요하다는 의미의
-in-out 파라미터로 전달합니다.
+in-out 매개변수로 전달합니다.
 이 경우 튜플 요소의 쓰기 접근은
 튜플 전체의 쓰기 접근을 요구합니다.
 이것은 `playerInformation`에 두 쓰기 접근이
@@ -663,7 +663,7 @@ func someFunction() {
 
 위의 예시에서
 Oscar의 체력과 에너지는
-`balance(_:_:)`에 두 개의 in-out 파라미터로 전달합니다.
+`balance(_:_:)`에 두 개의 in-out 매개변수로 전달합니다.
 컴파일러는 두 개의 저장 프로퍼티가 어떤식으로도 상호작용 하지 않으므로
 메모리 안정성이 유지된다고 판단할 수 있습니다.
 

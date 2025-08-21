@@ -326,14 +326,14 @@ print(friendlyWelcome)
 출력하는 전역 함수입니다.
 예를 들어, Xcode에서
 `print(_:separator:terminator:)` 함수는 Xcode "콘솔(console)" 창에 결과를 출력합니다.
-`separator`와 `terminator` 파라미터는 기본값을 가지고 있으므로
+`separator`와 `terminator` 매개변수는 기본값을 가지고 있으므로
 함수를 호출할 때 생략할 수 있습니다.
 기본적으로 이 함수는 줄바꿈을 출력하고 종료됩니다.
 줄바꿈 없이 값을 출력하려면,
 `terminator`로 빈 문자열을 전달하면 됩니다 --- 예를 들어,
 `print(someValue, terminator: "")`처럼 사용합니다.
-파라미터 기본값에 대한 자세한 내용은
-<doc:Functions#파라미터-기본값-Default-Parameter-Values>을 참고바랍니다.
+매개변수 기본값에 대한 자세한 내용은
+<doc:Functions#매개변수-기본값-Default-Parameter-Values>을 참고바랍니다.
 
 <!--
   - test: `printingWithoutNewline`

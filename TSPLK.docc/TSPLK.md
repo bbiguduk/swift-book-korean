@@ -42,7 +42,7 @@
 | Function                     | 함수           |
 | Return                       | 반환           |
 | Type                         | 타입           |
-| Parameter                    | 파라미터         |
+| Parameter                    | 매개변수         |
 | Argument                     | 인자           |
 | Tuple                        | 튜플           |
 | Closure                      | 클로저          |
@@ -120,7 +120,7 @@
 | Parallel                     | 병렬           |
 | Structed Concurrency         | 구조화된 동시성     |
 | Unstructed Concurrency       | 구조화되지 않은 동시성 |
-| Type Parameter               | 타입 파라미터      |
+| Type Parameter               | 타입 매개변수      |
 | Opaque Type                  | 불투명 타입      |
 | Automatic Reference Counting | 자동 참조 카운팅    |
 | Strong Reference Cycle       | 강한 순환 참조    |

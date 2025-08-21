@@ -120,7 +120,7 @@ Swift에서는 오류를 처리하는 네 가지 방법이 있습니다.
 ### 던지는 함수를 이용한 오류 전파 (Propagating Errors Using Throwing Functions)
 
 오류가 발생할 수 있는 함수, 메서드, 이니셜라이저를 나타내기 위해
-함수의 선언 중 파라미터 뒤에
+함수의 선언 중 매개변수 뒤에
 `throws` 키워드를 작성합니다.
 `throws`로 표시된 함수는 *던지는 함수*라고 합니다.
 함수의 반환 타입이 지정되어 있으면,
@@ -742,7 +742,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 
 - 코드에서 클로저 인자를 가지고
   클로저로 부터 오류를 전파하는 함수와 같이
-  제네릭 파라미터에 의해 전파되는 오류의 경우입니다.
+  제네릭 매개변수에 의해 전파되는 오류의 경우입니다.
   특정 오류 타입을 전파하는 것과
   `rethrows`를 사용하는 것에 대한 비교는
   <doc:Declarations:오류를-다시-던지는-함수와-메서드-Rethrowing-Functions-and-Methods>를 참고바랍니다.

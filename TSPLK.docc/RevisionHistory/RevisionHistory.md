@@ -47,7 +47,7 @@
 
 - Swift 5.9.2 Beta 기반으로 문서 작업
 - `borrowing` 과 `consuming` 수정자에 대한 정보를 
-  <doc:Declarations#파라미터-수정자-Parameter-Modifiers> 섹션에 추가했습니다.
+  <doc:Declarations#매개변수-수정자-Parameter-Modifiers> 섹션에 추가했습니다.
 - <doc:TheBasics#상수와-변수-선언-Declaring-Constants-and-Variables> 에
   상수를 선언한 후에 값을 설정에 대한 정보를 추가했습니다.
 - 백 배포 (back deployment) 에 대한 정보를
