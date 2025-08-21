@@ -1284,7 +1284,7 @@ class ExampleClass: NSObject {
 
 이 속성을 클래스 선언에 적용하여
 클래스의 모든 Objective-C 호환 멤버,
-확장, 서브클래스, 그리고 모든 확장의 서브클래스에
+확장, 하위 클래스, 그리고 모든 확장의 하위 클래스에
 암시적으로 `objc` 속성을 적용합니다.
 
 대부분의 코드는 필요한 선언만 노출시키기 위해
@@ -1306,67 +1306,142 @@ Objective-C 런타임의 인트로스펙션 기능(introspection facilities)을
 
 ### preconcurrency
 
-강한 비동기 검사를 억제하려면,
-이 속성을 선언에 적용합니다.
+이 속성을 선언에 적용하여
+엄격한 동시성 검사를 억제합니다.
 다음과 같은 선언에
 이 속성을 적용할 수 있습니다:
 
-- Imports
-- 구조체 (Structures), 클래스 (classes), 그리고 액터 (actors)
-- 열거형 (Enumerations)  열거형 케이스 (enumeration cases)
-- 프로토콜 (Protocols)
-- 변수 (Variables) 와 상수 (constants)
-- 서브스크립트 (Subscripts)
-- 이니셜라이저 (Initializers)
-- 함수 (Functions)
+- 임포트(Imports)
+- 구조체(Structures), 클래스(classes), 액터(actors)
+- 열거형(Enumerations)과 열거형 케이스(enumeration cases)
+- 프로토콜(Protocols)
+- 변수(Variables)와 상수(constants)
+- 서브스크립트(Subscripts)
+- 이니셜라이저(Initializers)
+- 함수(Functions)
 
-가져오기 (import) 선언에서 이 속성은
-가져온 모듈의 타입을 사용하는 코드에서
+임포트(import) 선언에서
+이 속성은 임포트한 모듈의 타입을 사용하는 코드에서
 동시성 검사의 엄격함을 줄입니다.
-특히,
-전송 불가능 (nonsendable) 로 명시적으로 표시되지 않은
-가져온 모듈의 타입은
-전송 가능한 타입 (sendable types) 을 요구하는 컨텍스트에서 사용될 수 있습니다.
+특히
+명시적으로 non-sendable로 표시되지 않은
+임포트한 모듈의 타입은
+sendable 타입을 요구하는 컨텍스트에서 사용될 수 있습니다.
 
 다른 선언에서
 이 속성은 선언되는 기호를 시용하는 코드에 대해
 동시성 검사의 엄격성을 감소시킵니다.
 최소한의 동시성 검사를 가지는 범위에서 이 기호를 사용하면,
-`Sendable` 요구사항이나 전역 액터와 같이,
-해당 기호로 지정된 동시성 관련 제약사항은
+`Sendable` 요구사항이나 전역 액터와 같은
+해당 기호로 지정된 동시성 관련 제약사항이
 검사되지 않습니다.
 
-엄격한 동시성 검사로 코드를 변환하는데
-이 속성을 다음과 같이 사용할 수 있습니다:
+이 속성은 엄격한 동시성 검사로 코드를 변환하는데
+다음과 같이 사용할 수 있습니다:
 
-1. 엄격한 검사를 활성화 합니다.
-2. 엄격한 검사를 활성화 하지 않은 모듈에 대해
-   `preconcurrency` 속성으로 가져오기에 표시합니다.
+1. 엄격한 검사를 활성화합니다.
+2. 엄격한 검사를 활성화하지 않은 모듈에 대해
+   임포트 선언에 `preconcurrency` 속성을 표시합니다.
 3. 모듈을 엄격한 검사로 변환 후에,
    `preconcurrency` 속성을 삭제합니다.
-   컴파일러는 가져오기에 `preconcurrency` 속성이
-   더이상 영향을 미치지 않고 삭제되어야 하는 위치에
+   컴파일러는 임포트에 있는 `preconcurrency` 속성이
+   더 이상 영향을 미치지 않고 삭제되어야 하는 위치에
    경고를 나타냅니다.
 
 다른 선언의 경우,
-동시성 관련 제약사항을 선언에 추가할 때,
 엄격한 검사에 대한 변환이 되지 않은
 클라이언트가 있는 경우에,
+동시성 관련 제약사항을 선언에 추가할 때
 `preconcurrency` 속성을 추가합니다.
 `preconcurrency` 속성은 클라언트가 모두 변환된 후에 삭제합니다.
 
-Objective-C 의 선언은 항상
-`preconcurrency` 속성이 선언된 것처럼 가져옵니다.
+Objective-C의 선언은 항상
+`preconcurrency` 속성이 선언된 것처럼 임포트됩니다.
 
 ### propertyWrapper
 
-프로퍼티 래퍼 (protperty wrapper) 로 해당 타입을 사용하기 위해 클래스, 구조체, 또는 열거형 선언에 이 속성을 적용합니다. 타입에 이 속성을 적용하면 타입과 동일한 이름으로 커스텀 속성을 생성합니다. 래퍼 타입의 인스턴스로 프로퍼티에 대한 접근을 래핑하려면 클래스, 구조체, 또는 열거형의 프로퍼티에 새로운 속성을 적용해야 합니다. 지역과 전역 변수는 프로퍼티 래퍼를 사용할 수 없습니다.
+이 속성을 클래스, 구조체, 열거형 선언에 적용하여
+프로퍼티 래퍼(protperty wrapper)로 사용합니다.
+타입에 이 속성을 적용하면,
+타입과 동일한 이름으로 커스텀 속성을 생성합니다.
+이 새로운 속성을 클래스, 구조체, 열거형의 프로퍼티에 적용하여
+래퍼 타입의 인스턴스로 프로퍼티에 대한 접근을 감쌉니다;
+이 속성을 지역 저장 변수 선언에 적용하면
+같은 방식으로 변수에 대한 접근을 감쌉니다.
+연산 변수, 전역 변수, 상수는 프로퍼티 래퍼를 사용할 수 없습니다.
 
-래퍼는 `wrappedValue` 인스턴스 프로퍼티를 정의해야 합니다. 프로퍼티의 _래핑된 값 (wrapped value)_ 은 이 프로퍼티에 대해 getter 와 setter 를 노출하는 값입니다. 대부분의 경우 `wrappedValue` 는 계산된 값이지만 대신 저장된 값이 될 수 있습니다. 래퍼는 래핑된 값에 필요한 기본 저장소를 정의하고 관리합니다. 컴파일러는 래핑된 프로퍼티의 이름 앞에 언더바 (`_`) 로 래퍼 타입의 인스턴스에 대해 저장소를 합성합니다. 예를 들어 `someProperty` 에 대한 래퍼는 `_someProperty` 로 저장됩니다. 래퍼에 대한 합성된 저장소는 `private` 의 접근 제어 수준을 가집니다.
+<!--
+  - test: `property-wrappers-can-go-on-stored-variable`
 
-프로퍼티 래퍼를 가지는 프로퍼티는 `willSet` 과 `didSet` 블록을 포함할 수 있지만 컴파일러가 합성한 `get` 또는 `set` 블록을 재정의할 수 없습니다.
+  ```swifttest
+  >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+  >> func f() {
+  >>     @UselessWrapper var d: Int = 20
+  >>     print(d)
+  >> }
+  >> f()
+  << 20
+  ```
+-->
 
-Swift 는 프로퍼티 래퍼의 초기화에 대해 두가지의 편의 문법(syntactic sugar) 을 제공합니다. 래핑된 값의 정의에 할당 구문을 사용하여 할당의 오른쪽에 있는 표현식을 프로퍼티 래퍼에 이니셜라이저의 `wrappedValue` 파라미터에 대한 인자로 전달할 수 있습니다. 프로퍼티에 속성을 적용할 때 속성에 인자를 제공할 수도 있으며 이 인자는 프로퍼티 래퍼의 이니셜라이저으로 전달됩니다. 예를 들어 아래 코드에서 `SomeStruct` 는 `SomeWrapper` 가 정의한 각 이니셜라이저를 호출합니다.
+<!--
+  - test: `property-wrappers-cant-go-on-constants`
+
+  ```swifttest
+  >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+  >> func f() {
+  >>     @UselessWrapper let d: Int = 20
+  >>     print(d)
+  >> }
+  !$ error: property wrapper can only be applied to a 'var'
+  !! @UselessWrapper let d: Int = 20
+  !! ^
+  ```
+-->
+
+<!--
+  - test: `property-wrappers-cant-go-on-computed-variable`
+
+  ```swifttest
+  >> @propertyWrapper struct UselessWrapper { var wrappedValue: Int }
+  >> func f() {
+  >>     @UselessWrapper var d: Int { return 20 }
+  >>     print(d)
+  >> }
+  >> f()
+  !$ error: property wrapper cannot be applied to a computed property
+  !! @UselessWrapper var d: Int { return 20 }
+  !! ^
+  ```
+-->
+
+래퍼는 `wrappedValue` 인스턴스 프로퍼티를 정의해야 합니다.
+프로퍼티의 *래핑값(wrapped value)*은
+이 프로퍼티의 getter와 setter를 노출하는 값입니다.
+대부분의 경우 `wrappedValue`는 연산값이지만,
+저장값일 수도 있습니다.
+래퍼는
+래핑값에 필요한 기본 저장소를 정의하고 관리합니다.
+컴파일러는 래핑 프로퍼티의 이름 앞에 언더바(`_`)로
+래퍼 타입의 인스턴스에 대해 저장소를 합성합니다 ---
+예를 들어 `someProperty`에 대한 래퍼는 `_someProperty`로 저장됩니다.
+래퍼에 대한 합성된 저장소는 `private`의 접근 제어 수준을 가집니다.
+
+프로퍼티 래퍼를 가지는 프로퍼티는
+`willSet`과 `didSet` 블록을 포함할 수 있지만
+컴파일러가 합성한 `get`이나 `set` 블록을 재정의할 수 없습니다.
+
+Swift는 프로퍼티 래퍼의 초기화에 대해
+두 가지의 편의 문법(syntactic sugar)을 제공합니다.
+래핑값의 정의에서 할당 문법을 사용하여
+할당의 오른쪽에 있는 표현식을
+프로퍼티 래퍼 이니셜라이저의
+`wrappedValue` 파라미터로 전달할 수 있습니다.
+또한 프로퍼티에 속성을 적용할 때
+인자를 제공할 수도 있으며
+이 인자는 프로퍼티 래퍼의 이니셜라이저로 전달됩니다.
+예를 들어 아래 코드에서
+`SomeStruct`는 `SomeWrapper`가 정의한 각 이니셜라이저를 호출합니다.
 
 ```swift
 @propertyWrapper
@@ -1400,7 +1475,72 @@ struct SomeStruct {
 }
 ```
 
-래핑된 프로퍼티에 대한 _투영값 (projected value)_ 은 프로퍼티 래퍼가 추가 기능을 노출하기 위해 사용할 수 있는 두번째 값입니다. 프로퍼티 래퍼 타입의 작성자는 투영값의 의미를 결정하고 투영값이 노출하는 인터페이스를 정의할 책임이 있습니다. 프로퍼티 래퍼에서 값을 계획하려면 래퍼 타입에 `projectedValue` 인스턴스 프로퍼티를 정의합니다. 컴파일러는 래핑된 프로퍼티의 이름 앞에 달러 기호 (`$`) 로 투영값에 대한 식별자를 합성합니다. 예를 들어 `someProperty` 에 대한 투영값은 `$someProperty` 입니다. 투영값은 기존의 래핑된 프로퍼티와 동일한 접근 제어 수준을 가집니다.
+<!--
+  - test: `propertyWrapper`
+
+  ```swifttest
+  -> @propertyWrapper
+  -> struct SomeWrapper {
+         var wrappedValue: Int
+         var someValue: Double
+         init() {
+             self.wrappedValue = 100
+             self.someValue = 12.3
+         }
+         init(wrappedValue: Int) {
+             self.wrappedValue = wrappedValue
+             self.someValue = 45.6
+         }
+         init(wrappedValue value: Int, custom: Double) {
+             self.wrappedValue = value
+             self.someValue = custom
+         }
+     }
+  ---
+  -> struct SomeStruct {
+  ->     // Uses init()
+  ->     @SomeWrapper var a: Int
+  ---
+  ->     // Uses init(wrappedValue:)
+  ->     @SomeWrapper var b = 10
+  ---
+  ->     // Both use init(wrappedValue:custom:)
+  ->     @SomeWrapper(custom: 98.7) var c = 30
+  ->     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
+  -> }
+  ```
+-->
+
+<!--
+  Comments in the SomeStruct part of the example above
+  are on the line before instead of at the end of the line
+  because the last example gets too long to fit on one line.
+-->
+
+<!--
+  Initialization of a wrapped property using ``init(wrappedValue:)``
+  can be split across multiple statements.
+  However, you can only see that behavior using local variables
+  which currently can't have a property wrapper.
+  It would look like this:
+
+  -> @SomeWrapper var e
+  -> e = 20  // Uses init(wrappedValue:)
+  -> e = 30  // Uses the property setter
+-->
+
+래핑 프로퍼티의 *투영값(projected value)*은
+프로퍼티 래퍼가 추가 기능을 노출하기 위해 사용할 수 있는 두 번째 값입니다.
+프로퍼티 래퍼 타입의 작성자는
+투영값의 의미를 결정하고
+투영값이 노출하는 인터페이스를 정의할 책임이 있습니다.
+프로퍼티 래퍼에서 값을 예상하려면,
+래퍼 타입에 `projectedValue` 인스턴스 프로퍼티를 정의합니다.
+컴파일러는 래핑 프로퍼티의 이름 앞에 달러 기호(`$`)로
+투영값에 대한 식별자를 합성합니다 ---
+예를 들어 `someProperty`에 대한 투영값은 `$someProperty`입니다.
+투영값은 기존의 래핑 프로퍼티와
+동일한 접근 제어 수준을 가집니다.
 
 ```swift
 @propertyWrapper
@@ -1423,56 +1563,146 @@ s.$x          // SomeProjection value
 s.$x.wrapper  // WrapperWithProjection value
 ```
 
+<!--
+  - test: `propertyWrapper-projection`
+
+  ```swifttest
+  -> @propertyWrapper
+  -> struct WrapperWithProjection {
+         var wrappedValue: Int
+         var projectedValue: SomeProjection {
+             return SomeProjection(wrapper: self)
+         }
+  }
+  -> struct SomeProjection {
+         var wrapper: WrapperWithProjection
+  }
+  ---
+  -> struct SomeStruct {
+  ->     @WrapperWithProjection var x = 123
+  -> }
+  -> let s = SomeStruct()
+  >> _ =
+  -> s.x           // Int value
+  >> _ =
+  -> s.$x          // SomeProjection value
+  >> _ =
+  -> s.$x.wrapper  // WrapperWithProjection value
+  ```
+-->
+
 ### resultBuilder
 
-결과 빌더 (result builder) 로 타입을 사용하기 위해 클래스, 구조체, 열거형에 이 속성을 적용합니다. _결과 빌더 (result builder)_ 는 데이터 구조체를 단계별로 빌드하는 타입입니다. 자연스럽고 선언적인 방법으로 중첩된 데이터 구조체를 생성하기 위해 도메인-특정 언어 (DSL) 를 구현하기 위해 결과 빌더를 사용합니다. `resultBuilder` 속성을 어떻게 사용하는지에 대한 예시는 <doc:AdvancedOperators#결과-빌더-Result-Builders> 를 참고바랍니다.
+이 속성을 클래스, 구조체, 열거형에 적용하여
+해당 타입을 결과 빌더(result builder)로 사용합니다.
+*결과 빌더(result builder)*는
+중첩된 데이터 구조를 단계별로 구축하는 타입입니다.
+결과 빌더를 사용하여 중첩된 데이터 구조를 자연스럽고 선언적인 방식으로 생성하기 위한
+도메인 특화 언어(DSL)를 구현합니다.
+`resultBuilder` 속성을 어떻게 사용하는지에 대한 예시는
+<doc:AdvancedOperators#결과-빌더-Result-Builders>를 참고바랍니다.
 
-#### 결과-빌딩 메서드 (Result-Building Methods)
+#### 결과-구축 메서드 (Result-Building Methods)
 
-결과 빌더는 아래 설명한대로 정적 메서드를 구현합니다. 결과 빌더의 모든 기능은 정적 메서드를 통해 노출되므로 해당 타입의 인스턴스를 초기화 하지 않습니다. 결과 빌더는 `buildBlock(_:)` 메서드를 구현하거나 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 구현해야 합니다. DSL 에서 추가 기능을 활성화 하는 다른 메서드는 옵셔널 입니다. 결과 빌더 타입의 선언은 프로토콜 준수를 포함할 필요가 없습니다.
+결과 빌더는 아래에 설명된 정적 메서드를 구현합니다.
+결과 빌더의 모든 기능은
+정적 메서드를 통해 노출되므로
+해당 타입의 인스턴스를 초기화하지 않습니다.
+결과 빌더는 `buildBlock(_:)` 메서드를 구현하거나
+`buildPartialBlock(first:)`와
+`buildPartialBlock(accumulated:next:)` 메서드를 모두 구현해야 합니다.
+DSL에서 추가 기능을 가능하게 하는
+다른 메서드는
+선택 사항입니다.
+결과 빌더 타입의 선언은
+프로토콜 준수를 포함할 필요가 없습니다.
 
-정적 메서드의 설명은 기호로 세가지 타입을 사용합니다. `Expression` 타입은 결과 빌더의 입력의 타입에 대한 기호이고 `Component` 는 부분 결과의 타입에 대한 기호이며 `FinalResult` 는 결과 빌더가 생성하는 결과의 타입에 대한 기호입니다. 이러한 타입을 결과 빌더가 사용하는 실제 타입으로 바꿉니다. 결과-빌딩 메서드가 `Expression` 또는 `FinalResult` 에 대한 타입을 지정하지 않으면 `Component` 와 기본적으로 동일합니다.
+정적 메서드의 설명은 세 가지 타입을 플레이스 홀더로 사용합니다.
+`Expression` 타입은
+결과 빌더의 입력 타입에 대한 플레이스 홀더이고,
+`Component`는 부분 결과 타입에 대한 플레이스 홀더이며,
+`FinalResult`는
+결과 빌더가 생성하는 결과 타입에 대한 플레이스 홀더입니다.
+이러한 타입은 결과 빌더가 사용하는 실제 타입으로 대체해야 합니다.
+결과-구축 메서드가
+`Expression`이나 `FinalResult`에 대한 타입을 지정하지 않으면
+`Component`와 동일한 타입으로 기본 설정됩니다.
 
-결과-빌딩 메서드는 다음과 같습니다:
+결과-구축 메서드는 다음과 같습니다:
 
 - `static func buildBlock(_ components: Component...) -> Component`:
   부분 결과의 배열을 단일 부분 결과로 결합합니다.
 
 - `static func buildPartialBlock(first: Component) -> Component`:
-  첫번째 컴포넌트로 부터 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블록을 지원하기위해 이 메서드와 `buildPartialBlock(accumulated:next:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
+  첫 번째 컴포넌트로부터 부분 결과 컴포넌트를 구축합니다.
+  한 번에 하나의 컴포넌트로 블록을 구축하는 것을 지원하기위해
+  이 메서드와 `buildPartialBlock(accumulated:next:)` 메서드를 모두 구현합니다.
+  `buildBlock(_:)`에 비해,
+  이 접근은 인자의 다양한 수를 처리하는
+  일반적인 오버로드의 필요성을 줄여줍니다.
 
 - `static func buildPartialBlock(accumulated: Component, next: Component) -> Component`:
-  누적된 컴포넌트와 새로운 컴포넌트를 결합하여 부분 결과 컴포넌트를 빌드합니다. 한번에 하나의 컴포넌트 빌딩 블록을 지원하기위해 이 메서드와 `buildPartialBlock(first:)` 메서드를 구현합니다. `buildBlock(_:)` 과 비교하여 이 접근은 인자의 다른 갯수를 처리하는 일반적인 오버로드의 필요성을 줄여줍니다.
+  축적된 컴포넌트와 새로운 컴포넌트를 결합하여
+  부분 결과 컴포넌트를 구축합니다.
+  한 번에 하나의 컴포넌트로 블록을 구축하는 것을 지원하기위해
+  이 메서드와 `buildPartialBlock(first:)` 메서드를 모두 구현합니다.
+  `buildBlock(_:)`에 비해,
+  이 접근은 인자의 다양한 수를 처리하는
+  일반적인 오버로드의 필요성을 줄여줍니다.
 
-결과 빌더는 위에 나열된 블록-빌딩 메서드 세가지 모두 구현할 수 있습니다. 이 경우에 가용성에 따라 호출되는 메서드가 결정됩니다. 기본적으로, Swift 는 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 호출합니다. Swift 가 `buildBlock(_:)` 을 호출하도록 하려면 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 에 작성하기 전에 동봉 선언 (enclosing declaration) 을 사용가능으로 표시합니다.
+결과 빌더는 위에 나열된 세 가지 블록-구축 메서드 모두 구현할 수 있습니다.
+이 경우에 가용성에 따라 호출되는 메서드가 결정됩니다.
+기본적으로 Swift는 `buildPartialBlock(first:)`와 `buildPartialBlock(accumulated:next:)` 메서드를 호출합니다.
+Swift가 대신 `buildBlock(_:)`을 호출하도록 하려면
+`buildPartialBlock(first:)`와
+`buildPartialBlock(accumulated:next:)`에 지정한 가용성보다
+먼저 결과 빌더를 감싸고 있는 선언부에 가용성을 지정해야 합니다.
 
-추가적인 결과-빌딩 메서드는 다음과 같습니다:  
+추가적인 결과-구축 메서드는 다음과 같습니다:
 
 - `static func buildOptional(_ component: Component?) -> Component`:
-  `nil` 이 가능한 부분 결과로 부터 부분 결과를 빌드합니다. `else` 절을 포함하지 않은 `if` 구문을 지원하려면 이 메서드를 구현해야 합니다.
+  `nil`이 가능한 부분 결과로부터 부분 결과를 구축합니다.
+  `else` 절을 포함하지 않은
+  `if` 구문을 지원하려면 이 메서드를 구현해야 합니다.
 
 - `static func buildEither(first: Component) -> Component`:
-  일부 조건에 따라 다양한 값의 부분 결과를 빌드합니다. `switch` 구문과 `else` 절을 포함하는 `if` 구문을 제공하려면 이 메서드와 `buildEither(second:)` 를 모두 구현해야 합니다.
+  일부 조건에 따라 값이 달라지는 부분 결과를 구축합니다.
+  `switch` 구문과
+  `else` 절을 포함하는 `if` 구문을 제공하려면
+  이 메서드와 `buildEither(second:)`를 모두 구현해야 합니다.
 
 - `static func buildEither(second: Component) -> Component`:
-  일부 조건에 따라 다양한 값의 부분 결과를 빌드합니다. `switch` 구문과 `else` 절을 포함하는 `if` 구문을 제공하려면 이 메서드와 `buildEither(first:)` 를 모두 구현해야 합니다.
+  일부 조건에 따라 값이 달리지는 부분 결과를 구축합니다.
+  `switch` 구문과
+  `else` 절을 포함하는 `if` 구문을 제공하려면
+  이 메서드와 `buildEither(first:)`를 모두 구현해야 합니다.
 
 - `static func buildArray(_ components: [Component]) -> Component`:
-  부분 결과의 배열로 부터 부분 결과를 빌드합니다. `for` 루프를 지원하려면 이 메서드를 구현해야 합니다.
+  부분 결과 배열로부터 부분 결과를 구축합니다.
+  `for` 루프를 지원하려면 이 메서드를 구현해야 합니다.
 
 - `static func buildExpression(_ expression: Expression) -> Component`:
-  표현식에서 부분 결과를 빌드합니다. 이 메서드를 구현하여 전처리 — 예를 들어 표현식을 내부 타입으로 변환 — 를 수행하거나 사용하는 곳에서 타입 추론을 위한 추가 정보를 제공하기 위해 구현할 수 있습니다.
+  표현식으로부터 부분 결과를 구축합니다.
+  이 메서드를 구현하여 전처리
+  (예: 표현식을 내부 타입으로 변환)를 수행하거나
+  사용하는 곳에서 타입 추론을 위한 추가 정보를 제공하기 위해 구현할 수 있습니다.
 
 - `static func buildFinalResult(_ component: Component) -> FinalResult`:
-  부분 결과로 부터 최종 결과를 빌드합니다. 부분과 최종 결과에 대한 다른 타입을 사용하는 결과 빌더의 부분으로 이 메서드를 구현하거나 결과를 반환하기 전에 결과에 대해 다른 후처리를 진행하기 위해 이 메서드를 구현할 수 있습니다.
+  부분 결과로부터 최종 결과를 구축합니다.
+  부분과 최종 결과에 대한 다른 타입을 사용하거나
+  결과를 반환하기 전에 다른 후처리를 수행하는
+  결과 빌더의 부분으로 이 메서드를 구현할 수 있습니다.
 
 - `static func buildLimitedAvailability(_ component: Component) -> Component`:
-  타입 정보를 지우는 부분 결과를 빌드합니다.
+  타입 정보를 지우는 부분 결과를 구축합니다.
   가용성을 검사하는
   컴파일러-제어 구문 외부로 
   타입 정보가 전파되는 것을 막기위해 이 메서드를 구현할 수 있습니다.
 
-예를 들어 아래 코드는 정수의 배열을 빌드하는 간다한 결과 빌더를 정의합니다. 이 코드는 타입 별칭으로 `Component` 와 `Expression` 을 정의하여 아래 예시를 위의 메서드의 리스트보다 쉽게 일치하도록 만듭니다.
+예를 들어 아래 코드는
+정수의 배열을 구축하는 간단한 결과 빌더를 정의합니다.
+이 코드는 타입 별칭으로 `Component`와 `Expression`을 정의하여
+아래 예시를 위의 메서드 목록과 쉽게 일치하도록 만듭니다.
 
 ```swift
 @resultBuilder
@@ -1501,342 +1731,885 @@ struct ArrayBuilder {
 }
 ```
 
+<!--
+  - test: `array-result-builder`
+
+  ```swifttest
+  -> @resultBuilder
+  -> struct ArrayBuilder {
+         typealias Component = [Int]
+         typealias Expression = Int
+         static func buildExpression(_ element: Expression) -> Component {
+             return [element]
+         }
+         static func buildOptional(_ component: Component?) -> Component {
+  >>         print("Building optional...", component as Any)
+             guard let component = component else { return [] }
+             return component
+         }
+         static func buildEither(first component: Component) -> Component {
+  >>         print("Building first...", component)
+             return component
+         }
+         static func buildEither(second component: Component) -> Component {
+  >>         print("Building second...", component)
+             return component
+         }
+         static func buildArray(_ components: [Component]) -> Component {
+             return Array(components.joined())
+         }
+         static func buildBlock(_ components: Component...) -> Component {
+             return Array(components.joined())
+         }
+     }
+  ```
+-->
+
 #### 결과 변환 (Result Transformations)
 
-다음 구문 변환은 결과-빌더 구문을 사용하는 코드에서 결과 빌더 타입의 정적 메서드를 호출하는 코드로 변환하기 위해 재귀적으로 적용됩니다:
+다음 구문 변환은 결과-구축 구문을 사용하는 코드에서
+결과 빌더 타입의 정적 메서드를 호출하는 코드로
+변환하기 위해 재귀적으로 적용됩니다:
 
-* 결과 빌더가 `buildExpression(_:)` 메서드를 가지면 각 표현식은 해당 메서드에 대한 호출이 됩니다. 이 변환은 항상 첫번째 입니다. 예를 들어 다음의 선언은 동등합니다:
+- 결과 빌더가 `buildExpression(_:)` 메서드가 있으면,
+  각 표현식은 해당 메서드에 대한 호출이 됩니다.
+  이 변환은 항상 가장 먼저 일어납니다.
+  예를 들어 다음의 선언은 동등합니다:
 
-```swift
-@ArrayBuilder var builderNumber: [Int] { 10 }
-var manualNumber = ArrayBuilder.buildExpression(10)
-```
+  ```swift
+  @ArrayBuilder var builderNumber: [Int] { 10 }
+  var manualNumber = ArrayBuilder.buildExpression(10)
+  ```
 
-* 할당 구문은 표현식 처럼 변환되지만 `()` 으로 평가되는 것으로 이해됩니다. 구체적으로 할당을 처리하기 위해 `()` 타입의 인자를 가지는 `buildExpression(_:)` 의 오버로드를 정의할 수 있습니다.
-* 가용성 조건을 확인하는 분기 구문은
-  해당 메서드가 구현되어 있으면, `buildLimitedAvailability(_:)` 메서드에 대한 호출이 됩니다.
-  `buildLimitedAvailability(_:)` 가 구현되어 있지 않다면,
-  가용성 조건을 확인하는 분기 구문은
+
+  <!--
+    - test: `array-result-builder`
+
+    ```swifttest
+    -> @ArrayBuilder var builderNumber: [Int] { 10 }
+    -> var manualNumber = ArrayBuilder.buildExpression(10)
+    >> assert(builderNumber == manualNumber)
+    ```
+  -->
+- 할당 구문은 표현식처럼 변환되지만
+  `()`로 평가되는 것으로 이해됩니다.
+  할당을 특별히 처리하기 위해 `()` 타입의 인자를 가지는
+  `buildExpression(_:)` 의 오버로드를 정의할 수 있습니다.
+- 가용성 조건을 검사하는 분기 구문은
+  `buildLimitedAvailability(_:)` 메서드가 구현되어 있으면,
+  해당 메서드에 대한 호출이 됩니다.
+  `buildLimitedAvailability(_:)`가 구현되어 있지 않다면,
+  가용성 조건을 검사하는 분기 구문은
   다른 분기 구문과 동일한 변환을 사용합니다.
-  이 변환은 `buildEither(first:)`, `buildEither(second:)`, 또는 `buildOptional(_:)` 에 대한 호출로 변환되기 전에 발생합니다.
+  이 변환은 `buildEither(first:)`, `buildEither(second:)`, `buildOptional(_:)`에 대한
+  호출로 변환되기 전에 발생합니다.
 
-  `buildLimitedAvailability(_:)` 메서드를 사용하여 어떤 분기를 사용하는지에 따라 변경되는 타입 정보를 지웁니다. 예를 들어 아래의 `buildEither(first:)` 와 `buildEither(second:)` 메서드는 두 분기에 대한 타입 정보를 캡처하는 제네릭 타입을 사용합니다.
+  `buildLimitedAvailability(_:)` 메서드는 어떤 분기를 사용하는지에 따라 변경되는
+  타입 정보를 지우기 위해 사용합니다.
+  예를 들어
+  아래의 `buildEither(first:)`와 `buildEither(second:)` 메서드는
+  두 분기에 대한 타입 정보를 캡처하는 제네릭 타입을 사용합니다.
 
-```swift
-protocol Drawable {
-    func draw() -> String
-}
-struct Text: Drawable {
-    var content: String
-    init(_ content: String) { self.content = content }
-    func draw() -> String { return content }
-}
-struct Line<D: Drawable>: Drawable {
-    var elements: [D]
-    func draw() -> String {
-        return elements.map { $0.draw() }.joined(separator: "")
-    }
-}
-struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
-    var content: Drawable
-    func draw() -> String { return content.draw() }
-}
+  ```swift
+  protocol Drawable {
+      func draw() -> String
+  }
+  struct Text: Drawable {
+      var content: String
+      init(_ content: String) { self.content = content }
+      func draw() -> String { return content }
+  }
+  struct Line<D: Drawable>: Drawable {
+      var elements: [D]
+      func draw() -> String {
+          return elements.map { $0.draw() }.joined(separator: "")
+      }
+  }
+  struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+      var content: Drawable
+      func draw() -> String { return content.draw() }
+  }
 
-@resultBuilder
-struct DrawingBuilder {
-    static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
-        return Line(elements: components)
-    }
-    static func buildEither<First, Second>(first: First)
-        -> DrawEither<First, Second> {
-            return DrawEither(content: first)
-    }
-    static func buildEither<First, Second>(second: Second)
-        -> DrawEither<First, Second> {
-            return DrawEither(content: second)
-    }
-}
-```
+  @resultBuilder
+  struct DrawingBuilder {
+      static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
+          return Line(elements: components)
+      }
+      static func buildEither<First, Second>(first: First)
+          -> DrawEither<First, Second> {
+              return DrawEither(content: first)
+      }
+      static func buildEither<First, Second>(second: Second)
+          -> DrawEither<First, Second> {
+              return DrawEither(content: second)
+      }
+  }
+  ```
 
-그러나 이 접근방식은 가용성 검사가 있는 코드에서 문제를 야기합니다:
+  <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-```swift
-@available(macOS 99, *)
-struct FutureText: Drawable {
-    var content: String
-    init(_ content: String) { self.content = content }
-    func draw() -> String { return content }
-}
-@DrawingBuilder var brokenDrawing: Drawable {
-    if #available(macOS 99, *) {
-        FutureText("Inside.future")  // Problem
-    } else {
-        Text("Inside.present")
-    }
-}
-// The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
-```
+  그러나 이 접근방식은 가용성 검사가 있는 코드에서 문제가 발생합니다:
 
-위의 코드에서 `FutureText` 는 `DrawEither` 제네릭 타입에서 타입 중 하나이므로 `brokenDrawing` 의 타입의 부분으로 나타납니다. 이로 인해 런타임에 `FutureText` 를 사용할 수 없는 경우 해당 타입이 명시적으로 사용되지 않는 경우에도 프로그램이 중된될 수 있습니다.
+  ```swift
+  @available(macOS 99, *)
+  struct FutureText: Drawable {
+      var content: String
+      init(_ content: String) { self.content = content }
+      func draw() -> String { return content }
+  }
+  @DrawingBuilder var brokenDrawing: Drawable {
+      if #available(macOS 99, *) {
+          FutureText("Inside.future")  // Problem
+      } else {
+          Text("Inside.present")
+      }
+  }
+  // The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+  ```
 
-이 문제를 해결하려면
-항상 사용가능한 타입을 반환하여 타입 정보를 지우는
-`buildLimitedAvailability(_:)` 메서드를 구현합니다.
-예를 들어 아래의 코드는 가용성 검사로 부터 `AnyDrawable` 값을 빌드합니다.
+  <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-```swift
-struct AnyDrawable: Drawable {
-    var content: Drawable
-    func draw() -> String { return content.draw() }
-}
-extension DrawingBuilder {
-    static func buildLimitedAvailability(_ content: some Drawable) -> AnyDrawable {
-        return AnyDrawable(content: content)
-    }
-}
+  위의 코드에서
+  `FutureText`는 `DrawEither` 제네릭 타입의 타입 중 하나이므로
+  `brokenDrawing`의 타입의 부분으로 나타납니다.
+  이 타입이 명시적으로 사용되지 않더라도
+  런타임에 `FutureText`를 사용할 수 없는 경우
+  프로그램이 충돌할 수 있습니다.
 
-@DrawingBuilder var typeErasedDrawing: Drawable {
-    if #available(macOS 99, *) {
-        FutureText("Inside.future")
-    } else {
-        Text("Inside.present")
-    }
-}
-// The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
-```
+  이 문제를 해결하려면
+  `buildLimitedAvailability(_:)` 메서드를 구현하여
+  항상 사용가능한 타입을 반환하여 타입 정보를 지워야 합니다.
+  예를 들어 아래의 코드는 가용성 검사로부터
+  `AnyDrawable` 값을 구축합니다.
 
-* 분기 구문은 `buildEither(first:)` 와 `buildEither(second:)` 메서드에 대한 일련의 중첩된 호출이 됩니다. 구문의 조건과 케이스는 이진 트리의 잎 노드에 매핑되고 구문은 루트 노드에서 잎 노드로의 경로를 따라 `buildEither` 메서드에 대한 중첩된 호출이 됩니다.
+  ```swift
+  struct AnyDrawable: Drawable {
+      var content: Drawable
+      func draw() -> String { return content.draw() }
+  }
+  extension DrawingBuilder {
+      static func buildLimitedAvailability(_ content: some Drawable) -> AnyDrawable {
+          return AnyDrawable(content: content)
+      }
+  }
 
-예를 들어 세가지 케이스가 있는 switch 구문을 작성하면 컴파일러는 세개의 잎 노드로 이진 트리를 사용합니다. 마찬가지로 루트 노드에서 두번째 케이스까지의 경로는 "second child" 이고 "first child" 이므로 `buildEither(first: buildEither(second: ... ))` 와 같이 중첩된 호출이 됩니다. 다음의 선언은 동일합니다:
+  @DrawingBuilder var typeErasedDrawing: Drawable {
+      if #available(macOS 99, *) {
+          FutureText("Inside.future")
+      } else {
+          Text("Inside.present")
+      }
+  }
+  // The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+  ```
 
-```swift
-let someNumber = 19
-@ArrayBuilder var builderConditional: [Int] {
-    if someNumber < 12 {
-        31
-    } else if someNumber == 19 {
-        32
-    } else {
-        33
-    }
-}
+  <!-- Comment block with swifttest for the code listing above is after the end of this bulleted list, due to tooling limitations. -->
 
-var manualConditional: [Int]
-if someNumber < 12 {
-    let partialResult = ArrayBuilder.buildExpression(31)
-    let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
-    manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
-} else if someNumber == 19 {
-    let partialResult = ArrayBuilder.buildExpression(32)
-    let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
-    manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
-} else {
-    let partialResult = ArrayBuilder.buildExpression(33)
-    manualConditional = ArrayBuilder.buildEither(second: partialResult)
-}
-```
+- 분기 구문은 `buildEither(first:)`와 `buildEither(second:)` 메서드에 대한
+  일련의 중첩된 호출이 됩니다.
+  구문의 조건과 케이스는
+  이진 트리의 리프 노드에 매핑되고
+  구문은
+  루트 노드에서 해당 리프 노드로의 경로를 따라
+  `buildEither` 메서드에 대한 중첩된 호출이 됩니다.
 
-* `else` 절 없는 `if` 구문과 같이 값을 생성하지 않을 분기 구문은 `buildOptional(_:)` 에 대한 호출이 됩니다. `if` 구문의 조건이 충족되면 코드 블록은 변환되고 인자로 전달됩니다; 그렇지 않으면 `buildOptional(_:)` 은 인자로 `nil` 가지고 호출됩니다. 예를 들어 다음의 선언은 동일합니다:
+  예를 들어 세 가지 케이스가 있는 switch 구문을 작성하면,
+  컴파일러는 세 개의 리프 노드를 가진 이진 트리를 사용합니다.
+  마찬가지로
+  루트 노드에서 두 번째 케이스까지의 경로는
+  "second child"이고 그 다음이 "first child"이므로
+  해당 케이스는 `buildEither(first: buildEither(second: ... ))`와 같은
+  중첩된 호출이 됩니다.
+  다음의 선언은 동일합니다:
 
-```swift
-@ArrayBuilder var builderOptional: [Int] {
-    if (someNumber % 2) == 1 { 20 }
-}
+  ```swift
+  let someNumber = 19
+  @ArrayBuilder var builderConditional: [Int] {
+      if someNumber < 12 {
+          31
+      } else if someNumber == 19 {
+          32
+      } else {
+          33
+      }
+  }
 
-var partialResult: [Int]? = nil
-if (someNumber % 2) == 1 {
-    partialResult = ArrayBuilder.buildExpression(20)
-}
-var manualOptional = ArrayBuilder.buildOptional(partialResult)
-```
-
-- 결과 빌더가 `buildPartialBlock(first:)` 와 `buildPartialBlock(accumulated:next:)` 메서드를 구현하는 경우,
-  코드 블록 또는 `do` 구문은 해당 메서드를 호출합니다.
-  블록의 첫번째 구문은 `buildPartialBlock(first:)` 메서드 인자로 변환되고,
-  나머지 구문은 `buildPartialBlock(accumulated:next:)` 메서드를 중첩 호출하게 됩니다.
-  예를 들어, 다음 선언은 동일한 구문입니다:
-
-```swift
-struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
-    var first: First
-    var second: Second
-    func draw() -> String { return first.draw() + second.draw() }
-}
-
-
-@resultBuilder
-struct DrawingPartialBlockBuilder {
-    static func buildPartialBlock<D: Drawable>(first: D) -> D {
-        return first
-    }
-    static func buildPartialBlock<Accumulated: Drawable, Next: Drawable>(
-        accumulated: Accumulated, next: Next
-    ) -> DrawBoth<Accumulated, Next> {
-        return DrawBoth(first: accumulated, second: next)
-    }
-}
+  var manualConditional: [Int]
+  if someNumber < 12 {
+      let partialResult = ArrayBuilder.buildExpression(31)
+      let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+      manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+  } else if someNumber == 19 {
+      let partialResult = ArrayBuilder.buildExpression(32)
+      let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+      manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+  } else {
+      let partialResult = ArrayBuilder.buildExpression(33)
+      manualConditional = ArrayBuilder.buildEither(second: partialResult)
+  }
+  ```
 
 
-@DrawingPartialBlockBuilder var builderBlock: some Drawable {
-    Text("First")
-    Line(elements: [Text("Second"), Text("Third")])
-    Text("Last")
-}
+  <!--
+    - test: `array-result-builder`
+
+    ```swifttest
+    -> let someNumber = 19
+    -> @ArrayBuilder var builderConditional: [Int] {
+           if someNumber < 12 {
+               31
+           } else if someNumber == 19 {
+               32
+           } else {
+               33
+           }
+       }
+    << Building second... [32]
+    << Building first... [32]
+    ---
+    -> var manualConditional: [Int]
+    -> if someNumber < 12 {
+           let partialResult = ArrayBuilder.buildExpression(31)
+           let outerPartialResult = ArrayBuilder.buildEither(first: partialResult)
+           manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+       } else if someNumber == 19 {
+           let partialResult = ArrayBuilder.buildExpression(32)
+           let outerPartialResult = ArrayBuilder.buildEither(second: partialResult)
+           manualConditional = ArrayBuilder.buildEither(first: outerPartialResult)
+       } else {
+           let partialResult = ArrayBuilder.buildExpression(33)
+           manualConditional = ArrayBuilder.buildEither(second: partialResult)
+       }
+    >> assert(builderConditional == manualConditional)
+    << Building second... [32]
+    << Building first... [32]
+    ```
+  -->
+- `else` 절이 없는 `if` 구문과 같이
+  값을 생성하지 않을 수도 있는 분기 구문은
+  `buildOptional(_:)`에 대한 호출이 됩니다.
+  `if` 구문의 조건이 충족되면,
+  코드 블록이 변환되고 인자로 전달됩니다;
+  그렇지 않으면 `buildOptional(_:)`이 `nil`을 인자로 받아 호출됩니다.
+  예를 들어 다음의 선언은 동일합니다:
+
+  ```swift
+  @ArrayBuilder var builderOptional: [Int] {
+      if (someNumber % 2) == 1 { 20 }
+  }
+
+  var partialResult: [Int]? = nil
+  if (someNumber % 2) == 1 {
+      partialResult = ArrayBuilder.buildExpression(20)
+  }
+  var manualOptional = ArrayBuilder.buildOptional(partialResult)
+  ```
 
 
-let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
-let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
-    accumulated: partialResult1,
-    next: Line(elements: [Text("Second"), Text("Third")])
-)
-let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
-    accumulated: partialResult2,
-    next: Text("Last")
-)
-```
+  <!--
+    - test: `array-result-builder`
 
-* 그렇지 않으면, 코드 블록 또는 `do` 구문은 `buildBlock(_:)` 메서드에 대한 호출이 됩니다. 블록 내부의 각 구문은 한번에 하나씩 변환되고 `buildBlock(_:)` 메서드에 대한 인자가 됩니다. 예를 들어 다음의 선언은 동일합니다:
+    ```swifttest
+    -> @ArrayBuilder var builderOptional: [Int] {
+           if (someNumber % 2) == 1 { 20 }
+       }
+    << Building optional... Optional([20])
+    ---
+    -> var partialResult: [Int]? = nil
+    -> if (someNumber % 2) == 1 {
+           partialResult = ArrayBuilder.buildExpression(20)
+       }
+    -> var manualOptional = ArrayBuilder.buildOptional(partialResult)
+    << Building optional... Optional([20])
+    >> assert(builderOptional == manualOptional)
+    ```
+  -->
+- 결과 빌더가
+  `buildPartialBlock(first:)`와
+  `buildPartialBlock(accumulated:next:)` 메서드를 구현하는 경우,
+  코드 블록이나 `do` 구문은 해당 메서드를 호출합니다.
+  블록의 첫 번째 구문은
+  `buildPartialBlock(first:)` 메서드의 인자로 변환되고,
+  나머지 구문은
+  `buildPartialBlock(accumulated:next:)` 메서드에 대한
+  중첩된 호출이 됩니다.
+  예를 들어 다음 선언은 동일한 구문입니다:
 
-```swift
-@ArrayBuilder var builderBlock: [Int] {
-    100
-    200
-    300
-}
+  ```swift
+  struct DrawBoth<First: Drawable, Second: Drawable>: Drawable {
+      var first: First
+      var second: Second
+      func draw() -> String { return first.draw() + second.draw() }
+  }
 
-var manualBlock = ArrayBuilder.buildBlock(
-    ArrayBuilder.buildExpression(100),
-    ArrayBuilder.buildExpression(200),
-    ArrayBuilder.buildExpression(300)
-)
-```
+  @resultBuilder
+  struct DrawingPartialBlockBuilder {
+      static func buildPartialBlock<D: Drawable>(first: D) -> D {
+          return first
+      }
+      static func buildPartialBlock<Accumulated: Drawable, Next: Drawable>(
+          accumulated: Accumulated, next: Next
+      ) -> DrawBoth<Accumulated, Next> {
+          return DrawBoth(first: accumulated, second: next)
+      }
+  }
 
-* `for` 루프는 임시 변수, `for` 루프, 그리고 `buildArray(_:)` 메서드에 대한 호출이 됩니다. 새로운 `for` 루프는 시퀀스를 반복하고 각 부분 결과를 해당 배열에 추가합니다. 임시 배열은 `buildArray(_:)` 호출에 인자로 전달됩니다. 예를 들어 다음의 선언은 동일합니다:
+  @DrawingPartialBlockBuilder var builderBlock: some Drawable {
+      Text("First")
+      Line(elements: [Text("Second"), Text("Third")])
+      Text("Last")
+  }
 
-```swift
-@ArrayBuilder var builderArray: [Int] {
-    for i in 5...7 {
-        100 + i
-    }
-}
+  let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
+  let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
+      accumulated: partialResult1,
+      next: Line(elements: [Text("Second"), Text("Third")])
+  )
+  let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
+      accumulated: partialResult2,
+      next: Text("Last")
+  )
+  ```
 
-var temporary: [[Int]] = []
-for i in 5...7 {
-    let partialResult = ArrayBuilder.buildExpression(100 + i)
-    temporary.append(partialResult)
-}
-let manualArray = ArrayBuilder.buildArray(temporary)
-```
+  <!--
+    - test: `drawing-partial-block-builder`
 
-* 결과 빌더가 `buildFinalResult(_:)` 메서드를 가지고 있으면 최종 결과는 해당 메서드에 대한 호출이 됩니다. 이 변환은 항상 마지막 입니다.
+    ```swifttest
+    -> @resultBuilder
+    -> struct DrawingPartialBlockBuilder {
+           static func buildPartialBlock<D: Drawable>(first: D) -> D {
+               return first
+           }
+           static func buildPartialBlock<Accumulated: Drawable, Next: Drawable>(
+               accumulated: Accumulated, next: Next
+           ) -> DrawBoth<Accumulated, Next> {
+               return DrawBoth(first: accumulated, second: next)
+           }
+       }
+    -> @DrawingPartialBlockBuilder var builderBlock: some Drawable {
+          Text("First")
+          Line(elements: [Text("Second"), Text("Third")])
+          Text("Last")
+       }
+    ---
+    -> let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
+    -> let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
+          accumulated: partialResult1,
+          next: Line(elements: [Text("Second"), Text("Third")])
+       )
+       let manualResult = DrawingPartialBlockBuilder.buildPartialBlock(
+           accumulated: partialResult2,
+           next: Text("Last")
+       )
+    >> assert(type(of: builderBlock) == type(of: manualResult))
+    ```
+  -->
+- 그렇지 않으면 코드 블록이나 `do` 구문은
+  `buildBlock(_:)` 메서드에 대한 호출이 됩니다.
+  블록 내부의 각 구문은
+  한 번에 하나씩 변환되고
+  `buildBlock(_:)` 메서드에 대한 인자가 됩니다.
+  예를 들어 다음의 선언은 동일합니다:
 
-변환 동작은 임시 변수로 설명되지만 결과 빌더를 사용하는 것은 나머지 코드에서 볼 수 있는 새로운 선언을 생성하지 않습니다.
+  ```swift
+  @ArrayBuilder var builderBlock: [Int] {
+      100
+      200
+      300
+  }
 
-결과 빌더 변환 코드에서 `break`, `continue`, `defer`, `guard`, 또는 `return` 구문, `while` 구문, 또는 `do`-`catch` 구문을 사용할 수 없습니다.
+  var manualBlock = ArrayBuilder.buildBlock(
+      ArrayBuilder.buildExpression(100),
+      ArrayBuilder.buildExpression(200),
+      ArrayBuilder.buildExpression(300)
+  )
+  ```
 
-변환 프로세스는 코드에서 선언을 변경하지 않으므로 임시 상수와 변수를 사용하여 부분적으로 표현식을 작성할 수 있습니다. `throw` 구문, 컴파일 시점 진단 구문, 또는 `return` 구문이 포함된 클로저도 변경하지 않습니다.
 
-가능할 때마다 변환이 통합됩니다. 예를 들어 표현식 `4 + 5 * 6` 은 해당 함수를 여러번 호출하는 대신 `buildExpression(4 + 5 * 6)` 으로 됩니다. 마찬가지로 중첩된 분기 구문은 `buildEither` 메서드에 대한 호출의 단일 이진 트리가 됩니다.
+  <!--
+    - test: `array-result-builder`
+
+    ```swifttest
+    -> @ArrayBuilder var builderBlock: [Int] {
+           100
+           200
+           300
+       }
+    ---
+    -> var manualBlock = ArrayBuilder.buildBlock(
+           ArrayBuilder.buildExpression(100),
+           ArrayBuilder.buildExpression(200),
+           ArrayBuilder.buildExpression(300)
+       )
+    >> assert(builderBlock == manualBlock)
+    ```
+  -->
+- `for` 루프는 임시 변수, `for` 루프,
+  `buildArray(_:)` 메서드에 대한 호출이 됩니다.
+  새로운 `for` 루프는 시퀀스를 반복하고
+  각 부분 결과를 해당 배열에 추가합니다.
+  임시 배열은 `buildArray(_:)` 호출에 인자로 전달됩니다.
+  예를 들어 다음의 선언은 동일합니다:
+
+  ```swift
+  @ArrayBuilder var builderArray: [Int] {
+      for i in 5...7 {
+          100 + i
+      }
+  }
+
+  var temporary: [[Int]] = []
+  for i in 5...7 {
+      let partialResult = ArrayBuilder.buildExpression(100 + i)
+      temporary.append(partialResult)
+  }
+  let manualArray = ArrayBuilder.buildArray(temporary)
+  ```
+
+
+  <!--
+    - test: `array-result-builder`
+
+    ```swifttest
+    -> @ArrayBuilder var builderArray: [Int] {
+           for i in 5...7 {
+               100 + i
+           }
+       }
+    ---
+    -> var temporary: [[Int]] = []
+    -> for i in 5...7 {
+           let partialResult = ArrayBuilder.buildExpression(100 + i)
+           temporary.append(partialResult)
+       }
+    -> let manualArray = ArrayBuilder.buildArray(temporary)
+    >> assert(builderArray == manualArray)
+    ```
+  -->
+- 결과 빌더가 `buildFinalResult(_:)` 메서드를 가지고 있으면,
+  최종 결과는 해당 메서드에 대한 호출이 됩니다.
+  이 변환은 항상 마지막에 일어납니다.
+
+<!--
+  - test: `result-builder-limited-availability-broken, result-builder-limited-availability-ok`, `drawing-partial-result-builder`
+
+  ```swifttest
+  -> protocol Drawable {
+         func draw() -> String
+     }
+  -> struct Text: Drawable {
+         var content: String
+         init(_ content: String) { self.content = content }
+         func draw() -> String { return content }
+     }
+  -> struct Line<D: Drawable>: Drawable {
+         var elements: [D]
+         func draw() -> String {
+             return elements.map { $0.draw() }.joined(separator: "")
+         }
+     }
+  -> struct DrawEither<First: Drawable, Second: Drawable>: Drawable {
+         var content: Drawable
+         func draw() -> String { return content.draw() }
+     }
+  ---
+  -> @resultBuilder
+     struct DrawingBuilder {
+         static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
+             return Line(elements: components)
+         }
+         static func buildEither<First, Second>(first: First)
+                 -> DrawEither<First, Second> {
+             return DrawEither(content: first)
+         }
+         static func buildEither<First, Second>(second: Second)
+                 -> DrawEither<First, Second> {
+             return DrawEither(content: second)
+         }
+     }
+  ```
+-->
+
+<!--
+  - test: `result-builder-limited-availability-broken`
+
+  ```swifttest
+  -> @available(macOS 99, *)
+  -> struct FutureText: Drawable {
+         var content: String
+         init(_ content: String) { self.content = content }
+         func draw() -> String { return content }
+     }
+  -> @DrawingBuilder var brokenDrawing: Drawable {
+         if #available(macOS 99, *) {
+             FutureText("Inside.future")  // Problem
+         } else {
+             Text("Inside.present")
+         }
+     }
+  /> The type of brokenDrawing is \(type(of: brokenDrawing))
+  </ The type of brokenDrawing is Line<DrawEither<Line<FutureText>, Line<Text>>>
+  !$ warning: result builder 'DrawingBuilder' does not implement 'buildLimitedAvailability'; this code may crash on earlier versions of the OS
+  !! if #available(macOS 99, *) {
+  !! ^
+  !$ note: add 'buildLimitedAvailability(_:)' to the result builder 'DrawingBuilder' to erase type information for less-available types
+  !! struct DrawingBuilder {
+  !! ^
+  ```
+-->
+
+<!--
+  - test: `result-builder-limited-availability-ok`
+
+  ```swifttest
+  >> @available(macOS 99, *)
+  >> struct FutureText: Drawable {
+  >>     var content: String
+  >>     init(_ content: String) { self.content = content }
+  >>     func draw() -> String { return content }
+  >> }
+  >> @DrawingBuilder var x: Drawable {
+  >>     if #available(macOS 99, *) {
+  >>         FutureText("Inside.future")
+  >>     } else {
+  >>         Text("Inside.present")
+  >>     }
+  >> }
+  -> struct AnyDrawable: Drawable {
+         var content: Drawable
+         func draw() -> String { return content.draw() }
+     }
+  -> extension DrawingBuilder {
+         static func buildLimitedAvailability(_ content: some Drawable) -> AnyDrawable {
+             return AnyDrawable(content: content)
+         }
+     }
+  ---
+  -> @DrawingBuilder var typeErasedDrawing: Drawable {
+         if #available(macOS 99, *) {
+             FutureText("Inside.future")
+         } else {
+             Text("Inside.present")
+         }
+     }
+  /> The type of typeErasedDrawing is \(type(of: typeErasedDrawing))
+  </ The type of typeErasedDrawing is Line<DrawEither<AnyDrawable, Line<Text>>>
+  ```
+-->
+
+변환 동작은 임시 변수로 설명되지만
+결과 빌더를 사용하는 것은 나머지 코드에서 볼 수 있는
+새로운 선언을 생성하지 않습니다.
+
+결과 빌더 변환하는 코드에서
+`break`, `continue`, `defer`, `guard`, `return` 구문,
+`while` 구문,
+`do`-`catch` 구문을
+사용할 수 없습니다.
+
+변환 과정은 코드에서 선언을 변경하지 않으므로
+임시 상수와 변수를 사용하여
+표현식을 부분적으로 구축할 수 있습니다.
+또한 `throw` 구문,
+컴파일 시점 진단 구문,
+`return` 구문이 포함된 클로저도
+변경하지 않습니다.
+
+가능하면 변환이 병합됩니다.
+예를 들어 표현식 `4 + 5 * 6`은
+해당 함수를 여러 번 호출하는 대신 `buildExpression(4 + 5 * 6)`이 됩니다.
+마찬가지로 중첩된 분기 구문은
+`buildEither` 메서드에 대한 단일 이진 호출 트리가 됩니다.
+
+<!--
+  - test: `result-builder-transform-complex-expression`
+
+  ```swifttest
+  >> @resultBuilder
+  >> struct ArrayBuilder {
+  >>     static func buildExpression(_ element: Int) -> [Int] {
+  >>         print("Building", element)
+  >>         return [element]
+  >>     }
+  >>     static func buildBlock(_ components: [Int]...) -> [Int] {
+  >>         return Array(components.joined())
+  >>     }
+  >> }
+  >> @ArrayBuilder var x: [Int] {
+  >>     10+12*3
+  >> }
+  << Building 46
+  >> print(x)
+  << [46]
+  ```
+-->
 
 #### 커스텀 결과-빌더 속성 (Custom Result-Builder Attributes)
 
-결과 빌더 타입을 생성하면 동일한 이름의 커스텀 속성을 생성합니다. 다음 위치에 해당 속성을 적용할 수 있습니다:
+결과 빌더 타입을 생성하면 동일한 이름의 커스텀 속성을 생성합니다.
+이 속성은 다음 위치에 적용할 수 있습니다:
 
-* 함수 선언에서 결과 빌더는 함수의 본문을 빌드합니다.
-* getter 를 포함하는 변수 또는 서브스크립트 선언에서 결과 빌더는 getter 의 본문을 빌드합니다.
-* 함수 선언의 파라미터에서 결과 빌더는 해당 인자로 전달되는 클로저의 본문을 빌드합니다.
+- 함수 선언에 적용하면,
+  결과 빌더는 함수의 본문을 구축합니다.
+- getter를 포함하는 변수나 서브스크립트 선언에 적용하면,
+  결과 빌더는 getter의 본문을 구축합니다.
+- 함수 선언의 파라미터에 적용하면,
+  결과 빌더는 해당 인자로 전달되는
+  클로저의 본문을 구축합니다.
 
-결과 빌더 속성을 적용하는 것은 ABI 호환성에 영향을 주지 않습니다. 파라미터에 결과 빌더 속성을 적용하는 것은 해당 속성이 함수의 인터페이스의 부분으로 소스 호환성에 영향을 줄 수 있습니다.
+결과 빌더 속성을 적용하는 것은 ABI 호환성에 영향을 주지 않습니다.
+파라미터에 결과 빌더 속성을 적용하는 것은
+해당 속성을 함수의 인터페이스의 부분으로 만들고
+이것은 소스 호환성에 영향을 줄 수 있습니다.
 
-### requires\_stored\_property\_inits
+### requires_stored_property_inits
 
-선언의 일부로 기본값을 제공하기 위해 클래스 내에 모든 저장 프로퍼티를 요구하기 위해 클래스 선언에 이 속성을 적용합니다. 이 속성은 `NSManagedObject` 에서 상속한 모든 클래스에 대해 유추됩니다.
+이 속성을 클래스 선언에 적용하여
+클래스 내의 모든 저장 프로퍼티가
+정의의 일부로 기본값을 제공하도록 요구합니다.
+이 속성은 `NSManagedObject`를 상속하는
+모든 클래스에 대해 추론됩니다.
+
+<!--
+  - test: `requires_stored_property_inits-requires-default-values`
+
+  ```swifttest
+  >> @requires_stored_property_inits class DefaultValueProvided {
+         var value: Int = -1
+         init() { self.value = 0 }
+     }
+  -> @requires_stored_property_inits class NoDefaultValue {
+         var value: Int
+         init() { self.value = 0 }
+     }
+  !$ error: stored property 'value' requires an initial value
+  !! var value: Int
+  !! ^
+  !$ note: class 'NoDefaultValue' requires all stored properties to have initial values
+  !! @requires_stored_property_inits class NoDefaultValue {
+  !! ^
+  ```
+-->
 
 ### testable
 
-테스팅 모듈의 코드를 단순화 하는 접근 제어에 대한 변경으로 해당 모듈을 가져오기 위해 `import` 선언에 이 속성을 적용합니다. `internal` 접근-수준 수정자로 표시된 가져온 모듈의 엔티티는 `public` 접근-수준 수정자로 선언된 경우에 가져옵니다. `internal` 또는 `public` 접근-수준 수정자로 표시된 클래스와 클래스 멤버는 `open` 접근-수준 수정자로 선언된 경우에 가져옵니다. 가져온 모듈은 테스트가 활성화 된 상태로 컴파일되어야 합니다.
+이 속성을 `import` 선언에 적용하여
+모듈의 코드를 테스트하기 쉽게
+접근 제어를 변경하여 해당 모듈을 가져옵니다.
+임포트한 모듈에서
+`internal` 접근-수준 수정자로 표시된 엔티티는
+`public` 접근-수준 수정자로 선언된 것처럼 가져옵니다.
+`internal`이나 `public` 접근-수준 수정자로 표시된
+클래스와 클래스 멤버는
+`open` 접근-수준 수정자로 선언된 것처럼 가져옵니다.
+임포트한 모듈은 테스트가 활성화된 상태로 컴파일되어야 합니다.
 
 ### UIApplicationMain
 
 > Deprecated:
-> 이 속성은 더이상 사용되지 않습니다;
-> 대신에 <doc:Attributes#main> 속성을 사용합니다.
-> Swift 6 에서,
+> 이 속성은 사용 중단되었습니다;
+> 대신 <doc:Attributes#main> 속성을 사용합니다.
+> Swift 6에서
 > 이 속성을 사용하면 오류가 발생합니다.
 
-앱 대리자를 나타내기 위해 클래스에 이 속성을 적용합니다. 이 속성을 사용하는 것은 `UIApplicationMain` 함수를 호출하는 것과 대리자 클래스의 이름으로 클래스의 이름을 전달하는 것과 같습니다.
+이 속성을 클래스에 적용하여
+앱 델리게이트임을 나타냅니다.
+이 속성을 사용하는 것은
+`UIApplicationMain` 함수를 호출하는 것과
+이 클래스의 이름을 델리게이트 클래스의 이름으로 전달하는 것과 동일합니다.
 
-이 속성을 사용하지 않으면 [`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 함수를 호출하는 최상위 수준의 코드를 가지는 `main.swift` 파일을 제공해야 합니다. 예를 들어 주 클래스로 `UIApplication` 의 커스텀 서브클래스를 사용하면 이 속성을 사용하는 것 대신에 `UIApplicationMain(_:_:_:_:)` 함수를 호출합니다.
+이 속성을 사용하지 않으면,
+[`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 함수를 호출하는
+최상위 수준의 코드가 포함된 `main.swift` 파일을 제공해야 합니다.
+예를 들어
+주 클래스로
+`UIApplication`의 커스텀 하위 클래스를 사용하면
+이 속성을 사용하는 것 대신
+`UIApplicationMain(_:_:_:_:)` 함수를 호출해야 합니다.
 
-실행 가능하도록 만들기 위해 컴파일 한 Swift 코드는 <doc:Declarations#최상위-수준-코드-Top-Level-Code> 에서 설명한대로 하나의 최상위-수준 시작 지점을 포함해야 합니다.
+실행 파일을 만들기 위해 컴파일 한 Swift 코드는
+<doc:Declarations#최상위-수준-코드-Top-Level-Code>에서 설명한대로
+하나의 최상위-수준 시작점을 포함해야 합니다.
 
 ### unchecked
 
-프로토콜의 요구사항의 강제성을 끄기위해 타입 선언 리스트의 적용된 프로토콜 타입에 이 속성을 적용합니다.
+이 속성을 타입 선언의 채택된 프로토콜 목록의 일부로
+프로토콜 타입에 적용하여
+해당 프로토콜의 요구사항 적용을 끕니다.
 
-지원하는 프로토콜은 [전달 가능 \(Sendable\)](https://developer.apple.com/documentation/swift/sendable) 만 있습니다.
+지원되는 유일한 프로토콜은 [Sendable](https://developer.apple.com/documentation/swift/sendable)입니다.
 
 ### usableFromInline
 
-선언과 동일한 모듈에 정의된 인라인 가능 코드에서 해당 기호를 사용할 수 있도록 하기 위해 함수, 메서드, 연산 프로퍼티, 서브스크립트, 이니셜라이저, 또는 디이니셜라이저 선언에 이 속성을 적용합니다. 선언은 `internal` 접근 수준 수정자를 가지고 있어야 합니다. `usableFromInline` 으로 표시된 구조체나 클래스는 프로퍼티에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다. `usableFromInline` 으료 표시된 열거형은 케이스의 원시값과 연관값에 대해 public 또는 `usableFromInline` 인 타입만 사용할 수 있습니다.
+이 속성을
+함수, 메서드, 연산 프로퍼티, 서브스크립트,
+이니셜라이저, 디이니셜라이저 선언에 적용하여
+해당 선언과 동일한 모듈에 정의된
+인라인 가능 코드에서 해당 기호를 사용할 수 있도록 허용합니다.
+선언은 `internal` 접근 수준 수정자를 가지고 있어야 합니다.
+`usableFromInline`으로 표시된 구조체나 클래스는
+프로퍼티에 대해 public이나 `usableFromInline`인 타입만 사용할 수 있습니다.
+`usableFromInline`으로 표시된 열거형은
+케이스의 원시값과 연관값에 대해
+public이나 `usableFromInline`인 타입만 사용할 수 있습니다.
 
-`public` 접근 수준 수정자와 같이 이 속성은 모듈의 공개 인터페이스의 부분으로 선언을 노출합니다. `public` 과 다르게 컴파일러는 선언의 기호를 내보내더라도 모듈 외부의 코드에서 이름으로 참조되기 위해 `usableFromInline` 으로 표시된 선언을 허용하지 않습니다. 그러나 모듈 외부의 코드는 런타임 동작을 사용하여 선언의 기호와 상호작용 할 수 있습니다.
+`public` 접근 수준 수정자와 같이
+이 속성은
+모듈의 공개 인터페이스의 부분으로 선언을 노출합니다.
+`public`과 다르게
+컴파일러는 `usableFromInline`으로 표시된 선언이
+선언의 기호를 내보내지더라도
+모듈 외부의 코드에서 이름으로 참조되는 것을 허용하지 않습니다.
+그러나 모듈 외부의 코드는
+런타임 동작을 사용하여 선언의 기호와 상호작용할 수 있습니다.
 
-`inlinable` 속성으로 표시된 선언은 암시적으로 인라인 가능 코드에서 사용가능 합니다. `inlinable` 또는 `usableFromInline` 은 `internal` 선언에 적용될 수 있지만 두 속성 모두 적용하는 것은 오류가 발생합니다.
+`inlinable` 속성으로 표시된 선언은
+암시적으로 인라인 가능 코드에서 사용 가능합니다.
+`inlinable`이나 `usableFromInline` 중 하나를
+`internal` 선언에 적용할 수 있지만
+두 속성 모두 적용하는 것은 오류가 발생합니다.
 
-### warn\_unqualified\_access
+<!--
+  - test: `usableFromInline-and-inlinable-is-redundant`
 
-해당 함수 또는 메서드가 모듈 이름, 타입 이름, 또는 인스턴스 변수 또는 상수와 같이 선행 한정자 없이 사용될 때 경고를 나타내기 위해 최상위-수준 함수, 인스턴스 메서드, 또는 클래스 또는 정적 메서드에 이 속성을 적용합니다. 동일한 범위에서 접근할 수 있는 동일한 이름을 가지는 함수 간의 모호성을 방지하기 위해 이 속성을 사용합니다.
+  ```swifttest
+  >> @usableFromInline @inlinable internal func f() { }
+  !$ warning: '@usableFromInline' attribute has no effect on '@inlinable' global function 'f()'
+  !! @usableFromInline @inlinable internal func f() { }
+  !! ^~~~~~~~~~~~~~~~~~
+  ```
+-->
 
-예를 들어 Swift 표준 라이브러리는 최상위-수준 [`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/) 함수와 비교 가능한 요소가 있는 시퀀스에 대한 [`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 메서드 모두 포함합니다. 시퀀스 메서드는 Sequence 확장 내에서 하나 또는 다른 것을 사용하려고 할 때 혼동을 줄이기 위해 `warn_unqualified_access` 속성으로 선언됩니다.
+### warn_unqualified_access
 
-### 인터페이스 빌더에 사용되는 선언 속성 (Declaration Attributes Used by Interface Builder)
+이 속성을
+최상위 함수, 인스턴스 메서드, 클래스나 정정 메서드에 적용하여
+모듈 이름, 타입 이름, 인스턴스 변수나 상수와 같은
+선행 한정자 없이
+해당 함수나 메서드 사용될 때 경고를 발생시킵니다.
+이 속성은 동일한 범위에서 접근할 수 있는 동일한 이름을 가지는
+함수 간의 모호성을 줄이는데 도움을 주기 위해 사용됩니다.
 
-인터페이스 빌더 (Interface Builder) 속성은 Xcode 와 동기화 하기위해 인터페이스 빌더에서 사용되는 선언 속성입니다. Swift 는 다음의 인터페이스 빌더 속성을 제공합니다: `IBAction`, `IBSegueAction`, `IBOutlet`, `IBDesignable`, 그리고 `IBInspectable`. 이 속성은 개념적으로 Objective-C 와 동일합니다.
+예를 들어
+Swift 표준 라이브러리는 최상위
+[`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/)
+함수와
+비교 가능한 요소가 있는 시퀀스에 대한
+[`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 메서드 모두 포함합니다.
+시퀀스 메서드는 `Sequence` 확장 내에서 어느 하나를 사용하려할 때
+혼동을 줄이기 위해
+`warn_unqualified_access` 속성으로 선언됩니다.
 
-클래스의 프로퍼티 선언에 `IBOutlet` 과 `IBInspectable` 속성을 적용합니다. 클래스의 메서드 선언에 `IBAction` 과 `IBSegueAction` 속성을 클래스 선언에 `IBDesignable` 속성을 적용합니다.
+### 인터페이스 빌더에서 사용되는 선언 속성 (Declaration Attributes Used by Interface Builder)
 
-`IBAction`, `IBSegueAction`, `IBOutlet`, `IBDesignable`, 또는 `IBInspectable` 속성을 적용하는 것은 `objc` 속성을 의미합니다.
+인터페이스 빌더(Interface Builder) 속성은
+Xcode와 동기화하기 위해 인터페이스 빌더에서 사용하는 선언 속성입니다.
+Swift는 다음의 인터페이스 빌더 속성을 제공합니다:
+`IBAction`, `IBSegueAction`, `IBOutlet`,
+`IBDesignable`, `IBInspectable`.
+이 속성은 개념적으로
+Objective-C와 동일합니다.
+
+<!--
+  TODO: Need to link to the relevant discussion of these attributes in Objc.
+-->
+
+`IBOutlet`과 `IBInspectable` 속성은
+클래스의 프로퍼티 선언에 적용합니다.
+`IBAction`과 `IBSegueAction` 속성은
+클래스의 메서드 선언에 적용하고
+`IBDesignable` 속성은 클래스 선언에 적용합니다.
+
+`IBAction`, `IBSegueAction`, `IBOutlet`,
+`IBDesignable`, `IBInspectable` 속성을 적용하는 것은
+`objc` 속성도 암시적으로 포함합니다.
 
 ## 타입 속성 (Type Attributes)
 
-타입에만 타입 속성 (type attributes) 를 적용할 수 있습니다.
+타입 속성은 타입에만 적용할 수 있습니다.
 
 ### autoclosure
 
-인자 없이 해당 표현식을 클로저에 자동으로 래핑하여 표현식의 평가를 지연하기 위해 이 속성을 적용합니다. 메서드 또는 함수 선언에 파라미터의 타입에 인자를 사용하지 않고 표현식의 타입에 값을 반환하는 함수 타입 인 파라미터에 적용합니다. `autoclosure` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Closures#자동-클로저-Autoclosures> 와 <doc:Types#함수-타입-Function-Type> 을 참고바랍니다.
+이 속성을 적용하여 인자를 받지 않는 클로저로 표현식을 자동으로 감싸서
+해당 표현식의 평가를 지연시킵니다.
+이 속성은 함수나 메서드 선언의 파라미터 타입에 적용하여
+인자를 받지 않고
+표현식의 타입과 같은 값을 반환하는 함수 타입의 파라미터에 사용합니다. 
+`autoclosure` 속성을 어떻게 사용하는지에 대한 예시는
+<doc:Closures#자동-클로저-Autoclosures>와 <doc:Types#함수-타입-Function-Type>을 참고바랍니다.
 
 ### convention
 
-호출 규칙 (calling conventions) 을 나타내기 위해 함수의 타입에 이 속성을 적용합니다.
+이 속성을 함수의 타입에 적용하여
+호출 규약(calling conventions)을 나타냅니다.
 
-`convention` 속성은 항상 다음의 인자 중 하나에 나타납니다:
+`convention` 속성은
+항상 다음의 인자 중 하나와 함께 사용됩니다:
 
-* `swift` 인자는 Swift 함수 참조를 나타냅니다. 이것은 Swift 에서 함수 값에 대한 표준 호출 규칙입니다.
-* `block` 인자는 Objective-C 호환 블록 참조를 나타냅니다. 함수 값은 객체 내에 호출 함수 (invocation function) 를 포함하는 `id`-호환성 Objective-C 객체 인 블록 객체에 대한 참조로 표시됩니다. 호출 함수는 C 호출 규칙을 사용합니다.
-* `c` 인자는 C 함수 참조를 나타냅니다. 함수 값은 컨텍스트를 전달하지 않으며 C 호출 규칙을 사용합니다.
+- `swift` 인자는 Swift 함수 참조를 나타냅니다.
+  이것은 Swift에서 함수 값에 대한 표준 호출 규약입니다.
+- `block` 인자는 Objective-C 호환 블록 참조를 나타냅니다.
+  함수 값은 블록 객체에 대한 참조로 표현되며
+  이 객체는 자체 호출 함수를 객체 내에 내장하는
+  `id`-호환 Objective-C 객체입니다.
+  호출 함수는 C 호출 규약을 사용합니다.
+- `c` 인자는 C 함수 참조를 나타냅니다.
+  함수 값은 어떤 컨텍스트를 전달하지 않으며, C 호출 규약을 사용합니다.
 
-몇가지 예외를 제외하고 모든 호출 규칙의 함수는 다른 호출 규칙이 필요할 때 사용될 수 있습니다. 제네릭이 아닌 전역 함수, 지역 변수를 캡처하지 않는 지역 함수 또는 지역 변수를 캡처하지 않는 클로저는 C 호출 규칙으로 변환될 수 있습니다. 다른 Swift 함수는 C 호출 규칙으로 변환될 수 없습니다. Objective-C 블록 호출 규칙을 가지는 함수는 C 호출 규칙으로 변환될 수 없습니다.
+<!--
+  Note: @convention(thin) is private, even though it doesn't have an underscore
+  https://forums.swift.org/t/12087/6
+-->
+
+몇 가지 예외를 제외하고
+어떤 호출 규약을 가진 함수라도
+다른 호출 규약이 필요한 함수에 사용할 수 있습니다.
+제네릭이 아닌 전역 함수,
+지역 변수를 캡처하지 않는 지역 함수,
+지역 변수를 캡처하지 않는 클로저는
+C 호출 규약으로 변환될 수 있습니다.
+다른 Swift 함수는 C 호출 규약으로 변환될 수 없습니다.
+Objective-C 블록 호출 규약을 가지는 함수는
+C 호출 규약으로 변환될 수 없습니다.
 
 ### escaping
 
-나중에 실행하기 위해 파라미터의 값이 저장될 수 있음을 나타내기 위해 메서드 또는 함수 선언의 파라미터 타입에 이 속성을 적용합니다. 이는 값이 호출 수명보다 오래 지속될 수 있음을 의미합니다. `escaping` 타입 속성을 가지는 함수 타입 파라미터는 프로퍼티나 메서드에 대해 `self.` 의 명시적 사용을 요구합니다. `escaping` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Closures#탈출-클로저-Escaping-Closures> 를 참고바랍니다.
+이 속성을 함수나 메서드 선언의 파라미터 타입에 적용하여
+해당 파라미터의 값이 나중에 실행하기 위해 저장될 수 있음을 나타냅니다.
+이는 값이 호출 수명보다 오래 지속될 수 있음을 의미합니다.
+`escaping` 타입 속성을 가지는 함수 타입 파라미터는
+프로퍼티나 메서드에 대해 `self.`를 명시적으로 사용해야 합니다.
+`escaping` 속성을 어떻게 사용하는지에 대한 예시는
+<doc:Closures#탈출-클로저-Escaping-Closures>를 참고바랍니다.
 
 ### Sendable
 
-함수 또는 클로저가 전송 가능하다는 것을 나타내기 위해 함수의 타입에 이 속성을 적용합니다. 함수 타입에 이 속성을 적용하면 비함수 \(non-function\) 타입이 [전달 가능 \(Sendable\)](https://developer.apple.com/documentation/swift/sendable) 프로토콜을 준수하는 것과 같은 의미를 가집니다.
+이 속성을 함수 타입에 적용하여
+함수나 클로저가 Sendable을 나타냅니다.
+함수 타입에 이 속성을 적용하는 것은
+비함수(non-function) 타입이 [Sendable](https://developer.apple.com/documentation/swift/sendable) 프로토콜을
+준수하는 것과 같은 의미를 가집니다.
 
-함수 또는 클로저가 전송 가능한 값을 예상하는 컨텍스트에서 사용되고 함수 또는 클로저가 전송 가능한 요구사항을 충족하면 이 속성은 함수와 클로저에서 유추됩니다.
+이 속성은 함수나 클로저가
+Sendable 값을 기대하는
+컨텍스트에서 사용되고
+함수나 클로저가 Sendable 요구사항을 충족하는 경우 추론됩니다.
 
-전송 가능한 함수 타입은 전송 불가능한 함수 타입의 서브타입입니다.
+Sendable 함수 타입은
+Sendable 하지 않은 함수 타입의 하위 타입입니다.
 
-## Switch 케이스 속성 (Switch Case Attributes)
+## 스위치 케이스 속성 (Switch Case Attributes)
 
-switch 케이스에만 switch 케이스 속성을 적용할 수 있습니다.
+스위치 케이스 속성은 스위치 케이스에만 적용할 수 있습니다.
 
 ### unknown
 
-코드가 컴파일 될 때 알려진 열거형의 케이스와 일치하지 않는 것으로 예상됨을 나타내기 위해 switch 케이스에 이 속성을 적용합니다. `unknown` 속성을 어떻게 사용하는지에 대한 예시는 <doc:Statements#향후-열거형-케이스-전환-Switching-Over-Future-Enumeration-Cases> 을 참고바랍니다.
+이 속성을 스위치 케이스에 적용하여
+코드가 컴파일될 때
+알려진 열거형의 어떤 케이스와도
+일치하지 않는 것으로 예상됨을 나타냅니다.
+`unknown` 속성을 어떻게 사용하는지에 대한 예시는
+<doc:Statements#향후-열거형-케이스-전환-Switching-Over-Future-Enumeration-Cases>을 참고바랍니다.
 
 > Grammar of an attribute:
 >
@@ -1851,3 +2624,13 @@ switch 케이스에만 switch 케이스 속성을 적용할 수 있습니다.
 > *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
 > *balanced-token* → Any identifier, keyword, literal, or operator \
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
+
+<!--
+This source file is part of the Swift.org open source project
+
+Copyright (c) 2014 - 2022 Apple Inc. and the Swift project authors
+Licensed under Apache License v2.0 with Runtime Library Exception
+
+See https://swift.org/LICENSE.txt for license information
+See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+-->
