@@ -2371,7 +2371,7 @@ extension PrettyTextRepresentable  {
   to prevent someone from overriding it in a conforming type.
 -->
 
-### 프로토콜 확장에 제약사항 추가 (Adding Constraints to Protocol Extensions)
+### 프로토콜 확장에 제약조건 추가 (Adding Constraints to Protocol Extensions)
 
 프로토콜 확장을 정의할 때,
 확장의 메서드와 프로퍼티를 사용할 수 있기 전에
