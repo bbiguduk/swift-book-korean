@@ -169,60 +169,28 @@ file private이나 private로 코드의 어떤 부분을 표기할 수 있습니
 ## 접근 제어 문법 (Access Control Syntax)
 
 엔티티의 선언 앞에
-`open`, `public`, `internal`, `fileprivate`, `private` 수정자 중 하나를
+`public`이나 `private`처럼
+<doc:AccessControl#Access-Levels>에 나열된 수정자 중 하나를
 위치시켜 엔티티에 대한 접근 수준을 정의합니다.
+예를 들어:
 
 ```swift
-open class SomeOpenClass {}
 public class SomePublicClass {}
-internal class SomeInternalClass {}
-fileprivate class SomeFilePrivateClass {}
-private class SomePrivateClass {}
-
-open var someOpenVariable = 0
-public var somePublicVariable = 0
-internal let someInternalConstant = 0
-fileprivate func someFilePrivateFunction() {}
+internal struct SomeInternalStruct() {}
 private func somePrivateFunction() {}
 ```
 
-<!--
-  - test: `accessControlSyntax`
-
-  ```swifttest
-  -> open class SomeOpenClass {}
-  -> public class SomePublicClass {}
-  -> internal class SomeInternalClass {}
-  -> fileprivate class SomeFilePrivateClass {}
-  -> private class SomePrivateClass {}
-  ---
-  -> open var someOpenVariable = 0
-  -> public var somePublicVariable = 0
-  -> internal let someInternalConstant = 0
-  -> fileprivate func someFilePrivateFunction() {}
-  -> private func somePrivateFunction() {}
-  ```
--->
-
-지정하지 않으면 <doc:AccessControl#기본-접근-수준-Default-Access-Levels>에서 설명한대로
-internal입니다.
-`SomeInternalClass`와 `someInternalConstant`는
-명시적으로 접근 수준 수정자 없이 작성될 수 있으며,
-internal의 접근 수준을 가진다는 의미입니다:
+위 코드는 `SomePublicClass`는 public으로
+`SomeInternalStruct`는 internal로
+`SomePrivateFunction()`은 private로 선언했습니다.
+명시적으로 접근 수준을 작성하지 않으면,
+<doc:AccessControl#기본-접근-수준-Default-Access-Levels>에서 설명한대로
+기본 접근 수준 수정자는 `internal`입니다.
+예를 들어 아래 코드의 `SomeInternalStruct`는 암시적으로 internal입니다:
 
 ```swift
-class SomeInternalClass {}              // implicitly internal
-let someInternalConstant = 0            // implicitly internal
+struct SomeInternalStruct() {}
 ```
-
-<!--
-  - test: `accessControlDefaulted`
-
-  ```swifttest
-  -> class SomeInternalClass {}              // implicitly internal
-  -> let someInternalConstant = 0            // implicitly internal
-  ```
--->
 
 ## 커스텀 타입 (Custom Types)
 
@@ -284,18 +252,18 @@ private class SomePrivateClass {                 // explicitly private class
         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> class SomeInternalClass {                       // implicitly internal class
         var someInternalProperty = 0                 // implicitly internal class member
         fileprivate func someFilePrivateMethod() {}  // explicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> fileprivate class SomeFilePrivateClass {        // explicitly file-private class
         func someFilePrivateMethod() {}              // implicitly file-private class member
         private func somePrivateMethod() {}          // explicitly private class member
      }
-  ---
+
   -> private class SomePrivateClass {                // explicitly private class
         func somePrivateMethod() {}                  // implicitly private class member
      }
@@ -557,7 +525,7 @@ public 타입 내에 중첩 타입을 공개하려면,
   -> let publicNestedInsidePublic = PublicStruct.PublicEnumInsidePublicStruct.a
   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
-  ---
+
   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
   ```
@@ -569,12 +537,12 @@ public 타입 내에 중첩 타입을 공개하려면,
   ```swifttest
   // these are all expected to fail, because they're private to the other file
   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
-  ---
+
   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
-  ---
+
   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
-  ---
+
   !$ error: 'PrivateEnumInsidePublicStruct' is inaccessible due to 'private' protection level
   !! let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
   !!                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -615,14 +583,14 @@ public 타입 내에 중첩 타입을 공개하려면,
   -> let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   -> let automaticNestedInsidePublic = PublicStruct.AutomaticEnumInsidePublicStruct.a
   -> let privateNestedInsidePublic = PublicStruct.PrivateEnumInsidePublicStruct.a
-  ---
+
   -> let internalNestedInsideInternal = InternalStruct.InternalEnumInsideInternalStruct.a
   -> let automaticNestedInsideInternal = InternalStruct.AutomaticEnumInsideInternalStruct.a
   -> let privateNestedInsideInternal = InternalStruct.PrivateEnumInsideInternalStruct.a
-  ---
+
   -> let privateNestedInsidePrivate = PrivateStruct.PrivateEnumInsidePrivateStruct.a
   -> let automaticNestedInsidePrivate = PrivateStruct.AutomaticEnumInsidePrivateStruct.a
-  ---
+
   !$ error: 'InternalEnumInsidePublicStruct' is inaccessible due to 'internal' protection level
   !! let internalNestedInsidePublic = PublicStruct.InternalEnumInsidePublicStruct.a
   !!                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -701,7 +669,7 @@ internal class B: A {
   -> public class A {
         fileprivate func someMethod() {}
      }
-  ---
+
   -> internal class B: A {
         override internal func someMethod() {}
      }
@@ -734,7 +702,7 @@ internal class B: A {
   -> public class A {
         fileprivate func someMethod() {}
      }
-  ---
+
   -> internal class B: A {
         override internal func someMethod() {
            super.someMethod()
@@ -1162,7 +1130,7 @@ public으로 인자가 없는 이니셜라이저를 제공해야 합니다.
         var publicProperty = 0
         func publicMethod() {}
      }
-  ---
+
   -> public class PublicClassConformingToInternalProtocol: InternalProtocol {
         var internalProperty = 0
         func internalMethod() {}
@@ -1190,7 +1158,7 @@ public으로 인자가 없는 이니셜라이저를 제공해야 합니다.
   !$ error: cannot find type 'FilePrivateProtocol' in scope
   !! public class PublicClassConformingToFilePrivateProtocol: FilePrivateProtocol {
   !! ^~~~~~~~~~~~~~~~~~~
-  ---
+
   // these will fail, because PrivateProtocol isn't visible outside of its file
   -> public class PublicClassConformingToPrivateProtocol: PrivateProtocol {
         var privateProperty = 0
@@ -1440,7 +1408,7 @@ extension SomeStruct: SomeProtocol {
   -> struct SomeStruct {
          private var privateVariable = 12
      }
-  ---
+
   -> extension SomeStruct: SomeProtocol {
          func doSomething() {
              print(privateVariable)
@@ -1474,19 +1442,19 @@ public 타입 별칭은 internal, fileprivate, private 타입의 별칭이 불�
   -> public struct PublicStruct {}
   -> internal struct InternalStruct {}
   -> private struct PrivateStruct {}
-  ---
+
   -> public typealias PublicAliasOfPublicType = PublicStruct
   -> internal typealias InternalAliasOfPublicType = PublicStruct
   -> private typealias PrivateAliasOfPublicType = PublicStruct
-  ---
+
   -> public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
   -> internal typealias InternalAliasOfInternalType = InternalStruct
   -> private typealias PrivateAliasOfInternalType = InternalStruct
-  ---
+
   -> public typealias PublicAliasOfPrivateType = PrivateStruct       // not allowed
   -> internal typealias InternalAliasOfPrivateType = PrivateStruct   // not allowed
   -> private typealias PrivateAliasOfPrivateType = PrivateStruct
-  ---
+
   !$ error: type alias cannot be declared public because its underlying type uses an internal type
   !! public typealias PublicAliasOfInternalType = InternalStruct     // not allowed
   !! ^                           ~~~~~~~~~~~~~~
@@ -1507,6 +1475,12 @@ public 타입 별칭은 internal, fileprivate, private 타입의 별칭이 불�
   !! ^
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

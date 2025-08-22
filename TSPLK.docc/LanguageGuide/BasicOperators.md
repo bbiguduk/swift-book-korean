@@ -35,12 +35,12 @@ Swift는 C에서는 없는
 
 연산자는 단항(unary), 이항(binary), 삼항(ternary)으로 구분됩니다:
 
-* *단항(Unary)* 연산자는 단일 항목에 동작합니다(예: `-a`).
+- *단항(Unary)* 연산자는 단일 항목에 동작합니다(예: `-a`).
   단항 *접두* 연산자는 항목 바로 직전에 위치하고(예: `!b`),
   단항 *접미* 연산자는 항목 바로 다음에 위치합니다(예: `c!`).
-* *이항(Binary)* 연산자는 두 항목에 동작하고(예: `2 + 3`)
+- *이항(Binary)* 연산자는 두 항목에 동작하고(예: `2 + 3`)
   두 항목 사이에 위치하므로 위치는 *중위* 연산자라고 합니다.
-* *삼항(Ternary)* 연산자는 세 항목에 동작합니다.
+- *삼항(Ternary)* 연산자는 세 항목에 동작합니다.
   C처럼 Swift는 하나의 삼항 연산자만 있으며,
   삼항 조건 연산자입니다(`a ? b : c`).
 
@@ -147,10 +147,10 @@ Swift는 코드에서 이런 종류의 오류를 피할 수 있도록 도와줍�
 
 Swift는 모든 숫자 타입에 대해 4개의 기본 *산술 연산자(arithmetic operators)*를 제공합니다:
 
-* 덧셈(`+`)
-* 뺄셈(`-`)
-* 곱셈(`*`)
-* 나눗셈(`/`)
+- 덧셈(`+`)
+- 뺄셈(`-`)
+- 곱셈(`*`)
+- 나눗셈(`/`)
 
 ```swift
 1 + 2       // equals 3
@@ -372,12 +372,12 @@ Swift 표준 라이브러리에서 제공하는 연산자에 대한 내용은
 
 Swift는 아래의 비교 연산자(comparison operators)를 제공합니다:
 
-* 같음(`a == b`)
-* 다름(`a != b`)
-* 보다 큼(`a > b`)
-* 보다 작음(`a < b`)
-* 보다 크거나 같음(`a >= b`)
-* 보다 작거나 같음(`a <= b`)
+- 같음(`a == b`)
+- 다름(`a != b`)
+- 보다 큼(`a > b`)
+- 보다 작음(`a < b`)
+- 보다 크거나 같음(`a >= b`)
+- 보다 작거나 같음(`a <= b`)
 
 > Note: Swift는 두 객체 참조가 동일한 객체 인스턴스를 참조하는지 판별하는
 > *식별 연산자(identity operators)*(`===`와 `!==`)를 제공합니다.
@@ -714,7 +714,7 @@ var colorNameToUse = userDefinedColorName ?? defaultColorName
   ```swifttest
   -> let defaultColorName = "red"
   -> var userDefinedColorName: String?   // defaults to nil
-  ---
+
   -> var colorNameToUse = userDefinedColorName ?? defaultColorName
   /> userDefinedColorName is nil, so colorNameToUse is set to the default of \"\(colorNameToUse)\"
   </ userDefinedColorName is nil, so colorNameToUse is set to the default of "red"
@@ -939,7 +939,7 @@ for name in names[...2] {
      }
   </ Brian
   </ Jack
-  ---
+
   -> for name in names[...2] {
          print(name)
      }
@@ -1018,9 +1018,9 @@ range.contains(-1)  // true
 `true`와 `false`로 수정하거나 결합합니다.
 Swift는 C-기반 언어에서 볼 수 있는 세 가지 표준 논리 연산자를 제공합니다:
 
-* 논리적 NOT(`!a`)
-* 논리적 AND(`a && b`)
-* 논리적 OR(`a || b`)
+- 논리적 NOT(`!a`)
+- 논리적 AND(`a && b`)
+- 논리적 OR(`a || b`)
 
 ### 논리적 NOT 연산자 (Logical NOT Operator)
 
@@ -1230,6 +1230,12 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 전체적인 의도는 명확해 집니다.
 가독성은 항상 간결성보다 선호됩니다;
 의도를 명확하게 하는데 도움이 되는 곳에 소괄호를 사용해야 합니다.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -374,15 +374,15 @@ someFunctionThatTakesAClosure() {
   -> func someFunctionThatTakesAClosure(closure: () -> Void) {
         // function body goes here
      }
-  ---
+
   -> // Here's how you call this function without using a trailing closure:
-  ---
+
   -> someFunctionThatTakesAClosure(closure: {
         // closure's body goes here
      })
-  ---
+
   -> // Here's how you call this function with a trailing closure instead:
-  ---
+
   -> someFunctionThatTakesAClosure() {
         // trailing closure's body goes here
      }
@@ -872,7 +872,7 @@ incrementByTen()
   -> alsoIncrementByTen()
   /> returns a value of \(r5)
   </ returns a value of 50
-  ---
+
   >> let r6 =
   -> incrementByTen()
   /> returns a value of \(r6)
@@ -978,7 +978,7 @@ print(instance.x)
   -> func someFunctionWithNonescapingClosure(closure: () -> Void) {
          closure()
      }
-  ---
+
   -> class SomeClass {
          var x = 10
          func doSomething() {
@@ -986,12 +986,12 @@ print(instance.x)
              someFunctionWithNonescapingClosure { x = 200 }
          }
      }
-  ---
+
   -> let instance = SomeClass()
   -> instance.doSomething()
   -> print(instance.x)
   <- 200
-  ---
+
   -> completionHandlers.first?()
   -> print(instance.x)
   <- 100
@@ -1097,7 +1097,7 @@ struct SomeStruct {
   >>         someFunctionWithNonescapingClosure { x = 200 }
   >>     }
   >> }
-  ---
+
   >> completionHandlers = []
   >> var instance3 = SomeStruct()
   >> instance3.doSomething()
@@ -1116,7 +1116,7 @@ struct SomeStruct {
   >>         someFunctionWithEscapingClosure { print(x) }  // OK
   >>     }
   >> }
-  ---
+
   >> completionHandlers = []
   >> var s = S()
   >> s.doSomething()
@@ -1173,11 +1173,11 @@ print(customersInLine.count)
   -> var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
   -> print(customersInLine.count)
   <- 5
-  ---
+
   -> let customerProvider = { customersInLine.remove(at: 0) }
   -> print(customersInLine.count)
   <- 5
-  ---
+
   -> print("Now serving \(customerProvider())!")
   <- Now serving Chris!
   -> print(customersInLine.count)
@@ -1311,7 +1311,7 @@ for customerProvider in customerProviders {
      }
   -> collectCustomerProviders(customersInLine.remove(at: 0))
   -> collectCustomerProviders(customersInLine.remove(at: 0))
-  ---
+
   -> print("Collected \(customerProviders.count) closures.")
   <- Collected 2 closures.
   -> for customerProvider in customerProviders {
@@ -1332,6 +1332,12 @@ for customerProvider in customerProviders {
 그 결과
 `customerProvider` 인자의 값은
 함수의 범위를 벗어날 수 있어야 합니다.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

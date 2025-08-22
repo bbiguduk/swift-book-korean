@@ -1606,7 +1606,7 @@ Swift에서 매크로의 개요는 <doc:Macros>를 참고바랍니다.
 타입의 프로퍼티나 서브스크립트를 참조합니다.
 키-경로 표현식은
 키-값 관찰(key-value observing)과 같은
-동적 프로그래밍 작업(dynamic programming task)에서 사용합니다.
+동적 프로그래밍 태스크(dynamic programming task)에서 사용합니다.
 형식은 다음과 같습니다:
 
 ```swift

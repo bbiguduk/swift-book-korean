@@ -18,21 +18,25 @@ UI 업데이트와 같은 짧은 작업을
 병렬과 비동기 코드를 사용하는 프로그램은
 한 번에 여러 작업을 수행하고,
 외부 시스템을 기다리는 작업은 일시 중단됩니다.
+이 챕터의 나머지 부분에서는 *동시성*이라는 용어를
+비동기 코드와 병렬 코드의 일반적인 조합을 가르키는 의미로 사용합니다.
 
 병렬이나 비동기 코드의 추가적인 스케줄링 유연성에는
 복잡성이 증가합니다.
-Swift는 개발 의도를
-컴파일 타임에 일부 검증할 수 있는 방식으로 표현할 수 있습니다 ---
-예를 들어 가변 상태에 안전하게 접근하기 위해 actor를 사용할 수 있습니다.
-그러나 느리거나 버그가 있는 코드에 동시성을 추가한다고 해서
-코드가 빠르거나 올바르게 동작한다는 보장은 없습니다.
-사실 동시성을 추가하면 코드를 디버깅하기 더 어렵게 만들 수도 있습니다.
-그러나 동시성이 필요한 코드에서
-동시성에 대한 Swift의 언어 수준 지원을 사용하면
-Swift가 컴파일 시간에 문제를 찾는데 도움이 될 수 있습니다.
-
-이 챕터의 나머지 부분에서는 *동시성*이라는 용어를
-비동기와 병렬 코드의 일반적인 조합을 가르키는 의미로 사용합니다.
+동시성 코드를 작성할 때
+어떤 코드가 동시에 실행될지 미리 알 수 없으며,
+코드 실행 순서도 항상 알 수 없을 수 있습니다.
+동시성 코드에서 흔히 발생하는 문제는
+여러 코드가 일부 공유 가능한 가변 상태에
+접근하려고 할 때 발생하고 ---
+이것을 *데이터 경쟁(data race)*이라고 합니다.
+동시성을 지원하는 언어 수준을 사용하면,
+Swift는 데이터 경쟁을 감지하고 방지하며
+대부분의 데이터 경쟁은 컴파일 시에 오류를 발생시킵니다.
+일부 데이터 경쟁은 코드를 실행될 때까지 감지되지 않을 수 있습니다;
+이러한 데이터 경쟁은 코드 실행을 종료시킵니다.
+이 챕터에서 설명한대로
+액터와 격리를 사용하면 데이터 경쟁으로부터 보호할 수 있습니다.
 
 > Note: 이전에 동시성 코드를 작성한 적이 있다면,
 > 스레드 동작에 익숙할 것입니다.
@@ -153,7 +157,8 @@ func listPhotos(inGallery name: String) async -> [String] {
 이것은 오류가 있는 경우 프로그램의 흐름이 변경 가능함을 나타내기 위해
 던지는 함수를 호출할 때 `try`를 작성하는 것과 같습니다.
 비동기 메서드 내에서
-실행 흐름은 다른 비동기 메서드를 호출할 때만 일시 중단됩니다 —--
+실행 흐름은 다른 비동기 메서드를
+호출할 때*만* 일시 중단될 수 있습니다 —--
 중단은 암시적이거나 선점적이지 않습니다 —--
 이것은 가능한 모든 중단 지점이 `await`로 표시된다는 의미입니다.
 코드에서 중단 가능한 모든 지점을 표시하면
@@ -208,7 +213,7 @@ show(photo)
 
 2. 이 코드의 실행이 일시 중단되는 동안
    같은 프로그램의 다른 동시 코드가 실행됩니다.
-   예를 들어 오랜 시간 실행되는 백그라운드 작업이
+   예를 들어 오랜 시간 실행되는 백그라운드 태스크가
    새로운 사진의 목록을 업데이트 할 수 있습니다.
    이 코드는 `await`로 표시된 다음 중단 지점까지 실행되거나
    코드의 마지막 부분까지 실행됩니다.
@@ -245,7 +250,7 @@ Swift가 현재 스레드에서 코드의 실행을 일시 중단하고
 - `@main`으로 표시된 구조체, 클래스, 열거형의
   정적(static) `main()` 메서드의 코드
 
-- 아래의 <doc:Concurrency#비구조화된-동시성-Unstructured-Concurrency>에 보이는 것처럼
+- 아래의 <doc:Concurrency#비구조-동시성-Unstructured-Concurrency>에 보이는 것처럼
   구조화되지 않은 하위 태스크의 코드
 
 <!--
@@ -256,35 +261,10 @@ Swift가 현재 스레드에서 코드의 실행을 일시 중단하고
   - Code at the top level that forms an implicit main function.
 -->
 
-[`Task.yield()`]() 메서드를 호출해서
-명시적으로 중단 지점을 추가할 수 있습니다.
-
-[`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
-
-```swift
-func generateSlideshow(forGallery gallery: String) async {
-    let photos = await listPhotos(inGallery: gallery)
-    for photo in photos {
-        // ... render a few seconds of video for this photo ...
-        await Task.yield()
-    }
-}
-```
-
-영상을 렌더링하는 코드가 동기적으로 동작한다고 가정해보면,
-이 코드는 중단 지점을 포함하지 않습니다.
-영상 렌더링 작업은 오랜 시간이 걸립니다.
-그러나,
-`Task.yield()`를 주기적으로 호출하여
-명시적으로 중단 지점을 추가할 수 있습니다.
-이러한 방법으로 코드를 구성하면
-Swift는 이 작업과 다른 작업의 진행을
-균형적으로 맞출 수 있습니다.
-
 [`Task.sleep(for:tolerance:clock:)`][] 메서드는
 동시성 동작이 어떻게 동작하는지 알기 위해
 간단한 코드를 작성할 때 유용합니다.
-이 메서드는 주어진 시간만큼 현재 작업을 중단합니다.
+이 메서드는 주어진 시간만큼 현재 태스크를 중단합니다.
 다음은 네트워크 동작을 지연시키기 위해 `sleep(for:tolerance:clock:)`을 사용하는
 `listPhotos(inGallery:)` 함수 입니다.
 
@@ -392,7 +372,7 @@ for try await line in handle.bytes.lines {
 
   ```swifttest
   -> import Foundation
-  ---
+
   >> func f() async throws {
   -> let handle = FileHandle.standardInput
   -> for try await line in handle.bytes.lines {
@@ -409,10 +389,6 @@ for try await line in handle.bytes.lines {
 `for`-`await`-`in` 루프는
 다음 요소를 사용할 수 있을 때까지 기다리고
 각 반복이 시작될 때 잠재적으로 실행을 일시 중단합니다.
-
-<!--
-  FIXME TR: Where does the 'try' above come from?
--->
 
 [`Sequence`][] 프로토콜에 준수성을 추가하여
 `for`-`in` 루프에서 자체 타입을 사용할 수 있는 것과 같은 방식으로
@@ -477,7 +453,7 @@ show(photos)
   -> let firstPhoto = await downloadPhoto(named: photoNames[0])
   -> let secondPhoto = await downloadPhoto(named: photoNames[1])
   -> let thirdPhoto = await downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -518,7 +494,7 @@ show(photos)
   -> async let firstPhoto = downloadPhoto(named: photoNames[0])
   -> async let secondPhoto = downloadPhoto(named: photoNames[1])
   -> async let thirdPhoto = downloadPhoto(named: photoNames[2])
-  ---
+
   -> let photos = await [firstPhoto, secondPhoto, thirdPhoto]
   -> show(photos)
   >> }
@@ -555,42 +531,42 @@ show(photos)
 
 ## Task와 Task Group (Tasks and Task Groups)
 
-*작업(task)*은 프로그램의 일부로
+*태스크(task)*는 프로그램의 일부로
 비동기적으로 실행할 수 있는 작업 단위입니다.
-모든 비동기 코드는 어떠한 작업의 일부로 실행됩니다.
-작업은 한 번에 하나의 작업만 수행하지만,
-여러 작업을 생성하면,
-Swift는 동시에 수행하기 위해 작업을 스케쥴링 할 수 있습니다.
+모든 비동기 코드는 어떠한 태스크의 일부로 실행됩니다.
+태스크은 한 번에 하나의 태스크만 수행하지만,
+여러 태스크를 생성하면,
+Swift는 동시에 수행하기 위해 태스크를 스케쥴링 할 수 있습니다.
 
 이전 섹션에서 설명한 `async`-`let` 구문은
-암시적으로 하위 작업을 생성합니다 ---
-이 구문은 프로그램에서 무슨 작업을 수행해야 될지
+암시적으로 하위 태스크를 생성합니다 ---
+이 문법은 프로그램에서 무슨 태스크를 수행해야 될지
 이미 알고 있을 때 잘 동작합니다.
 우선 순위와 취소를 더 잘 제어할 수 있고
-동적으로 작업을 생성할 수 있는
-작업 그룹(task group)
+동적으로 태스크를 생성할 수 있는
+태스크 그룹(task group)
 ([`TaskGroup`][]의 인스턴스)과
-해당 그룹의 하위 작업을 추가할 수도 있습니다.
+해당 그룹에 하위 태스크를 추가할 수도 있습니다.
 
 [`TaskGroup`]: https://developer.apple.com/documentation/swift/taskgroup
 
-작업은 계층 구조로 정렬됩니다.
-주어진 작업 그룹의 작업은 동일한 상위 작업을 가지고
-각 작업에는 하위 작업이 있을 수도 있습니다.
-작업과 작업 그룹 간의 명시적 관계 때문에
-이 접근방식을 *구조적 동시성(structured concurrency)*이라고 합니다.
-명시적 부모(parent)-자식(child) 관계는 작업 간에 여러 이점이 있습니다:
+태스크는 계층 구조로 정렬됩니다.
+주어진 태스크 그룹의 태스크는 동일한 상위 태스크를 가지고
+각 태스크에는 하위 태스크가 있을 수도 있습니다.
+태스크와 태스크 그룹 간의 명시적 관계 때문에
+이 접근방식을 *구조 동시성(structured concurrency)*이라고 합니다.
+명시적 부모(parent)-자식(child) 관계는 태스크 간에 여러 이점이 있습니다:
 
-- 부모 작업에서,
-  하위 작업이 완료될 때까지 기다릴 수 있습니다.
+- 부모 태스크에서,
+  하위 태스크가 완료될 때까지 기다릴 수 있습니다.
 
-- 하위 작업에서 더 높은 우선 순위로 설정되면,
-  상위 작업의 우선 순위는 자동으로 높아집니다.
+- 하위 태스크에서 더 높은 우선 순위로 설정되면,
+  상위 태스크의 우선 순위는 자동으로 높아집니다.
 
-- 상위 작업이 취소되면,
-  각 하위 작업은 자동으로 취소됩니다.
+- 상위 태스크가 취소되면,
+  각 하위 태스크는 자동으로 취소됩니다.
 
-- 작업-로컬 값(Task-local value)은 하위 작업에 효율적이고 자동으로 전파됩니다.
+- 태스크-로컬 값(Task-local value)은 하위 태스크에 효율적이고 자동으로 전파됩니다.
 
 다음은 여러 사진을 다운로드하는
 코드를 나타냅니다:
@@ -610,13 +586,13 @@ await withTaskGroup(of: Data.self) { group in
 }
 ```
 
-위 코드는 새로운 작업 그룹을 생성하고,
+위 코드는 새로운 태스크 그룹을 생성하고,
 갤러리에 사진을 다운로드하는
-하위 작업을 생성합니다.
-Swift는 조건이 되는만큼 비동기적으로 여러 작업을 수행합니다.
-하위 작업에서 사진 다운로드가 끝나자마자
+하위 태스크를 생성합니다.
+Swift는 조건이 되는만큼 비동기적으로 여러 태스크를 수행합니다.
+하위 태스크에서 사진 다운로드가 끝나자마자
 해당 사진은 보여집니다.
-하위 작업 완료에 대한 순서를 보장하지 않으므로,
+하위 태스크 완료에 대한 순서를 보장하지 않으므로,
 갤러리에 사진은 무작위로 보여질 수 있습니다.
 
 > Note:
@@ -625,8 +601,8 @@ Swift는 조건이 되는만큼 비동기적으로 여러 작업을 수행합니
 
 위 코드에서
 각 사진은 다운로드되고 보여지므로,
-작업 그룹은 결과를 반환하지 않습니다.
-결과를 반환하는 작업 그룹의 경우,
+태스크 그룹은 결과를 반환하지 않습니다.
+결과를 반환하는 태스크 그룹의 경우,
 `withTaskGroup(of:returning:body:)`에 전달하는 클로저 내에
 결과를 누적하는 코드를 추가합니다.
 
@@ -649,13 +625,13 @@ let photos = await withTaskGroup(of: Data.self) { group in
 ```
 
 이전 예시와 같이,
-이 예시는 각 사진을 다운로드하는 하위 작업을 생성합니다.
+이 예시는 각 사진을 다운로드하는 하위 태스크를 생성합니다.
 이전 예시와 다르게,
-`for`-`await`-`in` 루프는 다음 하위 작업이 완료될 때까지 기다리고,
-해당 작업의 결과를 결과 배열에 추가한 다음에,
-모든 하위 작업이 완료될 때까지 기다립니다.
+`for`-`await`-`in` 루프는 다음 하위 태스크가 완료될 때까지 기다리고,
+해당 태스크의 결과를 결과 배열에 추가한 다음에,
+모든 하위 태스크가 완료될 때까지 기다립니다.
 마지막으로,
-작업 그룹은 다운로드한 사진의 배열을
+태스크 그룹은 다운로드한 사진의 배열을
 전체 결과로 반환합니다.
 
 <!--
@@ -676,45 +652,44 @@ since that's optimized for child tasks
 whose values aren't collected.
 -->
 
-### 작업 취소 (Task Cancellation)
+### 태스크 취소 (Task Cancellation)
 
 Swift 동시성은 협동 취소 모델(cooperative cancellation model)을 사용합니다.
-각 작업은 실행 중에 적절할 때
+각 태스크는 실행 중에 적절할 때
 취소여부를 확인하고,
 적절하게 취소에 응답합니다.
-작업의 종류에 따라
+태스크의 종류에 따라
 취소에 대한 응답은 다음 중 하나에 해당합니다:
 
 - `CancellationError`와 같은 오류 발생
 - `nil`이나 빈 컬렉션 반환
-- 부분적으로 완료된 작업 반환
+- 부분적으로 완료된 태스크 반환
 
 사진이 크거나 네트워크가 느려서
 사진을 다운로드하는데 오랜 시간이 걸릴 수 있습니다.
-모든 작업이 완료되기를 기다리지 않고
-작업을 멈추려면,
-작업이 취소되었는지 확인하고 취소된 경우에 실행을 중지합니다.
-작업이 취소되었는지 확인하는 방법은 두 가지가 있습니다:
+모든 태스크가 완료되기를 기다리지 않고
+태스크를 멈추려면,
+태스크가 취소되었는지 확인하고 취소된 경우에 실행을 중지합니다.
+태스크가 취소되었는지 확인하는 방법은 두 가지가 있습니다:
 [`Task.checkCancellation()`][] 타입 메서드를 호출하거나,
 [`Task.isCancelled`][`Task.isCancelled` 타입] 타입 프로퍼티를 읽어서 확인할 수 있습니다.
-`checkCancellation()`을 호출하는 것은 작업이 취소되었으면 오류가 발생합니다;
-던지는 작업은 작업 외부로 오류를 전파하여
-모든 작업을 중지시킬 수 있습니다.
+`checkCancellation()`을 호출하는 것은 태스크가 취소되었으면 오류가 발생합니다;
+던지는 태스크는 태스크 외부로 오류를 전파하여
+모든 태스크를 중지시킬 수 있습니다.
 이것은 구현과 이해가 간단하다는 이점이 있습니다.
 더 유연한 방법으로는, 네트워크 연결을 닫고 임시 파일을 지우는 것과 같은
-작업 중지의 부분으로 정리 작업을 수행할 수 있는
+태스크 중지의 부분으로 정리 작업을 수행할 수 있는
 `isCancelled` 프로퍼티를 사용합니다.
 
 [`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
 [`Task.isCancelled` 타입]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
 ```swift
-let photos = await withTaskGroup(of: Optional<Data>.self) { group in
+let photos = await withTaskGroup { group in
     let photoNames = await listPhotos(inGallery: "Summer Vacation")
     for name in photoNames {
         let added = group.addTaskUnlessCancelled {
-            guard !Task.isCancelled else { return nil }
-            return await downloadPhoto(named: name)
+            Task.isCancelled ? nil : await downloadPhoto(named: name)
         }
         guard added else { break }
     }
@@ -730,29 +705,29 @@ let photos = await withTaskGroup(of: Optional<Data>.self) { group in
 위의 코드는 이전 버전과 몇 가지 다른 점이 있습니다:
 
 - 취소 후에 새로운 작업이 시작되지 않도록
-  각 작업은
+  각 태스크는
   [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`][] 메서드를 사용해서 추가됩니다.
 
 - `addTaskUnlessCancelled(priority:operation:)`을 호출할 때마다,
-  코드는 하위 작업이 새로 추가되었는지 확인합니다.
+  코드는 하위 태스크가 새로 추가되었는지 확인합니다.
   그룹이 취소되면 `added`의 값은 `false`이고 ---
   코드는 추가 사진 다운로드를 중지합니다.
 
-- 각 작업은 사진을 다운로드 하기 전에
+- 각 태스크는 사진을 다운로드 하기 전에
   취소 여부를 검사합니다.
-  작업이 취소 되었으면, `nil`을 반환합니다.
+  태스크가 취소 되었으면, `nil`을 반환합니다.
 
 - 결국,
-  작업 그룹은 결과를 수집할 때 `nil` 값이면 건너뜁니다.
+  태스크 그룹은 결과를 수집할 때 `nil` 값이면 건너뜁니다.
   `nil`을 반환해서 취소를 처리한다는 것은
-  작업 그룹은 부분적인 결과를 반환할 수 있다는 의미입니다 ---
+  태스크 그룹은 부분적인 결과를 반환할 수 있다는 의미입니다 ---
   취소했을 때 이미 다운로드된 사진은 사진을 파기하는 대신에
   다운로드된 사진을 반환합니다.
 
 [`TaskGroup.addTaskUnlessCancelled(priority:operation:)`]: https://developer.apple.com/documentation/swift/taskgroup/addtaskunlesscancelled(priority:operation:)
 
 > Note:
-> 작업이 외부에서 취소되었는지 확인하려면,
+> 태스크가 외부에서 취소되었는지 확인하려면,
 > 타입 프로퍼티 대신에
 > [`Task.isCancelled`][`Task.isCancelled` 인스턴스] 인스턴스 프로퍼티를 사용합니다.
 
@@ -776,12 +751,12 @@ task.cancel()  // Prints "Canceled!"
 ```
 
 취소 처리를 사용할 때,
-작업 취소는 여전히 협조적입니다:
-작업은 완료될 때까지 수행하거나
+태스크 취소는 여전히 협조적입니다:
+태스크가 완료될 때까지 수행하거나
 취소를 확인하고 조기 중지합니다.
-취소 처리가 시작될 때 작업은 여전히 수행 중이므로,
+취소 처리가 시작될 때 태스크는 여전히 수행 중이므로,
 경쟁 조건(race condition)이 생성될 수 있는
-작업과 취소 처리간의 상태 공유를 피해야 합니다.
+태스크와 취소 처리간의 상태 공유를 피해야 합니다.
 
 <!--
   OUTLINE
@@ -885,7 +860,6 @@ task.cancel()  // Prints "Canceled!"
   .. _Concurrency_TaskPriority:
 
   Setting Task Priority
-  ~~~~~~~~~~~~~~~~~~~~~
 
   - priority values defined by ``Task.Priority`` enum
 
@@ -904,25 +878,58 @@ task.cancel()  // Prints "Canceled!"
   - In addition, or instead of, setting a low priority,
   you can use ``Task.yield()`` to explicitly pass execution to the next scheduled task.
   This is a sort of cooperative multitasking for long-running work.
+
+  You can explicitly insert a suspension point
+  by calling the [`Task.yield()`][] method.
+
+  [`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
+  
+  ```swift
+  func generateSlideshow(forGallery gallery: String) async {
+      let photos = await listPhotos(inGallery: gallery)
+      for photo in photos {
+          // ... render a few seconds of video for this photo ...
+          await Task.yield()
+      }
+  }
+  ```
+
+  Assuming the code that renders video is synchronous,
+  it doesn't contain any suspension points.
+  The work to render video could also take a long time.
+  However,
+  you can periodically call `Task.yield()`
+  to explicitly add suspension points.
+  Structuring long-running code this way
+  lets Swift balance between making progress on this task,
+  and letting other tasks in your program make progress on their work.
 -->
 
-### 비구조화된 동시성 (Unstructured Concurrency)
+### 비구조 동시성 (Unstructured Concurrency)
 
 이전 섹션에서 설명한
 동시성에 대한 구조화된 접근방식 외에도
-Swift는 비구조화된 동시성(unstructured concurrency)을 지원합니다.
-작업 그룹의 일부인 작업과 달리
-*비구조화된 작업(unstructured task)*에는 상위 작업이 없습니다.
+Swift는 비구조 동시성(unstructured concurrency)을 지원합니다.
+태스크 그룹의 일부인 태스크와 달리
+*비구조 태스크(unstructured task)*에는 상위 태스크가 없습니다.
 프로그램이 필요로 하는 방식으로
-비구조화된 작업을 관리할 수 있는 유연성이 있지만
+비구조 태스크를 관리할 수 있는 유연성이 있지만
 올바른 동작을 위한 책임도 있습니다.
-현재 액터(actor)에서 실행되는 비구조화된 작업을 생성하려면
-[`Task.init(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856790-init) 이니셜라이저를 호출해야 합니다.
-현재 액터에 속하지 않는
-더 구체적으로 *분리된 작업(detached task)*을 생성하려면
-[`Task.detached(priority:operation:)`](https://developer.apple.com/documentation/swift/task/3856786-detached) 클래스 메서드를 호출합니다.
-이 모든 동작은 상호작용이 가능한 작업(task)을 반환합니다 —--
-예를 들어 작업의 결과를 기다리거나 작업을 취소할 수 있습니다.
+
+비구조 태스크를 생성하여
+주변 코드와 유사하게 실행하려면,
+[`Task.init(priority:operation:)`][] 이니셜라이저를 호출해야 합니다.
+새로운 태스크는 기본적으로 현재 태스크와
+동일한 액터 격리(actor isolation), 우선순위(priority), 태스크-로컬 상태(task-local state)를 가지고 실행됩니다.
+주변 코드로부터 더 독립적인
+비구조 태스크,
+특히 *분리 태스크(detached task)*라고 알려진 것을 생성하려면
+[`Task.detached(priority:operation:)`][] 정적 메서드를 호출해야 합니다.
+새로운 태스크는 기본적으로 어떠한 액터 격리없이 실행되고
+현재 태스크의 우선순위나 태스크-로컬 상태를 상속받지 않습니다.
+이 두 작업 모두 예를 들어 결과를 기다리거나 취소하는 것과 같이
+상호작용이 가능한 태스크를 반환합니다.
+<!-- TODO: In SE-0461 terms, Task.detached runs as an @concurrent function. -->
 
 ```swift
 let newPhoto = // ... some photo data ...
@@ -932,8 +939,11 @@ let handle = Task {
 let result = await handle.value
 ```
 
-분리된 작업(detached tasks) 관리에 대한 자세한 내용은
+분리 태스크(detached tasks) 관리에 대한 자세한 내용은
 [`Task`](https://developer.apple.com/documentation/swift/task)를 참고바랍니다.
+
+[`Task.init(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/init(priority:operation:)-7f0zv
+[`Task.detached(priority:operation:)`]: https://developer.apple.com/documentation/swift/task/detached(priority:operation:)-d24l
 
 <!--
   TODO Add some conceptual guidance about
@@ -942,12 +952,229 @@ let result = await handle.value
   (Pull from my 2021-04-21 notes from Ben's talk rehearsal.)
 -->
 
+## 격리 (Isolation)
+
+이전 섹션에서는 동시성 작업을 분할하는 접근방식에 대해 논의했습니다.
+이러한 작업은 앱의 UI와 같은 공유 데이터를 변경하는 것이 포함될 수 있습니다.
+코드의 다른 부분이 동시에 동일한 데이터를 수정할 수 있다면,
+이것은 데이터 경쟁(data race)를 초래할 위험이 있습니다.
+Swift는 코드를 데이터 경쟁으로부터 보호합니다:
+데이터를 읽거나 수정할 때마다,
+Swift는 다른 코드가 동시에 해당 데이터를 수정하지 않도록 보장합니다.
+이런 보장을 *데이터 격리(data isolation)*라고 합니다.
+데이터를 격리하는 세 가지 주요 방법이 있습니다:
+
+1. 불변 데이터(immutable data)는 항상 격리됩니다.
+   상수는 수정할 수 없으므로,
+   상수를 읽을 때
+   다른 코드에서 상수를 수정할 위험이 없습니다.
+
+2. 현재 태스크만 참조하는 데이터는 항상 격리됩니다.
+   지역 변수는 안전하게 읽고 쓸 수 있으며,
+   이것은 태스크 외부의 코드가 해당 메모리에 대한 참조를 가지고 있지 않아
+   다른 코드가 이 데이터를 수정할 수 없기 때문입니다.
+   또한
+   클로저에서 변수를 캡처하면,
+   Swift는 해당 클로저가 동시에 사용되지 않도록 보장합니다.
+
+3. 액터에 의해 보호되는 데이터는
+   해당 데이터에 접근하는 코드가 액터에 격리된 경우 격리됩니다.
+   현재 함수가 액터에 격리되어 있다면,
+   해당 액터에 의해 보호되는 데이터를 안전하게 읽고 쓸 수 있으며,
+   이것은 동일한 액터에 격리된 다른 모든 코드가
+   실행되기 전에 자신의 차례를 기다려야 하기 때문입니다.
+
+## 메인 액터 (The Main Actor)
+
+액터는 코드가 해당 데이터에 번갈아 접근하도록 강제함으로써
+가변 데이터에 대한 접근을 보호하는 객체입니다.
+많은 프로그램에서 가장 중요한 액터는 *메인 액터(main actor)*입니다.
+앱에서
+메인 액터는 UI를 표시하는데 사용되는 모든 데이터를 보호합니다.
+메인 액터는 UI 렌더링,
+UI 이벤트 처리,
+UI를 조회하거나 업데이트해야 하는 코드 실행을 번갈아 수행합니다.
+
+코드에서 동시성을 사용하기 전에는
+모든 것이 메인 액터에서 실행됩니다.
+긴 실행이나 리소스 집약적인 코드를 식별하면
+안전하고 올바른 방식으로
+이 작업을 메인 액터에서 분리할 수 있습니다.
+
+> Note:
+> 메인 액터는 메인 스레드와 밀접한 관련이 있지만
+> 동일한 것은 아닙니다.
+> 메인 액터는 비공개 가변 상태를 가지고,
+> 메인 스레드는 해당 상태에 대한 접근을 직렬화합니다.
+> 메인 액터에서 코드를 실행하면,
+> Swift는 해당 코드를 메인 스레드에서 실행합니다.
+> 이러한 연결 때문에
+> 두 용어가 상호 교환적으로 사용되는 것을 볼 수 있습니다.
+> 코드는 메인 액터와 상호작용하며;
+> 메인 스레드는 더 낮은 수준의 구현 세부사항입니다.
+
+<!--
+TODO: Discuss the SE-0478 syntax for 'using @MainActor'
+
+When you're writing UI code,
+you often want all of it to be isolated to the main actor.
+To do this, you can write `using @MainActor`
+at the top of a Swift file to apply that attribute by default
+to all the code in the file.
+If there's a specific function or property
+that you want to exclude from `using @MainActor`,
+you can use the `nonisolated` modifier on that declaration
+to override the default.
+Modules can be configured to be built using `using @MainActor` by default.
+This can be overridden on a per-file basis
+by writing `using nonisolated` at the top of a file.
+-->
+
+메인 액터에서 작업을 실행하는 몇 가지 방법이 있습니다.
+함수가 항상 메인 액터에서 실행되도록 하려면,
+`@MainActor` 속성으로 표시해야 합니다:
+
+```swift
+@MainActor
+func show(_: Data) {
+    // ... UI code to display the photo ...
+}
+```
+
+위 코드에서
+`show(_:)` 함수의 `@MainActor` 속성은
+이 함수가 메인 액터에서만 실행되도록 요구합니다.
+메인 액터에서 실행 중인 다른 코드 내에서
+`show(_:)`를 동기 함수처럼 호출할 수 있습니다.
+그러나
+메인 액터에서 실행되지 않는 코드에서 `show(_:)`를 호출하려면
+`await`를 포함하고 비동기 함수로 호출해야 합니다.
+이것은 메인 액터로 전환하는 것이 잠재 중단점(potential suspension point)을 도입하기 때문입니다.
+예를 들어:
+
+```swift
+func downloadAndShowPhoto(named name: String) async {
+    let photo = await downloadPhoto(named: name)
+    await show(photo)
+}
+```
+
+위 코드에서
+`downloadPhoto(named:)`와 `show(_:)` 함수는 모두
+호출 시 중단될 수 있습니다.
+이 코드는 또한 일반적인 패턴을 보여줍니다:
+백그라운드에서 긴 실행과 CPU 집약적 작업을 수행한 다음에
+UI를 업데이트하기 위해 메인 액터로 전환하는 것입니다.
+`downloadAndShowPhoto(named:)` 함수는 메인 액터에 있지 않으므로,
+`downloadPhoto(named:)`의 작업도 메인 액터에서 실행되지 않습니다.
+`show(_:)` 함수는 `@MainActor` 속성으로 표시되어 있으므로,
+UI 업데이트하는 `show(_:)`의 작업만 메인 액터에서 실행됩니다.
+<!-- TODO
+When updating for SE-0461,
+this is a good place to note
+that downloadPhoto(named:) runs
+on whatever actor you were on when you called it.
+-->
+
+클로저가 메인 액터에서 실행되도록 하려면,
+클로저 시작 부분에서
+캡처 목록과 `in` 앞에 `@MainActor`를 작성합니다.
+
+```swift
+let photo = await downloadPhoto(named: "Trees at Sunrise")
+Task { @MainActor in
+    show(photo)
+}
+```
+
+위 코드는
+이전 코드 목록의 `downloadAndShowPhoto(named:)`와 유사하지만
+이 예시의 코드는 UI 업데이트를 기다리지 않습니다.
+또한 구조체, 클래스, 열거형에 `@MainActor`를 작성하여
+모든 메서드와 프로퍼티에 대한 모든 접근이
+메인 액터에서 실행되도록 할 수 있습니다:
+
+```swift
+@MainActor
+struct PhotoGallery {
+    var photoNames: [String]
+    func drawUI() { /* ... other UI code ... */ }
+}
+```
+
+위 코드의 `PhotoGallery` 구조체는
+`photoNames` 프로퍼티의 이름을 사용하여
+어떤 사진을 표시할지 결정하고
+화면에 사진을 그립니다.
+`photoNames`가 UI에 영향을 미치므로,
+이것을 변경하는 코드는 접근을 직렬화하기 위해
+메인 액터에서 실행되어야 합니다.
+
+프레임워크를 기반으로 구축하는 경우,
+해당 프레임워크의 프로토콜과 기본 클래스는
+일반적으로 이미 `@MainActor`로 표시되어 있으므로
+이 경우에 자신의 타입에 `@MainActor`를 작성할 필요는 없습니다.
+다음은 간단한 예시입니다:
+
+```swift
+@MainActor
+protocol View { /* ... */ }
+
+// Implicitly @MainActor
+struct PhotoGalleryView: View { /* ... */ }
+```
+
+위 코드에서
+SwiftUI와 같은 프레임워크는 `View` 프로토콜을 정의합니다.
+프로토콜 선언에 `@MainActor`를 작성하여
+이 프로토콜을 준수하는 `PhotoGalleryView`와 같은 타입도
+암시적으로 `@MainActor`로 표시됩니다.
+`View`가 기본 클래스이고
+`PhotoGalleryView`가 하위 클래스인 경우에도 동일한 동작을 볼 수 있습니다 ---
+하위 클래스는 암시적으로 `@MainActor`로 표시됩니다.
+
+위 예시에서
+`PhotoGallery`는 전체 구조체를 메인 액터에서 보호합니다.
+더 세밀한 제어를 위해
+메인 스레드에서 접근하거나 실행되어야 하는
+프로퍼티나 메서드에만 `@MainActor`를 작성할 수 있습니다:
+
+```swift
+struct PhotoGallery {
+    @MainActor var photoNames: [String]
+    var hasCachedPhotos = false
+
+    @MainActor func drawUI() { /* ... UI code ... */ }
+    func cachePhotos() { /* ... networking code ... */ }
+}
+```
+
+위 `PhotoGallery` 버전에서
+`drawUI()` 메서드는 화면에 갤러이의 사진을 그리므로
+메인 액터에 격리되어야 합니다.
+`photoNames` 프로퍼티는 UI를 직접 생성하지는 않지만
+`drawUI()` 함수가 UI를 그리는데 사용하는 상태를 저장하므로
+이 프로퍼티 또한 메인 액터에서만 접근되어야 합니다.
+반면에
+`hasCachedPhotos` 프로퍼티에 대한 변경은
+UI와 상호작용하지 않고
+`cachePhotos()` 메서드는 메인 액터에서 실행할 필요가 있는
+상태에 접근하지 않습니다.
+따라서 이것은 `@MainActor`로 표시되지 않습니다.
+
+이전 예시와 마찬가지로
+프레임워크를 사용하여 UI를 구축하는 경우에
+해당 프레임워크의 프로퍼티 래퍼는
+아마도 UI 상태 프로퍼티를 `@MainActor`로 표시할 것입니다.
+프로퍼티 래퍼를 정의할 때
+`wrappedValue` 프로퍼티가 `@MainActor`로 표시되면,
+해당 프로퍼티 래퍼를 적용하는 모든 프로퍼티도
+암시적으로 `@MainActor`로 표시됩니다.
+
 ## 액터 (Actors)
 
-프로그램을 독립적이고 동시에 실행 가능한 조각으로 분리하기위해 작업(task)을 사용할 수 있습니다.
-작업은 서로 격리(isolated)되어 있어
-동시에 안전하게 실행될 수 있지만
-작업 간에 일부 정보를 공유해야 할 수도 있습니다.
+Swift는 메인 액터를 제공합니다 ---
+또한 자신만의 액터를 정의할 수도 있습니다.
 액터(Actors)는 동시성 코드 간에 정보를 안전하게 공유할 수 있게 해줍니다.
 
 클래스와 마찬가지로 액터(actors)는 참조 타입이므로
@@ -955,8 +1182,8 @@ let result = await handle.value
 값 타입과 참조 타입의 비교는
 클래스 뿐만 아니라 액터에도 적용됩니다.
 클래스와 다르게
-액터는 한 번에 하나의 작업만 변경 가능한 상태에 접근할 수 있도록 허용하므로
-여러 작업의 코드가
+액터는 한 번에 하나의 태스크만 변경 가능한 상태에 접근할 수 있도록 허용하므로
+여러 태스크의 코드가
 액터의 동일한 인스턴스와 상호작용 하는 것은 안전합니다.
 예를 들어 다음은 온도를 기록하는 액터 입니다:
 
@@ -1013,8 +1240,8 @@ print(await logger.max)
 
 이 예시에서
 `logger.max`에 접근하는 것은 일시 중단이 발생할 수 있는 지점입니다.
-액터는 한 번에 하나의 작업만 변경 가능한 상태에 접근할 수 있도록 허용하므로
-다른 작업의 코드가 이미 로거와 상호작용하고 있는 경우
+액터는 한 번에 하나의 태스크만 변경 가능한 상태에 접근할 수 있도록 허용하므로
+다른 태스크의 코드가 이미 로거와 상호작용하고 있는 경우
 이 코드는 프로퍼티 접근을 기다리는 동안 일시 중단됩니다.
 
 대조적으로
@@ -1036,7 +1263,7 @@ extension TemperatureLogger {
 
 `update(with:)` 메서드는 액터에서 이미 실행 중이므로
 `max`와 같은 프로퍼티에 대한 접근을 `await`로 표시하지 않습니다.
-이 메서드는 액터가 변경 가능한 상태와 상호작용하기 위해 한 번에 하나의 작업만 허용하는
+이 메서드는 액터가 변경 가능한 상태와 상호작용하기 위해 한 번에 하나의 태스크만 허용하는
 이유 중 하나를 보여줍니다:
 액터의 상태에 대한 일부 업데이트는 일시적으로 불변성을 깨뜨립니다.
 `TemperatureLogger` 액터는 온도 목록과 최대 온도를 추적하고
@@ -1045,7 +1272,7 @@ extension TemperatureLogger {
 업데이트 도중에
 새로운 측정값을 추가한 후 `max`를 업데이트하지 않았다면
 온도 로거는 일시적으로 일관성 없는 상태가 됩니다.
-다른 작업이 동일한 인스턴스에 접근하지 못하도록 방지하면
+다른 태스크가 동일한 인스턴스에 접근하지 못하도록 방지하면
 다음 문제를 예방할 수 있습니다:
 
 1. 코드는 `update(with:)` 메서드를 호출합니다.
@@ -1059,7 +1286,7 @@ extension TemperatureLogger {
 데이터가 일시적으로 잘못된 상태에 있었기 때문에
 `update(with:)` 호출 중간에
 액터에 대한 접근이 잘못된 정보를 읽습니다.
-Swift 액터는 한 번에 하나의 작업만 해당 상태에 접근을 허용하고
+Swift 액터는 한 번에 하나의 태스크만 해당 상태에 접근을 허용하고
 해당 코드는
 `await`로 표시된 일시 중단 지점 위치에서만 중단될 수 있기 때문에
 이 문제를 방지할 수 있습니다.
@@ -1088,6 +1315,9 @@ Swift 동시성 모델의 다음의 요소들은
 
 - 일시 중단 가능 지점 사이의 코드는
   다른 동시 코드의 중단없이 순차적으로 수행됩니다.
+  그러나
+  여러 개의 동시성 코드는 동시에 실행될 수 있으므로,
+  다른 코드가 동시에 실행되고 있을 수 있습니다.
 
 - 액터의 로컬 상태와 상호작용하는 코드는
   해당 액터에서만 수행됩니다.
@@ -1104,8 +1334,8 @@ Swift 동시성 모델의 다음의 요소들은
 ```swift
 extension TemperatureLogger {
     func convertFahrenheitToCelsius() {
-        measurements = measurements.map { measurement in
-            (measurement - 32) * 5 / 9
+        for i in measurements.indices {
+            measurements[i] = (measurements[i] - 32) * 5 / 9
         }
     }
 }
@@ -1133,10 +1363,35 @@ map 작업이 진행되는 동안,
 작업이 완료되어 데이터 일관성을 복원하기 전까지
 다른 코드를 수행할 수 없음을
 읽기 쉽게 만들어 줍니다.
-또한
+이 기간동안
+Swift가 이 코드에서 프로그램의
+다른 부분의 코드를 실행하도록 전환하지 않는 것이 중요합니다.
+향후
 이 함수에 비동기 코드를 추가하여,
 임시 중단 지점을 도입하면
 버그가 발생하는 대신에 컴파일 오류가 발생합니다.
+
+
+## 전역 액터 (Global Actors)
+
+메인 액터는 [`MainActor`][] 타입의 전역 싱글턴 인스턴스입니다.
+액터는 일반적으로 여러 인스턴스를 가질 수 있으며,
+각 인스턴스는 독립적인 격리를 제공합니다.
+이것이 액터의 모든 격리된 데이터를
+해당 액터의 인스턴스 프로퍼티로 선언하는 이유입니다.
+그러나 `MainActor`는 싱글턴이므로 ---
+이 타입의 단일 인스턴스만 존재 ---
+타입만으로 액터를 식별하기에 충분하기 때문에
+속성으로만 메인 액터 격리를 표시할 수 있습니다.
+이 접근방식은 가장 적합한 방식으로 코드를 구성할 수 있는
+더 많은 유연성을 제공합니다.
+
+[`MainActor`]: https://developer.apple.com/documentation/swift/mainactor
+
+`@globalActor` 속성을 사용하여
+자신만의 싱글턴 전역 액터를 정의할 수 있으며,
+이것은 <doc:Attributes#globalActor>에서 설명합니다.
+
 
 <!--
   OUTLINE
@@ -1146,7 +1401,6 @@ map 작업이 진행되는 동안,
    .. _Concurrency_ActorIsolation:
 
    Actor Isolation
-   ~~~~~~~~~~~~~~~
 
    TODO outline impact from SE-0313 Control Over Actor Isolation
    about the 'isolated' and 'nonisolated' keywords
@@ -1165,13 +1419,6 @@ map 작업이 진행되는 동안,
 
    - you can't write to a property directly from outside the actor
 
-   TODO: Either define "data race" or use a different term;
-   the chapter on exclusive ownership talks about "conflicting access",
-   which is related, but different.
-   Konrad defines "data race" as concurrent access to shared state,
-   noting that our current design doesn't prevent all race conditions
-   because suspension points allow for interleaving.
-
    - The same actor method can be called multiple times, overlapping itself.
    This is sometimes referred to as *reentrant code*.
    The behavior is defined and safe... but might have unexpected results.
@@ -1183,7 +1430,6 @@ map 작업이 진행되는 동안,
    - If a closure is ``@Sendable`` or ``@escaping``
    then it behaves like code outside of the actor
    because it could execute concurrently with other code that's part of the actor
-
 
    exercise the log actor, using its client API to mutate state
 
@@ -1215,7 +1461,7 @@ map 작업이 진행되는 동안,
 한 동시성 도메인에서 다른 동시성 도메인으로 공유될 수 있는 타입을
 *Sendable* 타입(*sendable* type)이라고 합니다.
 예를 들어 액터 메서드를 호출할 때 인자로 전달하거나
-작업의 결과로 반환될 수 있습니다.
+태스크의 결과로 반환될 수 있습니다.
 이 챕터의 앞부분에 있는 예시들은
 동시성 도메인 간에 전달되는 데이터는
 항상 안전한 간단한 값 타입을 사용하기 때문에
@@ -1224,7 +1470,7 @@ Sendable 타입에 대해 논의하지 않았습니다.
 일부 타입은 동시성 도메인 간에 전달이 안전하지 않습니다.
 예를 들어 변경 가능한 프로퍼티를 포함하고
 해당 프로퍼티에 순차적으로 접근하지 않는 클래스는
-서로 다른 작업 간에 클래스의 인스턴스를 전달할 때
+서로 다른 태스크 간에 클래스의 인스턴스를 전달할 때
 예상할 수 없고 잘못된 결과를 생성할 수 있습니다.
 
 `Sendable` 프로토콜을 채택하여
@@ -1286,13 +1532,13 @@ await logger.addReading(from: reading)
   -> struct TemperatureReading: Sendable {
          var measurement: Int
      }
-  ---
+
   -> extension TemperatureLogger {
          func addReading(from reading: TemperatureReading) {
              measurements.append(reading.measurement)
          }
      }
-  ---
+
   -> let logger = TemperatureLogger(label: "Tea kettle", measurement: 85)
   -> let reading = TemperatureReading(measurement: 45)
   -> await logger.addReading(from: reading)
@@ -1322,79 +1568,28 @@ struct TemperatureReading {
 -->
 
 명시적으로 타입을 Sendable하지 않는 것으로 나타내려면
-`Sendable` 프로토콜을 암시적으로 준수하는 것을
-재정의하고 확장을 사용합니다:
+`Sendable`에 대한 사용 불가능한 준수를 작성해야 합니다:
 
 ```swift
 struct FileDescriptor {
-    let rawValue: CInt
+    let rawValue: Int
 }
 
 @available(*, unavailable)
-extension FileDescriptor: Sendable { }
+extension FileDescriptor: Sendable {}
 ```
 
 <!--
-The example above is abbreviated from a Swift System API.
+The example above is based on a Swift System API.
 https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+
+See also this PR that adds Sendable conformance to FileDescriptor:
+https://github.com/apple/swift-system/pull/112
 -->
 
-위의 코드는 POSIX 파일 디스크립터에 대한 래퍼의 일부분을 보여줍니다.
-파일 디스크립터의 인터페이스는 정수를 사용하여
-열린 파일에 대해 식별하고 상호작용 하고
-정수값은 Sendable이지만,
-비동기적 도메인을 통해 전송하는 것은 안전하지 않습니다.
-
-<!--
-  - test: `suppressing-implied-sendable-conformance`
-
-  -> struct FileDescriptor {
-  ->     let rawValue: CInt
-  -> }
-  ---
-  -> @available(*, unavailable)
-  -> extension FileDescriptor: Sendable { }
-  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
-  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
-  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
-  !! ^
-  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
-  !! extension FileDescriptor: Sendable { }
-  !! ^
--->
-
-위의 코드에서
-`FileDescriptor`은 암시적으로
-Sendable한 구조체입니다.
-그러나 확장에 `Sendable`에 대한 준수를 사용할 수 없게 만들어
-이 타입이 Sendable이 되지 않도록 방지하고 있습니다.
-
-<!--
-  OUTLINE
-  .. _Concurrency_MainActor:
-
-  The Main Actor
-  ~~~~~~~~~~~~~~
-
-
-  - the main actor is kinda-sorta like the main thread
-
-  - use it when you have shared mutable state,
-  but that state isn't neatly wrapped up in a single type
-
-  - you can put it on a function,
-  which makes calls to the function always run on the main actor
-
-  - you can put it on a type,
-  which makes calls to all of the type's methods run on the main actor
-
-  - some property wrappers like ``@EnvironmentObject`` from SwiftUI
-  imply ``@MainActor`` on a type.
-  Check for a ``wrappedValue`` that's marked ``@MainActor``.
-  If you mark the property of a type with one of these implicit-main-actor properties,
-  that has the same effect as marking the type with ``@MainActor``
-  you can wait for each child of a task
--->
+<doc:Protocols#암시적-프로토콜-준수-Implicit-Conformance-to-a-Protocol>에서 논의한대로
+프로토콜에 대한 암시적 준수를 억제하는데
+사용 불가능한 준수를 사용할 수도 있습니다.
 
 <!--
   LEFTOVER OUTLINE BITS
@@ -1413,7 +1608,6 @@ Sendable한 구조체입니다.
     the TemperatureSensor example
     might be a good example to expand when explaining them.
 
-
   ::
 
       while let result = try await group.next() { }
@@ -1430,6 +1624,12 @@ Sendable한 구조체입니다.
   Probably don't cover unsafe continuations (SE-0300) in TSPL,
   but maybe link to them?
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

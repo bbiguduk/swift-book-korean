@@ -70,8 +70,12 @@ Swift 배열의 타입은 `Array<Element>`로 작성되고,
 
 ### 빈 배열 생성 (Creating an Empty Array)
 
-이니셜라이저를 사용하여
-타입을 포함한 빈 배열을 생성할 수 있습니다:
+Swift에서 두 가지 접근방식으로 빈 배열을 생성할 수 있습니다.
+컨텍스트에서 함수 인자나 타입 변수나 상수와 같이
+타입 정보를 이미 제공하고 있다면,
+`[]`로 작성하는
+빈 배열 리터럴을 사용할 수 있습니다
+(빈 대괄호 쌍):
 
 ```swift
 var someInts: [Int] = []
@@ -89,14 +93,24 @@ print("someInts is of type [Int] with \(someInts.count) items.")
   ```
 -->
 
-`someInts` 변수의 타입은
-초기화 타입을 통해 `[Int]`로 추론됩니다.
+또한 명시적 이니셜라이저 문법을 사용하여
+특정 타입의 빈 배열을 생성할 수 있으며,
+이것은 대괄호 안에 요소 타입을 작성하고
+다음에 소괄호를 작성합니다 ---
+예를 들어 다음의 `[Int]()`입니다:
 
-또는 함수 인자나 이미 타입이 지정된
-변수 또는 상수와 같이
-이미 타입 정보를 제공하는 경우,
-`[]`(빈 대괄호 쌍)으로
-빈 배열을 생성할 수 있습니다:
+```swift
+var someInts = [Int]()
+print("someInts is of type [Int] with \(someInts.count) items.")
+// Prints "someInts is of type [Int] with 0 items."
+```
+
+두 접근방식 모두 동일한 결과를 생성합니다.
+그러나
+빈 배열 리터럴이 더 짧고 읽기 쉽습니다.
+
+두 경우 모두 빈 배열 리터럴(`[]`)을 사용하여
+기존 변수에 빈 배열을 다시 할당할 수 있습니다:
 
 ```swift
 someInts.append(3)
@@ -162,7 +176,7 @@ var sixDoubles = threeDoubles + anotherThreeDoubles
   -> var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
   /> anotherThreeDoubles is of type [Double], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
   </ anotherThreeDoubles is of type [Double], and equals [2.5, 2.5, 2.5]
-  ---
+
   -> var sixDoubles = threeDoubles + anotherThreeDoubles
   /> sixDoubles is inferred as [Double], and equals \(sixDoubles)
   </ sixDoubles is inferred as [Double], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
@@ -934,7 +948,7 @@ oddDigits.symmetricDifference(singleDigitPrimeNumbers).sorted()
   -> let oddDigits: Set = [1, 3, 5, 7, 9]
   -> let evenDigits: Set = [0, 2, 4, 6, 8]
   -> let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
-  ---
+
   >> let a =
   -> oddDigits.union(evenDigits).sorted()
   >> assert(a == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -998,7 +1012,7 @@ farmAnimals.isDisjoint(with: cityAnimals)
   -> let houseAnimals: Set = ["🐶", "🐱"]
   -> let farmAnimals: Set = ["🐮", "🐔", "🐑", "🐶", "🐱"]
   -> let cityAnimals: Set = ["🐦", "🐭"]
-  ---
+
   >> let aa =
   -> houseAnimals.isSubset(of: farmAnimals)
   >> assert(aa == true)
@@ -1430,7 +1444,7 @@ for airportName in airports.values {
      }
   </ Airport code: LHR
   </ Airport code: YYZ
-  ---
+
   -> for airportName in airports.values {
         print("Airport name: \(airportName)")
      }
@@ -1458,7 +1472,7 @@ let airportNames = [String](airports.values)
   -> let airportCodes = [String](airports.keys)
   /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
   </ airportCodes is ["LHR", "YYZ"]
-  ---
+
   -> let airportNames = [String](airports.values)
   /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
   </ airportNames is ["London Heathrow", "Toronto Pearson"]
@@ -1468,6 +1482,12 @@ let airportNames = [String](airports.values)
 Swift의 `Dictionary` 타입은 정의된 순서를 가지고 있지 않습니다.
 특정 순서로 딕셔너리의 키나 값을 반복하려면,
 `keys`나 `values` 프로퍼티에 `sorted()` 메서드를 사용 하십시오.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
