@@ -141,7 +141,7 @@ struct BlackjackCard {
 두 번째 값에 대해 상세 설명을 추가합니다.
 
 `BlackjackCard`는 커스텀 이니셜라이저가 없는 구조체이기 때문에,
-<doc:Initialization#구조체의-멤버별-이니셜라이저-Memberwise-Initializers-for-Structure-Types>에서 설명했듯이
+<doc:Initialization#구조체-타입의-멤버와이즈-이니셜라이저-Memberwise-Initializers-for-Structure-Types>에서 설명했듯이
 암시적 멤버별 이니셜라이저를 가지고 있습니다.
 `theAceOfSpades`라는 새로운 상수를 초기화하기 위해 이니셜라이저를 사용할 수 있습니다:
 

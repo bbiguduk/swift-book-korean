@@ -1,4 +1,4 @@
-# The Swift Programming Language (6) (한국어)
+# The Swift Programming Language (6.2 Beta) (한국어)
 
 @Metadata {
   @TechnologyRoot
@@ -13,7 +13,7 @@
 <!-- ## The Swift Programming Language -->
 ## Overview
 
-[https://docs.swift.org/swift-book/](https://docs.swift.org/swift-book/) 에 있는 [The Swift Programming Language](https://docs.swift.org/swift-book/) 을 한국어로 번역한 것이며, 오역 및 오타 많을 수 있습니다. 발견 시 연락처에 있는 email로 연락해 주세요!
+[https://docs.swift.org/swift-book/](https://docs.swift.org/swift-book/)에 있는 [The Swift Programming Language](https://docs.swift.org/swift-book/)을 한국어로 번역한 것이며, 오역 및 오타 많을 수 있습니다. 발견 시 연락처에 있는 email로 연락해 주세요!
 
 <!-- ### 업데이트
 

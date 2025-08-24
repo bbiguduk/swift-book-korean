@@ -1312,7 +1312,7 @@ var someOptional: MyEnumeration? = .someValue
 -->
 
 암시적 멤버 표현식 뒤에는
-접미 연산자(postfix operator)나 <doc:Expressions#접미사-표현식-Postfix-Expressions>에
+접미 연산자(postfix operator)나 <doc:Expressions#접미-표현식-Postfix-Expressions>에
 나열된 다른 접미 구문이 올 수 있습니다.
 이것을 *연쇄 암시적 멤버 표현식(chained implicit member expression)*이라 합니다.
 연쇄 접미 표현식(chained postfix expression)이

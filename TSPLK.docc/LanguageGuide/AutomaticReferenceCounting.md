@@ -1510,7 +1510,7 @@ paragraph = nil
 -->
 
 캡처 리스트에 대한 더 자세한 내용은
-<doc:Expressions#캡처-리스트-Capture-Lists>를 참고바랍니다.
+<doc:Expressions#캡처-목록-Capture-Lists>를 참고바랍니다.
 
 > Beta Software:
 >

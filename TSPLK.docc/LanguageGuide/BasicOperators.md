@@ -381,7 +381,7 @@ Swift는 아래의 비교 연산자(comparison operators)를 제공합니다:
 
 > Note: Swift는 두 객체 참조가 동일한 객체 인스턴스를 참조하는지 판별하는
 > *식별 연산자(identity operators)*(`===`와 `!==`)를 제공합니다.
-> 자세한 내용은 <doc:ClassesAndStructures#식별-연산자-Identity-Operators>를 참고바랍니다.
+> 자세한 내용은 <doc:ClassesAndStructures#동일성-연산자-Identity-Operators>를 참고바랍니다.
 
 각 비교 연산자는 구문이 참인지 아닌지 판단하기 위해 `Bool` 값을 반환합니다:
 

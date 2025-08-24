@@ -914,7 +914,7 @@ Swift는 다음과 같이 오류 타입을 추론합니다:
   `any Error`를 던진다고 추론합니다.
 
 명시적 타입을 가지는 오류 동작의 자세한 내용은,
-<doc:오류-타입-지정-Specifying-the-Error-Type>을 참고바랍니다.
+<doc:ErrorHandling#오류-타입-지정-Specifying-the-Error-Type>을 참고바랍니다.
 
 `do` 코드 블록의 구문에서 오류가 발생하면
 프로그렘 제어는

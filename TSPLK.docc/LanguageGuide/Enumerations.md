@@ -669,7 +669,7 @@ let possiblePlanet = Planet(rawValue: 7)
 
 > Note: 원시값 이니셜라이저는 모든 원시값을 열거형 케이스로 반환할 수 없으므로,
 > 실패 가능 이니셜라이저입니다.
-> 자세한 내용은 <doc:Initialization#실패-가능-이니셜라이저-Failable-Initializers>을 참고바랍니다.
+> 자세한 내용은 <doc:Initialization#실패-가능한-이니셜라이저-Failable-Initializers>를 참고바랍니다.
 
 `11`의 위치로 행성을 찾는다면,
 원시값 이니셜라이저에서 반환된 옵셔널 `Planet` 값은 `nil`입니다:

@@ -222,7 +222,7 @@ var red, green, blue: Double
 
 > Note: 실제로 타입 명시가 필요한 경우는 드뭅니다.
 > 상수 또는 변수를 선언할 때 초기값을 지정하면
-> Swift는 <doc:TheBasics#타입-세이프티와-타입-추론-Type-Safety-and-Type-Inference>에서 설명된 대로
+> Swift는 <doc:TheBasics#타입-안정성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로
 > 해당 상수 또는 변수에 사용될 타입을 거의 항상 추론할 수 있습니다.
 > 위의 `welcomeMessage` 예시에서 초기값을 지정하지 않았으므로,
 > `welcomeMessage` 변수의 타입은 초기값에서 유추되지 않고
@@ -539,7 +539,7 @@ Swift는 또한 현재 플랫폼의 네이티브 사이즈와 같은
 > `Int`를 더 선호합니다.
 > 정수값에 `Int`를 일관되게 사용하면
 > 코드 상호 운용성을 지원하고
-> <doc:TheBasics#타입-세이프티와-타입-추론-Type-Safety-and-Type-Inference>에 설명한대로 다른 숫자 형식간에 변환 할 필요가 없습니다.
+> <doc:TheBasics#타입-안정성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로 다른 숫자 형식간에 변환 할 필요가 없습니다.
 
 ## 부동소수점 숫자 (Floating-Point Numbers)
 
@@ -1243,7 +1243,7 @@ print("The status message is \(http200Status.description)")
 두 개의 값을 반환함으로써,
 단일 타입의 단일 값만 반환할 수 있는 경우보다
 유용합니다.
-자세한 내용은 <doc:Functions#여러개의-반환값이-있는-함수-Functions-with-Multiple-Return-Values>를 참조 바랍니다.
+자세한 내용은 <doc:Functions#여러-개의-반환값이-있는-함수-Functions-with-Multiple-Return-Values>를 참조 바랍니다.
 
 > Note: 튜플은 관련된 값의 간단한 그룹에 유용합니다.
 > 복잡한 데이터 구조를 생성하는데는 맞지 않습니다.
@@ -1623,7 +1623,7 @@ print(greeting)
 -->
 
 대체 값 제공하기 위한 `??` 사용에 대한 더 자세한 내용은
-<doc:BasicOperators#Nil-결합-연산자-Nil-Coalescing-Operator>를 참고바랍니다.
+<doc:BasicOperators#Nil-병합-연산자-Nil-Coalescing-Operator>를 참고바랍니다.
 
 ### 강제 언래핑 (Force Unwrapping)
 
@@ -1660,7 +1660,7 @@ guard let number = convertedNumber else {
 
 데이터 요구사항을 강제하고
 실행 중에 가정을 확인하는 방법에 대한 자세한 내용은
-<doc:TheBasics#역설과-전제조건-Assertions-and-Preconditions>을 참고바랍니다.
+<doc:TheBasics#어설션과-전제-조건-Assertions-and-Preconditions>을 참고바랍니다.
 
 ### 암시적 언래핑 옵셔널 (Implicitly Unwrapped Optionals)
 

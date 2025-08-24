@@ -96,7 +96,7 @@ open 접근은 가장 높은(가장 적은 제약) 접근 수준이며
 private 접근은 가장 낮은(가장 높은 제약) 접근 수준입니다.
 
 open 접근은 클래스와 클래스 멤버에만 적용되고
-아래의 <doc:AccessControl#서브-클래싱-Subclassing>에서 설명했듯이
+아래의 <doc:AccessControl#하위-클래스-Subclassing>에서 설명했듯이
 외부 모듈에서 하위 클래스와 재정의를 허용한다는 점에서
 public 접근과 다릅니다.
 명시적으로 클래스를 open으로 표기하면
@@ -170,7 +170,7 @@ file private이나 private로 코드의 어떤 부분을 표기할 수 있습니
 
 엔티티의 선언 앞에
 `public`이나 `private`처럼
-<doc:AccessControl#Access-Levels>에 나열된 수정자 중 하나를
+<doc:AccessControl#접근-수준-Access-Levels>에 나열된 수정자 중 하나를
 위치시켜 엔티티에 대한 접근 수준을 정의합니다.
 예를 들어:
 

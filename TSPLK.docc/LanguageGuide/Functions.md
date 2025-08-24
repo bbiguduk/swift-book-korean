@@ -539,7 +539,7 @@ print(anotherGreeting(for: "Dave"))
 `return` 키워드를 사용하여 더 긴 형식으로 작성합니다.
 `return` 한 줄로만 작성된 함수는 `return`을 생략할 수 있습니다.
 
-<doc:Properties#짧은-Getter-선언-Shorthand-Getter-Declaration>에서 살펴보겠지만,
+<doc:Properties#간략한-Getter-선언-Shorthand-Getter-Declaration>에서 살펴보겠지만,
 프로퍼티 getter 또한 암시적 반환을 사용할 수 있습니다.
 
 > Note: 암시적 반환값으로 작성하는 코드는

@@ -14,7 +14,7 @@ Swift의 클로저는
 Swift는 캡처에 대한 메모리 관리를 자동으로 처리합니다.
 
 > Note: 캡처에 대한 개념이 생소하더라도 걱정하지 마세요.
-> 아래 <doc:Closures#캡처-값-Capturing-Values>에서 자세히 다루도록 하겠습니다.
+> 아래 <doc:Closures#캡처값-Capturing-Values>에서 자세히 다루도록 하겠습니다.
 
 <doc:Functions>에서 소개한 전역 함수와 중첩 함수는
 클로저의 특별한 형태입니다.
@@ -629,7 +629,7 @@ loadPicture(from: someServer) { picture in
 > 이것을 대체하기 위해선 <doc:Concurrency>에서 설명되어진 것과 같이
 > 비동기 코드를 사용하면 됩니다.
 
-## 캡처 값 (Capturing Values)
+## 캡처값 (Capturing Values)
 
 클로저는 정의된 주변 컨텍스트로부터
 상수와 변수를 *캡처(capture)*할 수 있습니다.
@@ -834,7 +834,7 @@ incrementByTen()
 > 클로저가 인스턴스나 인스턴스의 멤버를 참조하여 해당 인스턴스를 캡처하면
 > 클로저와 인스턴스 사이에 강한 참조 순환이 생성됩니다.
 > Swift는 *캡처 리스트*를 사용하여 이러한 강한 참조 순환을 끊습니다.
-> 자세한 내용은 <doc:AutomaticReferenceCounting#클로저의-강한-참조-순환-Strong-Reference-Cycles-for-Closures>을 참고바랍니다.
+> 자세한 내용은 <doc:AutomaticReferenceCounting#클로저의-강한-순환-참조-Strong-Reference-Cycles-for-Closures>을 참고바랍니다.
 
 ## 클로저는 참조 타입 (Closures Are Reference Types)
 

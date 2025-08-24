@@ -337,7 +337,7 @@ getter와 setter 절 모두 생략하고 요구된 값을 직접적으로 반환
 
 위 형식의 *setter 이름(setter name)*과 둘러싸인 소괄호는 선택 사항입니다.
 setter 이름을 제공하면, setter의 매개변수 이름으로 사용됩니다.
-setter 이름을 제공하지 않으면, <doc:Properties#짧은-Setter-선언-Shorthand-Setter-Declaration>에서 설명한대로
+setter 이름을 제공하지 않으면, <doc:Properties#간략한-Setter-선언-Shorthand-Setter-Declaration>에서 설명한대로
 setter의 기본 매개변수 이름은 `newValue`입니다.
 
 명명된 저장값과 변수 저장 프로퍼티와 다르게
@@ -1999,7 +1999,7 @@ Swift 표준 라이브러리에 정의된 `RawRepresentable` 프로토콜을 준
 
 열거형 타입의 케이스를 참조하기 위해
 `EnuerationType.enumerationCase`와 같이 점(`.`) 구문을 사용합니다.
-열거형 타입을 컨텍스트에서 추론할 수 있으면 <doc:Enumerations#열거형-구문-Enumeration-Syntax>과
+열거형 타입을 컨텍스트에서 추론할 수 있으면 <doc:Enumerations#열거형-문법-Enumeration-Syntax>과
 <doc:Expressions#암시적-멤버-표현식-Implicit-Member-Expression>에서 설명한대로
 점은 그대로 유지한 채 생략할 수 있습니다.
 
@@ -2097,7 +2097,7 @@ struct <#structure name#>: <#adopted protocols#> {
 - <doc:Initialization#이니셜라이저-Initializers>에서 설명한대로
   구조체 내 선언된 이니셜라이저 중 하나를 호출합니다.
 - 선언된 이니셜라이저가 없는 경우
-  <doc:Initialization#구조체의-멤버별-이니셜라이저-Memberwise-Initializers-for-Structure-Types>에서 설명한대로
+  <doc:Initialization#구조체-타입의-멤버와이즈-이니셜라이저-Memberwise-Initializers-for-Structure-Types>에서 설명한대로
   구조체의 멤버별 이니셜라이저를 호출합니다.
 - 선언된 이니셜라이저가 없고
   구조체 선언의 모든 프로퍼티에 초기값이 주어진 경우
