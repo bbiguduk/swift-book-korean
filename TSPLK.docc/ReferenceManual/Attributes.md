@@ -97,8 +97,12 @@ If there's a stable URL we can use, make the macro protocols below links.
   확장 매크로를 작성하거나
   확장 매크로를 사용하여 peer 매크로가 있는 확장을 추가할 수 없습니다.
 
-peer, member, accessor 매크로 역할은 매크로가 생성하는 기호의 이름을 나열하는
+peer와 member 매크로 역할은 매크로가 생성하는 기호의 이름을 나열하는
 `names:` 인자를 요구합니다.
+accessor 매크로 역할은 매크로가 `willSet`이나 `didSet` 프로퍼티 관찰자를 생성한다면
+`names:` 인자를 요구합니다.
+프로퍼티 관찰자를 생성하는 accessor 매크로는
+프로퍼티 관찰자는 저장 프로퍼티에만 적용가능하므로 다른 accessor 매크로를 추가할 수 없습니다.
 매크로가 확장 내에 선언을 추가한다면
 확장 매크로 역할도 `names:` 인자를 요구합니다.
 `names:` 인자가 매크로 선언에 포함되면,
@@ -215,10 +219,10 @@ Swift 버전을 사용하여 지정한 가용
   선언된 기호가 비동기 컨텍스트에서
   직접적으로 사용될 수 없음을 나타냅니다.
 
-  Swift 동시성은 잠재적 중단점 후에
+  Swift 동시성은 잠재적 중단 지점 후에
   다른 스레드에서 재개될 수 있으므로,
   스레드 로컬 스토리지(thread-local storage), 락(locks), 뮤텍스(mutexes), 세마포어(semaphores)와 같은 요소를
-  중단점을 넘어 사용하면 올바르지 않은 결과를 가져올 수 있습니다.
+  중단 지점을 넘어 사용하면 올바르지 않은 결과를 가져올 수 있습니다.
 
   이런 문제를 피하기 위해
   기호의 선언에 `@available(*, noasync)` 속성을 추가합니다:
@@ -1000,21 +1004,19 @@ SpriteKit 에디터 UI에 노출합니다.
 이 프로퍼티는 액터의 공유 인스턴스를 제공합니다.
 
 전역 액터는 액터 격리의 개념을
-코드의 여러 곳에서 
-A global actor generalizes the concept of actor isolation
-to state that's spread out in several different places in code ---
-such as multiple types, files, and modules ---
-and makes it possible to safely assess global variables from concurrent code.
-The actor that the global actor provides
-as the value of its `shared` property
-serializes access to all this state.
-You can also use a global actor to model constraints in concurrent code
-like code that all needs to execute on the same thread.
+코드의 여러 곳 ---
+여러 타입, 모듈과 같은 ---
+에 분산된 상태로 만들며 동시성 코드에서 전역 변수를 안전하게 접근할 수 있도록 합니다.
+전역 액터가
+`shared` 프로퍼티의 값으로 제공하는 액터는
+모든 상태의 접근을 직렬화합니다.
+또한 모든 코드가 동일한 스레드에서 실행되어야 하는 경우와 같이
+동시성 코드의 제약조건을 모델링하는 데 전역 액터를 사용할 수도 있습니다.
 
-Global actors implicitly conform to the [`GlobalActor`][] protocol.
-The main actor is a global actor provided by the standard library,
-as discussed in <doc:Concurrency#The-Main-Actor>.
-Most code can use the main actor instead of defining a new global actor.
+전역 액터는 [`GlobalActor`][] 프로토콜을 암시적 준수합니다.
+메인 액터는 <doc:Concurrency#메인-액터-The-Main-Actor>에서 설명한대로
+표준 라이브러리에서 제공하는 전역 액터입니다.
+대부분 코드에서는 새로운 전역 액터를 정의하는 대신 메인 액터를 사용할 수 있습니다.
 
 [`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
 
@@ -1587,14 +1589,14 @@ struct SomeStruct {
              self.someValue = custom
          }
      }
-  ---
+
   -> struct SomeStruct {
   ->     // Uses init()
   ->     @SomeWrapper var a: Int
-  ---
+
   ->     // Uses init(wrappedValue:)
   ->     @SomeWrapper var b = 10
-  ---
+
   ->     // Both use init(wrappedValue:custom:)
   ->     @SomeWrapper(custom: 98.7) var c = 30
   ->     @SomeWrapper(wrappedValue: 30, custom: 98.7) var d
@@ -1668,7 +1670,7 @@ s.$x.wrapper  // WrapperWithProjection value
   -> struct SomeProjection {
          var wrapper: WrapperWithProjection
   }
-  ---
+
   -> struct SomeStruct {
   ->     @WrapperWithProjection var x = 123
   -> }
@@ -1872,7 +1874,6 @@ struct ArrayBuilder {
   var manualNumber = ArrayBuilder.buildExpression(10)
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2040,7 +2041,6 @@ struct ArrayBuilder {
   }
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2057,7 +2057,7 @@ struct ArrayBuilder {
        }
     << Building second... [32]
     << Building first... [32]
-    ---
+
     -> var manualConditional: [Int]
     -> if someNumber < 12 {
            let partialResult = ArrayBuilder.buildExpression(31)
@@ -2096,7 +2096,6 @@ struct ArrayBuilder {
   var manualOptional = ArrayBuilder.buildOptional(partialResult)
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2105,7 +2104,7 @@ struct ArrayBuilder {
            if (someNumber % 2) == 1 { 20 }
        }
     << Building optional... Optional([20])
-    ---
+
     -> var partialResult: [Int]? = nil
     -> if (someNumber % 2) == 1 {
            partialResult = ArrayBuilder.buildExpression(20)
@@ -2182,7 +2181,7 @@ struct ArrayBuilder {
           Line(elements: [Text("Second"), Text("Third")])
           Text("Last")
        }
-    ---
+
     -> let partialResult1 = DrawingPartialBlockBuilder.buildPartialBlock(first: Text("first"))
     -> let partialResult2 = DrawingPartialBlockBuilder.buildPartialBlock(
           accumulated: partialResult1,
@@ -2216,7 +2215,6 @@ struct ArrayBuilder {
   )
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2226,7 +2224,7 @@ struct ArrayBuilder {
            200
            300
        }
-    ---
+
     -> var manualBlock = ArrayBuilder.buildBlock(
            ArrayBuilder.buildExpression(100),
            ArrayBuilder.buildExpression(200),
@@ -2257,7 +2255,6 @@ struct ArrayBuilder {
   let manualArray = ArrayBuilder.buildArray(temporary)
   ```
 
-
   <!--
     - test: `array-result-builder`
 
@@ -2267,7 +2264,7 @@ struct ArrayBuilder {
                100 + i
            }
        }
-    ---
+
     -> var temporary: [[Int]] = []
     -> for i in 5...7 {
            let partialResult = ArrayBuilder.buildExpression(100 + i)
@@ -2303,7 +2300,7 @@ struct ArrayBuilder {
          var content: Drawable
          func draw() -> String { return content.draw() }
      }
-  ---
+
   -> @resultBuilder
      struct DrawingBuilder {
          static func buildBlock<D: Drawable>(_ components: D...) -> Line<D> {
@@ -2375,7 +2372,7 @@ struct ArrayBuilder {
              return AnyDrawable(content: content)
          }
      }
-  ---
+
   -> @DrawingBuilder var typeErasedDrawing: Drawable {
          if #available(macOS 99, *) {
              FutureText("Inside.future")
@@ -2715,6 +2712,12 @@ Sendable 하지 않은 함수 타입의 하위 타입입니다.
 > *balanced-token* → **`{`** *balanced-tokens*_?_ **`}`** \
 > *balanced-token* → Any identifier, keyword, literal, or operator \
 > *balanced-token* → Any punctuation except  **`(`**,  **`)`**,  **`[`**,  **`]`**,  **`{`**, or  **`}`**
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

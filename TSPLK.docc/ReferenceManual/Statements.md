@@ -1005,19 +1005,20 @@ Swift는 세 가지 컴파일러 제어 구문을 가지고 있습니다:
 | 플랫폼 조건 | 유효 인자 |
 | -------- | ------- |
 | `os()` | `macOS`, `iOS`, `watchOS`, `tvOS`, `visionOS`, `Linux`, `Windows` |
-| `arch()` | `i386`, `x86_64`, `arm`, `arm64` |
+| `arch()` | `arm`, `arm64`, `i386`, `wasm32`, `x86_64` |
 | `swift()` | `>=` 또는 `<` 다음에 버전 번호 |
 | `compiler()` | `>=` 또는 `<` 다음에 버전 번호 |
 | `canImport()` | 모듈 이름 |
 | `targetEnvironment()` | `simulator`, `macCatalyst` |
 
 <!--
-  For the full list in the compiler, see the values of
+  The lists above match <https://www.swift.org/platform-support/>
+  and include only platforms with *official* support.
+  For the full list of operating systems and architectures,
+  including those with unofficial or experimental support,
+  see the values of
   SupportedConditionalCompilationOSs and SupportedConditionalCompilationArches
   in the file lib/Basic/LangOptions.cpp.
-  Some of the OSes and architectures are listed there
-  because there's experimental work to port Swift to them.
-  We won't list them here until they're officially supported.
   The compiler also accepts pretty much any string --
   for example "#if os(toaster)" compiles just fine,
   but Swift doesn't actually support running on a toaster oven --
@@ -1118,7 +1119,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
   >> #else
   >> #error("Can't import A")
   >> #endif
-  ---
+
   >> #if canImport(canImport_A.B)
   >> #else
   >> #error("Can't import A.B")
@@ -1254,7 +1255,7 @@ print("Compiled with the Swift 5 compiler or later in a Swift mode earlier than 
 > *platform-condition* → **`targetEnvironment`** **`(`** *environment* **`)`**
 >
 > *operating-system* → **`macOS`** | **`iOS`** | **`watchOS`** | **`tvOS`** | **`visionOS`** | **`Linux`** | **`Windows`** \
-> *architecture* → **`i386`** | **`x86_64`** | **`arm`** | **`arm64`** \
+> *architecture* → **`arm`** | **`arm64`** | **`i386`** | **`wasm32`** | **`x86_64`** \
 > *swift-version* → *decimal-digits* *swift-version-continuation*_?_ \
 > *swift-version-continuation* → **`.`** *decimal-digits* *swift-version-continuation*_?_ \
 > *environment* → **`simulator`** | **`macCatalyst`**
@@ -1316,8 +1317,8 @@ Swift 5.9 이전에는
 이 동작은 이제
 Swift 표준 라이브러리에 [`warning(_:)`][]과 [`error(_:)`][] 매크로로 제공됩니다.
 
-[`warning(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/warning(_:)
-[`error(_:)`]: http://developer.apple.com/documentation/swift/documentation/swift/error(_:)
+[`warning(_:)`]: https://developer.apple.com/documentation/swift/warning(_:)
+[`error(_:)`]: https://developer.apple.com/documentation/swift/error(_:)
 
 ## 가용성 조건 (Availability Condition)
 
@@ -1443,6 +1444,12 @@ if #unavailable(<#platform name#> <#version#>, <#...#>) {
   !$                ^
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -481,7 +481,7 @@ newAndOld.x = 200
              set { print("Setter was called"); xValue = newValue }
          }
      }
-  ---
+
   // This subclass doesn't refer to oldValue in its observer, so the
   // superclass's getter is called only once to print the value.
   -> class New: Superclass {
@@ -494,7 +494,7 @@ newAndOld.x = 200
   <- Setter was called
   <- Getter was called
   <- New value 100
-  ---
+
   // This subclass refers to oldValue in its observer, so the superclass's
   // getter is called once before the setter, and again to print the value.
   -> class NewAndOld: Superclass {
@@ -607,7 +607,7 @@ var dictionary2: Dictionary<String, Int> = [:]
 
   ```swifttest
   -> typealias StringDictionary<Value> = Dictionary<String, Value>
-  ---
+
   // The following dictionaries have the same type.
   -> var dictionary1: StringDictionary<Int> = [:]
   -> var dictionary2: Dictionary<String, Int> = [:]
@@ -688,7 +688,7 @@ func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
          associatedtype Iterator: IteratorProtocol
          typealias Element = Iterator.Element
      }
-  ---
+
   -> func sum<T: Sequence>(_ sequence: T) -> Int where T.Element == Int {
          // ...
   >>     return 9000
@@ -873,7 +873,6 @@ func someFunction(a: inout A, b: consuming B, c: C) { ... }
 함수 내에서 수정된 것은 호출자에게 보이지 않습니다.
 in-out 매개변수를 만드려면,
 `inout` 매개변수 수정자를 적용합니다.
-
 
 ```swift
 func someFunction(a: inout Int) {
@@ -1070,6 +1069,8 @@ in-out 매개변수에 대한 자세한 설명과 예시는
 `borrowing`이나 `consuming` 매개변수 수정자를 적용할 수 있습니다.
 이 경우에
 `copy`를 사용해 복사 작업을 명시적으로 표시합니다.
+또한
+복사 불가능한 타입의 값은 borrowing이나 consuming으로 전달되어야 합니다.
 
 기본 규칙을 사용하는 것과 상관없이,
 Swift는 객체 수명과 소유권이
@@ -1800,7 +1801,7 @@ let evenInts: [Number] = [0, 2, 4, 6].map(f)
      }
   -> let f = Number.integer
   -> // f is a function of type (Int) -> Number
-  ---
+
   -> // Apply f to create an array of Number instances with integer values
   -> let evenInts: [Number] = [0, 2, 4, 6].map(f)
   ```
@@ -1891,10 +1892,10 @@ enum Tree<T> {
   !! <REPL Input>:1:10: error: enum case 'c' without associated value cannot be 'indirect'
   !! enum E { indirect case c }
   !!          ^
-  ---
+
   -> enum E1 { indirect case c() }     // This is fine, but probably shouldn't be
   -> enum E2 { indirect case c(Int) }  // This is fine, but probably shouldn't be
-  ---
+
   -> indirect enum E3 { case x }
 -->
 
@@ -2667,7 +2668,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   -> protocol SomeProtocol {
          associatedtype SomeType
      }
-  ---
+
   -> protocol SubProtocolA: SomeProtocol {
          // This syntax produces a warning.
          associatedtype SomeType: Equatable
@@ -2679,7 +2680,7 @@ protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   !$ note: 'SomeType' declared here
   !! associatedtype SomeType
   !! ^
-  ---
+
   // This syntax is preferred.
   -> protocol SubProtocolB: SomeProtocol where SomeType: Equatable { }
   ```
@@ -3109,7 +3110,7 @@ extension String: TitledLoggable {
              print(self)
          }
      }
-  ---
+
      protocol TitledLoggable: Loggable {
          static var logTitle: String { get }
      }
@@ -3118,7 +3119,7 @@ extension String: TitledLoggable {
              print("\(Self.logTitle): \(self)")
          }
      }
-  ---
+
      struct Pair<T>: CustomStringConvertible {
          let first: T
          let second: T
@@ -3126,14 +3127,14 @@ extension String: TitledLoggable {
              return "(\(first), \(second))"
          }
      }
-  ---
+
      extension Pair: Loggable where T: Loggable { }
      extension Pair: TitledLoggable where T: TitledLoggable {
          static var logTitle: String {
              return "Pair of '\(T.logTitle)'"
          }
      }
-  ---
+
      extension String: TitledLoggable {
         static var logTitle: String {
            return "String"
@@ -3247,7 +3248,7 @@ extension Array: Serializable where Element == String {
   -> protocol Serializable {
         func serialize() -> Any
      }
-  ---
+
      extension Array: Serializable where Element == Int {
          func serialize() -> Any {
              // implementation
@@ -3294,7 +3295,7 @@ extension Array: Serializable where Element: SerializableInArray {
   -> protocol SerializableInArray { }
      extension Int: SerializableInArray { }
      extension String: SerializableInArray { }
-  ---
+
   -> extension Array: Serializable where Element: SerializableInArray {
          func serialize() -> Any {
              // implementation
@@ -3349,14 +3350,14 @@ extension Array: MarkedLoggable where Element: MarkedLoggable { }
   -> protocol MarkedLoggable: Loggable {
         func markAndLog()
      }
-  ---
+
      extension MarkedLoggable {
         func markAndLog() {
            print("----------")
            log()
         }
      }
-  ---
+
      extension Array: Loggable where Element: Loggable { }
      extension Array: TitledLoggable where Element: TitledLoggable {
         static var logTitle: String {
@@ -3506,7 +3507,7 @@ getter만 필요하다면, 모든 절을 생략할 수 있고
 
 위 형식의 *setter 이름(setter name)*과 둘러싸인 소괄호는 선택 사항입니다.
 setter 이름을 제공하면, setter의 매개변수 이름으로 사용됩니다.
-setter 이름을 제공하지 않으면, setter의 기본 매개변수 이름은 `value`입니다.
+setter 이름을 제공하지 않으면, setter의 기본 매개변수 이름은 `newValue`입니다.
 setter의 매개변수 타입은 위 형식의 *반환 타입(return type)*과 동일합니다.
 
 *매개변수(parameters)*나 *반환 타입(return type)*이 오버로드 하려는 것과 다르면,
@@ -3582,7 +3583,7 @@ Swift 표준 라이브러리의 `externalMacro(module:type:)` 매크로를 호�
 해당 매크로를 호출할 때 매크로의 구현을 포함하는 타입의 이름과
 해당 타입을 포함하는 모듈의 이름을 전달합니다.
 
-[SwiftSyntax]: http://github.com/apple/swift-syntax/
+[SwiftSyntax]: https://github.com/swiftlang/swift-syntax
 
 매크로는 함수에서 사용하는 동일한 모델에 따라
 오버로드될 수 있습니다.
@@ -3982,6 +3983,12 @@ Swift는 다섯 가지 접근 제어 수준을 제공합니다: open, public, in
 > *mutation-modifier* → **`mutating`** | **`nonmutating`**
 >
 > *actor-isolation-modifier* → **`nonisolated`**
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

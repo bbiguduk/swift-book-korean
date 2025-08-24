@@ -107,8 +107,8 @@ Swift 컴파일러와 표준 라이브러리 용으로 사용됩니다.
 The paragraph above produces a link-resolution warning
 because of a known issue with ` in code voice.
 
-https://github.com/apple/swift-book/issues/71
-https://github.com/apple/swift-markdown/issues/93
+https://github.com/swiftlang/swift-book/issues/71
+https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
 명시적으로 매개변수 이름이 없는 클로저 내의
@@ -133,8 +133,8 @@ The formal grammar below for 'identifier'
 produces a link-resolution warning
 because of a known issue with ` in code voice.
 
-https://github.com/apple/swift-book/issues/71
-https://github.com/apple/swift-markdown/issues/93
+https://github.com/swiftlang/swift-book/issues/71
+https://github.com/swiftlang/swift-markdown/issues/93
 -->
 
 > Grammar of an identifier:
@@ -971,7 +971,7 @@ let textB = "Hello world"
   of the supported syntax here.
   (Unified dialect/superset of POSIX + PCRE 2 + Oniguruma + .NET)
 
-  https://github.com/apple/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
+  https://github.com/swiftlang/swift-experimental-string-processing/blob/main/Sources/_StringProcessing/Regex/Core.swift
 
   Regex literals and the DSL take different approaches to captures.
   The literals give you more type safety.
@@ -1251,6 +1251,12 @@ Swift 표준 라이브러리는 사용할 수 있는 여러 가지 연산자를 
 > *infix-operator* → *operator* \
 > *prefix-operator* → *operator* \
 > *postfix-operator* → *operator*
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

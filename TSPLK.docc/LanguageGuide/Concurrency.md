@@ -1049,7 +1049,7 @@ func show(_: Data) {
 그러나
 메인 액터에서 실행되지 않는 코드에서 `show(_:)`를 호출하려면
 `await`를 포함하고 비동기 함수로 호출해야 합니다.
-이것은 메인 액터로 전환하는 것이 잠재 중단점(potential suspension point)을 도입하기 때문입니다.
+이것은 메인 액터로 전환하는 것이 잠재 중단 지점(potential suspension point)을 도입하기 때문입니다.
 예를 들어:
 
 ```swift

@@ -249,7 +249,7 @@ In-out 매개변수는 <doc:Functions#In-Out-매개변수-In-Out-Parameters>에 
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   >> print(type(of: f))
   << (Int, Int) -> ()
@@ -281,17 +281,17 @@ f = functionWithDifferentNumberOfArguments // Error
   -> func someFunction(left: Int, right: Int) {}
   -> func anotherFunction(left: Int, right: Int) {}
   -> func functionWithDifferentLabels(top: Int, bottom: Int) {}
-  ---
+
   -> var f = someFunction // The type of f is (Int, Int) -> Void, not (left: Int, right: Int) -> Void.
   -> f = anotherFunction              // OK
   -> f = functionWithDifferentLabels  // OK
-  ---
+
   -> func functionWithDifferentArgumentTypes(left: Int, right: String) {}
   -> f = functionWithDifferentArgumentTypes     // Error
   !$ error: cannot assign value of type '(Int, String) -> ()' to type '(Int, Int) -> ()'
   !! f = functionWithDifferentArgumentTypes     // Error
   !! ^
-  ---
+
   -> func functionWithDifferentNumberOfArguments(left: Int, right: Int, top: Int) {}
   -> f = functionWithDifferentNumberOfArguments // Error
   !$ error: type of expression is ambiguous without more context
@@ -406,11 +406,11 @@ var operation: (Int, Int) -> Int               // OK
   >>     }
   >>     return g
   >> }
-  ---
+
   >> let a: (Int) -> (Int) -> Int = f
   >> let r0 = a(3)(5)
   >> assert(r0 == 8)
-  ---
+
   >> let b: (Int) -> ((Int) -> Int) = f
   >> let r1 = b(3)(5)
   >> assert(r1 == 8)
@@ -864,6 +864,7 @@ typealias PQR = PQ & Q & R
 프로토콜이나 프로토콜 합성을 준수하는 타입을 정의합니다.
 
 불투명 타입은 함수나 서브스크립트의 반환 타입,
+함수, 서브스크립트, 이니셜라이저 매개변수의 타입,
 또는 프로퍼티의 타입으로 나타납니다.
 불투명 타입은 배열의 요소 타입이나 옵셔널의 래핑된 타입과 같은
 튜플 타입 또는 제네릭 타입의 부분으로 나타날 수 없습니다.
@@ -908,6 +909,42 @@ Swift는 이 내부 타입을 사용해 최적화를 수행할 수 있습니다.
 함수의 제네릭 타입 매개변수도 포함할 수 있습니다.
 예를 들어 함수 `someFunction<T>()`는
 타입 `T`나 `Dictionary<String, T>`의 값을 반환할 수 있습니다.
+
+매개변수에 불투명 타입을 작성하는 것은
+제네릭 타입에 대한 편의 문법(syntactic sugar)이며
+이것은 제네릭 타입 매개변수의 이름을 지정하지 않는 방식입니다.
+암시적 제네릭 타입 매개변수는
+불투명 타입에 명시된 프로토콜을 준수하도록 요구하는 제약조건을 가집니다.
+여러 불투명 타입을 작성한 경우에는
+각각 자체 제네릭 타입 매개변수를 생성합니다.
+예를 들어 다음의 선언은 동일합니다:
+
+```swift
+func someFunction(x: some MyProtocol, y: some MyProtocol) { }
+func someFunction<T1: MyProtocol, T2: MyProtocol>(x: T1, y: T2) { }
+```
+
+두 번째 선언에서
+제네릭 타입 매개변수 `T1`과 `T2`는 이름을 가지므로
+코드의 다른 곳에서 이 타입을 참조할 수 있습니다.
+반면에
+첫 번째 선언의 제네릭 타입 매개변수는
+이름이 없으므로 다른 코드에서 참조할 수 없습니다.
+
+가변 매개변수(variadic parameter)의 타입에는 불투명 타입을 사용할 수 없습니다.
+
+반환되는 함수 타입의 매개변수나
+함수 타입인 매개변수 타입의 매개변수로
+불투명 타입을 사용할 수 없습니다.
+이러한 위치에서는
+함수를 호출하는 쪽에서 알 수 없는 타입의
+값을 구성해야 하기 때문입니다.
+
+```swift
+protocol MyProtocol { }
+func badFunction() -> (some MyProtocol) -> Void { }  // Error
+func anotherBadFunction(callback: (some MyProtocol) -> Void) { }  // Error
+```
 
 > Grammar of an opaque type:
 >
@@ -975,7 +1012,7 @@ any <#constraint#>
 
 <!--
 Contrast P.Type with (any P.Type) and (any P).Type
-https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
+https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
 -->
 
 > Grammar of a boxed protocol type
@@ -1242,12 +1279,12 @@ print(type(of: z.f()))
   -> let x = Superclass()
   -> print(type(of: x.f()))
   <- Superclass
-  ---
+
   -> class Subclass: Superclass { }
   -> let y = Subclass()
   -> print(type(of: y.f()))
   <- Subclass
-  ---
+
   -> let z: Superclass = Subclass()
   -> print(type(of: z.f()))
   <- Subclass
@@ -1358,6 +1395,12 @@ Swift의 타입 추론은 단일 표현식이나 구문 수준에서 동작합�
   TODO: Email Doug for a list of rules or situations describing when type-inference
   is allowed and when types must be fully typed.
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
