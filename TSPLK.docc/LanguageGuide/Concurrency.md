@@ -1587,7 +1587,7 @@ See also this PR that adds Sendable conformance to FileDescriptor:
 https://github.com/apple/swift-system/pull/112
 -->
 
-<doc:Protocols#암시적-프로토콜-준수-Implicit-Conformance-to-a-Protocol>에서 논의한대로
+<doc:Protocols#프로토콜-암시적-준수-Implicit-Conformance-to-a-Protocol>에서 논의한대로
 프로토콜에 대한 암시적 준수를 억제하는데
 사용 불가능한 준수를 사용할 수도 있습니다.
 

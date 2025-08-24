@@ -142,7 +142,7 @@ func cannotThrowErrors() -> String
   ```swifttest
   -> func canThrowErrors() throws -> String
   >> { return "foo" }
-  ---
+
   -> func cannotThrowErrors() -> String
   >> { return "foo" }
   ```
@@ -246,7 +246,7 @@ class VendingMachine {
         var price: Int
         var count: Int
      }
-  ---
+
   -> class VendingMachine {
   ->     var inventory = [
              "Candy Bar": Item(price: 12, count: 7),
@@ -254,7 +254,7 @@ class VendingMachine {
              "Pretzels": Item(price: 7, count: 11)
          ]
   ->     var coinsDeposited = 0
-  ---
+
   ->     func vend(itemNamed name: String) throws {
              guard let item = inventory[name] else {
                  throw VendingMachineError.invalidSelection
@@ -521,7 +521,7 @@ do {
              print("Couldn't buy that from the vending machine.")
          }
      }
-  ---
+
   -> do {
          try nourish(with: "Beet-Flavored Chips")
      } catch {
@@ -615,11 +615,11 @@ do {
         // ...
   >>    return 40
   -> }
-  ---
+
   -> let x = try? someThrowingFunction()
   >> print(x as Any)
   << Optional(40)
-  ---
+
   -> let y: Int?
      do {
          y = try someThrowingFunction()
@@ -802,7 +802,7 @@ Swift는 다른 오류 타입을 던지는지 확인합니다.
 타입이 지정된 던지기를 사용하는 함수를 호출할 수 있습니다:
 
 ```swift
-func someThrowingFunction() -> throws {
+func someThrowingFunction() throws {
     let ratings = [1, 2, 3, 2, 2, 1]
     try summarize(ratings)
 }
@@ -814,7 +814,7 @@ func someThrowingFunction() -> throws {
 아래 코드는 위 코드와 동일합니다:
 
 ```swift
-func someThrowingFunction() -> throws(any Error) {
+func someThrowingFunction() throws(any Error) {
     let ratings = [1, 2, 3, 2, 2, 1]
     try summarize(ratings)
 }
@@ -981,6 +981,12 @@ func processFile(filename: String) throws {
 `defer` 구문을 사용할 수 있습니다.
 더 자세한 내용은
 <doc:ControlFlow#연기된-동작-Deferred-Actions>을 참고바랍니다.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

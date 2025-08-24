@@ -126,7 +126,6 @@ When the @OptionSet macro comes back, change both links back:
 [`OptionSet`]: https://developer.apple.com/documentation/swift/optionset-swift.protocol
 -->
 
-
 비교를 위해
 `@OptionSet` 매크로의 확장 버전은 다음과 같습니다.
 이 코드를 작성하지 않고
@@ -240,7 +239,7 @@ public macro OptionSet<RawType>() =
 독립 매크로에 대해
 매크로의 역할을 지정하기 위해 `@freestanding` 속성을 작성합니다:
 
-```
+```swift
 @freestanding(expression)
 public macro line<T: ExpressibleByIntegerLiteral>() -> T =
         /* ... location of the macro implementation... */
@@ -317,7 +316,7 @@ public macro OptionSet<RawType>() =
 
 특정 단계를 진행하려면, 다음을 참고 바랍니다:
 
-```
+```swift
 let magicNumber = #fourCharacterCode("ABCD")
 ```
 
@@ -413,7 +412,7 @@ Swift는 매크로를 구현한 코드를 제한하여
 
 이 AST는 다음과 같은 Swift 코드에 해당합니다:
 
-```
+```swift
 let magicNumber = 1145258561 as UInt32
 ```
 
@@ -520,11 +519,11 @@ Swift Package Manager로 새로운 매크로 패키지를 생성하면,
 기존 프로젝트에 매크로를 추가하면,
 `Package.swift` 파일에 SwiftSyntax에 대한 의존성을 추가합니다:
 
-[SwiftSyntax]: http://github.com/apple/swift-syntax/
+[SwiftSyntax]: https://github.com/swiftlang/swift-syntax
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0")
+    .package(url: "https://github.com/swiftlang/swift-syntax", from: "509.0.0")
 ],
 ```
 
@@ -633,9 +632,8 @@ private `fourCharacterCode(for:)` 함수를 호출합니다.
 <!--
 The return-a-string APIs come from here
 
-https://github.com/apple/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
+https://github.com/swiftlang/swift-syntax/blob/main/Sources/SwiftSyntaxBuilder/Syntax%2BStringInterpolation.swift
 -->
-
 
 <!-- OUTLINE:
 
@@ -764,6 +762,12 @@ in no particular order:
 
 - `TokenSyntax`
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -646,13 +646,13 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
   -> protocol SomeProtocol {
         init()
      }
-  ---
+
   -> class SomeSuperClass {
         init() {
            // initializer implementation goes here
         }
      }
-  ---
+
   -> class SomeSubClass: SomeSuperClass, SomeProtocol {
         // "required" from SomeProtocol conformance; "override" from SomeSuperClass
         required override init() {
@@ -751,6 +751,65 @@ class SomeSubClass: SomeSuperClass, SomeProtocol {
   -> struct S: P { init!(i: Int) {} }
   ```
 -->
+
+## 의미론적 요구사항만 있는 프로토콜 (Protocols that Have Only Semantic Requirements)
+
+위의 모든 프로토콜 예시는 일부 메서드나 프로퍼티를 요구하지만
+프로토콜 선언에 요구사항을 포함하지 않아도 됩니다.
+프로토콜을 사용해 *의미론적(semantic)* 요구사항을 기술할 수도 있습니다 ---
+이것은 해당 타입의 값이 어떻게 동작하고
+어떤 연산을 지원하는지에 대한 요구사항을 의미합니다.
+<!--
+Avoiding the term "marker protocol",
+which more specifically refers to @_marker on a protocol.
+-->
+Swift 표준 라이브러리는 여러 프로토콜을 정의하며
+이것은 어떠한 메서드나 프로퍼티를 요구하지 않습니다:
+
+- [`Sendable`][]: <doc:Concurrency#Sendable-타입-Sendable-Types>에서 설명한대로
+  동시성 도메인 간 공유될 수 있는 값을 위한 프로토콜입니다.
+- [`Copyable`][]: <doc:Declarations#Borrowing-매개변수와-Consuming-매개변수-Borrowing-and-Consuming-Parameters>에서 설명한대로
+  함수에 전달될 때
+  Swift가 복사할 수 있는 값을 위한 프로토콜입니다.
+- [`BitwiseCopyable`][]: 비트 단위로 복사될 수 있는 값을 위한 프로토콜입니다.
+
+[`BitwiseCopyable`]: https://developer.apple.com/documentation/swift/bitwisecopyable
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
+[`Sendable`]: https://developer.apple.com/documentation/swift/sendable
+
+<!--
+These link definitions are also used in the section below,
+Implicit Conformance to a Protocol.
+-->
+
+이러한 프로토콜의 요구사항에 대한 자세한 내용은
+이 문서의 개요를 참고바랍니다.
+
+다른 프로토콜을 채택할 때와
+동일한 문법을 사용하여 이러한 프로토콜을 채택합니다.
+유일한 차이점은
+프로토콜의 요구사항을 구현하는 메서드나 프로퍼티 선언이 포함되어 있지 않습니다.
+예를 들어:
+
+```swift
+struct MyStruct: Copyable {
+    var counter = 12
+}
+
+extension MyStruct: BitwiseCopyable { }
+```
+
+위 코드는 새로운 구조체를 정의합니다.
+`Copyable`은 의미론적 요구사항만 가지므로
+구조체 선언에 프로토콜을 채택하기 위한 코드가 없습니다.
+유사하게 `BitwiseCopyable`은 의미론적 요구사항만 가지므로
+프로토콜을 채택하는 확장은 빈 본문을 가집니다.
+
+보통 이러한 프로토콜의 준수를 작성할 필요가 없습니다 ---
+대신 <doc:Protocols#프로토콜-암시적-준수-Implicit-Conformance-to-a-Protocol>에서 설명한대로
+Swift는 암시적으로 준수를 추가합니다.
+
+<!-- TODO: Mention why you might define your own empty protocols. -->
 
 ## 프로토콜을 타입으로 사용 (Protocols as Types)
 
@@ -1240,7 +1299,7 @@ if twoThreeFour == anotherTwoThreeFour {
   -> struct Vector3D: Equatable {
         var x = 0.0, y = 0.0, z = 0.0
      }
-  ---
+
   -> let twoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
   -> let anotherTwoThreeFour = Vector3D(x: 2.0, y: 3.0, z: 4.0)
   -> if twoThreeFour == anotherTwoThreeFour {
@@ -1367,6 +1426,96 @@ for level in levels.sorted() {
   !!                 ^
   ```
 -->
+
+## 프로토콜 암시적 준수 (Implicit Conformance to a Protocol)
+
+일부 프로토콜은 너무 흔해서
+새로운 타입을 선언할 때 거의 항상 작성하게 됩니다.
+다음의 프로토콜의 경우
+프로토콜의 요구사항을 구현하는 타입을 정의할 때
+Swift가 자동으로 준수를 추론하므로
+직접 작성할 필요가 없습니다:
+
+- [`Copyable`][]
+- [`Sendable`][]
+- [`BitwiseCopyable`][]
+
+<!--
+The definitions for the links in this list
+are in the section above, Protocols That Have Semantic Requirements.
+-->
+
+명시적으로 준수를 작성할 수 있지만
+코드의 동작을 변경하지 않습니다.
+암시적 준수를 억제하려면
+준수 목록에서 프로토콜 이름 앞에 물결표(`~`)를 작성합니다:
+
+```swift
+struct FileDescriptor: ~Sendable {
+    let rawValue: Int
+}
+```
+
+<!--
+The example above is based on a Swift System API.
+https://github.com/apple/swift-system/blob/main/Sources/System/FileDescriptor.swift
+
+See also this PR that adds Sendable conformance to FileDescriptor:
+https://github.com/apple/swift-system/pull/112
+-->
+
+위 코드는 POSIX 파일 디스크립터를 감싸는 래퍼의 일부를 보여줍니다.
+`FileDescriptor` 구조체는
+`Sendable` 프로토콜의 요구사항을 모두 충족하여
+일반적으로 Sendable합니다.
+그러나
+`~Sendable` 작성하는 것은 암시적 준수를 억제합니다.
+파일 디스크립터는 열린 파일을 식별하고 상호작용하기 위해
+정수를 사용하고
+정수값은 Sendable함에도 불구하고
+이를 Sendable하지 않게 만드는 것은 특정 버그를 피하는데 도움을 줄 수 있습니다.
+
+암시적 준수를 억제하는 다른 방법은
+비가용성으로 표시된 확장을 사용하는 것입니다:
+
+```swift
+@available(*, unavailable)
+extension FileDescriptor: Sendable { }
+```
+
+<!--
+  - test: `suppressing-implied-sendable-conformance`
+  
+  -> struct FileDescriptor {
+  ->     let rawValue: CInt
+  -> }
+
+  -> @available(*, unavailable)
+  -> extension FileDescriptor: Sendable { }
+  >> let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !$ warning: conformance of 'FileDescriptor' to 'Sendable' is unavailable; this is an error in Swift 6
+  !! let nonsendable: Sendable = FileDescriptor(rawValue: 10)
+  !! ^
+  !$ note: conformance of 'FileDescriptor' to 'Sendable' has been explicitly marked unavailable here
+  !! extension FileDescriptor: Sendable { }
+  !! ^
+-->
+
+이전 예시처럼
+코드의 한 곳에 `~Sendable`을 작성하면,
+프로그램의 다른 곳에 있는 코드가
+`FileDescriptor` 타입에 `Sendable` 준수를 추가하여 확장할 수 있습니다.
+반면에
+이 예시의 비가용성 확장은
+`Sendable`의 암시적 준수를 억제할 뿐만 아니라
+코드의 다른 곳에 있는 어떤 확장도
+해당 타입에 `Sendable` 준수를 추가하는 것을 방지합니다.
+
+> Note:
+> 위에 언급한 프로토콜 외에도
+> 분산 액터(distributed actors)는 [`Codable`][] 프로토콜을 암시적으로 준수합니다.
+
+[`Codable`]: https://developer.apple.com/documentation/swift/codable
 
 ## 프로토콜 타입의 컬렉션 (Collections of Protocol Types)
 
@@ -1732,7 +1881,7 @@ beginConcert(in: seattle)
   -> func beginConcert(in location: Location & Named) {
          print("Hello, \(location.name)!")
      }
-  ---
+
   -> let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
   -> beginConcert(in: seattle)
   <- Hello, Seattle!
@@ -2484,6 +2633,12 @@ print(differentNumbers.allEqual())
   Protocol requirements can be marked as @unavailable, but this currently only works if they're also marked as @objc.
   Checking for (and calling) optional implementations via optional binding and closures
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

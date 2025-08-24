@@ -23,7 +23,7 @@ Swift는 값의 타입에 대한 정보를 숨기는 두 가지 방법을 제공
 값의 구체적인 타입은 런타임까지 알 수 없으며,
 저장되는 값에 따라 타입도 변경될 수 있습니다.
 
-## 불투명 타입이 해결하는 문제 (The Problem That Opaque Types Solve)
+## 불투명 타입이 해결하는 문제 (The Problem that Opaque Types Solve)
 
 예를 들어
 ASCII 도형을 그리는 모듈을 작성한다고 가정합시다.
@@ -60,7 +60,7 @@ print(smallTriangle.draw())
   -> protocol Shape {
          func draw() -> String
      }
-  ---
+
   -> struct Triangle: Shape {
         var size: Int
         func draw() -> String {
@@ -257,7 +257,7 @@ print(trapezoid.draw())
              return result.joined(separator: "\n")
          }
      }
-  ---
+
   -> func makeTrapezoid() -> some Shape {
          let top = Triangle(size: 2)
          let middle = Square(size: 2)
@@ -336,7 +336,7 @@ print(opaqueJoinedTriangles.draw())
   -> func join<T: Shape, U: Shape>(_ top: T, _ bottom: U) -> some Shape {
          JoinedShape(top: top, bottom: bottom)
      }
-  ---
+
   -> let opaqueJoinedTriangles = join(smallTriangle, flip(smallTriangle))
   -> print(opaqueJoinedTriangles.draw())
   </ *
@@ -349,7 +349,7 @@ print(opaqueJoinedTriangles.draw())
 -->
 
 이 예시의 `opaqueJoinedTriangles` 값은
-<doc:OpaqueTypes#불투명-타입이-해결하는-문제-The-Problem-That-Opaque-Types-Solve> 섹션의
+<doc:OpaqueTypes#불투명-타입이-해결하는-문제-The-Problem-that-Opaque-Types-Solve> 섹션의
 제네릭 예시에서 `joinedTriangles`와 동일합니다.
 그러나 이 예시의 값과 다르게
 `flip(_:)`과 `join(_:_:)`은
@@ -833,7 +833,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
   -> func makeProtocolContainer<T>(item: T) -> Container {
          return [item]
      }
-  ---
+
   // Error: Not enough information to infer C.
   -> func makeProtocolContainer<T, C: Container>(item: T) -> C {
          return [item]
@@ -920,6 +920,72 @@ print(type(of: twelve))
       return AnyP(p: result)
   }
 -->
+
+## 불투명 매개변수 타입 (Opaque Parameter Types)
+
+불투명 타입을 반환하기 위해 `some`을 작성하는 것 외에도
+함수, 서브스크립트, 이니셜라이저의
+매개변수 타입에 `some`을 작성할 수도 있습니다.
+그러나 매개변수 타입으로 `some`을 작성하는 것은
+불투명 타입이 아닌 제네릭을 위한 축약형일 뿐입니다.
+예를 들어
+아래의 두 함수 모두 동일합니다:
+
+```swift
+func drawTwiceGeneric<SomeShape: Shape>(_ shape: SomeShape) -> String {
+    let drawn = shape.draw()
+    return drawn + "\n" + drawn
+}
+
+func drawTwiceSome(_ shape: some Shape) -> String {
+    let drawn = shape.draw()
+    return drawn + "\n" + drawn
+}
+```
+
+`drawTwiceGeneric(_:)` 함수는
+`SomeShape`라는 제네릭 타입 매개변수를 선언하고
+`SomeShape`는 `Shape` 프로토콜을 준수하도록 요구하는 제약조건을 가집니다.
+`drawTwiceSome(_:)` 함수는
+인자에 `some Shape` 타입을 사용합니다.
+이것은 해당 함수에 `Shape` 프로토콜을 준수하는 타입을 요구하는 제약조건과 함께
+새롭고 이름이 없는 제네릭 타입 매개변수를 생성합니다.
+제네릭 타입은 이름을 가지지 않으므로,
+함수의 다른 곳에서는 타입을 참조할 수 없습니다.
+
+두 개 이상의 매개변수 타입 앞에 `some`을 작성하면,
+각 제네릭 타입은 독립적입니다.
+예를 들어:
+
+```swift
+func combine(shape s1: some Shape, with s2: some Shape) -> String {
+    return s1.draw() + "\n" + s2.draw()
+}
+
+combine(smallTriangle, trapezoid)
+```
+
+`combine(shape:with:)` 함수에서
+첫 번째와 두 번째 매개변수 타입은
+모두 `Shape` 프로토콜을 준수해야 하지만
+둘 다 동일한 타입이어야 한다는 제약조건은 없습니다.
+`combine(shape:with:)`를 호출할 때,
+두 개의 다른 모양을 전달할 수 있습니다 ---
+이 경우에는 하나는 삼각형이고 다른 하나는 사다리꼴입니다.
+
+<doc:Generics>에서 설명한대로
+명명 제네릭 타입 매개변수를 위한 문법과 다르게
+이 경량 문법은
+제네릭 `where` 절이나 동일 타입(`==`) 제약조건을 포함할 수 없습니다.
+또한
+매우 복잡한 제약조건에 경량 문법을 사용하면
+읽기 어려울 수 있습니다.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

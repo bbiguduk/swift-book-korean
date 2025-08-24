@@ -240,13 +240,13 @@ manager.data.append("Some more data")
   >>       print("the DataImporter instance for the importer property has now been created")
   >>    }
      }
-  ---
+
   -> class DataManager {
         lazy var importer = DataImporter()
         var data: [String] = []
         // the DataManager class would provide data management functionality here
      }
-  ---
+
   -> let manager = DataManager()
   -> manager.data.append("Some data")
   -> manager.data.append("Some more data")
@@ -736,8 +736,8 @@ print("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 > Note: 상위 클래스의 프로퍼티에 대한 `willSet`과 `didSet` 관찰자는
 > 상위 클래스 초기화가 완료된 후
 > 하위 클래스 이니셜라이저에서 해당 프로퍼티가 설정될 때 호출됩니다.
-> 상위 클래스가 초기화 완료되기 전에
-> 클래스가 자신의 프로퍼티를 설정하는 도중에는 호출되지 않습니다.
+> 이것은 클래스가 이니셜라이저 본문에서
+> 프로퍼티를 설정하는 동안에는 호출되지 않습니다.
 >
 > 초기화 위임에 대한 자세한 내용은
 > <doc:Initialization#값-타입을-위한-이니셜라이저-위임-Initializer-Delegation-for-Value-Types>과
@@ -1023,15 +1023,15 @@ print(rectangle.height)
   ->     @TwelveOrLess var height: Int
   ->     @TwelveOrLess var width: Int
   -> }
-  ---
+
   -> var rectangle = SmallRectangle()
   -> print(rectangle.height)
   <- 0
-  ---
+
   -> rectangle.height = 10
   -> print(rectangle.height)
   <- 10
-  ---
+
   -> rectangle.height = 24
   -> print(rectangle.height)
   <- 12
@@ -1149,12 +1149,12 @@ struct SmallNumber {
   -> struct SmallNumber {
          private var maximum: Int
          private var number: Int
-  ---
+
          var wrappedValue: Int {
              get { return number }
              set { number = min(newValue, maximum) }
          }
-  ---
+
          init() {
              maximum = 12
              number = 0
@@ -1211,7 +1211,7 @@ print(zeroRectangle.height, zeroRectangle.width)
   ->     @SmallNumber var height: Int
   ->     @SmallNumber var width: Int
   -> }
-  ---
+
   -> var zeroRectangle = ZeroRectangle()
   -> print(zeroRectangle.height, zeroRectangle.width)
   <- 0 0
@@ -1274,7 +1274,7 @@ print(unitRectangle.height, unitRectangle.width)
   ->     @SmallNumber var height: Int = 1
   ->     @SmallNumber var width: Int = 1
   -> }
-  ---
+
   -> var unitRectangle = UnitRectangle()
   -> print(unitRectangle.height, unitRectangle.width)
   <- 1 1
@@ -1339,11 +1339,11 @@ print(narrowRectangle.height, narrowRectangle.width)
   ->     @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
   ->     @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
   -> }
-  ---
+
   -> var narrowRectangle = NarrowRectangle()
   -> print(narrowRectangle.height, narrowRectangle.width)
   <- 2 3
-  ---
+
   -> narrowRectangle.height = 100
   -> narrowRectangle.width = 100
   -> print(narrowRectangle.height, narrowRectangle.width)
@@ -1418,11 +1418,11 @@ print(mixedRectangle.height)
   ->     @SmallNumber var height: Int = 1
   ->     @SmallNumber(maximum: 9) var width: Int = 2
   -> }
-  ---
+
   -> var mixedRectangle = MixedRectangle()
   -> print(mixedRectangle.height)
   <- 1
-  ---
+
   -> mixedRectangle.height = 20
   -> print(mixedRectangle.height)
   <- 12
@@ -1500,7 +1500,7 @@ print(someStructure.$someNumber)
   -> struct SmallNumber {
          private var number: Int
          private(set) var projectedValue: Bool
-  ---
+
          var wrappedValue: Int {
              get { return number }
              set {
@@ -1513,7 +1513,7 @@ print(someStructure.$someNumber)
                  }
              }
          }
-  ---
+
          init() {
              self.number = 0
              self.projectedValue = false
@@ -1523,11 +1523,11 @@ print(someStructure.$someNumber)
   ->     @SmallNumber var someNumber: Int
   -> }
   -> var someStructure = SomeStructure()
-  ---
+
   -> someStructure.someNumber = 4
   -> print(someStructure.$someNumber)
   <- false
-  ---
+
   -> someStructure.someNumber = 55
   -> print(someStructure.$someNumber)
   <- true
@@ -1588,11 +1588,11 @@ struct SizedRectangle {
   -> enum Size {
          case small, large
      }
-  ---
+
   -> struct SizedRectangle {
   ->     @SmallNumber var height: Int
   ->     @SmallNumber var width: Int
-  ---
+
          mutating func resize(to size: Size) -> Bool {
              switch size {
                  case .small:
@@ -1705,11 +1705,11 @@ func someFunction() {
   ```swifttest
   -> func someFunction() {
   ->     @SmallNumber var myNumber: Int = 0
-  ---
+
          myNumber = 10
          // now myNumber is 10
   >>     print(myNumber)
-  ---
+
          myNumber = 24
          // now myNumber is 12
   >>     print(myNumber)
@@ -2059,6 +2059,12 @@ print(AudioChannel.maxInputLevelForAllChannels)
   <- 10
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

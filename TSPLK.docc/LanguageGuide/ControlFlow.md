@@ -1440,6 +1440,97 @@ default:
 즉, `case`의 본문 안에 코드는
 항상 `distance`로 값에 접근할 수 있다는 의미입니다.
 
+## 패턴 (Patterns)
+
+이전 예시에서 각 스위치 케이스는
+어떤 값이 해당 케이스에 일치하는지 나타내는 패턴을 포함합니다.
+`if` 구문의 조건으로도 패턴을 사용할 수 있습니다.
+다음은 그 예시입니다:
+
+```swift
+let somePoint = (12, 100)
+if case (let x, 100) = somePoint {
+    print("Found a point on the y=100 line, at \(x)")
+}
+// Prints "Found a point on the y=100 line, at 12"
+```
+
+이 코드에서
+`if` 구문의 조건은 `case`로 시작하고
+조건이 Boolean 값 대신 패턴으로 나타냅니다.
+패턴이 일치하면,
+`if` 구문의 조건은 참이라고 여겨지며,
+`if` 구문의 본문 코드를 실행합니다.
+`if case` 다음에 작성할 수 있는 패턴은
+스위치 케이스에 작성할 수 있는 패턴과 동일합니다.
+
+`for`-`in` 루프에서는
+`case`를 작성하지 않고도
+값 바인딩 패턴을 사용하여 값의 부분으로 이름을 줄 수 있습니다:
+
+```swift
+let points = [(10, 0), (30, -30), (-20, 0)]
+
+for (x, y) in points {
+    if y == 0 {
+        print("Found a point on the x-axis at \(x)")
+    }
+}
+// Prints "Found a point on the x-axis at 10"
+// Prints "Found a point on the x-axis at -20"
+```
+
+위 `for`-`in` 루프는 튜플의 배열을 반복하며,
+튜플의 첫 번째와 두 번째 요소를
+`x`와 `y` 상수에 바인딩합니다.
+루프 내의 구문은 점이 x축 위에 있는지 확인하는 `if` 구문과 같이
+이 상수를 사용할 수 있습니다.
+이 코드를 작성하는 더 간결한 방법은
+`for`-`case`-`in` 루프를 사용하여
+값 바인딩과 조건을 결합하는 것입니다.
+아래 코드는 위의 `for`-`in` 루프와 동일한 동작을 하는 코드입니다:
+
+```swift
+for case (let x, 0) in points {
+    print("Found a point on the x-axis at \(x)")
+}
+// Prints "Found a point on the x-axis at 10"
+// Prints "Found a point on the x-axis at -20"
+```
+
+이 코드에서
+조건은 패턴의 일부로
+`for`-`case`-`in` 루프에 결합됩니다.
+`for`-`case`-`in` 루프 내의 구문은 x축 위에 있는 점일 때만 실행됩니다.
+이 코드는 위의 `for`-`in` 루프와 동일한 결과를 생성하지만,
+컬렉션의 특정 요소만
+반복하는 더 간결한 방법입니다.
+
+`for`-`case`-`in` 루프는 추가 조건을 확인하는
+`where` 절을 추가할 수도 있습니다.
+루프 내의 구문은
+현재 요소가 `where` 절과 일치할 때만 실행됩니다.
+예를 들어:
+
+```swift
+for case let (x, y) in points where x == y || x == -y  {
+    print("Found (\(x), \(y)) along a line through the origin")
+}
+// Prints "Found (30, -30) along a line through the origin"
+```
+
+이 코드는 튜플의 첫 번째와 두 번째 요소를
+`x`와 `y` 상수로 바인딩한 다음에
+해당 값을 `where` 절에서 확인합니다.
+`where` 절이 `true`이면,
+`for` 루프의 본문 내 코드를 실행합니다;
+그렇지 않으면 다음 요소로 반복이 계속됩니다.
+
+패턴은 값을 바인딩할 수 있으므로,
+`if`-`case` 구문과 `for`-`case`-`in` 루프는
+<doc:Enumerations#연관값-Associated-Values>에서 설명한대로
+연관값을 가진 열거형과 작업하는데 유용합니다.
+
 ## 제어 전송 구문 (Control Transfer Statements)
 
 *제어 전송 구문(Control transfer statements)*은 한 코드에서 다른 코드로
@@ -1939,17 +2030,17 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
          guard let name = person["name"] else {
              return
          }
-  ---
+
          print("Hello \(name)!")
-  ---
+
          guard let location = person["location"] else {
              print("I hope the weather is nice near you.")
              return
          }
-  ---
+
          print("I hope the weather is nice in \(location).")
      }
-  ---
+
   -> greet(person: ["name": "John"])
   <- Hello John!
   <- I hope the weather is nice near you.
@@ -2199,7 +2290,7 @@ func chooseBestColor() -> String {
   -> struct ColorPreference {
          var bestColor = "blue"
      }
-  ---
+
   -> func chooseBestColor() -> String {
         guard #available(macOS 10.12, *) else {
             return "gray"
@@ -2243,7 +2334,7 @@ if #unavailable(iOS 10) {
      } else {
         // Fallback code
      }
-  ---
+
   -> if #unavailable(iOS 10) {
         // Fallback code
      }
@@ -2258,6 +2349,13 @@ if #unavailable(iOS 10) {
   Not a general purpose condition; can't combine with &&, etc.
   You can use it with if-let, and other Boolean conditions, using a comma
 -->
+
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

@@ -523,7 +523,7 @@ print(anotherGreeting(for: "Dave"))
      }
   -> print(greeting(for: "Dave"))
   <- Hello, Dave!
-  ---
+
   -> func anotherGreeting(for person: String) -> String {
         return "Hello, " + person + "!"
      }
@@ -560,7 +560,7 @@ print(anotherGreeting(for: "Dave"))
   >> func testFatal() -> Int {
   >>     fatalError("Oh no!")
   >> }
-  ---
+
   // But not this:
   >> func testPrint() -> Int {
   >>     print(13)
@@ -803,10 +803,10 @@ arithmeticMean(3, 8.25, 18.75)
   ```swifttest
   // Labeled, immediately after
   >> func f(_ a: Int..., b: String) {}
-  ---
+
   // Unlabeled, not immediately after
   >> func g(_ a: Int..., b: String, _ c: Int) {}
-  ---
+
   // Multiple
   >> func h(_a: Int..., b: String, _ c: Int..., d: String) {}
   ```
@@ -1303,6 +1303,12 @@ print("zero!")
   </ zero!
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

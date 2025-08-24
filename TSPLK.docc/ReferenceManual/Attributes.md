@@ -210,7 +210,79 @@ Swift 버전을 사용하여 지정한 가용
   obsoleted: <#version number#>
   ```
   *버전 번호(version number)*는 마침표로 구분된 하나에서 세 개의 양수로 구성됩니다.
-- `message` 인자는 사용 중단되거나 폐기된 선언 사용에 대한 경고나 오류를 생성할 때,
+
+- `noasync` 인자는
+  선언된 기호가 비동기 컨텍스트에서
+  직접적으로 사용될 수 없음을 나타냅니다.
+
+  Swift 동시성은 잠재적 중단점 후에
+  다른 스레드에서 재개될 수 있으므로,
+  스레드 로컬 스토리지(thread-local storage), 락(locks), 뮤텍스(mutexes), 세마포어(semaphores)와 같은 요소를
+  중단점을 넘어 사용하면 올바르지 않은 결과를 가져올 수 있습니다.
+
+  이런 문제를 피하기 위해
+  기호의 선언에 `@available(*, noasync)` 속성을 추가합니다:
+
+  ```swift
+  extension pthread_mutex_t {
+
+    @available(*, noasync)
+    mutating func lock() {
+        pthread_mutex_lock(&self)
+    }
+
+    @available(*, noasync)
+    mutating func unlock() {
+        pthread_mutex_unlock(&self)
+    }
+  }
+  ```
+
+  이 속성은 누군가가 비동기 컨텍스트에서 이 기호를 사용하려고 하면
+  컴파일 시 오류가 발생합니다.
+  이 기호에 대해
+  추가적인 정보를 제공하기 위해 `message` 인자를 사용할 수도 있습니다.
+  
+  ```swift
+  @available(*, noasync, message: "Migrate locks to Swift concurrency.")
+  mutating func lock() {
+    pthread_mutex_lock(&self)
+  }
+  ```
+
+  잠재적으로 안전하지 않은 기호를 안전한 방식으로 사용함을
+  보장할 수 있다면,
+  이것을 동기 함수로 감싸고
+  비동기 컨텍스트에서 해당 함수를 호출할 수 있습니다.
+  
+  ```swift
+
+  // Provide a synchronous wrapper around methods with a noasync declaration.
+  extension pthread_mutex_t {
+    mutating func withLock(_ operation: () -> ()) {
+      self.lock()
+      operation()
+      self.unlock()
+    }
+  }
+
+  func downloadAndStore(key: Int,
+                      dataStore: MyKeyedStorage,
+                      dataLock: inout pthread_mutex_t) async {
+    // Safely call the wrapper in an asynchronous context.
+    dataLock.withLock {
+      dataStore[key] = downloadContent()
+    }
+  }
+  ```
+
+  `noasync` 인자는 대부분 선언에 사용할 수 있습니다;
+  그러나 디이니셜라이저 선언에는 사용할 수 없습니다.
+  Swift는 동기와 비동기 컨텍스트 모두에서
+  클래스의 디이니셜라이저를 호출할 수 있어야 합니다.
+
+- `message` 인자는 `deprecated`, `obsoleted`, `noasync`로 표시된 선언
+  사용에 대한 경고나 오류를 생성할 때,
   컴파일러가 표시하는 텍스트 메세지를 제공합니다.
   다음과 같은 형식을 가집니다:
 
@@ -244,7 +316,6 @@ Swift 버전을 사용하여 지정한 가용
   }
   ```
 
-
 <!--
   - test: `renamed1`
 
@@ -266,7 +337,6 @@ Swift 버전을 사용하여 지정한 가용
   typealias MyProtocol = MyRenamedProtocol
   ```
 
-
   <!--
     - test: `renamed2`
 
@@ -275,7 +345,7 @@ Swift 버전을 사용하여 지정한 가용
     -> protocol MyRenamedProtocol {
            // protocol definition
        }
-    ---
+
     -> @available(*, unavailable, renamed: "MyRenamedProtocol")
        typealias MyProtocol = MyRenamedProtocol
     ```
@@ -488,16 +558,16 @@ dial.dynamicallyCall(withArguments: [4, 1, 1])
              }
          }
      }
-  ---
+
   -> let dial = TelephoneExchange()
-  ---
+
   -> // Use a dynamic method call.
   -> dial(4, 1, 1)
   <- Get Swift help on forums.swift.org
-  ---
+
   -> dial(8, 6, 7, 5, 3, 0, 9)
   <- Unrecognized number
-  ---
+
   -> // Call the underlying method directly.
   -> dial.dynamicallyCall(withArguments: [4, 1, 1])
   << Get Swift help on forums.swift.org
@@ -548,7 +618,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
                  .joined(separator: "\n")
          }
      }
-  ---
+
   -> let repeatLabels = Repeater()
   -> print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
   </ a
@@ -676,12 +746,12 @@ print(dynamic == equivalent)
          }
      }
   -> let s = DynamicStruct()
-  ---
+
   // Use dynamic member lookup.
   -> let dynamic = s.someDynamicMember
   -> print(dynamic)
   <- 325
-  ---
+
   // Call the underlying subscript directly.
   -> let equivalent = s[dynamicMember: "someDynamicMember"]
   -> print(dynamic == equivalent)
@@ -715,7 +785,7 @@ print(wrapper.x)
 
   ```swifttest
   -> struct Point { var x, y: Int }
-  ---
+
   -> @dynamicMemberLookup
      struct PassthroughWrapper<Value> {
          var value: Value
@@ -723,7 +793,7 @@ print(wrapper.x)
              get { return value[keyPath: member] }
          }
      }
-  ---
+
   -> let point = Point(x: 381, y: 431)
   -> let wrapper = PassthroughWrapper(value: point)
   -> print(wrapper.x)
@@ -752,7 +822,7 @@ Or are those supported today?
 I see #error and #warning as @freestanding(declaration)
 in the stdlib already:
 
-https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
+https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Macros.swift#L102
 -->
 
 ### frozen
@@ -766,10 +836,6 @@ https://github.com/apple/swift/blob/main/stdlib/public/core/Macros.swift#L102
 추가, 제거, 재정렬로 선언을 변경할 수 없습니다.
 이러한 변경은 비고정 타입(nonfrozen types)에서 허용되지만
 고정 타입(frozen types)에 대해 ABI 호환성을 깨뜨립니다.
-
-> Note: 컴파일러가 라이브러리 진화 모드로 있지 않으면,
-> 모든 구조체와 열거형은 암시적으로 고정(frozen)이고
-> 이 속성은 무시됩니다.
 
 <!--
   - test: `can-use-frozen-without-evolution`
@@ -926,6 +992,31 @@ SpriteKit 에디터 UI에 노출합니다.
   See also <rdar://problem/27287369> Document @GKInspectable attribute
   which we will want to link to, once it's written.
 -->
+
+### globalActor
+
+이 속성을 액터, 구조체, 열겨헝, final 클래스에 적용합니다.
+이 타입은 `shared`라는 정적 프로퍼티를 정의해야 하며,
+이 프로퍼티는 액터의 공유 인스턴스를 제공합니다.
+
+전역 액터는 액터 격리의 개념을
+코드의 여러 곳에서 
+A global actor generalizes the concept of actor isolation
+to state that's spread out in several different places in code ---
+such as multiple types, files, and modules ---
+and makes it possible to safely assess global variables from concurrent code.
+The actor that the global actor provides
+as the value of its `shared` property
+serializes access to all this state.
+You can also use a global actor to model constraints in concurrent code
+like code that all needs to execute on the same thread.
+
+Global actors implicitly conform to the [`GlobalActor`][] protocol.
+The main actor is a global actor provided by the standard library,
+as discussed in <doc:Concurrency#The-Main-Actor>.
+Most code can use the main actor instead of defining a new global actor.
+
+[`GlobalActor`]: https://developer.apple.com/documentation/swift/globalactor
 
 ### inlinable
 

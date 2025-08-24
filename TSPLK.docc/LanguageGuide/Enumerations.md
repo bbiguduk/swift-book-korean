@@ -479,6 +479,27 @@ case let .qrCode(productCode):
   ```
 -->
 
+열거형의 케이스 중 하나만 일치시키는 경우에 ---
+예를 들어
+일치되는 케이스의 연관값을 추출하는 경우 ---
+스위치 구문의 전체 케이스를 작성하는 대신
+`if`-`case` 구문을 사용할 수 있습니다.
+다음은 그 예시입니다:
+
+```swift
+if case .qrCode(let productCode) = productBarcode {
+    print("QR code: \(productCode).")
+}
+```
+
+이 코드의
+`productBarcode` 변수는
+`.qrCode(let productCode)` 패턴과 일치합니다.
+그리고 스위치 케이스에서와 같이
+`let`은 상수로 연관값을 추출합니다.
+`if`-`case` 구문에 대한 자세한 내용은
+<doc:ControlFlow#패턴-Patterns>을 참고바랍니다.
+
 ## 원시값 (Raw Values)
 
 <doc:Enumerations#연관값-Associated-Values>에서의 바코드 예시는
@@ -520,14 +541,17 @@ enum ASCIIControlCharacter: Character {
 문자열, 문자, 정수 또는 부동소수점 숫자 타입이 가능합니다.
 각 원시값은 열거형 선언 내에서 유일한 값이어야 합니다.
 
-> Note: 원시값은 연관값(associated values)과 같지 않습니다.
-> 원시값은 위의 세 개의 ASCII 코드처럼
-> 코드에서 열거형을 처음 정의할 때
-> 미리 설정하는 값입니다.
-> 특정 열거형 케이스를 위한 원시값은 항상 같습니다.
-> 연관값은 열거형 케이스로
-> 상수나 변수를 생성할 때마다 새롭게 지정되며,
-> 매번 달라질 수 있습니다.
+열거형에 추가값을 부여하기 위해
+원시값과 연관값 모두 사용할 수 있지만
+둘의 차이점을 이해하는 것이 중요합니다.
+원시값은 위의 세 가지 ASCII 코드와 같이
+코드에서 열거형 케이스를 정의할 때
+선택합니다.
+특정 열거형 케이스의 원시값은 항상 동일합니다.
+반면에
+연관값은 열거형 케이스 중 하나를 사용하여
+새로운 상수나 변수를 생성할 때 선택하고,
+특정 열거형 케이스의 연관값은 다른 값을 선택할 수 있습니다.
 
 ### 암시적으로 할당된 원시값 (Implicitly Assigned Raw Values)
 
@@ -604,7 +628,7 @@ let sunsetDirection = CompassPoint.west.rawValue
   -> let earthsOrder = Planet.earth.rawValue
   /> earthsOrder is \(earthsOrder)
   </ earthsOrder is 3
-  ---
+
   -> let sunsetDirection = CompassPoint.west.rawValue
   /> sunsetDirection is \"\(sunsetDirection)\"
   </ sunsetDirection is "west"
@@ -817,7 +841,7 @@ print(evaluate(product))
                  return evaluate(left) * evaluate(right)
          }
      }
-  ---
+
   -> print(evaluate(product))
   <- 18
   ```
@@ -829,6 +853,12 @@ print(evaluate(product))
 왼쪽 표현식을 평가하고,
 오른쪽 표현식을 평가한 다음에
 두 결과를 더하거나 곱하여 평가합니다.
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

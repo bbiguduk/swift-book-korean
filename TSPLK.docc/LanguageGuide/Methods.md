@@ -488,15 +488,15 @@ struct LevelTracker {
   -> struct LevelTracker {
         static var highestUnlockedLevel = 1
         var currentLevel = 1
-  ---
+
   ->    static func unlock(_ level: Int) {
            if level > highestUnlockedLevel { highestUnlockedLevel = level }
         }
-  ---
+
   ->    static func isUnlocked(_ level: Int) -> Bool {
            return level <= highestUnlockedLevel
         }
-  ---
+
   ->    @discardableResult
         mutating func advance(to level: Int) -> Bool {
            if LevelTracker.isUnlocked(level) {
@@ -649,6 +649,12 @@ if player.tracker.advance(to: 6) {
   TODO: selector-style methods can be referenced as foo.bar:bas:
   (see Doug's comments from the 2014-03-12 release notes)
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

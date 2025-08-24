@@ -21,19 +21,28 @@ Swift는 튜플(tuple)과 같은 고급 타입도 있습니다.
 튜플은 값을 그룹화 하여 생성하거나 전달할 수 있습니다.
 함수에서 여러 값을 단일복합값으로 반환할 때 튜플을 사용할 수 있습니다.
 
-Swift는 또한 값이 존재하지 않는 상태를 처리하기 위해
-옵셔널(Optional) 타입이 있습니다.
-옵셔널은 "값이 *있고* *x*와 같다"
+Swift는 옵셔널(optional) 타입을 사용하여
+값이 존재하지 않는 상태를 처리합니다.
+옵셔널은 "값이 *있고* *x*이다"
 또는 "값이 *없다*"를 알려줍니다.
+옵셔널은 코드가
+항상 값을 사용하기 전에 값이 누락되었는지 확인하는 것을 보장하고,
+옵셔널이 아닌 값은 값이 절대로 누락되지 않도록 보장합니다.
 
-Swift는 *타입-안정성(type-safe)*을 가진 언어로,
-코드에서 처리할 수 있는 값의 타입을 명확하게 해줍니다.
+Swift는 안전한 언어이며,
+이것은 개발 과정에서 가능한 빨리
+여러 범주의 버그를 찾고 수정하는 것을 더 쉽게 만들고
+특정 종류의 버그가 발생하지 않도록 보장합니다.
+타입 안정성(Type safety)은 코드가 다루는 값의 타입에 대해
+명확하게 할 수 있도록 해줍니다.
 `String`을 요구하는 코드에서
 타입 안정성은 실수로 `Int`를 전달하는 것을 방지합니다.
-마찬가지로
-옵셔널이 아닌 `String`을 요구하는 코드에
-옵셔널 `String`을 전달하는 것을 막아줍니다.
-타입 안정성은 개발 단계에서 가능한 빠르게 오류를 찾고 고칠 수 있게 도와줍니다.
+메모리 안정성(Memory Safety)은 초기화되지 않은 메모리나 할당 해제된 객체가 아닌
+유효한 데이터만 사용하도록 보장하며,
+여러 코드가 동시에 실행되는 프로그램에서도
+데이터를 안전하게 다루도록 보장합니다.
+Swift는 대부분의 안전성 검사를 코드를 빌드하는 동안 수행하며,
+일부 경우에는 코드가 실행되는 동안 검사를 수행합니다.
 
 ## 상수와 변수 (Constants and Variables)
 
@@ -561,15 +570,26 @@ Swift는 2개의 부호를 가진 부동소수점 숫자 타입을 제공합니�
 
 ## 타입 안정성과 타입 추론 (Type Safety and Type Inference)
 
-Swift는 *타입-안정성(type-safe)*을 갖춘 언어입니다.
-타입 안정성이 있는 언어는
-코드에서 처리할 수 있는 값의 타입을 명확하게 합니다.
-코드의 일부가 `String`이 필요한 경우, 실수로 `Int`를 전달할 수 없습니다.
+Swift 프로그램의 모든 값은 타입을 가집니다.
+상수, 변수, 프로퍼티를 포함하여
+값을 저장하는 모든 곳에도
+타입을 가집니다.
+타입 주석을 사용하여 명시적으로 타입을 작성하거나
+Swift는 초기값으로부터 타입을 추론할 수 있습니다.
+코드를 작성하는 모든 곳에서 제공하는 값의 타입은
+그 값을 사용하는 곳에서의 타입과 일치해야 합니다.
+예를 들어
+코드에서 `String`을 요구하면,
+실수로 `Int`를 전달할 수 없습니다.
+이러한 검사로 인해 Swift는 *타입 안전(type-safe)* 언어입니다.
 
-Swift는 타입 안정성을 갖춘 언어이므로,
-코드를 컴파일할 때 *타입 검사*를 수행하고
+타입 안전 언어는 코드에서 다루는 값의 타입에 대해
+명확하게 정의하도록 권장합니다.
+한 타입의 값은 다른 타입으로 암시적으로 변환되지 않습니다.
+그러나 일부 타입은 명시적으로 변환될 수 있습니다.
+코드를 빌드할 때,
+Swift는 타입 안정성에 대해 코드를 검사하고
 일치하지 않는 타입을 오류로 표시합니다.
-이를 통해 개발 단계에서 가능한 빨리 오류를 발견하고 수정할 수 있습니다.
 
 타입 검사는 다른 타입의 값으로 작업할 때 오류를 피하는데 도움이 됩니다.
 그러나 이것이 선언하는 모든 상수와 변수의
@@ -1000,8 +1020,6 @@ Boolean 리터럴 값으로 초기화되었기 때문에
 위의 `Int`와 `Double`에서와 같이
 상수나 변수를 초기화 시 `true` 또는 `false`로 선언하면
 이를 `Bool` 타입으로 선언할 필요가 없습니다.
-타입 추론은 Swift 코드가 이미 알려진 값으로 상수나 변수를 초기화할 때
-더 간결하고 읽기 쉽게 만들어 줍니다.
 
 Boolean 값은 `if` 구문과 같은
 조건문으로 동작할 때 특히 유용합니다:
@@ -1548,7 +1566,7 @@ if let firstNumber = Int("4") {
         print("\(firstNumber) < \(secondNumber) < 100")
      }
   <- 4 < 42 < 100
-  ---
+
   -> if let firstNumber = Int("4") {
          if let secondNumber = Int("42") {
              if firstNumber < secondNumber && secondNumber < 100 {
@@ -1696,7 +1714,7 @@ let implicitString: String = assumedString // Unwrapped automatically
   ```swifttest
   -> let possibleString: String? = "An optional string."
   -> let forcedString: String = possibleString! // requires an exclamation point
-  ---
+
   -> let assumedString: String! = "An implicitly unwrapped optional string."
   -> let implicitString: String = assumedString // no need for an exclamation point
   ```
@@ -1777,6 +1795,58 @@ if let definiteString = assumedString {
   <- An implicitly unwrapped optional string.
   ```
 -->
+
+## 메모리 안전성 (Memory Safety)
+
+위의 <doc:TheBasics#타입-안정성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로
+타입 불일치를 방지하기 위한 검사 외에도
+Swift는 유효하지 않은 메모리 작업을 방지하도록 코드를 보호합니다.
+이 보호는 *메모리 안전성(memory safety)*라고 하며
+다음의 요구사항을 포함합니다:
+
+- 값은 읽기 전에 설정됩니다.
+  초기화되지 않은 메모리 영역과의 상호작용을 방지하는 이 보호를
+  *확정 초기화(definite intialization)*라고도 합니다.
+- 배열과 버퍼는 유효한 인덱스로만 접근됩니다.
+  경계를 벗어난 접근을 방지하는 이 보호를
+  *경계 안전성(bounds safety)*라고도 합니다.
+- 메모리는 값의 수명 중에만 접근됩니다.
+  할당 해제 후 사용(use-after-free) 오류를 방지하는 이 보호를
+  *수명 안전성(lifetime safety)*라고도 합니다.
+- 메모리 접근은 증명 가능한 안전한 방식으로만 겹칩니다.
+  동시성 코드에서 발생 가능한 데이터 경쟁을 방지하는 이 보호를
+  *스레드 안전성(thread safety)*라고도 합니다.
+
+이러한 보장을 제공하지 않는 언어에서 작업한다면,
+위에 나열된
+오류와 버그에 대해 익숙할 것입니다.
+이러한 문제를 겪어보지 않았더라도 괜찮습니다;
+Swift의 안전한 코드는 이러한 문제를 피합니다.
+Swift가 어떻게 초기값 설정을 보장하는지에 대한 자세한 내용은
+<doc:Initialization>를 참고하고,
+Swift가 어떻게 동시성 코드에서 메모리 안전성을 검사하는지에 대한 자세한 내용은
+<doc:Concurrency>를 참고하고,
+Swift가 어떻게 메모리의 겹치는 접근을 검사하는지에 대한 자세한 내용은
+<doc:MemorySafety>를 참고바랍니다.
+
+때로는 예를 들어 언어나 표준 라이브러리의 한계 때문에
+안전성의 경계 밖에서 작업을 해야할 수도 있습니다.
+이러한 경우에 Swift는 일부 API의 안전하지 않은 버전을 제공합니다.
+이름에 "unsafe", "unchecked", "unmanaged"와 같은
+단어를 포함하는 타입이나 메서드를 사용할 때는,
+안전에 대한 책임을 직접 처리해야 합니다.
+
+Swift의 안전한 코드도 오류와 예기치 않은 실패로
+프로그램의 실행이 중단될 수 있습니다.
+안전성이 코드의 완벽한 실행을 보장하지 않습니다.
+Swift는 아래 <doc:TheBasics#오류-처리-Error-Handling>와
+<doc:TheBasics#어설션과-전제-조건-Assertions-and-Preconditions>에서 설명한대로
+오류를 나타내고 복구하는 여러 방법을 제공합니다.
+그러나 일부 경우에
+오류를 처리하는 *유일한* 방법은 실행을 중단하는 것입니다.
+서비스가 예기치 않게 중단되지 않아야 한다면,
+구성요소 중 하나가 예기치 않게 중단되더라도 복구할 수 있도록
+전체 아키텍처에 내결함성을 통합해야 합니다.
 
 ## 오류 처리 (Error Handling)
 
@@ -1883,7 +1953,7 @@ do {
          // ...
      }
   >> func eatASandwich() {}
-  ---
+
   -> do {
          try makeASandwich()
          eatASandwich()
@@ -2146,6 +2216,12 @@ precondition(index > 0, "Index must be greater than zero.")
   In LLDB, 'breakpoint set -E swift' catches when errors are thrown,
   but doesn't stop at assertions.
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

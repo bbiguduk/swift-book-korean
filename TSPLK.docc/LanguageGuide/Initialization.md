@@ -31,7 +31,7 @@ Objective-C 이니셜라이저과 달리 Swift 이니셜라이저는 값을 반�
 이러한 동작에 대해 다음 섹션에 설명하도록 하겠습니다.
 
 > Note: 저장 프로퍼티에 기본값을 할당하거나
-> 이니셜라이저 내에 초기값을 설정할 때,
+> 이니셜라이저 내에 값을 설정할 때,
 > 해당 프로퍼티의 값은
 > 프로퍼티 관찰자 호출없이 직접 설정됩니다.
 
@@ -599,7 +599,7 @@ var item = ShoppingListItem()
   ```swifttest
   -> struct S { var int: Int; var string: String }
   -> let s = S(int: 42, string: "hello")
-  ---
+
   -> struct SS { var int = 10; var string: String }
   -> let ss = SS(int: 42, string: "hello")
   ```
@@ -664,7 +664,7 @@ print(zeroByZero.width, zeroByZero.height)
   -> let zeroByTwo = Size(height: 2.0)
   -> print(zeroByTwo.width, zeroByTwo.height)
   <- 0.0 2.0
-  ---
+
   -> let zeroByZero = Size()
   -> print(zeroByZero.width, zeroByZero.height)
   <- 0.0 0.0
@@ -1853,15 +1853,15 @@ if valueChanged == nil {
   ```swifttest
   -> let wholeNumber: Double = 12345.0
   -> let pi = 3.14159
-  ---
+
   -> if let valueMaintained = Int(exactly: wholeNumber) {
          print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
      }
   <- 12345.0 conversion to Int maintains value of 12345
-  ---
+
   -> let valueChanged = Int(exactly: pi)
   // valueChanged is of type Int?, not Int
-  ---
+
   -> if valueChanged == nil {
          print("\(pi) conversion to Int doesn't maintain value")
      }
@@ -1920,7 +1920,7 @@ if let giraffe = someCreature {
   ```swifttest
   -> let someCreature = Animal(species: "Giraffe")
   // someCreature is of type Animal?, not Animal
-  ---
+
   -> if let giraffe = someCreature {
         print("An animal was initialized with a species of \(giraffe.species)")
      }
@@ -1947,7 +1947,7 @@ if anonymousCreature == nil {
   ```swifttest
   -> let anonymousCreature = Animal(species: "")
   // anonymousCreature is of type Animal?, not Animal
-  ---
+
   -> if anonymousCreature == nil {
         print("The anonymous creature couldn't be initialized")
      }
@@ -2043,7 +2043,7 @@ if unknownUnit == nil {
         print("This is a defined temperature unit, so initialization succeeded.")
      }
   <- This is a defined temperature unit, so initialization succeeded.
-  ---
+
   -> let unknownUnit = TemperatureUnit(symbol: "X")
   -> if unknownUnit == nil {
         print("This isn't a defined temperature unit, so initialization failed.")
@@ -2089,13 +2089,13 @@ if unknownUnit == nil {
   -> enum TemperatureUnit: Character {
         case kelvin = "K", celsius = "C", fahrenheit = "F"
      }
-  ---
+
   -> let fahrenheitUnit = TemperatureUnit(rawValue: "F")
   -> if fahrenheitUnit != nil {
         print("This is a defined temperature unit, so initialization succeeded.")
      }
   <- This is a defined temperature unit, so initialization succeeded.
-  ---
+
   -> let unknownUnit = TemperatureUnit(rawValue: "X")
   -> if unknownUnit == nil {
         print("This isn't a defined temperature unit, so initialization failed.")
@@ -2204,7 +2204,7 @@ class CartItem: Product {
         }
      }
   >> let p = Product(name: "")
-  ---
+
   -> class CartItem: Product {
         let quantity: Int
         init?(name: String, quantity: Int) {
@@ -2450,7 +2450,7 @@ class UntitledDocument: Document {
 이러한 경우에 상위 클래스의 `init(name:)` 이니셜라이저가
 빈 문자열을 이름으로 받아 호출 된 경우,
 강제 언래핑 작업을 통해 런타임 오류가 발생합니다.
-그러나 문자열 상수로 호출되기 때문에,
+그러나 문자열 리터럴로 호출되기 때문에,
 이니셜라이저가 실패하지 않는 것을 알 수 있으므로,
 이 경우 런타임 오류가 발생하지 않습니다.
 
@@ -2953,6 +2953,12 @@ print(board.squareIsBlackAt(row: 7, column: 7))
   <- false
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

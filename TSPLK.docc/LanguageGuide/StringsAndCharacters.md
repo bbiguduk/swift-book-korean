@@ -419,7 +419,7 @@ constantString += " and another Highlander"
   -> var variableString = "Horse"
   -> variableString += " and carriage"
   // variableString is now "Horse and carriage"
-  ---
+
   -> let constantString = "Highlander"
   -> constantString += " and another Highlander"
   !$ error: left side of mutating operator isn't mutable: 'constantString' is a 'let' constant
@@ -652,7 +652,7 @@ print(goodStart + end)
   // Prints two lines:
   </ one
   </ twothree
-  ---
+
   -> let goodStart = """
          one
          two
@@ -938,9 +938,9 @@ print("the number of characters in \(word) is \(word.count)")
   -> var word = "cafe"
   -> print("the number of characters in \(word) is \(word.count)")
   <- the number of characters in cafe is 4
-  ---
+
   -> word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
-  ---
+
   -> print("the number of characters in \(word) is \(word.count)")
   <- the number of characters in café is 4
   ```
@@ -1124,7 +1124,7 @@ welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex)
   -> welcome.insert("!", at: welcome.endIndex)
   /> welcome now equals \"\(welcome)\"
   </ welcome now equals "hello!"
-  ---
+
   -> welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex))
   /> welcome now equals \"\(welcome)\"
   </ welcome now equals "hello there!"
@@ -1152,7 +1152,7 @@ welcome.removeSubrange(range)
   -> welcome.remove(at: welcome.index(before: welcome.endIndex))
   /> welcome now equals \"\(welcome)\"
   </ welcome now equals "hello there"
-  ---
+
   -> let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
   -> welcome.removeSubrange(range)
   /> welcome now equals \"\(welcome)\"
@@ -1206,7 +1206,7 @@ let newString = String(beginning)
   -> let beginning = greeting[..<index]
   /> beginning is \"\(beginning)\"
   </ beginning is "Hello"
-  ---
+
   // Convert the result to a String for long-term storage.
   -> let newString = String(beginning)
   ```
@@ -1350,10 +1350,10 @@ if eAcuteQuestion == combinedEAcuteQuestion {
   ```swifttest
   // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
   -> let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
-  ---
+
   // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
   -> let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
-  ---
+
   -> if eAcuteQuestion == combinedEAcuteQuestion {
         print("These two strings are considered equal")
      }
@@ -1385,10 +1385,10 @@ if latinCapitalLetterA != cyrillicCapitalLetterA {
   ```swifttest
   -> let latinCapitalLetterA: Character = "\u{41}"
   >> assert(latinCapitalLetterA == "A")
-  ---
+
   -> let cyrillicCapitalLetterA: Character = "\u{0410}"
   >> assert(cyrillicCapitalLetterA == "А")
-  ---
+
   -> if latinCapitalLetterA != cyrillicCapitalLetterA {
         print("These two characters aren't equivalent.")
      }
@@ -1784,6 +1784,12 @@ for scalar in dogString.unicodeScalars {
   </ 🐶
   ```
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project

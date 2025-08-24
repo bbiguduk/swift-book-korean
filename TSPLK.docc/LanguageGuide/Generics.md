@@ -19,7 +19,7 @@ Swift 표준 라이브러리의 많은 부분이 제네릭 코드로 작성되�
 마찬가지로 모든 지정된 타입의 값을 저장하기 위한 딕셔너리를 생성할 수 있고
 해당 타입에 대한 제한은 없습니다.
 
-## 제네릭이 해결하는 문제 (The Problem That Generics Solve)
+## 제네릭이 해결하는 문제 (The Problem that Generics Solve)
 
 다음은 두 `Int` 값을 바꾸는
 `swapTwoInts(_:_:)`라는 제네릭이 아닌 함수를 나타냅니다:
@@ -100,7 +100,7 @@ func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         a = b
         b = temporaryA
      }
-  ---
+
   -> func swapTwoDoubles(_ a: inout Double, _ b: inout Double) {
         let temporaryA = a
         a = b
@@ -237,7 +237,7 @@ swapTwoValues(&someString, &anotherString)
   -> swapTwoValues(&someInt, &anotherInt)
   /> someInt is now \(someInt), and anotherInt is now \(anotherInt)
   </ someInt is now 107, and anotherInt is now 3
-  ---
+
   -> var someString = "hello"
   -> var anotherString = "world"
   -> swapTwoValues(&someString, &anotherString)
@@ -286,9 +286,21 @@ swapTwoValues(&someString, &anotherString)
 위의 `swapTwoValues(_:_:)` 함수에서 `T`와 같이
 `T`, `U`, `V`와 같은 단일 문자를 사용하여 이름을 지정하는 것이 일반적입니다.
 
-> Note: 값이 아니라 *타입*에 대한 임의의 표시라는 것을 나타내기 위해
-> 항상 타입 매개변수 이름은 대문자 카멜 케이스
-> (`T`, `MyTypeParameter` 등)로 작성합니다.
+타입 매개변수에 `T`와 `MyTypeParameter`와 같이
+대문자 카멜 케이스 이름을 사용하여
+값이 아닌 *타입*을 위한 플레이스 홀더라고 나타냅니다.
+
+> Note:
+> 타입 매개변수에 이름이 필요하지 않고
+> 제네릭 타입 제약조건이 단순하다면,
+> <doc:OpaqueTypes#불투명-매개변수-타입-Opaque-Parameter-Types>에서 설명한대로
+> 경량 문법을 사용할 수 있습니다.
+<!--
+Comparison between this syntax and the lightweight syntax
+is in the Opaque Types chapter, not here ---
+the reader hasn't learned about constraints yet,
+so it wouldn't make sense to list what is/isn't supported.
+-->
 
 ## 제네릭 타입 (Generic Types)
 
@@ -1276,19 +1288,19 @@ func allItemsMatch<C1: Container, C2: Container>
   -> func allItemsMatch<C1: Container, C2: Container>
            (_ someContainer: C1, _ anotherContainer: C2) -> Bool
            where C1.Item == C2.Item, C1.Item: Equatable {
-  ---
+
         // Check that both containers contain the same number of items.
         if someContainer.count != anotherContainer.count {
            return false
         }
-  ---
+
         // Check each pair of items to see if they're equivalent.
         for i in 0..<someContainer.count {
            if someContainer[i] != anotherContainer[i] {
               return false
            }
         }
-  ---
+
         // All items match, so return true.
         return true
      }
@@ -1370,9 +1382,9 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
   -> stackOfStrings.push("uno")
   -> stackOfStrings.push("dos")
   -> stackOfStrings.push("tres")
-  ---
+
   -> var arrayOfStrings = ["uno", "dos", "tres"]
-  ---
+
   -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
         print("All items match.")
      } else {
@@ -1757,7 +1769,7 @@ protocol Container {
         mutating func append(_ item: Item)
         var count: Int { get }
         subscript(i: Int) -> Item { get }
-  ---
+
         associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
         func makeIterator() -> Iterator
      }
@@ -1955,6 +1967,76 @@ extension Container {
 `indices` 파리미터에 전달된 값은
 정수 시퀀스입니다.
 
+## 암시적 제약조건 (Implicit Constraints)
+
+명시적으로 제약조건을 작성하는 것 외에도
+제네릭 코드의 많은 곳에서
+[`Copyable`][]와 같은 일반적인 프로토콜 준수를 암시적으로 요구합니다.
+<!-- When SE-0446 is implemented, add Escapable above. -->
+이렇게 작성할 필요없는 제네릭 제약조건은
+*암시적 제약조건(implicit constraints)*라고 합니다.
+예를 들어 다음 함수 선언 모두
+`MyType`이 복사 가능해야 함을 요구합니다:
+
+[`Copyable`]: https://developer.apple.com/documentation/swift/copyable
+
+```swift
+function someFunction<MyType> { ... }
+function someFunction<MyType: Copyable> { ... }
+```
+
+위 코드에서
+첫 번째 선언은 암시적 제약조건을 가지고 있고
+두 번째 버전은 명시적으로 준수를 나열합니다.
+대부분의 코드에서
+타입은 이러한 일반적인 프로토콜을 암시적으로 준수합니다.
+자세한 내용은
+<doc:Protocols#프로토콜-암시적-준수-Implicit-Conformance-to-a-Protocol>을 참고바랍니다.
+
+Swift의 대부분 타입은 이러한 프로토콜을 준수하므로,
+거의 모든 곳에 이것을 작성하는 것은 반복적입니다.
+대신 예외적인 경우에만 표시함으로써
+일반적인 제약조건이 생략된 곳을 강조할 수 있습니다.
+암시적 제약조건을 억제하려면
+프로토콜 이름 앞에 물결표(`~`)를 작성합니다.
+`~Copyable`은 "복사 가능할 수도 있음"으로 읽을 수 있습니다 ---
+이 억제된 제약조건은
+이 위치에서 복사 가능한 타입과 복사 불가능한 타입 모두를 허용합니다.
+`~Copyable`은 타입이 복사 불가능할 것을 *요구*하는 것이 아닙니다.
+예를 들어:
+
+```swift
+func f<MyType>(x: inout MyType) {
+    let x1 = x  // The value of x1 is a copy of x's value.
+    let x2 = x  // The value of x2 is a copy of x's value.
+}
+
+func g<AnotherType: ~Copyable>(y: inout AnotherType) {
+    let y1 = y  // The assignment consumes y's value.
+    let y2 = y  // Error: Value consumed more than once.
+}
+```
+
+위 코드에서
+함수 `f()`는 `MyType`이 복사 가능할 것을 암시적으로 요구합니다.
+함수 본문 내에서
+`x`의 값은 할당으로 `x1`과 `x2`에 복사됩니다.
+반면에 `g()`는 `AnotherType`에 암시적 제약조건을 억제하여
+복사 가능한 값과 복사 불가능한 값 모두 전달할 수 있게 합니다.
+함수 본문 내에서
+`y`의 값을 복사할 수 없으며
+이것은 `AnotherType`이 복사 불가능할 수 있기 때문입니다.
+할당은 `y`의 값을 소비하며
+값을 두 번이상 소비하면 오류가 발생합니다.
+`y`와 같이 복사 불가능한 값은
+in-out, borrowing, consuming 매개변수로 전달되어야 합니다 ---
+더 많은 정보는
+<doc:Declarations#Borrowing-매개변수와-Consuming-매개변수-Borrowing-and-Consuming-Parameters>를 참고바랍니다.
+
+주어진 프로토콜에 암시적 제약조건이
+언제 제네릭 코드에 포함되는지에 대한 자세한 내용은
+해당 프로토콜의 참조를 참고바랍니다.
+
 <!--
   TODO: Generic Enumerations
   --------------------------
@@ -1963,6 +2045,12 @@ extension Container {
 <!--
   TODO: Describe how Optional<Wrapped> works
 -->
+
+> Beta Software:
+>
+> This documentation contains preliminary information about an API or technology in development. This information is subject to change, and software implemented according to this documentation should be tested with final operating system software.
+>
+> Learn more about using [Apple's beta software](https://developer.apple.com/support/beta-software/).
 
 <!--
 This source file is part of the Swift.org open source project
