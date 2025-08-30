@@ -587,7 +587,7 @@ for (index, value) in shoppingList.enumerated() {
   ```
 -->
 
-`for`-`in` 루프에 대한 자세한 내용은 <doc:ControlFlow#For-In-루프-For-In-Loops>을 참고바랍니다.
+`for`-`in` 루프에 대한 자세한 내용은 <doc:ControlFlow#For-In-루프-For-In-Loops>를 참고바랍니다.
 
 ## 집합 (Sets)
 

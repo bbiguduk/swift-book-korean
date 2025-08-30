@@ -1013,7 +1013,7 @@ Swift의 `switch` 구문은
 > Note: Swift에서 `break`는 요구되지 않지만,
 > 특정 케이스를 무시하거나 일치하는 케이스의 실행이 완료되기 전에
 > 빠져나와야할 경우 `break` 구문을 사용할 수 있습니다.
-> 자세한 내용은 <doc:ControlFlow#Switch-구문에서-중단-Break-in-a-Switch-Statement>를 참고바랍니다.
+> 자세한 내용은 <doc:ControlFlow#Switch-구문에서-중단-Break-in-a-Switch-Statement>을 참고바랍니다.
 
 각 케이스의 본문은 *반드시* 적어도 하나의 실행가능한 구문이 포함되어야 합니다.
 아래의 코드는 첫번째 케이스가 비어 있으므로 유효하지 않습니다:

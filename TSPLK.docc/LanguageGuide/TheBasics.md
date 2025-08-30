@@ -33,10 +33,10 @@ Swift는 안전한 언어이며,
 이것은 개발 과정에서 가능한 빨리
 여러 범주의 버그를 찾고 수정하는 것을 더 쉽게 만들고
 특정 종류의 버그가 발생하지 않도록 보장합니다.
-타입 안정성(Type safety)은 코드가 다루는 값의 타입에 대해
+타입 안전성(Type safety)은 코드가 다루는 값의 타입에 대해
 명확하게 할 수 있도록 해줍니다.
 `String`을 요구하는 코드에서
-타입 안정성은 실수로 `Int`를 전달하는 것을 방지합니다.
+타입 안전성은 실수로 `Int`를 전달하는 것을 방지합니다.
 메모리 안정성(Memory Safety)은 초기화되지 않은 메모리나 할당 해제된 객체가 아닌
 유효한 데이터만 사용하도록 보장하며,
 여러 코드가 동시에 실행되는 프로그램에서도
@@ -222,7 +222,7 @@ var red, green, blue: Double
 
 > Note: 실제로 타입 명시가 필요한 경우는 드뭅니다.
 > 상수 또는 변수를 선언할 때 초기값을 지정하면
-> Swift는 <doc:TheBasics#타입-안정성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로
+> Swift는 <doc:TheBasics#타입-안전성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로
 > 해당 상수 또는 변수에 사용될 타입을 거의 항상 추론할 수 있습니다.
 > 위의 `welcomeMessage` 예시에서 초기값을 지정하지 않았으므로,
 > `welcomeMessage` 변수의 타입은 초기값에서 유추되지 않고
@@ -539,7 +539,7 @@ Swift는 또한 현재 플랫폼의 네이티브 사이즈와 같은
 > `Int`를 더 선호합니다.
 > 정수값에 `Int`를 일관되게 사용하면
 > 코드 상호 운용성을 지원하고
-> <doc:TheBasics#타입-안정성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로 다른 숫자 형식간에 변환 할 필요가 없습니다.
+> <doc:TheBasics#타입-안전성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로 다른 숫자 형식간에 변환 할 필요가 없습니다.
 
 ## 부동소수점 숫자 (Floating-Point Numbers)
 
@@ -568,7 +568,7 @@ Swift는 2개의 부호를 가진 부동소수점 숫자 타입을 제공합니�
   TODO: mention infinity, -infinity etc.
 -->
 
-## 타입 안정성과 타입 추론 (Type Safety and Type Inference)
+## 타입 안전성과 타입 추론 (Type Safety and Type Inference)
 
 Swift 프로그램의 모든 값은 타입을 가집니다.
 상수, 변수, 프로퍼티를 포함하여
@@ -588,7 +588,7 @@ Swift는 초기값으로부터 타입을 추론할 수 있습니다.
 한 타입의 값은 다른 타입으로 암시적으로 변환되지 않습니다.
 그러나 일부 타입은 명시적으로 변환될 수 있습니다.
 코드를 빌드할 때,
-Swift는 타입 안정성에 대해 코드를 검사하고
+Swift는 타입 안전성에 대해 코드를 검사하고
 일치하지 않는 타입을 오류로 표시합니다.
 
 타입 검사는 다른 타입의 값으로 작업할 때 오류를 피하는데 도움이 됩니다.
@@ -1048,7 +1048,7 @@ if turnipsAreDelicious {
 
 `if` 구문 같은 조건문은 <doc:ControlFlow>에서 자세히 다룹니다.
 
-Swift의 타입 안정성은 Boolean이 아닌 값이 `Bool`로 대체되는 것을 방지합니다.
+Swift의 타입 안전성은 Boolean이 아닌 값이 `Bool`로 대체되는 것을 방지합니다.
 아래 예시는 컴파일 시 오류를 발생시킵니다:
 
 ```swift
@@ -1097,7 +1097,7 @@ if i == 1 {
 이 두번째 예시는 타입 검사를 정상적으로 수행할 수 있습니다.
 `i == 1`과 같은 비교는 <doc:BasicOperators>에서 설명합니다.
 
-Swift의 타입 안정성에 대한 다른 예시처럼
+Swift의 타입 안전성에 대한 다른 예시처럼
 이 방법은 실수로 인한 오류를 방지하고
 코드 섹션의 의도가 항상 명확하게 전달되도록 보장합니다.
 
@@ -1798,7 +1798,7 @@ if let definiteString = assumedString {
 
 ## 메모리 안전성 (Memory Safety)
 
-위의 <doc:TheBasics#타입-안정성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로
+위의 <doc:TheBasics#타입-안전성과-타입-추론-Type-Safety-and-Type-Inference>에서 설명한대로
 타입 불일치를 방지하기 위한 검사 외에도
 Swift는 유효하지 않은 메모리 작업을 방지하도록 코드를 보호합니다.
 이 보호는 *메모리 안전성(memory safety)*라고 하며
@@ -1825,9 +1825,9 @@ Swift의 안전한 코드는 이러한 문제를 피합니다.
 Swift가 어떻게 초기값 설정을 보장하는지에 대한 자세한 내용은
 <doc:Initialization>를 참고하고,
 Swift가 어떻게 동시성 코드에서 메모리 안전성을 검사하는지에 대한 자세한 내용은
-<doc:Concurrency>를 참고하고,
+<doc:Concurrency>을 참고하고,
 Swift가 어떻게 메모리의 겹치는 접근을 검사하는지에 대한 자세한 내용은
-<doc:MemorySafety>를 참고바랍니다.
+<doc:MemorySafety>을 참고바랍니다.
 
 때로는 예를 들어 언어나 표준 라이브러리의 한계 때문에
 안전성의 경계 밖에서 작업을 해야할 수도 있습니다.
