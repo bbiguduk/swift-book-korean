@@ -1,4 +1,4 @@
-# 디이니셜라이저 (Deinitialization)
+# 소멸 (Deinitialization)
 
 정리가 필요한 리소스를 해제합니다.
 
@@ -7,7 +7,7 @@
 디이니셜라이저는 `deinit` 키워드로 작성합니다.
 디이니셜라이저는 클래스 타입에서만 사용 가능합니다.
 
-## 디이니셜라이저의 동작 방식 (How Deinitialization Works)
+## 소멸 동작 방식 (How Deinitialization Works)
 
 Swift는 인스턴스가 더 이상 필요하지 않을 때,
 자원 확보를 위해 인스턴스를 자동으로 할당 해제합니다.
