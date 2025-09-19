@@ -4,9 +4,9 @@
 
 ## Revision History
 
-### 2025-08-25(월)
+### 2025-09-19(금)
 
-- Swift 6.2 Beta 기반으로 문서 업데이트.
+- Swift 6.2 기반으로 문서 업데이트.
 - 여러 오탈자와 오역 수정.
 - Swift가 방지해주는 이슈에 대한 내용을
   <doc:TheBasics#메모리-안전성-Memory-Safety>에 추가.
