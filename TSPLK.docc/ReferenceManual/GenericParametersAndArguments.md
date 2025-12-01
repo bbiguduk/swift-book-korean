@@ -99,6 +99,68 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
+### 정수 제네릭 매개변수 (Integer Generic Parameters)
+
+*정수 제네릭 매개변수(integer generic parameter)*는
+타입이 아닌 정수값을 위한 플레이스홀더 역할을 합니다.
+이것은 다음과 같은 형식을 가집니다:
+
+```swift
+let <#type parameter#>: <#type>
+```
+
+*타입*은 Swift 표준 라이브러리의 `Int` 타입이거나
+`Int`로 해석되는 타입 별칭이나 제네릭 타입이어야 합니다.
+
+정수 제네릭 매개변수로 제공하는 값은
+정수 리터럴이거나
+이를 감싸는 제네릭 컨텍스트에 있는 다른 정수 제네릭 매개변수여야 합니다.
+예를 들어:
+
+```swift
+struct SomeStruct<let x: Int> { }
+let a: SomeStruct<2>  // OK: integer literal
+
+struct AnotherStruct<let x: Int, T, each U> {
+    let b: SomeStruct<x>  // OK: another integer generic parameter
+
+    static let c = 42
+    let d: SomeStruct<c>  // Error: Can't use a constant.
+
+    let e: SomeStruct<T>  // Error: Can't use a generic type parameter.
+    let f: SomeStruct<U>  // Error: Can't use a parameter pack.
+}
+```
+
+타입으로 선언된 정수 제네릭 매개변수의 값은
+해당 타입과 동일한 접근 수준을 가지는
+정적 상수 멤버로 접근할 수 있습니다.
+함수에 선언된 정수 제네릭 매개변수의 값은
+함수 내에서 상수로 접근할 수 있습니다.
+표현식에서 사용될 때,
+이 상수는 `Int` 타입을 가집니다.
+
+```swift
+print(a.x)  // Prints "4"
+```
+
+정수 제네릭 매개변수의 값은
+타입을 초기화하거나 함수를 호출할 때
+사용하는 인자의 타입으로 추론될 수 있습니다.
+
+```swift
+struct AnotherStruct<let y: Int> {
+    var s: SomeStruct<y>
+}
+func someFunction<let z: Int>(s: SomeStruct<z>) {
+    print(z)
+}
+
+let s1 = SomeStruct<12>()
+let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12.
+someFunction(s: s1)  // Prints "12"
+```
+
 ### 제네릭 Where 절 (Generic Where Clauses)
 
 타입 매개변수와 연관 타입에 요구사항을 추가로 지정하려면
@@ -124,12 +186,17 @@ where <#requirements#>
 연관 타입 `S.Iterator.Element`는
 `Equatable` 프로토콜을 준수하도록 지정합니다.
 이 제약조건은 시퀀스의 각 요소가 비교 가능함을 보장합니다.
+정수 제네릭 매개변수는 프로토콜이나 상위 클래스의 요구사항을 가질 수 없습니다.
 
 `==` 연산자를 사용하여
 두 타입이 동일하다는 요구사항을 지정할 수도 있습니다.
 예를 들어 `<S1: Sequence, S2: Sequence> where S1.Iterator.Element == S2.Iterator.Element`은
 `S1`과 `S2`가 `Sequence` 프로토콜을 준수하고
 두 시퀀스의 요소가 같은 타입이어야 한다는 제약조건을 나타냅니다.
+정수 제네릭 매개변수의 경우
+`==` 연산자는 해당 매개변수 값의 요구사항을 지정합니다.
+두 정수 제네릭 매개변수가 동일한 값을 가져야 한다고 요구할 수도 있고,
+정수 제네릭 매개변수가 특정 정수값을 가져야 한다고 요구할 수 있습니다.
 
 타입 매개변수를 대체하는 모든 타입 인자는
 타입 매개변수에 있는 모든 제약조건과 요구사항을 충족해야 합니다.
@@ -210,7 +277,8 @@ extension Collection where Element: SomeProtocol {
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
-> *generic-parameter* → *type-name* **`:`** *protocol-composition-type*
+> *generic-parameter* → *type-name* **`:`** *protocol-composition-type* \
+> *generic-parameter* → **`let`** *type-name* **`:`** *type* \
 >
 > *generic-where-clause* → **`where`** *requirement-list* \
 > *requirement-list* → *requirement* | *requirement* **`,`** *requirement-list* \
@@ -218,7 +286,8 @@ extension Collection where Element: SomeProtocol {
 >
 > *conformance-requirement* → *type-identifier* **`:`** *type-identifier* \
 > *conformance-requirement* → *type-identifier* **`:`** *protocol-composition-type* \
-> *same-type-requirement* → *type-identifier* **`==`** *type*
+> *same-type-requirement* → *type-identifier* **`==`** *type* \
+> *same-type-requirement* → *type-identifier* **`==`** *signed-integer-literal*
 
 <!--
   NOTE: A conformance requirement can only have one type after the colon,
@@ -237,9 +306,11 @@ extension Collection where Element: SomeProtocol {
 <<#generic argument list#>>
 ```
 
-위 형식의 *제네릭 인자 목록(generic argument list)*은 콤마로 구분된 타입 인자의 목록입니다.
-*타입 인자(type argument)*는 제네릭 타입의 제네릭 매개변수 절에 있는
-해당 타입 매개변수를 대체하는 실제 구체적인 타입의 이름입니다.
+*제네릭 인자 목록(generic argument list)*는 타입 인자를 콤마로 구분한 목록입니다.
+*타입 인자(type argument)*는 제네릭 타입의 제네릭 매개변수 절에서
+해당 타입 매개변수를 대체하는 실제 구체 타입의 이름을 의미합니다 ---
+또는 정수 제네릭 매개변수의 경우에는
+해당 정수 제네릭 매개변수를 대체하는 정수값이 타입 인자가 됩니다.
 그 결과는 해당 제네릭 타입의 특수 버전이 됩니다.
 아래 예시는 Swift 표준 라이브러리의
 제네릭 딕셔너리 타입의 단순화한 버전을 보여줍니다.
@@ -288,7 +359,7 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 >
 > *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
-> *generic-argument* → *type*
+> *generic-argument* → *type* | *signed-integer-literal*
 
 <!--
 This source file is part of the Swift.org open source project
