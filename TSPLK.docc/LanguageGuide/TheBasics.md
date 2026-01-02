@@ -544,7 +544,7 @@ let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
 `max` 프로퍼티보다 큰 값처럼
 범위를 벗어나는 결과는
 유효하지 않은 결과를 저장하는 대신에 프로그램 실행을 중단합니다.
-하지만 <doc:AdvancedOperators#Overflow-Operators>에서 설명한대로
+하지만 <doc:AdvancedOperators#오버플로우-연산자-Overflow-Operators>에서 설명한대로
 연산이 오버플로우되도록 명시적으로 만들 수 있습니다.
 
 ### Int
@@ -635,7 +635,7 @@ print(n.nextUp)
 정확한 결과를 요구하고
 위에서 언급한 특수한 값이 필요하지 않으면
 부동소수점 숫자는 적절한 데이터 타입이 아닐 수 있습니다.
-이런 경우에는 <doc:TheBasics#Integers>에서 설명한
+이런 경우에는 <doc:TheBasics#정수-Integers>에서 설명한
 고정소수점 숫자를 사용하는걸 추천합니다.
 
 ## 타입 안전성과 타입 추론 (Type Safety and Type Inference)
