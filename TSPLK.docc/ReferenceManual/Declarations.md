@@ -58,11 +58,11 @@ Swift 소스 파일의 최상위-수준 코드는 비어있거나
 코드가 파일과 모듈로 구성되는 방식과 상관없이
 최상위-수준 진입점을 나타내는
 다음 접근방식 중 하나만 포함할 수 있습니다:
+최상위-수준 실행 가능한 코드를 포함하는 파일,
+`main.swift` 파일,
 `main` 속성,
 `NSApplicationMain` 속성,
-`UIApplicationMain` 속성,
-`main.swift` 파일,
-최상위-수준 실행 가능한 코드를 포함하는 파일.
+`UIApplicationMain` 속성.
 
 > Grammar of a top-level declaration:
 >
