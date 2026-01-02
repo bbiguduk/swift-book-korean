@@ -164,7 +164,7 @@ C의 atomic 함수 목록은 `stdatomic(3)` 메뉴얼 페이지에서 확인 가
 <!--
   Using the C atomic functions from Swift
   requires some shimming that's out of scope for TSPL - for example:
-  https://github.com/apple/swift-se-0282-experimental/tree/master/Sources/_AtomicsShims
+  https://github.com/apple/swift-atomics/tree/main/Sources/_AtomicsShims
 -->
 
 접근이 *즉시*인 경우는

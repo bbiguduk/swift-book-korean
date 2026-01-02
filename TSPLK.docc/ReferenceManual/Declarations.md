@@ -58,11 +58,11 @@ Swift 소스 파일의 최상위-수준 코드는 비어있거나
 코드가 파일과 모듈로 구성되는 방식과 상관없이
 최상위-수준 진입점을 나타내는
 다음 접근방식 중 하나만 포함할 수 있습니다:
+최상위-수준 실행 가능한 코드를 포함하는 파일,
+`main.swift` 파일,
 `main` 속성,
 `NSApplicationMain` 속성,
-`UIApplicationMain` 속성,
-`main.swift` 파일,
-최상위-수준 실행 가능한 코드를 포함하는 파일.
+`UIApplicationMain` 속성.
 
 > Grammar of a top-level declaration:
 >
@@ -886,7 +886,7 @@ in-out 인자는 앰퍼샌드(`&`)를 앞에 붙여야 합니다.
 
 ```swift
 var x = 7
-someFunction(&x)
+someFunction(a: &x)
 print(x)  // Prints "8".
 ```
 
@@ -930,7 +930,7 @@ func someFunction(a: inout Int) {
 }
 
 // Error: This causes a runtime exclusivity violation
-someFunction(&someValue)
+someFunction(a: &someValue)
 ```
 
 같은 이유로
@@ -944,7 +944,7 @@ func someFunction(a: inout Int, b: inout Int) {
 }
 
 // Error: Cannot pass the same value to multiple in-out parameters
-someFunction(&someValue, &someValue)
+someFunction(a: &someValue, b: &someValue)
 ```
 
 메모리 안정성과 메모리 독점성에 대한 자세한 내용은
