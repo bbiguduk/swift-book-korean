@@ -13,7 +13,7 @@ Swift에서는 이것을 한줄로 표기할 수 있습니다:
 
 ```swift
 print("Hello, world!")
-// Prints "Hello, world!"
+// Prints "Hello, world!".
 ```
 
 <!--
@@ -271,7 +271,7 @@ occupations["Jayne"] = "Public Relations"
 ```swift
 fruits.append("blueberries")
 print(fruits)
-// Prints "["strawberries", "grapes", "tangerines", "blueberries"]"
+// Prints "["strawberries", "grapes", "tangerines", "blueberries"]".
 ```
 
 <!--
@@ -342,7 +342,7 @@ for score in individualScores {
     }
 }
 print(teamScore)
-// Prints "11"
+// Prints "11".
 ```
 
 <!--
@@ -393,7 +393,7 @@ let scoreDecoration = if teamScore > 10 {
     ""
 }
 print("Score:", teamScore, scoreDecoration)
-// Prints "Score: 11 🎉"
+// Prints "Score: 11 🎉".
 ```
 
 `if`와 `let`을 사용하여
@@ -416,7 +416,7 @@ print("Score:", teamScore, scoreDecoration)
 ```swift
 var optionalString: String? = "Hello"
 print(optionalString == nil)
-// Prints "false"
+// Prints "false".
 
 var optionalName: String? = "John Appleseed"
 var greeting = "Hello!"
@@ -523,7 +523,7 @@ case let x where x.hasSuffix("pepper"):
 default:
     print("Everything tastes good in soup.")
 }
-// Prints "Is it a spicy red pepper?"
+// Prints "Is it a spicy red pepper?".
 ```
 
 <!--
@@ -593,7 +593,7 @@ for (_, numbers) in interestingNumbers {
     }
 }
 print(largest)
-// Prints "25"
+// Prints "25".
 ```
 
 <!--
@@ -638,14 +638,14 @@ while n < 100 {
     n *= 2
 }
 print(n)
-// Prints "128"
+// Prints "128".
 
 var m = 2
 repeat {
     m *= 2
 } while m < 100
 print(m)
-// Prints "128"
+// Prints "128".
 ```
 
 <!--
@@ -682,7 +682,7 @@ for i in 0..<4 {
     total += i
 }
 print(total)
-// Prints "6"
+// Prints "6".
 ```
 
 <!--
@@ -800,9 +800,9 @@ func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
 }
 let statistics = calculateStatistics(scores: [5, 3, 100, 3, 9])
 print(statistics.sum)
-// Prints "120"
+// Prints "120".
 print(statistics.2)
-// Prints "120"
+// Prints "120".
 ```
 
 <!--
@@ -990,7 +990,7 @@ numbers.map({ (number: Int) -> Int in
 ```swift
 let mappedNumbers = numbers.map({ number in 3 * number })
 print(mappedNumbers)
-// Prints "[60, 57, 21, 36]"
+// Prints "[60, 57, 21, 36]".
 ```
 
 <!--
@@ -1013,7 +1013,7 @@ print(mappedNumbers)
 ```swift
 let sortedNumbers = numbers.sorted { $0 > $1 }
 print(sortedNumbers)
-// Prints "[20, 19, 12, 7]"
+// Prints "[20, 19, 12, 7]".
 ```
 
 <!--
@@ -1264,10 +1264,10 @@ class EquilateralTriangle: NamedShape {
 }
 var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
 print(triangle.perimeter)
-// Prints "9.3"
+// Prints "9.3".
 triangle.perimeter = 9.9
 print(triangle.sideLength)
-// Prints "3.3000000000000003"
+// Prints "3.3000000000000003".
 ```
 
 <!--
@@ -1352,12 +1352,12 @@ class TriangleAndSquare {
 }
 var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
 print(triangleAndSquare.square.sideLength)
-// Prints "10.0"
+// Prints "10.0".
 print(triangleAndSquare.triangle.sideLength)
-// Prints "10.0"
+// Prints "10.0".
 triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
 print(triangleAndSquare.triangle.sideLength)
-// Prints "50.0"
+// Prints "50.0".
 ```
 
 <!--
@@ -1668,7 +1668,7 @@ case let .result(sunrise, sunset):
 case let .failure(message):
     print("Failure...  \(message)")
 }
-// Prints "Sunrise is at 6:00 am and sunset is at 8:09 pm."
+// Prints "Sunrise is at 6:00 am and sunset is at 8:09 pm.".
 ```
 
 <!--
@@ -1826,7 +1826,7 @@ func connectUser(to server: String) async {
 Task {
     await connectUser(to: "primary")
 }
-// Prints "Hello Guest, user ID 97"
+// Prints "Hello Guest, user ID 97".
 ```
 
 <!--
@@ -2024,7 +2024,7 @@ extension Int: ExampleProtocol {
     }
 }
 print(7.simpleDescription)
-// Prints "The number 7"
+// Prints "The number 7".
 ```
 
 <!--
@@ -2057,7 +2057,7 @@ print(7.simpleDescription)
 ```swift
 let protocolValue: any ExampleProtocol = a
 print(protocolValue.simpleDescription)
-// Prints "A very simple class.  Now 100% adjusted."
+// Prints "A very simple class.  Now 100% adjusted.".
 // print(protocolValue.anotherProperty)  // Uncomment to see the error
 ```
 
@@ -2165,7 +2165,7 @@ do {
 } catch {
     print(error)
 }
-// Prints "Job sent"
+// Prints "Job sent".
 ```
 
 <!--
@@ -2224,7 +2224,7 @@ do {
 } catch {
     print(error)
 }
-// Prints "Job sent"
+// Prints "Job sent".
 ```
 
 <!--
@@ -2299,7 +2299,7 @@ if fridgeContains("banana") {
     print("Found a banana")
 }
 print(fridgeIsOpen)
-// Prints "false"
+// Prints "false".
 ```
 
 <!--

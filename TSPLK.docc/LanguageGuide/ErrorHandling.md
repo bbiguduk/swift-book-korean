@@ -436,7 +436,7 @@ do {
 } catch {
     print("Unexpected error: \(error).")
 }
-// Prints "Insufficient funds. Please insert an additional 2 coins."
+// Prints "Insufficient funds. Please insert an additional 2 coins.".
 ```
 
 <!--
@@ -507,7 +507,7 @@ do {
 } catch {
     print("Unexpected non-vending-machine-related error: \(error)")
 }
-// Prints "Couldn't buy that from the vending machine."
+// Prints "Couldn't buy that from the vending machine.".
 ```
 
 <!--
@@ -853,7 +853,7 @@ do throws(StatisticsError) {
         print("Invalid rating: \(rating)")
     }
 }
-// Prints "No ratings available"
+// Prints "No ratings available".
 ```
 
 이 코드에서,
@@ -897,7 +897,7 @@ do {
         print("Invalid rating: \(rating)")
     }
 }
-// Prints "No ratings available"
+// Prints "No ratings available".
 ```
 
 위 `do`-`catch` 블록에서

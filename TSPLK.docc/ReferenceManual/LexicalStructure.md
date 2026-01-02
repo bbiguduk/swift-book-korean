@@ -500,7 +500,7 @@ Swift 표준 라이브러리 프로토콜을 준수해야 합니다.
 >
 > *literal* → *numeric-literal* | *string-literal* | *regular-expression-literal* | *boolean-literal* | *nil-literal*
 >
-> *numeric-literal* → **`-`**_?_ *integer-literal* | **`-`**_?_ *floating-point-literal* \
+> *numeric-literal* → *signed-integer-literal* | *signed-floating-point-literal* \
 > *boolean-literal* → **`true`** | **`false`** \
 > *nil-literal* → **`nil`**
 
@@ -552,6 +552,7 @@ Swift 표준 라이브러리는
 
 > Grammar of an integer literal:
 >
+> *signed-integer-literal* → **`-`**_?_ *integer-literal* \
 > *integer-literal* → *binary-literal* \
 > *integer-literal* → *octal-literal* \
 > *integer-literal* → *decimal-literal* \
@@ -626,6 +627,7 @@ Swift 표준 라이브러리는 `Float` 타입도 정의하며,
 
 > Grammar of a floating-point literal:
 >
+> *signed-floating-point-literal* → > **`-`**_?_ *floating-point-literal* \
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
 > *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
 >
@@ -800,9 +802,9 @@ let x = 3; "1 2 \(x)"
 let string = #"\(x) \ " \u{2603}"#
 let escaped = "\\(x) \\ \" \\u{2603}"
 print(string)
-// Prints "\(x) \ " \u{2603}"
+// Prints "\(x) \ " \u{2603}".
 print(string == escaped)
-// Prints "true"
+// Prints "true".
 ```
 
 <!--

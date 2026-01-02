@@ -105,13 +105,13 @@ try! <#expression#>
 즉, 괄호를 사용하여 연산자의 적용 범위를 지정할 수 있습니다.
 
 ```swift
-// try applies to both function calls
+// Writing 'try' applies to both function calls.
 sum = try someThrowingFunction() + anotherThrowingFunction()
 
-// try applies to both function calls
+// Writing 'try' applies to both function calls.
 sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-// Error: try applies only to the first function call
+// Error: Writing 'try' applies to both function calls.
 sum = (try someThrowingFunction()) + anotherThrowingFunction()
 ```
 
@@ -122,13 +122,13 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   >> func someThrowingFunction() throws -> Int { return 10 }
   >> func anotherThrowingFunction() throws -> Int { return 5 }
   >> var sum = 0
-  // try applies to both function calls
+  // Writing 'try' applies to both function calls.
   -> sum = try someThrowingFunction() + anotherThrowingFunction()
 
-  // try applies to both function calls
+  // Writing 'try' applies to both function calls.
   -> sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-  // Error: try applies only to the first function call
+  // Error: Writing 'try' applies to both function calls.
   -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
   !$ error: call can throw but is not marked with 'try'
   !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
@@ -215,13 +215,13 @@ await <#expression#>
 연산자의 적용 범위를 명시할 수 있습니다.
 
 ```swift
-// await applies to both function calls
+// Writing 'await' applies to both function calls.
 sum = await someAsyncFunction() + anotherAsyncFunction()
 
-// await applies to both function calls
+// Writing 'await' applies to both function calls.
 sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-// Error: await applies only to the first function call
+// Error: Writing 'await' applies to both function calls.
 sum = (await someAsyncFunction()) + anotherAsyncFunction()
 ```
 
@@ -233,13 +233,13 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> func anotherAsyncFunction() async -> Int { return 5 }
   >> func f() async {
   >> var sum = 0
-  // await applies to both function calls
+  // Writing 'await' applies to both function calls.
   -> sum = await someAsyncFunction() + anotherAsyncFunction()
 
-  // await applies to both function calls
+  // Writing 'await' applies to both function calls.
   -> sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-  // Error: await applies only to the first function call
+  // Error: Writing 'await' applies to both function calls.
   -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> _ = sum  // Suppress irrelevant written-but-not-read warning
   >> }
@@ -463,14 +463,14 @@ func f(_ any: Any) { print("Function for Any") }
 func f(_ int: Int) { print("Function for Int") }
 let x = 10
 f(x)
-// Prints "Function for Int"
+// Prints "Function for Int".
 
 let y: Any = x
 f(y)
-// Prints "Function for Any"
+// Prints "Function for Any".
 
 f(x as Any)
-// Prints "Function for Any"
+// Prints "Function for Any".
 ```
 
 <!--
@@ -1038,7 +1038,7 @@ let closure = { [a] in
 a = 10
 b = 10
 closure()
-// Prints "0 10"
+// Prints "0 10".
 ```
 
 <!--
@@ -1104,7 +1104,7 @@ let closure = { [x] in
 x.value = 10
 y.value = 10
 closure()
-// Prints "10 10"
+// Prints "10 10".
 ```
 
 <!--
@@ -1231,15 +1231,15 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 
   ```swifttest
   >> var a = 12
-  >> let c1 = { [a] in return a }                  // OK -- no async or throws
-  >> let c2 = { [a] async in return a }            // ERROR
-  >> let c3 = { [a] async -> in return a }         // ERROR
-  >> let c4 = { [a] () async -> Int in return a }  // OK -- has () and ->
+  >> let c1 = { [a] in return a }                  // OK: No async or throws
+  >> let c2 = { [a] async in return a }            // Error
+  >> let c3 = { [a] async -> in return a }         // Error
+  >> let c4 = { [a] () async -> Int in return a }  // OK: Has () and ->
   !$ error: expected expression
-  !! let c3 = { [a] async -> in return a }         // ERROR
+  !! let c3 = { [a] async -> in return a }         // Error
   !! ^
   !$ error: unable to infer type of a closure parameter 'async' in the current context
-  !! let c2 = { [a] async in return a }            // ERROR
+  !! let c2 = { [a] async in return a }            // Error
   !! ^
   // NOTE: The error message for c3 gets printed by the REPL before the c2 error.
   ```
@@ -1532,7 +1532,7 @@ let z: SomeClass = .sharedSubclass
 func f(a: Int = #line, b: Int = (#line), c: Int = 100 + #line) {
     print(a, b, c)
 }
-f()  // Prints "4 1 101"
+f()  // Prints "4 1 101".
 ```
 
 위 함수에서,
@@ -1823,18 +1823,18 @@ let path = \[String].[index]
 let fn: ([String]) -> String = { strings in strings[index] }
 
 print(greetings[keyPath: path])
-// Prints "bonjour"
+// Prints "bonjour".
 print(fn(greetings))
-// Prints "bonjour"
+// Prints "bonjour".
 
 // Setting 'index' to a new value doesn't affect 'path'
 index += 1
 print(greetings[keyPath: path])
-// Prints "bonjour"
+// Prints "bonjour".
 
 // Because 'fn' closes over 'index', it uses the new value
 print(fn(greetings))
-// Prints "안녕"
+// Prints "안녕".
 ```
 
 <!--
@@ -1868,12 +1868,12 @@ print(fn(greetings))
 ```swift
 let firstGreeting: String? = greetings.first
 print(firstGreeting?.count as Any)
-// Prints "Optional(5)"
+// Prints "Optional(5)".
 
 // Do the same thing using a key path.
 let count = greetings[keyPath: \[String].first?.count]
 print(count as Any)
-// Prints "Optional(5)"
+// Prints "Optional(5)".
 ```
 
 <!--
@@ -1908,13 +1908,13 @@ let interestingNumbers = ["prime": [2, 3, 5, 7, 11, 13, 17],
                           "triangular": [1, 3, 6, 10, 15, 21, 28],
                           "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
 print(interestingNumbers[keyPath: \[String: [Int]].["prime"]] as Any)
-// Prints "Optional([2, 3, 5, 7, 11, 13, 17])"
+// Prints "Optional([2, 3, 5, 7, 11, 13, 17])".
 print(interestingNumbers[keyPath: \[String: [Int]].["prime"]![0]])
-// Prints "2"
+// Prints "2".
 print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count])
-// Prints "7"
+// Prints "7".
 print(interestingNumbers[keyPath: \[String: [Int]].["hexagonal"]!.count.bitWidth])
-// Prints "64"
+// Prints "64".
 ```
 
 <!--
@@ -2000,7 +2000,7 @@ func makeIndex() -> Int {
 }
 // The line below calls makeIndex().
 let taskKeyPath = \[Task][makeIndex()]
-// Prints "Made an index"
+// Prints "Made an index".
 
 // Using taskKeyPath doesn't call makeIndex() again.
 let someTask = toDoList[keyPath: taskKeyPath]
@@ -2187,7 +2187,7 @@ let keyPath = #keyPath(SomeClass.someProperty)
 if let value = c.value(forKey: keyPath) {
     print(value)
 }
-// Prints "12"
+// Prints "12".
 ```
 
 <!--
@@ -2223,7 +2223,7 @@ extension SomeClass {
     }
 }
 print(keyPath == c.getSomeKeyPath())
-// Prints "true"
+// Prints "true".
 ```
 
 <!--
@@ -2481,9 +2481,9 @@ func someFunction(firstClosure: Callback? = nil,
     print(first ?? "-", second ?? "-")
 }
 
-someFunction()  // Prints "- -"
+someFunction()  // Prints "- -".
 someFunction { return $0 + 100 }  // Ambiguous
-someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
+someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20".
 ```
 
 <!--
@@ -2498,7 +2498,7 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
          print(first ?? "-", second ?? "-")
      }
 
-  -> someFunction()  // Prints "- -"
+  -> someFunction()  // Prints "- -".
   << - -
   -> someFunction { return $0 + 100 }  // Ambiguous
   << - 120
@@ -2509,7 +2509,7 @@ someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
   !$ note: 'someFunction(firstClosure:secondClosure:)' declared here
   !! func someFunction(firstClosure: Callback? = nil,
   !!      ^
-  -> someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20"
+  -> someFunction { return $0 } secondClosure: { return $0 }  // Prints "10 20".
   << 10 20
   ```
 -->
@@ -2698,7 +2698,7 @@ class SomeSubClass: SomeSuperClass {
 let initializer: (Int) -> String = String.init
 let oneTwoThree = [1, 2, 3].map(initializer).reduce("", +)
 print(oneTwoThree)
-// Prints "123"
+// Prints "123".
 ```
 
 <!--

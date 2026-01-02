@@ -429,7 +429,7 @@ if name == "world" {
 } else {
     print("I'm sorry \(name), but I don't recognize you")
 }
-// Prints "hello, world", because name is indeed equal to "world".
+// Prints "hello, world", because name is indeed equal to "world"..
 ```
 
 <!--
@@ -443,7 +443,7 @@ if name == "world" {
         print("I'm sorry \(name), but I don't recognize you")
      }
   << hello, world
-  // Prints "hello, world", because name is indeed equal to "world".
+  // Prints "hello, world", because name is indeed equal to "world"..
   ```
 -->
 
@@ -506,8 +506,8 @@ if name == "world" {
 비교할 수 없습니다.
 
 ```swift
-("blue", -1) < ("purple", 1)        // OK, evaluates to true
-("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+("blue", -1) < ("purple", 1)        // OK: Evaluates to true.
+("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
 ```
 
 <!--
@@ -515,17 +515,17 @@ if name == "world" {
 
   ```swifttest
   >> _ =
-  -> ("blue", -1) < ("purple", 1)        // OK, evaluates to true
+  -> ("blue", -1) < ("purple", 1)        // OK: Evaluates to true.
   >> _ =
-  -> ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  -> ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !$ error: type '(String, Bool)' cannot conform to 'Comparable'
-  !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  !! ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !!                 ^
   !$ note: only concrete types such as structs, enums and classes can conform to protocols
-  !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  !! ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !!                 ^
   !$ note: required by referencing operator function '<' on 'Comparable' where 'Self' = '(String, Bool)'
-  !! ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
+  !! ("blue", false) < ("purple", true)  // Error: Can't use < to compare Boolean values.
   !!                 ^
   ```
 -->
@@ -1037,7 +1037,7 @@ let allowedEntry = false
 if !allowedEntry {
     print("ACCESS DENIED")
 }
-// Prints "ACCESS DENIED"
+// Prints "ACCESS DENIED".
 ```
 
 <!--
@@ -1084,7 +1084,7 @@ if enteredDoorCode && passedRetinaScan {
 } else {
     print("ACCESS DENIED")
 }
-// Prints "ACCESS DENIED"
+// Prints "ACCESS DENIED".
 ```
 
 <!--
@@ -1131,7 +1131,7 @@ if hasDoorKey || knowsOverridePassword {
 } else {
     print("ACCESS DENIED")
 }
-// Prints "Welcome!"
+// Prints "Welcome!".
 ```
 
 <!--
@@ -1159,7 +1159,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 } else {
     print("ACCESS DENIED")
 }
-// Prints "Welcome!"
+// Prints "Welcome!".
 ```
 
 <!--
@@ -1208,7 +1208,7 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 } else {
     print("ACCESS DENIED")
 }
-// Prints "Welcome!"
+// Prints "Welcome!".
 ```
 
 <!--

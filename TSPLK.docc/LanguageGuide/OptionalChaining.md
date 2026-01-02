@@ -122,7 +122,7 @@ if let roomCount = john.residence?.numberOfRooms {
 } else {
     print("Unable to retrieve the number of rooms.")
 }
-// Prints "Unable to retrieve the number of rooms."
+// Prints "Unable to retrieve the number of rooms.".
 ```
 
 <!--
@@ -181,7 +181,7 @@ if let roomCount = john.residence?.numberOfRooms {
 } else {
     print("Unable to retrieve the number of rooms.")
 }
-// Prints "John's residence has 1 room(s)."
+// Prints "John's residence has 1 room(s).".
 ```
 
 <!--
@@ -387,7 +387,7 @@ if let roomCount = john.residence?.numberOfRooms {
 } else {
     print("Unable to retrieve the number of rooms.")
 }
-// Prints "Unable to retrieve the number of rooms."
+// Prints "Unable to retrieve the number of rooms.".
 ```
 
 <!--
@@ -525,7 +525,7 @@ if john.residence?.printNumberOfRooms() != nil {
 } else {
     print("It was not possible to print the number of rooms.")
 }
-// Prints "It was not possible to print the number of rooms."
+// Prints "It was not possible to print the number of rooms.".
 ```
 
 <!--
@@ -554,7 +554,7 @@ if (john.residence?.address = someAddress) != nil {
 } else {
     print("It was not possible to set the address.")
 }
-// Prints "It was not possible to set the address."
+// Prints "It was not possible to set the address.".
 ```
 
 <!--
@@ -593,7 +593,7 @@ if let firstRoomName = john.residence?[0].name {
 } else {
     print("Unable to retrieve the first room name.")
 }
-// Prints "Unable to retrieve the first room name."
+// Prints "Unable to retrieve the first room name.".
 ```
 
 <!--
@@ -646,7 +646,7 @@ if let firstRoomName = john.residence?[0].name {
 } else {
     print("Unable to retrieve the first room name.")
 }
-// Prints "The first room name is Living Room."
+// Prints "The first room name is Living Room.".
 ```
 
 <!--
@@ -742,7 +742,7 @@ if let johnsStreet = john.residence?.address?.street {
 } else {
     print("Unable to retrieve the address.")
 }
-// Prints "Unable to retrieve the address."
+// Prints "Unable to retrieve the address.".
 ```
 
 <!--
@@ -784,7 +784,7 @@ if let johnsStreet = john.residence?.address?.street {
 } else {
     print("Unable to retrieve the address.")
 }
-// Prints "John's street name is Laurel Street."
+// Prints "John's street name is Laurel Street.".
 ```
 
 <!--
@@ -826,7 +826,7 @@ if let johnsStreet = john.residence?.address?.street {
 if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
     print("John's building identifier is \(buildingIdentifier).")
 }
-// Prints "John's building identifier is The Larches."
+// Prints "John's building identifier is The Larches.".
 ```
 
 <!--
@@ -852,7 +852,7 @@ if let beginsWithThe =
         print("John's building identifier does not begin with \"The\".")
     }
 }
-// Prints "John's building identifier begins with "The"."
+// Prints "John's building identifier begins with "The".".
 ```
 
 <!--

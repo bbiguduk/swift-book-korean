@@ -122,7 +122,7 @@ var reference3: Person?
 
 ```swift
 reference1 = Person(name: "John Appleseed")
-// Prints "John Appleseed is being initialized"
+// Prints "John Appleseed is being initialized".
 ```
 
 <!--
@@ -187,7 +187,7 @@ ARC는 마지막 강한 참조를 중단할 때까지
 
 ```swift
 reference3 = nil
-// Prints "John Appleseed is being deinitialized"
+// Prints "John Appleseed is being deinitialized".
 ```
 
 <!--
@@ -526,7 +526,7 @@ unit4A!.tenant = john
 
 ```swift
 john = nil
-// Prints "John Appleseed is being deinitialized"
+// Prints "John Appleseed is being deinitialized".
 ```
 
 <!--
@@ -551,7 +551,7 @@ john = nil
 
 ```swift
 unit4A = nil
-// Prints "Apartment 4A is being deinitialized"
+// Prints "Apartment 4A is being deinitialized".
 ```
 
 <!--
@@ -746,8 +746,8 @@ john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
 ```swift
 john = nil
-// Prints "John Appleseed is being deinitialized"
-// Prints "Card #1234567890123456 is being deinitialized"
+// Prints "John Appleseed is being deinitialized".
+// Prints "Card #1234567890123456 is being deinitialized".
 ```
 
 <!--
@@ -1061,7 +1061,7 @@ class City {
 ```swift
 var country = Country(name: "Canada", capitalName: "Ottawa")
 print("\(country.name)'s capital city is called \(country.capitalCity.name)")
-// Prints "Canada's capital city is called Ottawa"
+// Prints "Canada's capital city is called Ottawa".
 ```
 
 <!--
@@ -1209,7 +1209,7 @@ heading.asHTML = {
     return "<\(heading.name)>\(heading.text ?? defaultText)</\(heading.name)>"
 }
 print(heading.asHTML())
-// Prints "<h1>some default text</h1>"
+// Prints "<h1>some default text</h1>".
 ```
 
 <!--
@@ -1245,7 +1245,7 @@ print(heading.asHTML())
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// Prints "<p>hello, world</p>"
+// Prints "<p>hello, world</p>".
 ```
 
 <!--
@@ -1472,7 +1472,7 @@ class HTMLElement {
 ```swift
 var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
 print(paragraph!.asHTML())
-// Prints "<p>hello, world</p>"
+// Prints "<p>hello, world</p>".
 ```
 
 <!--
@@ -1497,7 +1497,7 @@ print(paragraph!.asHTML())
 
 ```swift
 paragraph = nil
-// Prints "p is being deinitialized"
+// Prints "p is being deinitialized".
 ```
 
 <!--

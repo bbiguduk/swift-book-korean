@@ -80,7 +80,7 @@ Swift에서 두 가지 접근방식으로 빈 배열을 생성할 수 있습니�
 ```swift
 var someInts: [Int] = []
 print("someInts is of type [Int] with \(someInts.count) items.")
-// Prints "someInts is of type [Int] with 0 items."
+// Prints "someInts is of type [Int] with 0 items.".
 ```
 
 <!--
@@ -102,7 +102,7 @@ print("someInts is of type [Int] with \(someInts.count) items.")
 ```swift
 var someInts = [Int]()
 print("someInts is of type [Int] with \(someInts.count) items.")
-// Prints "someInts is of type [Int] with 0 items."
+// Prints "someInts is of type [Int] with 0 items.".
 ```
 
 두 접근방식 모두 동일한 결과를 생성합니다.
@@ -270,7 +270,7 @@ Swift는 `[String]`가
 
 ```swift
 print("The shopping list contains \(shoppingList.count) items.")
-// Prints "The shopping list contains 2 items."
+// Prints "The shopping list contains 2 items.".
 ```
 
 <!--
@@ -291,7 +291,7 @@ if shoppingList.isEmpty {
 } else {
     print("The shopping list is not empty.")
 }
-// Prints "The shopping list is not empty."
+// Prints "The shopping list is not empty.".
 ```
 
 <!--
@@ -640,7 +640,7 @@ Swift 집합의 타입은 `Element`가 저장할 값의 타입을 나타내는
 ```swift
 var letters = Set<Character>()
 print("letters is of type Set<Character> with \(letters.count) items.")
-// Prints "letters is of type Set<Character> with 0 items."
+// Prints "letters is of type Set<Character> with 0 items.".
 ```
 
 <!--
@@ -744,7 +744,7 @@ Swift는 `favoriteGenres` 변수를 사용하는데
 
 ```swift
 print("I have \(favoriteGenres.count) favorite music genres.")
-// Prints "I have 3 favorite music genres."
+// Prints "I have 3 favorite music genres.".
 ```
 
 <!--
@@ -766,7 +766,7 @@ if favoriteGenres.isEmpty {
 } else {
     print("I have particular music preferences.")
 }
-// Prints "I have particular music preferences."
+// Prints "I have particular music preferences.".
 ```
 
 <!--
@@ -811,7 +811,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
 } else {
     print("I never much cared for that.")
 }
-// Prints "Rock? I'm over it."
+// Prints "Rock? I'm over it.".
 ```
 
 <!--
@@ -835,7 +835,7 @@ if favoriteGenres.contains("Funk") {
 } else {
     print("It's too funky in here.")
 }
-// Prints "It's too funky in here."
+// Prints "It's too funky in here.".
 ```
 
 <!--
@@ -1195,7 +1195,7 @@ Swift는 `airports` 딕셔너리를 사용하기 위해
 
 ```swift
 print("The airports dictionary contains \(airports.count) items.")
-// Prints "The airports dictionary contains 2 items."
+// Prints "The airports dictionary contains 2 items.".
 ```
 
 <!--
@@ -1216,7 +1216,7 @@ if airports.isEmpty {
 } else {
     print("The airports dictionary is not empty.")
 }
-// Prints "The airports dictionary is not empty."
+// Prints "The airports dictionary is not empty.".
 ```
 
 <!--
@@ -1290,7 +1290,7 @@ airports["LHR"] = "London Heathrow"
 if let oldValue = airports.updateValue("Dublin Airport", forKey: "DUB") {
     print("The old value for DUB was \(oldValue).")
 }
-// Prints "The old value for DUB was Dublin."
+// Prints "The old value for DUB was Dublin.".
 ```
 
 <!--
@@ -1317,7 +1317,7 @@ if let airportName = airports["DUB"] {
 } else {
     print("That airport is not in the airports dictionary.")
 }
-// Prints "The name of the airport is Dublin Airport."
+// Prints "The name of the airport is Dublin Airport.".
 ```
 
 <!--
@@ -1373,7 +1373,7 @@ if let removedValue = airports.removeValue(forKey: "DUB") {
 } else {
     print("The airports dictionary does not contain a value for DUB.")
 }
-// Prints "The removed airport's name is Dublin Airport."
+// Prints "The removed airport's name is Dublin Airport.".
 ```
 
 <!--
