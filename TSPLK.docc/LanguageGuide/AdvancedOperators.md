@@ -952,7 +952,7 @@ let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
 if twoThree == anotherTwoThree {
     print("These two vectors are equivalent.")
 }
-// Prints "These two vectors are equivalent."
+// Prints "These two vectors are equivalent.".
 ```
 
 <!--
@@ -1224,7 +1224,7 @@ let manualDrawing = Line(elements: [
     Stars(length: 2),
     ])
 print(manualDrawing.draw())
-// Prints "***Hello RAVI PATEL!**"
+// Prints "***Hello RAVI PATEL!**".
 ```
 
 <!--
@@ -1332,11 +1332,11 @@ func makeGreeting(for name: String? = nil) -> Drawable {
 }
 let genericGreeting = makeGreeting()
 print(genericGreeting.draw())
-// Prints "***Hello WORLD!**"
+// Prints "***Hello WORLD!**".
 
 let personalGreeting = makeGreeting(for: "Ravi Patel")
 print(personalGreeting.draw())
-// Prints "***Hello RAVI PATEL!**"
+// Prints "***Hello RAVI PATEL!**".
 ```
 
 <!--

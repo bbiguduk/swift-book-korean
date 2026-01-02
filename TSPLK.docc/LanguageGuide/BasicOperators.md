@@ -429,7 +429,7 @@ if name == "world" {
 } else {
     print("I'm sorry \(name), but I don't recognize you")
 }
-// Prints "hello, world", because name is indeed equal to "world".
+// Prints "hello, world", because name is indeed equal to "world"..
 ```
 
 <!--
@@ -443,7 +443,7 @@ if name == "world" {
         print("I'm sorry \(name), but I don't recognize you")
      }
   << hello, world
-  // Prints "hello, world", because name is indeed equal to "world".
+  // Prints "hello, world", because name is indeed equal to "world"..
   ```
 -->
 
@@ -1037,7 +1037,7 @@ let allowedEntry = false
 if !allowedEntry {
     print("ACCESS DENIED")
 }
-// Prints "ACCESS DENIED"
+// Prints "ACCESS DENIED".
 ```
 
 <!--
@@ -1084,7 +1084,7 @@ if enteredDoorCode && passedRetinaScan {
 } else {
     print("ACCESS DENIED")
 }
-// Prints "ACCESS DENIED"
+// Prints "ACCESS DENIED".
 ```
 
 <!--
@@ -1131,7 +1131,7 @@ if hasDoorKey || knowsOverridePassword {
 } else {
     print("ACCESS DENIED")
 }
-// Prints "Welcome!"
+// Prints "Welcome!".
 ```
 
 <!--
@@ -1159,7 +1159,7 @@ if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
 } else {
     print("ACCESS DENIED")
 }
-// Prints "Welcome!"
+// Prints "Welcome!".
 ```
 
 <!--
@@ -1208,7 +1208,7 @@ if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword 
 } else {
     print("ACCESS DENIED")
 }
-// Prints "Welcome!"
+// Prints "Welcome!".
 ```
 
 <!--

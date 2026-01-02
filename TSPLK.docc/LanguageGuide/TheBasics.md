@@ -318,7 +318,7 @@ languageName = "Swift++"
 
 ```swift
 print(friendlyWelcome)
-// Prints "Bonjour!"
+// Prints "Bonjour!".
 ```
 
 <!--
@@ -372,7 +372,7 @@ Swift가 상수나 변수의 현재값으로 대체하도록 합니다.
 
 ```swift
 print("The current value of friendlyWelcome is \(friendlyWelcome)")
-// Prints "The current value of friendlyWelcome is Bonjour!"
+// Prints "The current value of friendlyWelcome is Bonjour!".
 ```
 
 <!--
@@ -460,7 +460,7 @@ Swift는 코드의 각 구문 후에 세미콜론(`;`)은
 
 ```swift
 let cat = "🐱"; print(cat)
-// Prints "🐱"
+// Prints "🐱".
 ```
 
 <!--
@@ -1100,7 +1100,7 @@ if turnipsAreDelicious {
 } else {
     print("Eww, turnips are horrible.")
 }
-// Prints "Eww, turnips are horrible."
+// Prints "Eww, turnips are horrible.".
 ```
 
 <!--
@@ -1213,9 +1213,9 @@ let http404Error = (404, "Not Found")
 ```swift
 let (statusCode, statusMessage) = http404Error
 print("The status code is \(statusCode)")
-// Prints "The status code is 404"
+// Prints "The status code is 404".
 print("The status message is \(statusMessage)")
-// Prints "The status message is Not Found"
+// Prints "The status message is Not Found".
 ```
 
 <!--
@@ -1237,7 +1237,7 @@ print("The status message is \(statusMessage)")
 ```swift
 let (justTheStatusCode, _) = http404Error
 print("The status code is \(justTheStatusCode)")
-// Prints "The status code is 404"
+// Prints "The status code is 404".
 ```
 
 <!--
@@ -1255,9 +1255,9 @@ print("The status code is \(justTheStatusCode)")
 
 ```swift
 print("The status code is \(http404Error.0)")
-// Prints "The status code is 404"
+// Prints "The status code is 404".
 print("The status message is \(http404Error.1)")
-// Prints "The status message is Not Found"
+// Prints "The status message is Not Found".
 ```
 
 <!--
@@ -1290,9 +1290,9 @@ let http200Status = (statusCode: 200, description: "OK")
 
 ```swift
 print("The status code is \(http200Status.statusCode)")
-// Prints "The status code is 200"
+// Prints "The status code is 200".
 print("The status message is \(http200Status.description)")
-// Prints "The status message is OK"
+// Prints "The status message is OK".
 ```
 
 <!--
@@ -1421,7 +1421,7 @@ let convertedNumber = Int(possibleNumber)
 if convertedNumber != nil {
     print("convertedNumber contains some integer value.")
 }
-// Prints "convertedNumber contains some integer value."
+// Prints "convertedNumber contains some integer value.".
 ```
 
 <!--
@@ -1503,7 +1503,7 @@ if let actualNumber = Int(possibleNumber) {
 } else {
     print("The string \"\(possibleNumber)\" could not be converted to an integer")
 }
-// Prints "The string "123" has an integer value of 123"
+// Prints "The string "123" has an integer value of 123".
 ```
 
 <!--
@@ -1543,7 +1543,7 @@ if let myNumber = myNumber {
     // Here, myNumber is a non-optional integer
     print("My number is \(myNumber)")
 }
-// Prints "My number is 123"
+// Prints "My number is 123".
 ```
 
 <!--
@@ -1579,7 +1579,7 @@ if let myNumber = myNumber {
 if let myNumber {
     print("My number is \(myNumber)")
 }
-// Prints "My number is 123"
+// Prints "My number is 123".
 ```
 
 <!--
@@ -1616,7 +1616,7 @@ Boolean 조건이 `false`로 판단되면
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
     print("\(firstNumber) < \(secondNumber) < 100")
 }
-// Prints "4 < 42 < 100"
+// Prints "4 < 42 < 100".
 
 if let firstNumber = Int("4") {
     if let secondNumber = Int("42") {
@@ -1625,7 +1625,7 @@ if let firstNumber = Int("4") {
         }
     }
 }
-// Prints "4 < 42 < 100"
+// Prints "4 < 42 < 100".
 ```
 
 <!--
@@ -1678,7 +1678,7 @@ nil-결합 연산자(`??`)를 사용하여 기본값을 제공하는 방법입�
 let name: String? = nil
 let greeting = "Hello, " + (name ?? "friend") + "!"
 print(greeting)
-// Prints "Hello, friend!"
+// Prints "Hello, friend!".
 ```
 
 <!--
@@ -1831,7 +1831,7 @@ let optionalString = assumedString
 if assumedString != nil {
     print(assumedString!)
 }
-// Prints "An implicitly unwrapped optional string."
+// Prints "An implicitly unwrapped optional string.".
 ```
 
 <!--
@@ -1852,7 +1852,7 @@ if assumedString != nil {
 if let definiteString = assumedString {
     print(definiteString)
 }
-// Prints "An implicitly unwrapped optional string."
+// Prints "An implicitly unwrapped optional string.".
 ```
 
 <!--

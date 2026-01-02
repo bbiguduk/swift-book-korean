@@ -171,7 +171,7 @@ case .east:
 case .west:
     print("Where the skies are blue")
 }
-// Prints "Watch out for penguins"
+// Prints "Watch out for penguins".
 ```
 
 <!--
@@ -221,7 +221,7 @@ case .earth:
 default:
     print("Not a safe place for humans")
 }
-// Prints "Mostly harmless"
+// Prints "Mostly harmless".
 ```
 
 <!--
@@ -255,7 +255,7 @@ enum Beverage: CaseIterable {
 }
 let numberOfChoices = Beverage.allCases.count
 print("\(numberOfChoices) beverages available")
-// Prints "3 beverages available"
+// Prints "3 beverages available".
 ```
 
 <!--
@@ -434,7 +434,7 @@ case .upc(let numberSystem, let manufacturer, let product, let check):
 case .qrCode(let productCode):
     print("QR code: \(productCode).")
 }
-// Prints "QR code: ABCDEFGHIJKLMNOP."
+// Prints "QR code: ABCDEFGHIJKLMNOP.".
 ```
 
 <!--
@@ -462,7 +462,7 @@ case let .upc(numberSystem, manufacturer, product, check):
 case let .qrCode(productCode):
     print("QR code: \(productCode).")
 }
-// Prints "QR code: ABCDEFGHIJKLMNOP."
+// Prints "QR code: ABCDEFGHIJKLMNOP.".
 ```
 
 <!--
@@ -686,7 +686,7 @@ if let somePlanet = Planet(rawValue: positionToFind) {
 } else {
     print("There isn't a planet at position \(positionToFind)")
 }
-// Prints "There isn't a planet at position 11"
+// Prints "There isn't a planet at position 11".
 ```
 
 <!--
@@ -824,7 +824,7 @@ func evaluate(_ expression: ArithmeticExpression) -> Int {
 }
 
 print(evaluate(product))
-// Prints "18"
+// Prints "18".
 ```
 
 <!--

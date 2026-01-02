@@ -141,7 +141,7 @@ struct AnotherStruct<let x: Int, T, each U> {
 이 상수는 `Int` 타입을 가집니다.
 
 ```swift
-print(a.x)  // Prints "4"
+print(a.x)  // Prints "4".
 ```
 
 정수 제네릭 매개변수의 값은
@@ -158,7 +158,7 @@ func someFunction<let z: Int>(s: SomeStruct<z>) {
 
 let s1 = SomeStruct<12>()
 let s2 = AnotherStruct(s: s1)  // AnotherStruct.y is inferred to be 12.
-someFunction(s: s1)  // Prints "12"
+someFunction(s: s1)  // Prints "12".
 ```
 
 ### 제네릭 Where 절 (Generic Where Clauses)

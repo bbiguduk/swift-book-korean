@@ -747,7 +747,7 @@ let task = await Task.withTaskCancellationHandler {
 }
 
 // ... some time later...
-task.cancel()  // Prints "Canceled!"
+task.cancel()  // Prints "Canceled!".
 ```
 
 취소 처리를 사용할 때,
@@ -1235,7 +1235,7 @@ actor TemperatureLogger {
 ```swift
 let logger = TemperatureLogger(label: "Outdoors", measurement: 25)
 print(await logger.max)
-// Prints "25"
+// Prints "25".
 ```
 
 이 예시에서

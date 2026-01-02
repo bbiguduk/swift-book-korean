@@ -802,9 +802,9 @@ let x = 3; "1 2 \(x)"
 let string = #"\(x) \ " \u{2603}"#
 let escaped = "\\(x) \\ \" \\u{2603}"
 print(string)
-// Prints "\(x) \ " \u{2603}"
+// Prints "\(x) \ " \u{2603}".
 print(string == escaped)
-// Prints "true"
+// Prints "true".
 ```
 
 <!--

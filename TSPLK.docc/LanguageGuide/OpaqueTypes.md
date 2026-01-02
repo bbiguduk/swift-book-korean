@@ -616,7 +616,7 @@ Swift는 필요할 때 간접 계층을 추가합니다 ---
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
     print(downcastTriangle.size)
 }
-// Prints "5"
+// Prints "5".
 ```
 
 더 자세한 내용은 <doc:TypeCasting#다운-캐스팅-Downcasting>을 참고바랍니다.
@@ -860,7 +860,7 @@ func makeOpaqueContainer<T>(item: T) -> some Container {
 let opaqueContainer = makeOpaqueContainer(item: 12)
 let twelve = opaqueContainer[0]
 print(type(of: twelve))
-// Prints "Int"
+// Prints "Int".
 ```
 
 <!--

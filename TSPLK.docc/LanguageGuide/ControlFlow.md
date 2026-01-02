@@ -157,7 +157,7 @@ for _ in 1...power {
     answer *= base
 }
 print("\(base) to the power of \(power) is \(answer)")
-// Prints "3 to the power of 10 is 59049"
+// Prints "3 to the power of 10 is 59049".
 ```
 
 <!--
@@ -641,7 +641,7 @@ var temperatureInFahrenheit = 30
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
 }
-// Prints "It's very cold. Consider wearing a scarf."
+// Prints "It's very cold. Consider wearing a scarf.".
 ```
 
 <!--
@@ -675,7 +675,7 @@ if temperatureInFahrenheit <= 32 {
 } else {
     print("It's not that cold. Wear a T-shirt.")
 }
-// Prints "It's not that cold. Wear a T-shirt."
+// Prints "It's not that cold. Wear a T-shirt.".
 ```
 
 <!--
@@ -709,7 +709,7 @@ if temperatureInFahrenheit <= 32 {
 } else {
     print("It's not that cold. Wear a T-shirt.")
 }
-// Prints "It's really warm. Don't forget to wear sunscreen."
+// Prints "It's really warm. Don't forget to wear sunscreen.".
 ```
 
 <!--
@@ -779,7 +779,7 @@ if temperatureInCelsius <= 0 {
 }
 
 print(weatherAdvice)
-// Prints "It's not that cold. Wear a T-shirt."
+// Prints "It's not that cold. Wear a T-shirt.".
 ```
 
 여기서, 각 분기는 `if` 구문 이후에 출력되는
@@ -799,7 +799,7 @@ let weatherAdvice = if temperatureInCelsius <= 0 {
 }
 
 print(weatherAdvice)
-// Prints "It's not that cold. Wear a T-shirt."
+// Prints "It's not that cold. Wear a T-shirt.".
 ```
 
 이 `if` 표현식에서
@@ -936,7 +936,7 @@ case "z":
 default:
     print("Some other character")
 }
-// Prints "The last letter of the Latin alphabet"
+// Prints "The last letter of the Latin alphabet".
 ```
 
 <!--
@@ -980,7 +980,7 @@ default:
 }
 
 print(message)
-// Prints "The first letter of the Latin alphabet"
+// Prints "The first letter of the Latin alphabet".
 ```
 
 이 예시에서
@@ -1070,7 +1070,7 @@ case "a", "A":
 default:
     print("Not the letter A")
 }
-// Prints "The letter A"
+// Prints "The letter A".
 ```
 
 <!--
@@ -1127,7 +1127,7 @@ default:
     naturalCount = "many"
 }
 print("There are \(naturalCount) \(countedThings).")
-// Prints "There are dozens of moons orbiting Saturn."
+// Prints "There are dozens of moons orbiting Saturn.".
 ```
 
 <!--
@@ -1188,7 +1188,7 @@ case (-2...2, -2...2):
 default:
     print("\(somePoint) is outside of the box")
 }
-// Prints "(1, 1) is inside the box"
+// Prints "(1, 1) is inside the box".
 ```
 
 <!--
@@ -1249,7 +1249,7 @@ case (0, let y):
 case let (x, y):
     print("somewhere else at (\(x), \(y))")
 }
-// Prints "on the x-axis with an x value of 2"
+// Prints "on the x-axis with an x value of 2".
 ```
 
 <!--
@@ -1312,7 +1312,7 @@ case let (x, y) where x == -y:
 case let (x, y):
     print("(\(x), \(y)) is just some arbitrary point")
 }
-// Prints "(1, -1) is on the line x == -y"
+// Prints "(1, -1) is on the line x == -y".
 ```
 
 <!--
@@ -1369,7 +1369,7 @@ case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
 default:
     print("\(someCharacter) is not a vowel or a consonant")
 }
-// Prints "e is a vowel"
+// Prints "e is a vowel".
 ```
 
 <!--
@@ -1414,7 +1414,7 @@ case (let distance, 0), (0, let distance):
 default:
     print("Not on an axis")
 }
-// Prints "On an axis, 9 from the origin"
+// Prints "On an axis, 9 from the origin".
 ```
 
 <!--
@@ -1452,7 +1452,7 @@ let somePoint = (12, 100)
 if case (let x, 100) = somePoint {
     print("Found a point on the y=100 line, at \(x)")
 }
-// Prints "Found a point on the y=100 line, at 12"
+// Prints "Found a point on the y=100 line, at 12".
 ```
 
 이 코드에서
@@ -1476,8 +1476,8 @@ for (x, y) in points {
         print("Found a point on the x-axis at \(x)")
     }
 }
-// Prints "Found a point on the x-axis at 10"
-// Prints "Found a point on the x-axis at -20"
+// Prints "Found a point on the x-axis at 10".
+// Prints "Found a point on the x-axis at -20".
 ```
 
 위 `for`-`in` 루프는 튜플의 배열을 반복하며,
@@ -1494,8 +1494,8 @@ for (x, y) in points {
 for case (let x, 0) in points {
     print("Found a point on the x-axis at \(x)")
 }
-// Prints "Found a point on the x-axis at 10"
-// Prints "Found a point on the x-axis at -20"
+// Prints "Found a point on the x-axis at 10".
+// Prints "Found a point on the x-axis at -20".
 ```
 
 이 코드에서
@@ -1516,7 +1516,7 @@ for case (let x, 0) in points {
 for case let (x, y) in points where x == y || x == -y  {
     print("Found (\(x), \(y)) along a line through the origin")
 }
-// Prints "Found (30, -30) along a line through the origin"
+// Prints "Found (30, -30) along a line through the origin".
 ```
 
 이 코드는 튜플의 첫 번째와 두 번째 요소를
@@ -1568,7 +1568,7 @@ for character in puzzleInput {
     puzzleOutput.append(character)
 }
 print(puzzleOutput)
-// Prints "grtmndsthnklk"
+// Prints "grtmndsthnklk".
 ```
 
 <!--
@@ -1656,7 +1656,7 @@ if let integerValue = possibleIntegerValue {
 } else {
     print("An integer value could not be found for \(numberSymbol).")
 }
-// Prints "The integer value of 三 is 3."
+// Prints "The integer value of 三 is 3.".
 ```
 
 <!--
@@ -1735,7 +1735,7 @@ default:
     description += " an integer."
 }
 print(description)
-// Prints "The number 5 is a prime number, and also an integer."
+// Prints "The number 5 is a prime number, and also an integer.".
 ```
 
 <!--
@@ -2015,11 +2015,11 @@ func greet(person: [String: String]) {
 }
 
 greet(person: ["name": "John"])
-// Prints "Hello John!"
-// Prints "I hope the weather is nice near you."
+// Prints "Hello John!".
+// Prints "I hope the weather is nice near you.".
 greet(person: ["name": "Jane", "location": "Cupertino"])
-// Prints "Hello Jane!"
-// Prints "I hope the weather is nice in Cupertino."
+// Prints "Hello Jane!".
+// Prints "I hope the weather is nice in Cupertino.".
 ```
 
 <!--
@@ -2092,7 +2092,7 @@ if score < 10 {
     }
     score += 5
 }
-// Prints "6"
+// Prints "6".
 ```
 
 <!--
@@ -2143,7 +2143,7 @@ if score < 100 {
     // Other code that uses the score with its bonus goes here.
     print(score)
 }
-// Prints "103"
+// Prints "103".
 ```
 
 <!--
@@ -2176,8 +2176,8 @@ if score < 10 {
     }
     score += 5
 }
-// Prints "The score is:"
-// Prints "6"
+// Prints "The score is:".
+// Prints "6".
 ```
 
 <!--

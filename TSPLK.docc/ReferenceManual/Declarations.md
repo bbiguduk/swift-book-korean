@@ -201,9 +201,9 @@ let (firstNumber, secondNumber) = (10, 42)
 
 ```swift
 print("The first number is \(firstNumber).")
-// Prints "The first number is 10."
+// Prints "The first number is 10.".
 print("The second number is \(secondNumber).")
-// Prints "The second number is 42."
+// Prints "The second number is 42.".
 ```
 
 <!--
@@ -451,9 +451,9 @@ class New: Superclass {
 }
 let new = New()
 new.x = 100
-// Prints "Setter was called"
-// Prints "Getter was called"
-// Prints "New value 100"
+// Prints "Setter was called".
+// Prints "Getter was called".
+// Prints "New value 100".
 
 // This subclass refers to oldValue in its observer, so the superclass's
 // getter is called once before the setter, and again to print the value.
@@ -464,10 +464,10 @@ class NewAndOld: Superclass {
 }
 let newAndOld = NewAndOld()
 newAndOld.x = 200
-// Prints "Getter was called"
-// Prints "Setter was called"
-// Prints "Getter was called"
-// Prints "Old value 12 - new value 200"
+// Prints "Getter was called".
+// Prints "Setter was called".
+// Prints "Getter was called".
+// Prints "Old value 12 - new value 200".
 ```
 
 <!--
@@ -887,7 +887,7 @@ in-out 인자는 앰퍼샌드(`&`)를 앞에 붙여야 합니다.
 ```swift
 var x = 7
 someFunction(&x)
-print(x)  // Prints "8"
+print(x)  // Prints "8".
 ```
 
 In-out 매개변수는 다음과 같이 전달됩니다:
@@ -3155,7 +3155,7 @@ extension String: TitledLoggable {
 ```swift
 let oneAndTwo = Pair(first: "one", second: "two")
 oneAndTwo.log()
-// Prints "Pair of 'String': (one, two)"
+// Prints "Pair of 'String': (one, two)".
 ```
 
 <!--
@@ -3181,7 +3181,7 @@ func doSomething<T: Loggable>(with x: T) {
     x.log()
 }
 doSomething(with: oneAndTwo)
-// Prints "(one, two)"
+// Prints "(one, two)".
 ```
 
 <!--

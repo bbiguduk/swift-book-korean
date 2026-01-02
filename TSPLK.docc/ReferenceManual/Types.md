@@ -1056,7 +1056,7 @@ let someInstance: SomeBaseClass = SomeSubClass()
 // The compile-time type of someInstance is SomeBaseClass,
 // and the runtime type of someInstance is SomeSubClass
 type(of: someInstance).printClassName()
-// Prints "SomeSubClass"
+// Prints "SomeSubClass".
 ```
 
 <!--
@@ -1165,7 +1165,7 @@ let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
 if let first = mixed.first as? String {
     print("The first item, '\(first)', is a string.")
 }
-// Prints "The first item, 'one', is a string."
+// Prints "The first item, 'one', is a string.".
 ```
 
 <!--
@@ -1257,16 +1257,16 @@ class Superclass {
 }
 let x = Superclass()
 print(type(of: x.f()))
-// Prints "Superclass"
+// Prints "Superclass".
 
 class Subclass: Superclass { }
 let y = Subclass()
 print(type(of: y.f()))
-// Prints "Subclass"
+// Prints "Subclass".
 
 let z: Superclass = Subclass()
 print(type(of: z.f()))
-// Prints "Subclass"
+// Prints "Subclass".
 ```
 
 <!--
