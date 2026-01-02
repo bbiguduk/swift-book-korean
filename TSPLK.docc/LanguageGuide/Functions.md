@@ -79,9 +79,9 @@ func greet(person: String) -> String {
 
 ```swift
 print(greet(person: "Anna"))
-// Prints "Hello, Anna!"
+// Prints "Hello, Anna!".
 print(greet(person: "Brian"))
-// Prints "Hello, Brian!"
+// Prints "Hello, Brian!".
 ```
 
 <!--
@@ -129,7 +129,7 @@ func greetAgain(person: String) -> String {
     return "Hello again, " + person + "!"
 }
 print(greetAgain(person: "Anna"))
-// Prints "Hello again, Anna!"
+// Prints "Hello again, Anna!".
 ```
 
 <!--
@@ -161,7 +161,7 @@ func sayHelloWorld() -> String {
     return "hello, world"
 }
 print(sayHelloWorld())
-// Prints "hello, world"
+// Prints "hello, world".
 ```
 
 <!--
@@ -199,7 +199,7 @@ func greet(person: String, alreadyGreeted: Bool) -> String {
     }
 }
 print(greet(person: "Tim", alreadyGreeted: true))
-// Prints "Hello again, Tim!"
+// Prints "Hello again, Tim!".
 ```
 
 <!--
@@ -239,7 +239,7 @@ func greet(person: String) {
     print("Hello, \(person)!")
 }
 greet(person: "Dave")
-// Prints "Hello, Dave!"
+// Prints "Hello, Dave!".
 ```
 
 <!--
@@ -275,9 +275,9 @@ func printWithoutCounting(string: String) {
     let _ = printAndCount(string: string)
 }
 printAndCount(string: "hello, world")
-// prints "hello, world" and returns a value of 12
+// Prints "hello, world". and returns a value of 12
 printWithoutCounting(string: "hello, world")
-// prints "hello, world" but does not return a value
+// Prints "hello, world". but does not return a value
 ```
 
 <!--
@@ -295,10 +295,10 @@ printWithoutCounting(string: "hello, world")
   -> printAndCount(string: "hello, world")
   << hello, world
   >> assert(a == 12)
-  // prints "hello, world" and returns a value of 12
+  // Prints "hello, world". and returns a value of 12
   -> printWithoutCounting(string: "hello, world")
   << hello, world
-  // prints "hello, world" but doesn't return a value
+  // Prints "hello, world". but doesn't return a value
   ```
 -->
 
@@ -393,7 +393,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
 print("min is \(bounds.min) and max is \(bounds.max)")
-// Prints "min is -6 and max is 109"
+// Prints "min is -6 and max is 109".
 ```
 
 <!--
@@ -479,7 +479,7 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
 }
-// Prints "min is -6 and max is 109"
+// Prints "min is -6 and max is 109".
 ```
 
 <!--
@@ -505,13 +505,13 @@ func greeting(for person: String) -> String {
     "Hello, " + person + "!"
 }
 print(greeting(for: "Dave"))
-// Prints "Hello, Dave!"
+// Prints "Hello, Dave!".
 
 func anotherGreeting(for person: String) -> String {
     return "Hello, " + person + "!"
 }
 print(anotherGreeting(for: "Dave"))
-// Prints "Hello, Dave!"
+// Prints "Hello, Dave!".
 ```
 
 <!--
@@ -647,7 +647,7 @@ func greet(person: String, from hometown: String) -> String {
     return "Hello \(person)!  Glad you could visit from \(hometown)."
 }
 print(greet(person: "Bill", from: "Cupertino"))
-// Prints "Hello Bill!  Glad you could visit from Cupertino."
+// Prints "Hello Bill!  Glad you could visit from Cupertino.".
 ```
 
 <!--
@@ -892,7 +892,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// Prints "someInt is now 107, and anotherInt is now 3"
+// Prints "someInt is now 107, and anotherInt is now 3".
 ```
 
 <!--
@@ -1023,7 +1023,7 @@ Swift의 타입 검사기에 의해 이 할당은 허용됩니다.
 
 ```swift
 print("Result: \(mathFunction(2, 3))")
-// Prints "Result: 5"
+// Prints "Result: 5".
 ```
 
 <!--
@@ -1041,7 +1041,7 @@ print("Result: \(mathFunction(2, 3))")
 ```swift
 mathFunction = multiplyTwoInts
 print("Result: \(mathFunction(2, 3))")
-// Prints "Result: 6"
+// Prints "Result: 6".
 ```
 
 <!--
@@ -1092,7 +1092,7 @@ func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
     print("Result: \(mathFunction(a, b))")
 }
 printMathResult(addTwoInts, 3, 5)
-// Prints "Result: 8"
+// Prints "Result: 8".
 ```
 
 <!--

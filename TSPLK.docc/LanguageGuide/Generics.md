@@ -56,7 +56,7 @@ var someInt = 3
 var anotherInt = 107
 swapTwoInts(&someInt, &anotherInt)
 print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
-// Prints "someInt is now 107, and anotherInt is now 3"
+// Prints "someInt is now 107, and anotherInt is now 3".
 ```
 
 <!--
@@ -542,7 +542,7 @@ extension Stack {
 if let topItem = stackOfStrings.topItem {
     print("The top item on the stack is \(topItem).")
 }
-// Prints "The top item on the stack is tres."
+// Prints "The top item on the stack is tres.".
 ```
 
 <!--
@@ -672,7 +672,7 @@ let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
 if let foundIndex = findIndex(ofString: "llama", in: strings) {
     print("The index of llama is \(foundIndex)")
 }
-// Prints "The index of llama is 2"
+// Prints "The index of llama is 2".
 ```
 
 <!--
@@ -1371,7 +1371,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 } else {
     print("Not all items match.")
 }
-// Prints "All items match."
+// Prints "All items match.".
 ```
 
 <!--
@@ -1462,7 +1462,7 @@ if stackOfStrings.isTop("tres") {
 } else {
     print("Top element is something else.")
 }
-// Prints "Top element is tres."
+// Prints "Top element is tres.".
 ```
 
 <!--
@@ -1550,7 +1550,7 @@ if [9, 9, 9].startsWith(42) {
 } else {
     print("Starts with something else.")
 }
-// Prints "Starts with something else."
+// Prints "Starts with something else.".
 ```
 
 <!--
@@ -1583,7 +1583,7 @@ extension Container where Item == Double {
     }
 }
 print([1260.0, 1200.0, 98.6, 37.0].average())
-// Prints "648.9"
+// Prints "648.9".
 ```
 
 <!--
@@ -1651,9 +1651,9 @@ extension Container {
 }
 let numbers = [1260, 1200, 98, 37]
 print(numbers.average())
-// Prints "648.75"
+// Prints "648.75".
 print(numbers.endsWith(37))
-// Prints "true"
+// Prints "true".
 ```
 
 <!--

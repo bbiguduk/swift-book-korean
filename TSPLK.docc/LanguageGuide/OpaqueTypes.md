@@ -373,9 +373,9 @@ print(opaqueJoinedTriangles.draw())
 ```swift
 func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
     if shape is Square {
-        return shape // Error: return types don't match
+        return shape // Error: Return types don't match.
     }
-    return FlippedShape(shape: shape) // Error: return types don't match
+    return FlippedShape(shape: shape) // Error: Return types don't match.
 }
 ```
 
@@ -395,18 +395,18 @@ func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   >> }
   -> func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
          if shape is Square {
-             return shape // Error: return types don't match
+             return shape // Error: Return types don't match.
          }
-         return FlippedShape(shape: shape) // Error: return types don't match
+         return FlippedShape(shape: shape) // Error: Return types don't match.
      }
   !$ error: function declares an opaque return type 'some Shape', but the return statements in its body do not have matching underlying types
   !! func invalidFlip<T: Shape>(_ shape: T) -> some Shape {
   !!      ^                                    ~~~~~~~~~~
   !$ note: return statement has underlying type 'T'
-  !! return shape // Error: return types don't match
+  !! return shape // Error: Return types don't match.
   !! ^
   !$ note: return statement has underlying type 'FlippedShape<T>'
-  !! return FlippedShape(shape: shape) // Error: return types don't match
+  !! return FlippedShape(shape: shape) // Error: Return types don't match.
   !! ^
   ```
 -->
@@ -616,7 +616,7 @@ Swift는 필요할 때 간접 계층을 추가합니다 ---
 if let downcastTriangle = vertical.shapes[0] as? Triangle {
     print(downcastTriangle.size)
 }
-// Prints "5"
+// Prints "5".
 ```
 
 더 자세한 내용은 <doc:TypeCasting#다운-캐스팅-Downcasting>을 참고바랍니다.
@@ -860,7 +860,7 @@ func makeOpaqueContainer<T>(item: T) -> some Container {
 let opaqueContainer = makeOpaqueContainer(item: 12)
 let twelve = opaqueContainer[0]
 print(type(of: twelve))
-// Prints "Int"
+// Prints "Int".
 ```
 
 <!--

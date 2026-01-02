@@ -197,7 +197,7 @@ let someVideoMode = VideoMode()
 
 ```swift
 print("The width of someResolution is \(someResolution.width)")
-// Prints "The width of someResolution is 0"
+// Prints "The width of someResolution is 0".
 ```
 
 <!--
@@ -218,7 +218,7 @@ print("The width of someResolution is \(someResolution.width)")
 
 ```swift
 print("The width of someVideoMode is \(someVideoMode.resolution.width)")
-// Prints "The width of someVideoMode is 0"
+// Prints "The width of someVideoMode is 0".
 ```
 
 <!--
@@ -235,7 +235,7 @@ print("The width of someVideoMode is \(someVideoMode.resolution.width)")
 ```swift
 someVideoMode.resolution.width = 1280
 print("The width of someVideoMode is now \(someVideoMode.resolution.width)")
-// Prints "The width of someVideoMode is now 1280"
+// Prints "The width of someVideoMode is now 1280".
 ```
 
 <!--
@@ -367,7 +367,7 @@ cinema.width = 2048
 
 ```swift
 print("cinema is now \(cinema.width) pixels wide")
-// Prints "cinema is now 2048 pixels wide"
+// Prints "cinema is now 2048 pixels wide".
 ```
 
 <!--
@@ -384,7 +384,7 @@ print("cinema is now \(cinema.width) pixels wide")
 
 ```swift
 print("hd is still \(hd.width) pixels wide")
-// Prints "hd is still 1920 pixels wide"
+// Prints "hd is still 1920 pixels wide".
 ```
 
 <!--
@@ -422,8 +422,8 @@ currentDirection.turnNorth()
 
 print("The current direction is \(currentDirection)")
 print("The remembered direction is \(rememberedDirection)")
-// Prints "The current direction is north"
-// Prints "The remembered direction is west"
+// Prints "The current direction is north".
+// Prints "The remembered direction is west".
 ```
 
 <!--
@@ -522,7 +522,7 @@ alsoTenEighty.frameRate = 30.0
 
 ```swift
 print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
-// Prints "The frameRate property of tenEighty is now 30.0"
+// Prints "The frameRate property of tenEighty is now 30.0".
 ```
 
 <!--
@@ -625,7 +625,7 @@ print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 if tenEighty === alsoTenEighty {
     print("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
 }
-// Prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
+// Prints "tenEighty and alsoTenEighty refer to the same VideoMode instance.".
 ```
 
 <!--

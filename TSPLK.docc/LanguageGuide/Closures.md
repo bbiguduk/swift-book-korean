@@ -964,11 +964,11 @@ class SomeClass {
 let instance = SomeClass()
 instance.doSomething()
 print(instance.x)
-// Prints "200"
+// Prints "200".
 
 completionHandlers.first?()
 print(instance.x)
-// Prints "100"
+// Prints "100".
 ```
 
 <!--
@@ -1046,7 +1046,7 @@ class SomeOtherClass {
 struct SomeStruct {
     var x = 10
     mutating func doSomething() {
-        someFunctionWithNonescapingClosure { x = 200 }  // Ok
+        someFunctionWithNonescapingClosure { x = 200 }  // OK
         someFunctionWithEscapingClosure { x = 100 }     // Error
     }
 }
@@ -1066,7 +1066,7 @@ struct SomeStruct {
   -> struct SomeStruct {
          var x = 10
          mutating func doSomething() {
-             someFunctionWithNonescapingClosure { x = 200 }  // Ok
+             someFunctionWithNonescapingClosure { x = 200 }  // OK
              someFunctionWithEscapingClosure { x = 100 }     // Error
          }
      }
@@ -1154,16 +1154,16 @@ struct SomeStruct {
 ```swift
 var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 print(customersInLine.count)
-// Prints "5"
+// Prints "5".
 
 let customerProvider = { customersInLine.remove(at: 0) }
 print(customersInLine.count)
-// Prints "5"
+// Prints "5".
 
 print("Now serving \(customerProvider())!")
-// Prints "Now serving Chris!"
+// Prints "Now serving Chris!".
 print(customersInLine.count)
-// Prints "4"
+// Prints "4".
 ```
 
 <!--
@@ -1218,7 +1218,7 @@ func serve(customer customerProvider: () -> String) {
     print("Now serving \(customerProvider())!")
 }
 serve(customer: { customersInLine.remove(at: 0) } )
-// Prints "Now serving Alex!"
+// Prints "Now serving Alex!".
 ```
 
 <!--
@@ -1254,7 +1254,7 @@ func serve(customer customerProvider: @autoclosure () -> String) {
     print("Now serving \(customerProvider())!")
 }
 serve(customer: customersInLine.remove(at: 0))
-// Prints "Now serving Ewa!"
+// Prints "Now serving Ewa!".
 ```
 
 <!--
@@ -1290,12 +1290,12 @@ collectCustomerProviders(customersInLine.remove(at: 0))
 collectCustomerProviders(customersInLine.remove(at: 0))
 
 print("Collected \(customerProviders.count) closures.")
-// Prints "Collected 2 closures."
+// Prints "Collected 2 closures.".
 for customerProvider in customerProviders {
     print("Now serving \(customerProvider())!")
 }
-// Prints "Now serving Barry!"
-// Prints "Now serving Daniella!"
+// Prints "Now serving Barry!".
+// Prints "Now serving Daniella!".
 ```
 
 <!--

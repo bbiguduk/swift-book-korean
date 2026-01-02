@@ -118,7 +118,7 @@ switch point {
 case let (x, y):
     print("The point is at (\(x), \(y)).")
 }
-// Prints "The point is at (3, 2)."
+// Prints "The point is at (3, 2).".
 ```
 
 <!--
@@ -269,7 +269,7 @@ case .right:
 case nil:
     print("Keep going straight")
 }
-// Prints "Turn left"
+// Prints "Turn left".
 ```
 
 <!--
@@ -429,7 +429,7 @@ case (-2...2, -2...2):
 default:
     print("The point is at (\(point.0), \(point.1)).")
 }
-// Prints "(1, 2) is near the origin."
+// Prints "(1, 2) is near the origin.".
 ```
 
 <!--
@@ -464,7 +464,7 @@ case ("0", "0"):
 default:
     print("The point is at (\(point.0), \(point.1)).")
 }
-// Prints "The point is at (1, 2)."
+// Prints "The point is at (1, 2).".
 ```
 
 <!--

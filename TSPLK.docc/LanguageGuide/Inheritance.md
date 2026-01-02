@@ -322,7 +322,7 @@ class Train: Vehicle {
 ```swift
 let train = Train()
 train.makeNoise()
-// Prints "Choo Choo"
+// Prints "Choo Choo".
 ```
 
 <!--
