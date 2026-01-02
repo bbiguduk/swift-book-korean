@@ -4,6 +4,15 @@
 
 ## Revision History
 
+**2026-01-02(금)**
+
+- Swift 6.2.1 기반으로 문서 업데이트.
+- 숫자 값을 가지는 제네릭 매개변수에 대한 정보를 담은
+  <doc:GenericParametersAndArguments#Integer-Generic-Parameters> 섹션 추가.
+- 정수와 부동소수점 숫자 사이의 결정에 대한 내용을
+  <doc:TheBasics#Integers>와
+  <doc:TheBasics#Floating-Point-Numbers> 섹션 추가.
+  
 ### 2025-09-19(금)
 
 - Swift 6.2 기반으로 문서 업데이트.
