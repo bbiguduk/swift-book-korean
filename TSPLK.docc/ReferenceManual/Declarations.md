@@ -886,7 +886,7 @@ in-out 인자는 앰퍼샌드(`&`)를 앞에 붙여야 합니다.
 
 ```swift
 var x = 7
-someFunction(&x)
+someFunction(a: &x)
 print(x)  // Prints "8".
 ```
 
@@ -930,7 +930,7 @@ func someFunction(a: inout Int) {
 }
 
 // Error: This causes a runtime exclusivity violation
-someFunction(&someValue)
+someFunction(a: &someValue)
 ```
 
 같은 이유로
@@ -944,7 +944,7 @@ func someFunction(a: inout Int, b: inout Int) {
 }
 
 // Error: Cannot pass the same value to multiple in-out parameters
-someFunction(&someValue, &someValue)
+someFunction(a: &someValue, b: &someValue)
 ```
 
 메모리 안정성과 메모리 독점성에 대한 자세한 내용은
