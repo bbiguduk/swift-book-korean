@@ -105,13 +105,13 @@ try! <#expression#>
 즉, 괄호를 사용하여 연산자의 적용 범위를 지정할 수 있습니다.
 
 ```swift
-// try applies to both function calls
+// Writing 'try' applies to both function calls.
 sum = try someThrowingFunction() + anotherThrowingFunction()
 
-// try applies to both function calls
+// Writing 'try' applies to both function calls.
 sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-// Error: try applies only to the first function call
+// Error: Writing 'try' applies to both function calls.
 sum = (try someThrowingFunction()) + anotherThrowingFunction()
 ```
 
@@ -122,13 +122,13 @@ sum = (try someThrowingFunction()) + anotherThrowingFunction()
   >> func someThrowingFunction() throws -> Int { return 10 }
   >> func anotherThrowingFunction() throws -> Int { return 5 }
   >> var sum = 0
-  // try applies to both function calls
+  // Writing 'try' applies to both function calls.
   -> sum = try someThrowingFunction() + anotherThrowingFunction()
 
-  // try applies to both function calls
+  // Writing 'try' applies to both function calls.
   -> sum = try (someThrowingFunction() + anotherThrowingFunction())
 
-  // Error: try applies only to the first function call
+  // Error: Writing 'try' applies to both function calls.
   -> sum = (try someThrowingFunction()) + anotherThrowingFunction()
   !$ error: call can throw but is not marked with 'try'
   !! sum = (try someThrowingFunction()) + anotherThrowingFunction()
@@ -215,13 +215,13 @@ await <#expression#>
 연산자의 적용 범위를 명시할 수 있습니다.
 
 ```swift
-// await applies to both function calls
+// Writing 'await' applies to both function calls.
 sum = await someAsyncFunction() + anotherAsyncFunction()
 
-// await applies to both function calls
+// Writing 'await' applies to both function calls.
 sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-// Error: await applies only to the first function call
+// Error: Writing 'await' applies to both function calls.
 sum = (await someAsyncFunction()) + anotherAsyncFunction()
 ```
 
@@ -233,13 +233,13 @@ sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> func anotherAsyncFunction() async -> Int { return 5 }
   >> func f() async {
   >> var sum = 0
-  // await applies to both function calls
+  // Writing 'await' applies to both function calls.
   -> sum = await someAsyncFunction() + anotherAsyncFunction()
 
-  // await applies to both function calls
+  // Writing 'await' applies to both function calls.
   -> sum = await (someAsyncFunction() + anotherAsyncFunction())
 
-  // Error: await applies only to the first function call
+  // Error: Writing 'await' applies to both function calls.
   -> sum = (await someAsyncFunction()) + anotherAsyncFunction()
   >> _ = sum  // Suppress irrelevant written-but-not-read warning
   >> }
@@ -1231,15 +1231,15 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 
   ```swifttest
   >> var a = 12
-  >> let c1 = { [a] in return a }                  // OK -- no async or throws
-  >> let c2 = { [a] async in return a }            // ERROR
-  >> let c3 = { [a] async -> in return a }         // ERROR
-  >> let c4 = { [a] () async -> Int in return a }  // OK -- has () and ->
+  >> let c1 = { [a] in return a }                  // OK: No async or throws
+  >> let c2 = { [a] async in return a }            // Error
+  >> let c3 = { [a] async -> in return a }         // Error
+  >> let c4 = { [a] () async -> Int in return a }  // OK: Has () and ->
   !$ error: expected expression
-  !! let c3 = { [a] async -> in return a }         // ERROR
+  !! let c3 = { [a] async -> in return a }         // Error
   !! ^
   !$ error: unable to infer type of a closure parameter 'async' in the current context
-  !! let c2 = { [a] async in return a }            // ERROR
+  !! let c2 = { [a] async in return a }            // Error
   !! ^
   // NOTE: The error message for c3 gets printed by the REPL before the c2 error.
   ```

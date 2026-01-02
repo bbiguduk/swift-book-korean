@@ -1046,7 +1046,7 @@ class SomeOtherClass {
 struct SomeStruct {
     var x = 10
     mutating func doSomething() {
-        someFunctionWithNonescapingClosure { x = 200 }  // Ok
+        someFunctionWithNonescapingClosure { x = 200 }  // OK
         someFunctionWithEscapingClosure { x = 100 }     // Error
     }
 }
@@ -1066,7 +1066,7 @@ struct SomeStruct {
   -> struct SomeStruct {
          var x = 10
          mutating func doSomething() {
-             someFunctionWithNonescapingClosure { x = 200 }  // Ok
+             someFunctionWithNonescapingClosure { x = 200 }  // OK
              someFunctionWithEscapingClosure { x = 100 }     // Error
          }
      }
