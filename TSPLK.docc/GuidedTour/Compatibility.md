@@ -36,7 +36,7 @@ Swift 표준 라이브러리의 버전이 필요합니다.
 iOS 13, macOS 10.15, tvOS 13, watchOS 6, visionOS 1로 설정합니다.
 
 Swift 6.2.3로 작성된 타겟은
-Swift 5, Swift 4.2, Swift 4로 작성된 타겟에 따라 달리질 수 있으며
+Swift 5, Swift 4.2, Swift 4로 작성된 타겟에 따라 달라질 수 있으며
 그 반대의 경우도 마찬가지입니다.
 즉, 여러 프레임워크로 분할 된
 대규모 프로젝트가 있는 경우
