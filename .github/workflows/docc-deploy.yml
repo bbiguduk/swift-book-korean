@@ -1,0 +1,56 @@
+name: Deploy DocC to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: macos-26.2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v3
+        with:
+          xcode-version: "26.2"
+
+      - name: Build DocC documentation
+        run: |
+          xcrun docc \ 
+            convert ./TSPLK.docc \ 
+            --output-dir ./swift-book-korean.doccarchive \ 
+            --experimental-enable-custom-templates ./TSPLK.docc/header-publish.html ./TSPLK.docc/footer.html
+
+      - name: Archive DocC documentation
+        run: |
+          xcrun docc \ 
+            process-archive \ 
+            transform-for-static-hosting ./swift-book-korean.doccarchive \ 
+            --output-path ./docs \ 
+            --hosting-base-path /swift-book-korean
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
