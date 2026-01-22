@@ -27,9 +27,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v3
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "26.2"
+          xcode-version: latest
 
       - name: Update Info.plist Version
         run: |
@@ -37,7 +37,7 @@ jobs:
           BUILD_VERSION=$GITHUB_RUN_NUMBER  # Actions 런 번호
           
           # Info.plist 경로 (프로젝트 루트 기준으로 조정)
-          PLIST_PATH="TSPLK/Info.plist"  # 또는 "TSPLK/TSPLK-Info.plist"
+          PLIST_PATH="./TSPLK.docc/Info.plist"
           
           # PlistBuddy로 업데이트 (빌드 전 소스 파일 직접 수정)
           /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $BUILD_VERSION" "$PLIST_PATH"
@@ -48,18 +48,11 @@ jobs:
 
       - name: Build DocC documentation
         run: |
-          xcrun docc \ 
-            convert ./TSPLK.docc \ 
-            --output-dir ./swift-book-korean.doccarchive \ 
-            --experimental-enable-custom-templates ./TSPLK.docc/header-publish.html ./TSPLK.docc/footer.html
+          xcrun docc convert --experimental-enable-custom-templates --hosting-base-path swift-book-korean --output-path ./docs ./TSPLK.docc
 
-      - name: Archive DocC documentation
-        run: |
-          xcrun docc \ 
-            process-archive \ 
-            transform-for-static-hosting ./swift-book-korean.doccarchive \ 
-            --output-path ./docs \ 
-            --hosting-base-path /swift-book-korean
+      # - name: Archive DocC documentation
+      #   run: |
+      #     xcrun docc process-archive transform-for-static-hosting ./swift-book-korean.doccarchive --output-path ./docs --hosting-base-path /swift-book-korean
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
