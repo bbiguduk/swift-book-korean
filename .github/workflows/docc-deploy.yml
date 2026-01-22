@@ -31,6 +31,21 @@ jobs:
         with:
           xcode-version: "26.2"
 
+      - name: Update Info.plist Version
+        run: |
+          # git 커밋 수를 build 번호로 사용 (또는 git describe --tags)
+          BUILD_VERSION=$GITHUB_RUN_NUMBER  # Actions 런 번호
+          
+          # Info.plist 경로 (프로젝트 루트 기준으로 조정)
+          PLIST_PATH="TSPLK/Info.plist"  # 또는 "TSPLK/TSPLK-Info.plist"
+          
+          # PlistBuddy로 업데이트 (빌드 전 소스 파일 직접 수정)
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $BUILD_VERSION" "$PLIST_PATH"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_VERSION" "$PLIST_PATH"
+          
+          echo "Updated to ShortVersion: $BUILD_VERSION, Build: $BUILD_VERSION"
+        shell: bash
+
       - name: Build DocC documentation
         run: |
           xcrun docc \ 
