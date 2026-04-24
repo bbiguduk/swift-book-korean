@@ -1253,7 +1253,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 > *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
- *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`,`**_?_ **`)`** | *identifier-list* \
+> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`,`**_?_ **`)`** | *identifier-list* \
 > *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
 > *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
 > *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
