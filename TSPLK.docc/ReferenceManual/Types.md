@@ -1350,7 +1350,7 @@ Swift 표준 라이브러리에서
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ **`~`**_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 ## 타입 추론 (Type Inference)
 
