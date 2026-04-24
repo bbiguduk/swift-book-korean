@@ -309,7 +309,7 @@ make the same change here also.
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ **`~`**_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 ## 표현식 (Expressions)
 
@@ -379,12 +379,12 @@ make the same change here also.
 > *literal-expression* → *literal* \
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
 >
-> *array-literal* → **`[`** *array-literal-items*_?_ **`]`** \
-> *array-literal-items* → *array-literal-item* **`,`**_?_ | *array-literal-item* **`,`** *array-literal-items* \
+> *array-literal* → **`[`** *array-literal-items*_?_ **`,`**_?_ **`]`** \
+> *array-literal-items* → *array-literal-item* | *array-literal-item* **`,`** *array-literal-items* \
 > *array-literal-item* → *expression*
 >
-> *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`** \
-> *dictionary-literal-items* → *dictionary-literal-item* **`,`**_?_ | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
+> *dictionary-literal* → **`[`** *dictionary-literal-items* **`,`**_?_ **`]`** | **`[`** **`:`** **`]`** \
+> *dictionary-literal-items* → *dictionary-literal-item* | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
 > *dictionary-literal-item* → *expression* **`:`** *expression*
 >
 > *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`** \
@@ -427,13 +427,13 @@ make the same change here also.
 > *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
-> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
+> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`,`**_?_ **`)`** | *identifier-list* \
 > *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
 > *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
 > *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
 > *closure-parameter-name* → *identifier*
 >
-> *capture-list* → **`[`** *capture-list-items* **`]`** \
+> *capture-list* → **`[`** *capture-list-items* **`,`**_?_ **`]`** \
 > *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression* \
@@ -451,7 +451,7 @@ make the same change here also.
 
 > Grammar of a tuple expression:
 >
-> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
+> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`,`**_?_ **`)`** \
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
 > *tuple-element* → *expression* | *identifier* **`:`** *expression*
 
@@ -499,7 +499,7 @@ make the same change here also.
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
 >
-> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
+> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`,`**_?_ **`)`** \
 > *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
 > *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
 > *function-call-argument* → *operator* | *identifier* **`:`** *operator*
@@ -820,7 +820,7 @@ make the same change here also.
 > *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
 >
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`,`**_?_ **`)`** \
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \
@@ -1076,7 +1076,7 @@ make the same change here also.
 
 > Grammar of a generic parameter clause:
 >
-> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`>`** \
+> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`,`**_?_ **`>`** \
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
@@ -1092,7 +1092,7 @@ make the same change here also.
 
 > Grammar of a generic argument clause:
 >
-> *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
+> *generic-argument-clause* → **`<`** *generic-argument-list* **`,`**_?_ **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
 > *generic-argument* → *type*
 

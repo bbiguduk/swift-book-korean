@@ -1700,7 +1700,7 @@ guard 구문의 `else` 절을 끝낼 수 있습니다.
 > *function-result* → **`->`** *attributes*_?_ *type* \
 > *function-body* → *code-block*
 >
-> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`)`** \
+> *parameter-clause* → **`(`** **`)`** | **`(`** *parameter-list* **`,`**_?_ **`)`** \
 > *parameter-list* → *parameter* | *parameter* **`,`** *parameter-list* \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* *default-argument-clause*_?_ \
 > *parameter* → *external-parameter-name*_?_ *local-parameter-name* *parameter-type-annotation* \

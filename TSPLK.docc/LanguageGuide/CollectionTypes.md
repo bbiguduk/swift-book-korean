@@ -261,6 +261,23 @@ var shoppingList = ["Eggs", "Milk"]
 Swift는 `[String]`가
 `shoppingList` 변수를 사용하는데 올바른 타입이라는 것을 유추할 수 있습니다.
 
+배열 리터럴의 마지막 값 뒤에 콤파를 포함할 수 있으며,
+이것을 *후행 콤마(trailing comma)*라고 합니다:
+
+```swift
+var shoppingList = [
+    "Eggs",
+    "Milk",
+]
+```
+
+후행 콤마는 모든 줄을 동일한 형태로 끝나게 만들어주기 때문에
+위와 같이 한 줄에 하나의 값을 가지는
+배열을 작성할 때 유용합니다.
+값을 추가, 제거, 순서를 바꾸는 것과 같이
+배열을 변경할 때,
+콤마를 추가하거나 제거하지 않아도 됩니다.
+
 ### 배열 접근과 수정 (Accessing and Modifying an Array)
 
 메서드와 프로퍼티 또는 서브스크립트 구문을 사용하여
@@ -1184,6 +1201,17 @@ var airports = ["YYZ": "Toronto Pearson", "DUB": "Dublin"]
 값이 각각 같은 타입이기 때문에
 Swift는 `airports` 딕셔너리를 사용하기 위해
 `[String: String]`이 올바른 타입이라는 것을 추론할 수 있습니다.
+
+배열 리터럴처럼
+딕셔너리 리터럴도 마지막 키-값 쌍에
+후행 콤마를 포함할 수 있습니다:
+
+```swift
+var airports = [
+    "YYZ": "Toronto Pearson",
+    "DUB": "Dublin",
+]
+```
 
 ### 딕셔너리 접근과 수정 (Accessing and Modifying a Dictionary)
 

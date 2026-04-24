@@ -1337,6 +1337,9 @@ Swift 표준 라이브러리에서
 프로토콜 타입이 다른 프로토콜을 상속할 때,
 그 상위 프로토콜의 요구사항이 통합되고
 해당 프로토콜을 상속하는 모든 타입은 그 요구사항을 모두 준수해야 합니다.
+이 목록의 프로토콜 이름 앞에 물결표(`~`)를 작성하면
+<doc:Protocols#프로토콜-암시적-준수-Implicit-Conformance-to-a-Protocol>에서 설명된 것처럼
+해당 프로토콜에 대한 암시적 준수가 억제됩니다.
 
 열거형 정의의 타입 상속 절은 프로토콜 목록이거나
 케이스의 원시값(raw values)을 지정하는 열거형인 경우
@@ -1347,7 +1350,7 @@ Swift 표준 라이브러리에서
 > Grammar of a type inheritance clause:
 >
 > *type-inheritance-clause* → **`:`** *type-inheritance-list* \
-> *type-inheritance-list* → *attributes*_?_ *type-identifier* | *attributes*_?_ *type-identifier* **`,`** *type-inheritance-list*
+> *type-inheritance-list* → *attributes*_?_ **`~`**_?_ *type-identifier* | *attributes*_?_ **`~`**_?_ *type-identifier* **`,`** *type-inheritance-list*
 
 ## 타입 추론 (Type Inference)
 

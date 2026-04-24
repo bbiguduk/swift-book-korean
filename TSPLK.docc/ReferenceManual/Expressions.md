@@ -677,12 +677,12 @@ Xcode Help의
 > *literal-expression* → *literal* \
 > *literal-expression* → *array-literal* | *dictionary-literal* | *playground-literal*
 >
-> *array-literal* → **`[`** *array-literal-items*_?_ **`]`** \
-> *array-literal-items* → *array-literal-item* **`,`**_?_ | *array-literal-item* **`,`** *array-literal-items* \
+> *array-literal* → **`[`** *array-literal-items*_?_ **`,`**_?_ **`]`** \
+> *array-literal-items* → *array-literal-item* | *array-literal-item* **`,`** *array-literal-items* \
 > *array-literal-item* → *expression*
 >
-> *dictionary-literal* → **`[`** *dictionary-literal-items* **`]`** | **`[`** **`:`** **`]`** \
-> *dictionary-literal-items* → *dictionary-literal-item* **`,`**_?_ | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
+> *dictionary-literal* → **`[`** *dictionary-literal-items* **`,`**_?_ **`]`** | **`[`** **`:`** **`]`** \
+> *dictionary-literal-items* → *dictionary-literal-item* | *dictionary-literal-item* **`,`** *dictionary-literal-items* \
 > *dictionary-literal-item* → *expression* **`:`** *expression*
 >
 > *playground-literal* → **`#colorLiteral`** **`(`** **`red`** **`:`** *expression* **`,`** **`green`** **`:`** *expression* **`,`** **`blue`** **`:`** *expression* **`,`** **`alpha`** **`:`** *expression* **`)`** \
@@ -1017,6 +1017,7 @@ myFunction { $0 + $1 }
 매개변수 목록 앞에 작성합니다.
 캡처 목록을 사용하면 매개변수 이름, 매개변수 타입, 반환 타입을 생략하더라도
 `in` 키워드를 작성해야 합니다.
+캡처 목록의 마지막 표현식에 콤마를 포함할 수도 있습니다.
 
 캡처 목록의 항목은
 클로저가 생성될 때 초기화됩니다.
@@ -1252,13 +1253,13 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 > *closure-signature* → *capture-list*_?_ *closure-parameter-clause* **`async`**_?_ *throws-clause*_?_ *function-result*_?_ **`in`** \
 > *closure-signature* → *capture-list* **`in`**
 >
-> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`)`** | *identifier-list* \
+> *closure-parameter-clause* → **`(`** **`)`** | **`(`** *closure-parameter-list* **`,`**_?_ **`)`** | *identifier-list* \
 > *closure-parameter-list* → *closure-parameter* | *closure-parameter* **`,`** *closure-parameter-list* \
 > *closure-parameter* → *closure-parameter-name* *type-annotation*_?_ \
 > *closure-parameter* → *closure-parameter-name* *type-annotation* **`...`** \
 > *closure-parameter-name* → *identifier*
 >
-> *capture-list* → **`[`** *capture-list-items* **`]`** \
+> *capture-list* → **`[`** *capture-list-items* **`,`**_?_ **`]`** \
 > *capture-list-items* → *capture-list-item* | *capture-list-item* **`,`** *capture-list-items* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* \
 > *capture-list-item* → *capture-specifier*_?_ *identifier* **`=`** *expression* \
@@ -1474,9 +1475,11 @@ let z: SomeClass = .sharedSubclass
 > 그러나 모든 타입 별칭과 마찬가지로 `Void`는 타입이므로 ---
 > 빈 튜플 표현식으로 작성할 수 없습니다.
 
+튜플의 마지막 표현식에 콤마를 포함할 수도 있습니다.
+
 > Grammar of a tuple expression:
 >
-> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`)`** \
+> *tuple-expression* → **`(`** **`)`** | **`(`** *tuple-element* **`,`** *tuple-element-list* **`,`**_?_ **`)`** \
 > *tuple-element-list* → *tuple-element* | *tuple-element* **`,`** *tuple-element-list* \
 > *tuple-element* → *expression* | *identifier* **`:`** *expression*
 
@@ -2308,6 +2311,8 @@ Swift 표준 라이브러리에 의해 제공되는 연산자에 대한 자세�
 <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 ```
 
+괄호 안에 마지막 인자에 콤마를 포함할 수도 있습니다.
+
 함수 호출 표현식은 닫는 소괄호 바로 다음에
 클로저 표현식을 작성해 후행 클로저(trailing closures)를 포함할 수 있습니다.
 이 후행 클로저는 괄호로 감싼 인자 목록 뒤에 클로저를 작성해
@@ -2471,6 +2476,8 @@ Swift 5.3 이전 버전에서 코드를 쉽게 마이그레이션 하기위해 -
 오래된 매칭 방법인 오른쪽에서 왼쪽 순서가 사용되고
 컴파일러는 경고를 발생시킵니다.
 Swift의 향후 버전은 항상 왼쪽에서 오른쪽 순서가 사용될 것입니다.
+
+<!-- FIXME: What future version? -->
 
 ```swift
 typealias Callback = (Int) -> Int
@@ -2643,7 +2650,7 @@ withUnsafePointer(to: myNumber) { unsafeFunction(pointer: $0) }
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause* \
 > *function-call-expression* → *postfix-expression* *function-call-argument-clause*_?_ *trailing-closures*
 >
-> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`)`** \
+> *function-call-argument-clause* → **`(`** **`)`** | **`(`** *function-call-argument-list* **`,`**_?_ **`)`** \
 > *function-call-argument-list* → *function-call-argument* | *function-call-argument* **`,`** *function-call-argument-list* \
 > *function-call-argument* → *expression* | *identifier* **`:`** *expression* \
 > *function-call-argument* → *operator* | *identifier* **`:`** *operator*

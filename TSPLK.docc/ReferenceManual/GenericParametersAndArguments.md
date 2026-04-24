@@ -99,6 +99,9 @@ simpleMax(3.14159, 2.71828) // T is inferred to be Double
   Tracking bug is <rdar://problem/35301593>
 -->
 
+제네릭 매개변수 목록의 마지막 제네릭 매개변수는
+콤마를 포함할 수도 있습니다.
+
 ### 정수 제네릭 매개변수 (Integer Generic Parameters)
 
 *정수 제네릭 매개변수(integer generic parameter)*는
@@ -273,7 +276,7 @@ extension Collection where Element: SomeProtocol {
 
 > Grammar of a generic parameter clause:
 >
-> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`>`** \
+> *generic-parameter-clause* → **`<`** *generic-parameter-list* **`,`**_?_ **`>`** \
 > *generic-parameter-list* → *generic-parameter* | *generic-parameter* **`,`** *generic-parameter-list* \
 > *generic-parameter* → *type-name* \
 > *generic-parameter* → *type-name* **`:`** *type-identifier* \
@@ -351,13 +354,16 @@ let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
   ```
 -->
 
+제네릭 매개변수 목록의 마지막 타입 인자는
+콤마를 포함할 수도 있습니다.
+
 <doc:GenericParametersAndArguments#제네릭-매개변수-절-Generic-Parameter-Clause>에서 언급했듯이
 제네릭 함수나 이니셜라이저의
 타입 인자로 지정하기 위해 제네릭 인자 절을 사용하지 않습니다.
 
 > Grammar of a generic argument clause:
 >
-> *generic-argument-clause* → **`<`** *generic-argument-list* **`>`** \
+> *generic-argument-clause* → **`<`** *generic-argument-list* **`,`**_?_ **`>`** \
 > *generic-argument-list* → *generic-argument* | *generic-argument* **`,`** *generic-argument-list* \
 > *generic-argument* → *type* | *signed-integer-literal*
 
