@@ -190,11 +190,6 @@ let quotation = """
   ```
 -->
 
-<!--
-  Can't show an example of indentation in the triple-quoted string above.
-  <rdar://problem/49129068> Swift code formatting damages indentation
--->
-
 대괄호(`[]`)를 사용하여 배열(array)과 딕셔너리(dictionary)를 생성하고
 대괄호에 인덱스 또는 키를 작성하여
 해당 요소에 접근할 수 있습니다.
