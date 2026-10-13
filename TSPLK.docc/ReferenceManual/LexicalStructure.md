@@ -96,20 +96,106 @@ A부터 Z까지 대문자 또는 소문자,
 두 개의 언더바로 시작하는 식별자는
 Swift 컴파일러와 표준 라이브러리 용으로 사용됩니다.
 
-예약어(reserved word)를 식별자로 사용하려면
-앞 뒤에 백틱(\`)을 넣어야 합니다.
-예를 들어 `class`는 유효한 식별자가 아니지만
-`` `class` ``는 유효합니다.
-백틱은 식별자로 간주되지 않습니다:
-`` `x` ``와 `x`는 같은 의미입니다.
+예약어를 식별자로 사용하거나
+공백과 같은 특수 문자를 포함하려면,
+식별자의 앞뒤에 백틱(\`)을 넣습니다.
+예를 들어 `class`, `100`, `model & test`는 유효한 식별자가 아니지만,
+\`class\`, \`100\`, \`model & test\`는 유효합니다.
+백틱은 식별자의 일부로 간주되지 않습니다;
+\`x\`와 `x`는 같은 의미입니다.
 
 <!--
-The paragraph above produces a link-resolution warning
-because of a known issue with ` in code voice.
+The paragraph above uses escaped backticks as literal text
+to avoid DocC interpreting code voice as symbol links.
 
 https://github.com/swiftlang/swift-book/issues/71
 https://github.com/swiftlang/swift-markdown/issues/93
 -->
+
+원시 식별자(raw identifier)는 다음을 제외한 모든 유니코드 스칼라 값을 포함할 수 있습니다:
+
+- 백틱 (\`)
+- 역슬래시 (`\`)
+- Null 문자 (U+0000)
+- 가로 탭 (U+0009)
+- 줄바꿈 (U+000A)
+- 세로 탭 (U+000B)
+- 캐리지 리턴 (U+000D)
+- 다음 줄(Next line) (U+0085)
+- 줄바꿈 없는 공백(Nonbreaking space) (U+00A0)
+- 오검 공백 표시(Ogham space mark) (U+1680)
+- En 쿼드(En quad) (U+2000)
+- Em 쿼드(Em quad) (U+2001)
+- En 공백(En space) (U+2002)
+- Em 공백(Em space) (U+2003)
+- Em의 3분의 1 공백(Three-per-em space) (U+2004)
+- Em의 4분의 1 공백(Four-per-em space) (U+2005)
+- Em의 6분의 1 공백(Six-per-em space) (U+2006)
+- 숫자 너비 공백(Figure space) (U+2007)
+- 구두점 너비 공백(Punctuation space) (U+2008)
+- 얇은 공백(Thin space) (U+2009)
+- 극히 얇은 공백(Hair space) (U+200A)
+- 줄 구분자(Line separator) (U+2028)
+- 문단 구분자(Paragraph separator) (U+2029)
+- 좁은 줄바꿈 없는 공백(Narrow nonbreaking space) (U+202F)
+- 중간 너비 수학 공백(Medium mathematical space) (U+205F)
+- 표의문자 공백(Ideographic space) (U+3000)
+
+<!--
+The list above states the rules from SE-0451 without nested negation.
+The acceptance revision (https://forums.swift.org/t/76387)
+lists the rules as follows:
+
+>>>
+The only whitespace that should be permitted in a raw identifier is
+`Pattern_White_Space` (which is stable), minus line/paragraph separators, and
+minus any already forbidden ASCII characters (like U+0009). That leaves
+{U+0020, U+200E, U+200F}.
+
+All other `White_Space` not in the set above, as defined in the Unicode 16.0.0
+standard, should be forbidden.
+>>>
+
+The list above also avoids discussing whitespace characters
+using a different definition of whitespace
+from what's in the Whitespace and Comments section above.
+
+0009..000D    ; Pattern_White_Space # Cc   [5] <control-0009>..<control-000D>
+0020          ; Pattern_White_Space # Zs       SPACE
+0085          ; Pattern_White_Space # Cc       <control-0085>
+200E..200F    ; Pattern_White_Space # Cf   [2] LEFT-TO-RIGHT MARK..RIGHT-TO-LEFT MARK
+2028          ; Pattern_White_Space # Zl       LINE SEPARATOR
+2029          ; Pattern_White_Space # Zp       PARAGRAPH SEPARATOR
+
+0009..000D    ; White_Space # Cc   [5] <control-0009>..<control-000D>
+0020          ; White_Space # Zs       SPACE
+0085          ; White_Space # Cc       <control-0085>
+00A0          ; White_Space # Zs       NO-BREAK SPACE
+1680          ; White_Space # Zs       OGHAM SPACE MARK
+2000..200A    ; White_Space # Zs  [11] EN QUAD..HAIR SPACE
+2028          ; White_Space # Zl       LINE SEPARATOR
+2029          ; White_Space # Zp       PARAGRAPH SEPARATOR
+202F          ; White_Space # Zs       NARROW NO-BREAK SPACE
+205F          ; White_Space # Zs       MEDIUM MATHEMATICAL SPACE
+3000          ; White_Space # Zs       IDEOGRAPHIC SPACE
+
+From https://www.unicode.org/Public/UCD/latest/ucd/PropList.txt
+-->
+
+원시 식별자는 공백을 포함할 수 있지만,
+공백만으로 구성될 수는 없습니다.
+원시 식별자에는
+왼쪽에서 오른쪽 표시(U+200E)나 오른쪽에서 왼쪽 표시(U+200F)를
+포함할 수 있으며 공백으로 간주됩니다.
+원시 식별자는 <doc:LexicalStructure#연산자-Operators>에 설명된
+연산자 문자를 포함할 수 있지만,
+연산자 문자만으로 구성될 수는 없습니다.
+
+> Note:
+> Swift 6.2 이전에는
+> 식별자 앞뒤에 백틱을 작성하는 방식을
+> *이스케이프 식별자(escaped identifier)*라고 불렀으며,
+> 키워드를 식별자로 사용하는 경우로 제한되었습니다.
 
 명시적으로 매개변수 이름이 없는 클로저 내의
 매개변수는 암시적으로 `$0`, `$1`, `$2` 등으로 지정됩니다.
@@ -130,8 +216,8 @@ https://github.com/swiftlang/swift-markdown/issues/93
 
 <!--
 The formal grammar below for 'identifier'
-produces a link-resolution warning
-because of a known issue with ` in code voice.
+uses escaped backticks as literal terminals
+to avoid DocC symbol-link resolution warnings.
 
 https://github.com/swiftlang/swift-book/issues/71
 https://github.com/swiftlang/swift-markdown/issues/93
@@ -140,7 +226,7 @@ https://github.com/swiftlang/swift-markdown/issues/93
 > Grammar of an identifier:
 >
 > *identifier* → *identifier-head* *identifier-characters*_?_ \
-> *identifier* → **`` ` ``** *identifier-head* *identifier-characters*_?_ **`` ` ``** \
+> *identifier* → *raw-identifier* \
 > *identifier* → *implicit-parameter-name* \
 > *identifier* → *property-wrapper-projection* \
 > *identifier-list* → *identifier* | *identifier* **`,`** *identifier-list*
@@ -169,6 +255,15 @@ https://github.com/swiftlang/swift-markdown/issues/93
 >
 > *implicit-parameter-name* → **`$`** *decimal-digits* \
 > *property-wrapper-projection* → **`$`** *identifier-characters*
+>
+> *raw-identifier* → **\`** *raw-identifier-characters* **\`** \
+> *raw-identifier-character* → Any Unicode scalar value except **\`**, **`\`**, U+0000, U+000A, or U+000D
+> *raw-identifier-characters* → *raw-identifier-character* *raw-identifier-characters*_?_
+
+> Note: **번역자 주**
+> 영문 원본의 형식 문법은 금지 문자를 일부만 나열합니다.
+> 실제 제한은 위의 금지 문자 목록과 이름 전체에 대한 조건을 함께 적용해야 합니다.
+> <doc:Swift64#원시-식별자의-형식-문법-Formal-Grammar-for-Raw-Identifiers>를 참고바랍니다.
 
 ## 키워드와 구두점 (Keywords and Punctuation)
 
@@ -415,7 +510,7 @@ https://github.com/swiftlang/swift-markdown/issues/93
 커스텀 연산자로 사용할 수 없습니다:
 `(`, `)`, `{`, `}`, `[`, `]`,
 `.`, `,`, `:`, `;`, `=`, `@`, `#`,
-`&`(접두 연산자), `->`, `` ` ``,
+`&`(접두 연산자), `->`, \`,
 `?`, `!`(접미 연산자).
 
 ## 리터럴 (Literals)
@@ -586,9 +681,9 @@ Swift 표준 라이브러리는
 기본적으로 부동소수점 리터럴은 접두사 없이 10진수로 표현되지만
 `0x` 접두사를 붙여 16진수로 표현할 수도 있습니다.
 
-10진수 부동소수점 리터럴은 가수(decimal fraction), 지수(decimal exponent) 중 하나만 있거나
-둘 모두의 순서로 구성합니다.
-가수는 소수점(`.`)과
+10진 부동소수점 리터럴은 10진 숫자열 뒤에 소수부(decimal fraction), 10진 지수(decimal exponent) 중 하나가 오거나
+둘 모두가 오는 형태입니다.
+소수부는 소수점(`.`)과
 소수 자릿수로 구성합니다.
 지수는 대문자나 소문자 `e` 접두사 다음에
 `e` 앞의 값에 10의 거듭 제곱을 곱한 것을 나타내는
@@ -599,10 +694,10 @@ Swift 표준 라이브러리는
 `0.0125`입니다.
 
 16진수 부동소수점 리터럴은 `0x` 접두사 다음으로
-옵셔널 가수(hexadecimal fraction) 뒤에
+선택적인 소수부(hexadecimal fraction) 뒤에
 지수(hexadecimal exponent)로 구성합니다.
-가수는 소수점과
-16진수로 구성합니다.
+소수부는 소수점과
+16진 숫자열로 구성합니다.
 지수는 대문자나 소문자 `p` 접두사 다음에
 `p` 앞의 값에 2의 거듭 제곱을 곱한 것을 나타내는
 10진수로 구성합니다.
@@ -627,7 +722,7 @@ Swift 표준 라이브러리는 `Float` 타입도 정의하며,
 
 > Grammar of a floating-point literal:
 >
-> *signed-floating-point-literal* → > **`-`**_?_ *floating-point-literal* \
+> *signed-floating-point-literal* → **`-`**_?_ *floating-point-literal* \
 > *floating-point-literal* → *decimal-literal* *decimal-fraction*_?_ *decimal-exponent*_?_ \
 > *floating-point-literal* → *hexadecimal-literal* *hexadecimal-fraction*_?_ *hexadecimal-exponent*
 >
@@ -718,7 +813,7 @@ Swift 표준 라이브러리는 `Float` 타입도 정의하며,
 - 쌍따옴표(`\"`)
 - 홑따옴표(`\'`)
 - 유니코드 스칼라(`\u{`*n*`}`),
-  *n*은 8자리 숫자로 구성된
+  *n*은 한 자리부터 여덟 자리까지의 숫자로 구성된
   16진수 입니다.
 
 <!--

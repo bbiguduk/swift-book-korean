@@ -369,7 +369,7 @@ let bodyTemperature = Celsius(37.0)
 ### 옵셔널 프로퍼티 타입 (Optional Property Types)
 
 커스텀 타입에 저장 프로퍼티가 있는데, 해당 프로퍼티가 논리적으로 "값이 없을 수 있음"이 허용되는 경우 ---
-초기화 중에 값을 절정할 수 없거나,
+초기화 중에 값을 설정할 수 없거나,
 나중에 "값 없음" 상태가 될 수 있는 경우 ---
 그 프로퍼티를 옵셔널 타입으로 선언할 수 있습니다.
 옵셔널 타입(optional type)의 프로퍼티는 자동으로 초기화 동안
@@ -710,7 +710,7 @@ print(zeroByZero.width, zeroByZero.height)
 
 다음의 예시는 기하학적 사각형을 나타내는 `Rect` 구조체를 정의합니다.
 이 예시는 `Size`와 `Point`라는 두 개의 보조 구조체가 필요하고,
-둘 다 모든 프로퍼티에 대해 `0,0`의 기본값을 제공합니다:
+둘 다 모든 프로퍼티에 대해 `0.0`의 기본값을 제공합니다:
 
 ```swift
 struct Size {
@@ -2423,7 +2423,7 @@ class AutomaticallyNamedDocument: Document {
 하위 클래스의 실패하지 않는 이니셜라이저 구현에서
 상위 클래스의 실패 가능한 이니셜라이저를 호출할 때
 강제 언래핑을 사용할 수 있습니다.
-예를 들어 아래의 `UntitleDocument` 하위 클래스는 항상 `"[Untitled]"` 이름을 가지고,
+예를 들어 아래의 `UntitledDocument` 하위 클래스는 항상 `"[Untitled]"` 이름을 가지고,
 초기화 동안에 상위 클래스의
 실패 가능한 `init(name:)` 이니셜라이저를 사용합니다.
 
@@ -2931,7 +2931,7 @@ struct Chessboard {
 설정이 완료되면
 클로저의 반환값으로 임시 배열을 반환합니다.
 반환된 배열 값은 `boardColors`에 저장되고
-`squareIsBlackAt(row:coloumn:)` 유틸리티 함수로 조회할 수 있습니다:
+`squareIsBlackAt(row:column:)` 유틸리티 함수로 조회할 수 있습니다:
 
 ```swift
 let board = Chessboard()

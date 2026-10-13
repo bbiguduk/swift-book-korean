@@ -2,6 +2,10 @@
 
 값에 접근, 수정, 할당합니다.
 
+> Note: **번역자 보충**
+> 모듈의 선언을 명확하게 선택하는 `ModuleName::Name` 구문은
+> <doc:Swift64#모듈-선택자-Module-Selectors>를 참고바랍니다.
+
 Swift에는 네 종류의 표현식이 있습니다:
 접두 표현식(prefix expressions), 중위 표현식(infix expressions), 기본 표현식(primary expressions), 접미 표현식(postfix expressions)입니다.
 표현식을 평가하면 값을 반환하거나

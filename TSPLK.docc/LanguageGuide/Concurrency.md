@@ -19,7 +19,7 @@ UI 업데이트와 같은 짧은 작업을
 한 번에 여러 작업을 수행하고,
 외부 시스템을 기다리는 작업은 일시 중단됩니다.
 이 챕터의 나머지 부분에서는 *동시성*이라는 용어를
-비동기 코드와 병렬 코드의 일반적인 조합을 가르키는 의미로 사용합니다.
+비동기 코드와 병렬 코드의 일반적인 조합을 가리키는 의미로 사용합니다.
 
 병렬이나 비동기 코드의 추가적인 스케줄링 유연성에는
 복잡성이 증가합니다.
@@ -164,6 +164,11 @@ func listPhotos(inGallery name: String) async -> [String] {
 코드에서 중단 가능한 모든 지점을 표시하면
 동시성 코드를 읽기 쉽고 이해하기 쉽게 만들어 줍니다.
 
+> Note: **번역자 보충**
+> `async let`이나 비동기 `defer`의 작업을 범위 종료 시 기다릴 때는
+> 암시적인 중단 지점이 생길 수 있습니다.
+> Swift 6.4의 비동기 정리 작업은 <doc:Swift64#비동기-defer-Asynchronous-Defer>를 참고바랍니다.
+
 예를 들어
 아래 코드는 갤러리에 모든 사진의 이름을 가져온 다음에
 첫 번째 사진을 보여줍니다:
@@ -290,7 +295,7 @@ func listPhotos(inGallery name: String) async throws -> [String] {
 -->
 
 위 코드에서 `listPhotos(inGallery:)`은
-`Task.sleep(until:tolerance:clock:)` 호출이 오류를 발생할 수 있으므로
+`Task.sleep(for:tolerance:clock:)` 호출이 오류를 발생할 수 있으므로
 비동기와 던지기를 모두 작성하였습니다.
 이 `listPhotos(inGallery:)`를 호출하려면,
 `try`와 `await` 모두 작성해야 합니다:
@@ -518,7 +523,7 @@ show(photos)
 - 다음 줄의 코드가 해당 함수의 결과에 따라 달라지면
   `await`를 사용하여 비동기 함수를 호출합니다.
   이것은 순차적으로 실행되는 작업을 생성합니다.
-- 나중에 코드에서 결과가 필요하지 않을 때
+- 코드의 뒤쪽에 이르러서야 결과가 필요할 때
   `async`-`let`을 사용하여 비동기 함수를 호출합니다.
   이렇게 하면 병렬로 수행할 수 있는 작업이 생성됩니다.
 - `await`와 `async`-`let`은
@@ -534,7 +539,7 @@ show(photos)
 *태스크(task)*는 프로그램의 일부로
 비동기적으로 실행할 수 있는 작업 단위입니다.
 모든 비동기 코드는 어떠한 태스크의 일부로 실행됩니다.
-태스크은 한 번에 하나의 태스크만 수행하지만,
+태스크는 한 번에 하나의 작업만 수행하지만,
 여러 태스크를 생성하면,
 Swift는 동시에 수행하기 위해 태스크를 스케쥴링 할 수 있습니다.
 
@@ -558,7 +563,7 @@ Swift는 동시에 수행하기 위해 태스크를 스케쥴링 할 수 있습�
 명시적 부모(parent)-자식(child) 관계는 태스크 간에 여러 이점이 있습니다:
 
 - 부모 태스크에서,
-  하위 태스크가 완료될 때까지 기다릴 수 있습니다.
+  하위 태스크의 완료를 기다리는 일을 빠뜨릴 수 없습니다.
 
 - 하위 태스크에서 더 높은 우선 순위로 설정되면,
   상위 태스크의 우선 순위는 자동으로 높아집니다.
@@ -654,6 +659,10 @@ whose values aren't collected.
 
 ### 태스크 취소 (Task Cancellation)
 
+> Note: **번역자 보충**
+> 필수 정리 작업을 둘러싸는 태스크의 취소로부터 보호하는 API는
+> <doc:Swift64#정리-작업의-취소-차단-Cancellation-Shields-for-Cleanup>을 참고바랍니다.
+
 Swift 동시성은 협동 취소 모델(cooperative cancellation model)을 사용합니다.
 각 태스크는 실행 중에 적절할 때
 취소여부를 확인하고,
@@ -681,7 +690,7 @@ Swift 동시성은 협동 취소 모델(cooperative cancellation model)을 사�
 태스크 중지의 부분으로 정리 작업을 수행할 수 있는
 `isCancelled` 프로퍼티를 사용합니다.
 
-[`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/3814826-checkcancellation
+[`Task.checkCancellation()`]: https://developer.apple.com/documentation/swift/task/checkcancellation()
 [`Task.isCancelled` 타입]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.type.property
 
 ```swift
@@ -734,16 +743,18 @@ let photos = await withTaskGroup { group in
 [`Task.isCancelled` 인스턴스]: https://developer.apple.com/documentation/swift/task/iscancelled-swift.property
 
 즉시 취소에 대한 알림이 필요한 경우에
-[`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`][] 메서드를 사용합니다.
+[`withTaskCancellationHandler(operation:onCancel:isolation:)`][] 함수를 사용합니다.
 예를 들어:
 
-[`Task.withTaskCancellationHandler(operation:onCancel:isolation:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:isolation:)
+[`withTaskCancellationHandler(operation:onCancel:isolation:)`]: https://developer.apple.com/documentation/swift/withtaskcancellationhandler(operation:oncancel:isolation:)
 
 ```swift
-let task = await Task.withTaskCancellationHandler {
-    // ...
-} onCancel: {
-    print("Canceled!")
+let task = Task {
+    await withTaskCancellationHandler {
+        // ...
+    } onCancel: {
+        print("Canceled!")
+    }
 }
 
 // ... some time later...
@@ -882,7 +893,7 @@ task.cancel()  // Prints "Canceled!".
   You can explicitly insert a suspension point
   by calling the [`Task.yield()`][] method.
 
-  [`Task.yield()`]: https://developer.apple.com/documentation/swift/task/3814840-yield
+  [`Task.yield()`]: https://developer.apple.com/documentation/swift/task/yield()
   
   ```swift
   func generateSlideshow(forGallery gallery: String) async {
@@ -1150,7 +1161,7 @@ struct PhotoGallery {
 ```
 
 위 `PhotoGallery` 버전에서
-`drawUI()` 메서드는 화면에 갤러이의 사진을 그리므로
+`drawUI()` 메서드는 화면에 갤러리의 사진을 그리므로
 메인 액터에 격리되어야 합니다.
 `photoNames` 프로퍼티는 UI를 직접 생성하지는 않지만
 `drawUI()` 함수가 UI를 그리는데 사용하는 상태를 저장하므로
@@ -1489,7 +1500,7 @@ Swift가 적용하는 의미론적 요구사항이 있습니다.
 - 타입이 `@MainActor`로 표시된 클래스나
   특정 스레드나 큐에서
   프로퍼티에 순차적으로 접근하는 클래스와 같이
-  변경 가능한 상태의 안정성을 보장하는 코드를 가지고 있는 경우입니다.
+  변경 가능한 상태의 안전성을 보장하는 코드를 가지고 있는 경우입니다.
 
 <!--
   There's no example of the third case,

@@ -947,7 +947,7 @@ func someFunction(a: inout Int, b: inout Int) {
 someFunction(a: &someValue, b: &someValue)
 ```
 
-메모리 안정성과 메모리 독점성에 대한 자세한 내용은
+메모리 안전성과 메모리 독점성에 대한 자세한 내용은
 <doc:MemorySafety>을 참고바랍니다.
 
 <!--
@@ -1497,7 +1497,7 @@ func <#function name#>(<#parameters#>) throws(<#error type#>) -> <#return type#>
 
 ### 오류를 다시 던지는 함수와 메서드 (Rethrowing Functions and Methods)
 
-함수나 메서드는 함수 매개변수 중 하나만 오류를 발생하는 것을 나타내기 위해
+함수나 메서드는 함수 타입의 매개변수 중 하나가 오류를 던지는 경우에만 자신도 오류를 던질 수 있음을 나타내기 위해
 `rethrows` 키워드로 선언할 수 있습니다.
 이러한 함수와 메서드를 *다시 던지는 함수(rethrowing functions)*와
 *다시 던지는 메서드(rethrowing methods)*라고 합니다.
@@ -1998,7 +1998,7 @@ Swift 표준 라이브러리에 정의된 `RawRepresentable` 프로토콜을 준
 ### 열거형 케이스 접근 (Accessing Enumeration Cases)
 
 열거형 타입의 케이스를 참조하기 위해
-`EnuerationType.enumerationCase`와 같이 점(`.`) 구문을 사용합니다.
+`EnumerationType.enumerationCase`와 같이 점(`.`) 구문을 사용합니다.
 열거형 타입을 컨텍스트에서 추론할 수 있으면 <doc:Enumerations#열거형-문법-Enumeration-Syntax>과
 <doc:Expressions#암시적-멤버-표현식-Implicit-Member-Expression>에서 설명한대로
 점은 그대로 유지한 채 생략할 수 있습니다.
@@ -2436,6 +2436,28 @@ protocol SomeProtocol: AnyObject {
 > Note: `objc` 속성으로 표시된 프로토콜은
 > 해당 프로토콜에 암시적으로 `AnyObject` 요구사항을 적용합니다;
 > 명시적으로 `AnyObject` 요구사항을 프로토콜에 표시할 필요가 없습니다.
+
+위 형식의 *상속된 프로토콜(inherited protocols)* 목록에 특정 클래스를 지정하여
+프로토콜의 채택을 해당 클래스의 하위 클래스로 제한할 수도 있습니다.
+예를 들어 다음 프로토콜은 `SomeBaseClass`의 하위 클래스만 채택할 수 있습니다:
+
+```swift
+class SomeBaseClass { /* ... */ }
+protocol SomeRefinedProtocol: SomeBaseClass {
+    /* Protocol members go here. */
+}
+```
+
+<!--
+  - test: `protocol-declaration-superclass`
+
+  ```swifttest
+  -> class SomeBaseClass {}
+  -> protocol SomeRefinedProtocol: SomeBaseClass {
+         /* Protocol members go here. */
+     }
+  ```
+-->
 
 프로토콜은 명명 타입 이므로 <doc:Protocols#프로토콜을-타입으로-사용-Protocols-as-Types>에서 설명한대로
 다른 명명 타입과 동일한 위치의 코드에 나타날 수 있습니다.

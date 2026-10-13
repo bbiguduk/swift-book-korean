@@ -194,7 +194,7 @@ func max<T>(_ x: T, _ y: T) -> T where T: Comparable { ... }
 ```
 
 <!--
-  From https://developer.apple.com/documentation/swift/1538951-max
+  From https://developer.apple.com/documentation/swift/max(_:_:)
   Not test code because it won't actually compile
   and there's nothing to meaningfully test.
 -->
@@ -716,9 +716,9 @@ func protoFlip<T: Shape>(_ shape: T) -> Shape {
 
 개정된 코드의 버전은
 전달되는 도형에 따라
-`Shape` 인스턴스나 `FlippedShape` 인스턴스를 반환합니다.
+`Square` 인스턴스나 `FlippedShape` 인스턴스를 반환합니다.
 이 함수에 의해 반환된 두 개의 뒤집힌 모양은
-완전히 다른 타입을 가집니다.
+완전히 다른 타입을 가질 수 있습니다.
 이 함수의 다른 유효한 버전은 같은 도형을 여러 번 뒤집을 때도
 다른 타입의 값을 반환할 수 있습니다.
 `protoFlip(_:)`의 구체적이지 않은 반환 타입은
@@ -767,15 +767,20 @@ protoFlippedTriangle == sameThing  // Error
 구체적인 타입 정보에 따라
 `==` 연산자를 사용할 수 없는 것을 보여줍니다.
 
-이 접근방식의 다른 문제는 도형 변환이 중첩되지 않습니다.
+박싱 프로토콜 타입을 사용한다고 도형 변환의 중첩이 항상 불가능한 것은 아닙니다.
 삼각형을 뒤집은 결과는 `Shape` 타입의 값이고
 `protoFlip(_:)` 함수는
 `Shape` 프로토콜을 준수하는 타입을 인자로 가집니다.
-그러나 박싱 프로토콜 타입의 값은
-`protoFlip(_:)`에 의해 반환된 값은 `Shape`를 준수하지 않으므로 프로토콜을 준수하지 않습니다.
-여러 변환을 적용하는
-`protoFlip(protoFlip(smallTriangle))`같은 코드는
-뒤집힌 도형이 `protoFlip(_:)`에 대해 유효하지 않은 인자입니다.
+박싱 프로토콜 타입 자체는 `Shape`를 준수하지 않지만,
+Swift는 지원하는 호출 위치에서 existential을 암시적으로 열어 구체적인 타입을 제네릭 매개변수에 바인딩합니다.
+따라서 현재 Swift에서는 여러 변환을 적용하는
+`protoFlip(protoFlip(smallTriangle))` 같은 코드가
+유효한 호출입니다.
+
+> Note: **번역자 주**
+> 이 문단은 영문 원본에 남아 있는 설명을 현재 Swift의 동작에 맞춰 정정했습니다.
+> 박싱 프로토콜의 자체 준수와 제네릭 호출의 암시적 열기는 서로 다른 개념입니다.
+> 자세한 내용은 <doc:Swift64#박싱-프로토콜과-제네릭-호출-Boxed-Protocols-and-Generic-Calls>을 참고바랍니다.
 
 반대로
 불투명 타입은 기본 타입의 정체성을 보존합니다.
@@ -807,14 +812,20 @@ extension Array: Container { }
   ```
 -->
 
-프로토콜은 연관 타입을 가지고 있으므로
-함수의 반환 타입으로 `Container`를 사용할 수 없습니다.
+연관 타입이 있는 프로토콜도
+함수의 반환 타입으로 `any Container`를 사용할 수 있습니다.
 또한 제네릭 타입이 필요한지 추론하기 위해
 함수 본문의 외부에 충분한 정보가 없으므로
 제네릭 반환 타입의 제약조건을 사용할 수 없습니다.
 
+> Note: **번역자 주**
+> 연관 타입이 있다는 이유만으로 박싱 프로토콜 반환이 금지되는 것은 아닙니다.
+> 아래의 첫 번째 오류는 Swift 6 언어 모드에서 명시적인 `any`가 필요하기 때문입니다.
+> `any Container`와 `some Container`가 보존하는 타입 정보의 차이는
+> <doc:Swift64#박싱-프로토콜과-제네릭-호출-Boxed-Protocols-and-Generic-Calls>을 참고바랍니다.
+
 ```swift
-// Error: Protocol with associated types can't be used as a return type.
+// Error: Use 'any Container' for a boxed protocol return type.
 func makeProtocolContainer<T>(item: T) -> Container {
     return [item]
 }
@@ -829,7 +840,7 @@ func makeProtocolContainer<T, C: Container>(item: T) -> C {
   - test: `opaque-result-existential-error`
 
   ```swifttest
-  // Error: Protocol with associated types can't be used as a return type.
+  // Error: Use 'any Container' for a boxed protocol return type.
   -> func makeProtocolContainer<T>(item: T) -> Container {
          return [item]
      }
