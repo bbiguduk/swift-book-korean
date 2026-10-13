@@ -6,6 +6,13 @@
 
 [The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/)를 한국어로 번역한 것이며, 오역 및 오타 많을 수 있습니다. 발견 시 연락처에 있는 email로 연락해 주세요!
 
+### PDF 다운로드
+
+[Swift 6.4 한국어 가이드 PDF](pdf/swift-book-korean-6.4.pdf)
+
+언어 가이드, 언어 참조와 Swift 6.4 번역자 보충을 포함한 548쪽 PDF입니다. 클릭 가능한 목차와 책갈피, 코드 예제와 삽화를 포함합니다.
+2026-10-14에 [한국어 소스 29dcb02](https://github.com/bbiguduk/swift-book-korean/tree/29dcb0261518adb556137ce5b2ef9a127e9a37a6)를 기준으로 생성했습니다.
+
 ### 업데이트
 
 * Swift 6.4, 2026-10-13
