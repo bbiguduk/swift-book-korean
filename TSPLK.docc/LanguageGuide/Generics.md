@@ -590,7 +590,7 @@ Swift의 기본 타입(`String`, `Int`, `Double`, `Bool` 등)은
 기본적으로 hashable입니다.
 `Hashable` 프로토콜을 준수하는 자체 커스텀 타입을 만드는 것에 대한
 자세한 내용은
-[Hashable 프로토콜 준수 (Conforming to the Hashable Protocol)](https://developer.apple.com/documentation/swift/hashable#2849490)를 참고바랍니다.
+[Hashable 프로토콜 준수 (Conforming to the Hashable Protocol)](https://developer.apple.com/documentation/swift/hashable#Conforming-to-the-Hashable-Protocol)를 참고바랍니다.
 
 커스텀 제네릭 타입을 생성할 때 고유 타입 제약을 정의할 수 있고,
 이러한 제약은 제네릭 프로그래밍에 많은 기능을 제공합니다.

@@ -743,6 +743,11 @@ throw <#expression#>
 
 ## Defer 구문 (Defer Statement)
 
+> Note: **번역자 보충**
+> Swift 6.4에서는 비동기 컨텍스트의 `defer` 본문에서 `await`를 사용할 수 있습니다.
+> 범위를 벗어날 때 해당 작업을 암시적으로 기다립니다.
+> 예제와 격리·취소 조건은 <doc:Swift64#비동기-defer-Asynchronous-Defer>를 참고바랍니다.
+
 `defer` 구문은 `defer` 구문이 나타나는
 범위의 바깥으로 프로그램 제어가 전송되기 직전에
 실행되는 코드에 사용됩니다.

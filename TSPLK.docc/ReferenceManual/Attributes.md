@@ -32,6 +32,10 @@ Swift에는 두 종류의 속성(attributes)이 있습니다 —--
 
 ## 선언 속성 (Declaration Attributes)
 
+> Note: **번역자 보충**
+> Swift 6.4의 경고 제어 속성 `@diagnose`는
+> <doc:Swift64#경고-제어-속성-Warning-Control-Attribute>을 참고바랍니다.
+
 선언 속성(declaration attribute)은 선언에만 적용할 수 있습니다.
 
 ### attached
@@ -96,6 +100,16 @@ If there's a stable URL we can use, make the macro protocols below links.
   확장, 타입 별칭, 함수 내에 중첩된 타입에
   확장 매크로를 작성하거나
   확장 매크로를 사용하여 peer 매크로가 있는 확장을 추가할 수 없습니다.
+
+- Body 매크로:
+  이 속성의 첫 번째 인자로 `body`를 작성합니다.
+  이 매크로 구현 타입은 `BodyMacro` 프로토콜을 준수합니다.
+  이러한 매크로는 매크로가 적용된 함수나 접근자의
+  본문을 생성하거나 수정하거나 교체할 수 있습니다.
+  하나의 함수에는 본문 매크로를 최대 한 개만 작성할 수 있습니다.
+  원래 함수 본문이 제공되면,
+  문법적으로 올바른 코드여야 하지만,
+  타입 검사는 매크로가 확장된 후에 수행됩니다.
 
 peer와 member 매크로 역할은 매크로가 생성하는 기호의 이름을 나열하는
 `names:` 인자를 요구합니다.
@@ -638,7 +652,7 @@ print(repeatLabels(a: 1, b: 2, c: 3, b: 2, a: 1))
 프로토콜을
 준수하는 단일 매개변수를 가지고
 반환 타입은 모든 타입이 가능합니다.
-매개변수의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/2294108-key)는
+매개변수의 [`Key`](https://developer.apple.com/documentation/swift/expressiblebydictionaryliteral/key)는
 [`ExpressibleByStringLiteral`](https://developer.apple.com/documentation/swift/expressiblebystringliteral)을
 준수해야 합니다.
 이전 예시는 매개변수 타입으로
@@ -688,18 +702,18 @@ repeatLabels(a: "four") // Error
 
 이 속성을 클래스, 구조체, 열거형, 프로토콜에 적용하여
 런타임 시 멤버를 이름으로 찾을 수 있도록 합니다.
-이 타입은 `subscript(dynamicMemberLookup:)` 서브스크립트를 구현해야 합니다.
+이 타입은 `subscript(dynamicMember:)` 서브스크립트를 구현해야 합니다.
 
 명시적 멤버 표현식에서
 명명된 멤버에 대한 해당 선언이 없는 경우
-표현식은 타입의 `subscript(dynamicMemberLookup:)` 서브스크립트를
+표현식은 타입의 `subscript(dynamicMember:)` 서브스크립트를
 호출하는 것으로 이해하고
 멤버에 대한 정보를 인자로 전달합니다.
 서브스크립트는 키 경로나 멤버 이름 중 하나인 매개변수를 사용할 수 있습니다;
 두 서브스크립트를 모두 구현하면
 키 경로 인자를 가지는 서브스크립트가 사용됩니다.
 
-`subscript(dynamicMemberLookup:)`의 구현은
+`subscript(dynamicMember:)`의 구현은
 [`KeyPath`](https://developer.apple.com/documentation/swift/keypath),
 [`WritableKeyPath`](https://developer.apple.com/documentation/swift/writablekeypath),
 [`ReferenceWritableKeyPath`](https://developer.apple.com/documentation/swift/referencewritablekeypath)
@@ -1706,6 +1720,16 @@ s.$x.wrapper  // WrapperWithProjection value
   ```
 -->
 
+투영값이 원시 식별자로 이름을 지정한 변수를 래핑하는 경우,
+해당 값의 합성 저장소와 투영값을 참조할 때도
+원시 식별자를 사용합니다.
+언더스코어나 달러 기호는 백틱 안에 작성합니다;
+예를 들어 someValue.\`_some raw identifier\`는
+이름에 공백이 있는 프로퍼티의
+합성 저장소를 참조하며,
+someValue.\`$some raw identifier\`는
+해당 프로퍼티의 투영값을 참조합니다.
+
 ### resultBuilder
 
 이 속성을 클래스, 구조체, 열거형에 적용하여
@@ -2529,7 +2553,7 @@ struct ArrayBuilder {
 이 클래스의 이름을 델리게이트 클래스의 이름으로 전달하는 것과 동일합니다.
 
 이 속성을 사용하지 않으면,
-[`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/1622933-uiapplicationmain) 함수를 호출하는
+[`UIApplicationMain(_:_:_:_:)`](https://developer.apple.com/documentation/uikit/uiapplicationmain(_:_:_:_:)-1yub7) 함수를 호출하는
 최상위 수준의 코드가 포함된 `main.swift` 파일을 제공해야 합니다.
 예를 들어
 주 클래스로
@@ -2602,10 +2626,10 @@ public이나 `usableFromInline`인 타입만 사용할 수 있습니다.
 
 예를 들어
 Swift 표준 라이브러리는 최상위
-[`min(_:_:)`](https://developer.apple.com/documentation/swift/1538339-min/)
+[`min(_:_:)`](https://developer.apple.com/documentation/swift/min(_:_:))
 함수와
 비교 가능한 요소가 있는 시퀀스에 대한
-[`min()`](https://developer.apple.com/documentation/swift/sequence/1641174-min) 메서드 모두 포함합니다.
+[`min()`](https://developer.apple.com/documentation/swift/sequence/min()) 메서드 모두 포함합니다.
 시퀀스 메서드는 `Sequence` 확장 내에서 어느 하나를 사용하려할 때
 혼동을 줄이기 위해
 `warn_unqualified_access` 속성으로 선언됩니다.

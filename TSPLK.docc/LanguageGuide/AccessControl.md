@@ -182,7 +182,7 @@ private func somePrivateFunction() {}
 
 위 코드는 `SomePublicClass`는 public으로
 `SomeInternalStruct`는 internal로
-`SomePrivateFunction()`은 private로 선언했습니다.
+`somePrivateFunction()`은 private로 선언했습니다.
 명시적으로 접근 수준을 작성하지 않으면,
 <doc:AccessControl#기본-접근-수준-Default-Access-Levels>에서 설명한대로
 기본 접근 수준 수정자는 `internal`입니다.
@@ -477,7 +477,7 @@ public enum CompassPoint {
 #### 원시값과 연관값 (Raw Values and Associated Values)
 
 열거형 정의의 모든 원시값이나 연관값에 사용되는 타입은
-열거형의 접근 수준보다 높은 접근 수준을 가져야 합니다.
+열거형과 같거나 더 높은 접근 수준을 가져야 합니다.
 예를 들어
 internal 접근 수준을 가진 열거형에
 private 타입을 원시값으로 사용할 수 없습니다.
@@ -779,7 +779,7 @@ private var privateInstance = SomePrivateClass()
 getter보다 *더 낮은* 접근 수준으로 setter를 제공할 수 있습니다.
 setter의 접근 수준을 낮추려면
 `var`나 `subscript` 선언 앞에
-`fileprivate(set)`, `private(set)`, `internal(set)`을 작성합니다.
+`fileprivate(set)`, `private(set)`, `internal(set)`, `package(set)`을 작성합니다.
 
 > Note: 이 규칙은 저장 프로퍼티 뿐만 아니라 연산 프로퍼티에도 적용됩니다.
 > 저장 프로퍼티에 대해 명시적으로 getter와 setter를 작성하지 않아도,
@@ -788,7 +788,7 @@ setter의 접근 수준을 낮추려면
 > 연산 프로퍼티의
 > 명시적 setter와 같은 방식으로 자동 생성된 setter의
 > 접근 수준을 변경하기 위해
-> `fileprivate(set)`, `private(set)`, `internal(set)`을 사용합니다.
+> `fileprivate(set)`, `private(set)`, `internal(set)`, `package(set)`을 사용합니다.
 
 아래 예시는 `TrackedString` 이라는 구조체를 정의하고,
 문자열 프로퍼티가 몇 번 수정되는지 추적합니다:

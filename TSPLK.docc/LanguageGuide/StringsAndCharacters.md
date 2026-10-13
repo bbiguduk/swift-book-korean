@@ -713,7 +713,7 @@ let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
 
 `multiplier`의 값은 문자열 내에서 표현식의 일부로 사용됩니다.
 이 표현식은 `Double(multiplier) * 2.5`의 값을 계산하고
-문자열에 결과 `(7.5)`를 삽입합니다.
+문자열에 결과 `7.5`를 삽입합니다.
 이 경우 표현식은 문자열 리터럴에 포함될 때
 `\(Double(multiplier) * 2.5)`로 작성합니다.
 

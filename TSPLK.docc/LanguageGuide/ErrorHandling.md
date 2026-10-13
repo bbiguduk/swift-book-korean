@@ -726,7 +726,7 @@ let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 - 동적 메모리 할당을 지원하지 않는
   임베디드 시스템에서 코드를 실행하는 경우입니다.
   `any Error`나 다른 박싱 프로토콜 타입의 인스턴스는
-  오류를 저장히기 위해 런타임 때 메모리에 할당해야 합니다.
+  오류를 저장하기 위해 런타임 때 메모리에 할당해야 합니다.
   반대로,
   특정 타입의 오류를 발생하려면
   Swift는 오류에 대한 힙 할당을 피할 수 있습니다.
@@ -762,7 +762,7 @@ enum StatisticsError: Error {
 함수를 선언할 때
 `throws` 대신에 `throws(StatisticsError)`를 작성합니다.
 이 구문은 선언에서 `throws` 다음에 오류 타입을 작성하기 때문에
-*타입이 지정된 던기지(typed throws)*라고 부릅니다.
+*타입이 지정된 던지기(typed throws)*라고 부릅니다.
 예를 들어,
 아래의 함수는 오류로 `StatisticsError` 값을 던집니다.
 
@@ -787,9 +787,9 @@ func summarize(_ ratings: [Int]) throws(StatisticsError) {
 위 코드에서 함수의 오류 타입은
 이미 정의되었으므로,
 오류를 던질 때 타입을 생략합니다.
-이와 같이 함수에서 오류가 발생할면
+이와 같이 함수에서 오류가 발생하면
 `throw StatisticsError.noRatings`로 작성하는 대신,
-`throw .noRatins`로 축약형으로 작성할 수 있습니다.
+`throw .noRatings`로 축약형으로 작성할 수 있습니다.
 
 함수의 시작 부분에 오류 타입을 지정해서 작성하면,
 Swift는 다른 오류 타입을 던지는지 확인합니다.

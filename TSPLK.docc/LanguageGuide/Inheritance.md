@@ -284,7 +284,7 @@ print("Tandem: \(tandem.description)")
 - `someMethod()`라는 재정의된 메서드는 재정의한 메서드 구현 내에서 `super.someMethod()`를 호출하여
   상위 클래스 버전의 `someMethod()` 를 호출할 수 있습니다.
 - `someProperty`라는 재정의된 프로퍼티는 재정의한 getter나 setter 구현 내에서
-  `super.somProperty`로 상위 클래스의 `someProperty`를 접근할 수 있습니다.
+  `super.someProperty`로 상위 클래스의 `someProperty`를 접근할 수 있습니다.
 - `someIndex`를 위한 재정의된 서브스크립트는 재정의한 서브스크립트 구현 내에서
   `super[someIndex]`로 상위 클래스의 같은 서브스크립트에 접근할 수 있습니다.
 
