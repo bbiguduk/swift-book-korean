@@ -196,7 +196,7 @@ if somePoint.isToTheRightOf(x: 1.0) {
 -->
 
 `self` 접두사가 없으면,
-Swift는 두 번 모두 `x`가 메서드의 매개변수 `x`를 가르키는 것으로 간주합니다.
+Swift는 두 번 모두 `x`가 메서드의 매개변수 `x`를 가리키는 것으로 간주합니다.
 
 ### 인스턴스 메서드 내부에서 값 타입 수정 (Modifying Value Types from Within Instance Methods)
 
@@ -432,7 +432,7 @@ SomeClass.someTypeMethod()
 
 타입 메서드의 본문 내에서
 암시적인 `self` 프로퍼티는 타입의 인스턴스가 아닌
-해당 타입 자체를 가르킵니다.
+해당 타입 자체를 가리킵니다.
 인스턴스 프로퍼티와 인스턴스 메서드 매개변수에서와 같이
 `self`를 타입 프로퍼티와 타입 메서드 매개변수를
 명확하게 사용할 수 있다는 의미입니다.

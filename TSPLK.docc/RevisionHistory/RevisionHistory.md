@@ -4,6 +4,17 @@
 
 ## Revision History
 
+### 2026-10-13(화)
+
+- Swift 6.4 기반으로 문서 업데이트.
+- <doc:Protocols#클래스-전용-프로토콜-Class-Only-Protocols>와
+  <doc:Declarations#프로토콜-선언-Protocol-Declaration>에 상위 클래스 제약 설명 추가.
+- <doc:LexicalStructure#식별자-Identifiers>에 원시 식별자 설명 추가.
+- <doc:Attributes#attached>에 본문 매크로 역할 설명 추가.
+- 태스크 취소 예제, 옵셔널 바인딩 타입 설명, 메모리 접근 충돌 조건과 인스턴스 해제 조건 수정.
+- 번역, API 이름, 문법 요약, 문서 링크와 오탈자 수정.
+- <doc:Swift64>에 최신 언어 기능과 영문 원본의 기술적 정정을 별도로 정리.
+
 ### 2026-04-24(금)
 
 - Swift 6.3 기반으로 문서 업데이트.
@@ -114,7 +125,7 @@
 - <doc:ControlFlow> 챕터와 <doc:Expressions#조건-표현식-Conditional-Expression> 섹션에 `if`와 `switch` 표현식에 대한 내용을 추가
 - 컴파일 때 코드를 생성하는 것에 대한 <doc:Macros> 챕터 추가
 - <doc:OpaqueTypes> 챕터에 박싱 프로토콜 타입(boxed protocol type)에 대한 내용을 추가
-- `buildPartialBlock(first:)`와 `buildPartialBlock(accumulated:next:)` 메서드에 대한 내용을 <doc:Attributes#결과-빌딩-메서드-Result-Building-Methods> 섹션에 추가
+- `buildPartialBlock(first:)`와 `buildPartialBlock(accumulated:next:)` 메서드에 대한 내용을 <doc:Attributes#결과-구축-메서드-Result-Building-Methods> 섹션에 추가
 - Swift-DocC 적용한 [TSPLK (The Swift Programming Language Korean)](https://bbiguduk.github.io/swift-book-korean/documentation/tsplk/) 페이지 오픈
 > GitBook과 Swift-DocC 둘 다 운영할 계획입니다.
 
@@ -134,7 +145,7 @@
 - Swift 5.7 기반으로 문서 작업 완료
 - 액터(actor)와 태스크(task) 간의 데이터 전송에 대한 내용을 <doc:Concurrency#Sendable-타입-Sendable-Types> 섹션에 추가하고 `@Sendable` 과 `@unchecked` 속성에 대한 내용을 <doc:Attributes#Sendable>과 <doc:Attributes#unchecked> 섹션에 추가하였습니다.
 - 정규 표현식 생성에 대한 내용을 <doc:LexicalStructure#정규-표현식-리터럴-Regular-Expression-Literals> 섹션에 추가하였습니다.
-- `if`-`let` 형식에 대한 내용을 <doc:TheBasics#옵셔널-바인딩-Optional-Binding> 섹선에 추가하였습니다.
+- `if`-`let` 형식에 대한 내용을 <doc:TheBasics#옵셔널-바인딩-Optional-Binding> 섹션에 추가하였습니다.
 - `#unavailable`에 대한 내용을 <doc:ControlFlow#API-가용성-검사-Checking-API-Availability> 섹션에 추가하였습니다.
 
 ### 2022-03-17(목)

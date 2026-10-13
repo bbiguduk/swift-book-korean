@@ -1,4 +1,6 @@
-# The Swift Programming Language (6.3) (한국어)
+# The Swift Programming Language (6.4) (한국어)
+
+현대적인 범용 언어로 안전하고 빠르며 표현력이 풍부한 코드를 작성합니다.
 
 @Metadata {
   @TechnologyRoot
@@ -86,6 +88,10 @@
 ### Revision History
 
 - <doc:RevisionHistory>
+
+### 번역자 보충
+
+- <doc:Swift64>
 
 ### Contact
 

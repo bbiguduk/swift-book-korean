@@ -108,7 +108,7 @@ let roomCount = john.residence!.numberOfRooms
   ```
 -->
 
-`John.residence`가 `nil`이 아니고
+`john.residence`가 `nil`이 아니고
 `roomCount`에 적절한 방의 갯수를 포함하는 `Int`로 설정하면 위의 코드는 정상 동작합니다.
 그러나 `residence`가 `nil`이면
 이 코드는 항상 런타임 오류가 발생합니다.
@@ -404,7 +404,7 @@ if let roomCount = john.residence?.numberOfRooms {
   ```
 -->
 
-`John.residence`는 `nil`이기 때문에
+`john.residence`는 `nil`이기 때문에
 옵셔널 체이닝은 이전과 같이 실패를 호출합니다.
 
 옵셔널 체이닝을 통해 프로퍼티의 값을 설정할 수도 있습니다:
@@ -544,7 +544,7 @@ if john.residence?.printNumberOfRooms() != nil {
 옵셔널 체이닝을 통해 프로퍼티를 설정하려는 경우에도 마찬가지입니다.
 <doc:OptionalChaining#옵셔널-체이닝을-통한-프로퍼티-접근-Accessing-Properties-Through-Optional-Chaining>에서 위의 예시는
 `residence` 프로퍼티가 `nil`이지만
-`John.residence`에 대해 `address` 값을 설정 하려고 합니다.
+`john.residence`에 대해 `address` 값을 설정 하려고 합니다.
 옵셔널 체이닝을 통해 프로퍼티를 설정하려는 모든 시도는
 `nil`과 비교하여 프로퍼티에 값이 성공적으로 설정되었는지 확인할 수 있는 `Void?` 타입의 값을 반환합니다:
 
@@ -759,7 +759,7 @@ if let johnsStreet = john.residence?.address?.street {
 -->
 
 `john.residence`의 값은 현재 유효한 `Residence` 인스턴스를 가지고 있습니다.
-그러나 `John.residence.address`의 값은 현재 `nil`입니다.
+그러나 `john.residence.address`의 값은 현재 `nil`입니다.
 이것 때문에 `john.residence?.address?.street`을 호출하면 실패합니다.
 
 위의 예시에서는

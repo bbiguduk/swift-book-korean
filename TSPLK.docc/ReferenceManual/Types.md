@@ -420,7 +420,7 @@ var operation: (Int, Int) -> Int               // OK
 ### 비탈출 클로저의 제약 (Restrictions for Nonescaping Closures)
 
 비탈출 함수(nonescaping function) 타입의 매개변수는
-프로퍼티, 변수, 상수에 저장할 수 없습니다.
+`Any` 타입의 프로퍼티, 변수, 상수에 저장할 수 없습니다.
 그렇게 하면 해당 값이 탈출될 수 있기 때문입니다.
 
 <!--
@@ -859,6 +859,10 @@ typealias PQR = PQ & Q & R
 
 ## 불투명 타입 (Opaque Type)
 
+> Note: **번역자 보충**
+> Swift 6.4의 `some P?`와 `any P?` 구문 및 프로토콜 합성의 괄호 조건은
+> <doc:Swift64#some과-any의-옵셔널-구문-Optional-some-and-any-Syntax>을 참고바랍니다.
+
 *불투명 타입(opaque type)*은
 구체적인 타입 지정없이
 프로토콜이나 프로토콜 합성을 준수하는 타입을 정의합니다.
@@ -1015,9 +1019,9 @@ Contrast P.Type with (any P.Type) and (any P).Type
 https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md#metatypes
 -->
 
-> Grammar of a boxed protocol type
+> Grammar of a boxed protocol type:
 >
-> *boxed-protocol-type* --> **``any``** *type*
+> *boxed-protocol-type* → **`any`** *type*
 
 ## 메타타입 타입 (Metatype Type)
 
@@ -1083,7 +1087,7 @@ type(of: someInstance).printClassName()
 
 자세한 내용은
 Swift 표준 라이브러리의
-[`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type)을 참고바랍니다.
+[`type(of:)`](https://developer.apple.com/documentation/swift/type(of:))을 참고바랍니다.
 
 메타타입 값을 사용하여
 해당 타입의 인스턴스를 생성하려면 이니셜라이저 표현식을 사용할 수 있습니다.
@@ -1308,7 +1312,7 @@ print(type(of: z.f()))
 
 `Self` 타입은
 Swift 표준 라이브러리에서
-[`type(of:)`](https://developer.apple.com/documentation/swift/2885064-type) 함수와 동일한 타입을 참조합니다.
+[`type(of:)`](https://developer.apple.com/documentation/swift/type(of:)) 함수와 동일한 타입을 참조합니다.
 현재 타입의 멤버를 접근하기 위해 `Self.someStaticMember`라고 작성하는 것은
 `type(of:self).someStaticMember`로 작성하는 것과 동일합니다.
 

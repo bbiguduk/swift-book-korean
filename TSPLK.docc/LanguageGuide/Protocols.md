@@ -1242,13 +1242,13 @@ Swift는 많은 경우에
   as long as the section stays around, that topic ID will be there too.
 
   Conforming to the Equatable Protocol
-  https://developer.apple.com/documentation/swift/equatable#2847780
+  https://developer.apple.com/documentation/swift/equatable#Conforming-to-the-Equatable-Protocol
 
   Conforming to the Hashable Protocol
-  https://developer.apple.com/documentation/swift/hashable#2849490
+  https://developer.apple.com/documentation/swift/hashable#Conforming-to-the-Hashable-Protocol
 
   Conforming to the Comparable Protocol
-  https://developer.apple.com/documentation/swift/comparable#2845320
+  https://developer.apple.com/documentation/swift/comparable#Conforming-to-the-Comparable-Protocol
 
   ^-- Need to add discussion of synthesized implementation
   to the reference for Comparable, since that's new
@@ -1256,7 +1256,7 @@ Swift는 많은 경우에
   Some of the information in the type references above
   is also repeated in the "Conform Automatically to Equatable and Hashable" section
   of the article "Adopting Common Protocols".
-  https://developer.apple.com/documentation/swift/adopting_common_protocols#2991123
+  https://developer.apple.com/documentation/swift/adopting-common-protocols#Conform-Automatically-to-Equatable-and-Hashable
 -->
 
 Swift는 다음과 같은 커스텀 타입에 대해
@@ -1704,7 +1704,7 @@ print(game.prettyTextualDescription)
 
 ## 클래스 전용 프로토콜 (Class-Only Protocols)
 
-프로토콜 상속 목록에 `AnyObject` 프로토콜을 추가여
+프로토콜 상속 목록에 `AnyObject` 프로토콜을 추가하여
 해당 프로토콜을 클래스 타입(구조체나 열거형이 아닌)에서만 채택할 수 있게 제한할 수 있습니다.
 
 ```swift
@@ -1724,7 +1724,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
   ```
 -->
 
-위의 예시에서 `SomeClassOnlyProtocol`은 클래스 타입서에만 채택할 수 있습니다.
+위의 예시에서 `SomeClassOnlyProtocol`은 클래스 타입에서만 채택할 수 있습니다.
 `SomeClassOnlyProtocol`을
 구조체나 열거형에 채택하면 컴파일 오류가 발생합니다.
 
@@ -1749,6 +1749,79 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 <!--
   TODO: a Cacheable protocol might make a good example here?
 -->
+
+프로토콜의 상속 목록에 특정 클래스를 지정하여
+프로토콜을 준수하는 모든 타입이 해당 클래스의 하위 클래스여야 한다고 요구할 수도 있습니다.
+
+```swift
+class Renderer {
+    func render(_ text: String) {
+        print(text)
+    }
+}
+
+protocol Widget: Renderer {
+    var title: String { get }
+}
+
+extension Widget {
+    func display() {
+        render(title)
+    }
+}
+
+class ButtonWidget: Renderer, Widget {
+    var title: String
+    init(title: String) {
+        self.title = title
+    }
+}
+
+let button = ButtonWidget(title: "OK")
+button.display()
+// Prints "OK".
+```
+
+<!--
+  - test: `classNameInProtocol`
+
+  ```swifttest
+  -> class Renderer {
+        func render(_ text: String) {
+            print(text)
+        }
+     }
+
+  -> protocol Widget: Renderer {
+        var title: String { get }
+     }
+
+  -> extension Widget {
+        func display() {
+            render(title)
+        }
+     }
+
+  -> class ButtonWidget: Renderer, Widget {
+        var title: String
+        init(title: String) {
+            self.title = title
+        }
+     }
+
+  -> let button = ButtonWidget(title: "OK")
+  -> button.display()
+  <- OK
+  ```
+-->
+
+위 예시에서 `Widget`은 `Renderer`의 하위 클래스만 채택할 수 있습니다.
+프로토콜이 모든 준수 타입을 `Renderer`의 하위 클래스로 보장하므로,
+`Widget` 프로토콜의 확장에서 `render(_:)`를 직접 호출할 수 있습니다.
+상위 클래스 요구사항은 `AnyObject`를 사용하는 것보다 더 엄격합니다:
+모든 클래스 타입을 허용하는 대신 특정 클래스 계층으로 준수를 제한합니다.
+프로토콜의 구현이
+특정 기본 클래스의 구체적인 동작에 의존하는 경우에 사용합니다.
 
 ## 프로토콜 합성 (Protocol Composition)
 

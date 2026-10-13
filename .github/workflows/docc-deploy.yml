@@ -46,9 +46,12 @@ jobs:
           echo "Updated to ShortVersion: $BUILD_VERSION, Build: $BUILD_VERSION"
         shell: bash
 
+      - name: Verify grammar summary
+        run: python3 bin/generate-grammar --check
+
       - name: Build DocC documentation
         run: |
-          xcrun docc convert --experimental-enable-custom-templates --hosting-base-path swift-book-korean --output-path ./docs ./TSPLK.docc
+          xcrun docc convert --warnings-as-errors --experimental-enable-custom-templates --hosting-base-path swift-book-korean --output-path ./docs ./TSPLK.docc
 
       # - name: Archive DocC documentation
       #   run: |

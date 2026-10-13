@@ -171,7 +171,7 @@ print("theAceOfSpades: \(theAceOfSpades.description)")
 ## 중첩 타입 참조 (Referring to Nested Types)
 
 중첩 타입을 그 정의된 범위 밖에서 사용하려면
-그 타입이 중첩ㅚㄴ 외부 타입의 이름을 접두사로 붙여야 합니다:
+그 타입이 중첩된 외부 타입의 이름을 접두사로 붙여야 합니다:
 
 ```swift
 let heartsSymbol = BlackjackCard.Suit.hearts.rawValue

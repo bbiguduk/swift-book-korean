@@ -886,7 +886,7 @@ stepCounter.totalSteps = 896
 프로퍼티가 저장되는 방법을 관리하는 코드와
 프로퍼티를 정의하는 코드 사이에 분리 계층을 추가합니다.
 예를 들어
-스레드 안정성 검사를 제공하거나
+스레드 안전성 검사를 제공하거나
 기본 데이터를 데이터베이스에 저장하는
 프로퍼티가 있는 경우
 모든 프로퍼티에 해당 코드를 작성해야 합니다.
@@ -1536,7 +1536,7 @@ print(someStructure.$someNumber)
 
 `someStructure.$someNumber`처럼 작성하면 해당 래퍼의 투영값에 접근할 수 있습니다.
 4와 같은 작은 숫자를 저장한 후에,
-`someStructure.$someValue`의 값은 `false`입니다.
+`someStructure.$someNumber`의 값은 `false`입니다.
 그러나
 55와 같은 큰 숫자를 저장하려고 한 경우에는
 투영값은 `true`입니다.

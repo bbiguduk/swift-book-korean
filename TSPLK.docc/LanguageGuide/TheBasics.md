@@ -37,7 +37,7 @@ Swift는 안전한 언어이며,
 명확하게 할 수 있도록 해줍니다.
 `String`을 요구하는 코드에서
 타입 안전성은 실수로 `Int`를 전달하는 것을 방지합니다.
-메모리 안정성(Memory Safety)은 초기화되지 않은 메모리나 할당 해제된 객체가 아닌
+메모리 안전성(Memory Safety)은 초기화되지 않은 메모리나 할당 해제된 객체가 아닌
 유효한 데이터만 사용하도록 보장하며,
 여러 코드가 동시에 실행되는 프로그램에서도
 데이터를 안전하게 다루도록 보장합니다.
@@ -234,7 +234,7 @@ var red, green, blue: Double
 대부분의 문자를 포함할 수 있습니다:
 
 ```swift
-let n = 3.14159
+let π = 3.14159
 let 你好 = "你好世界"
 let 🐶🐮 = "dogcow"
 ```
@@ -262,7 +262,7 @@ let 🐶🐮 = "dogcow"
 변수를 상수로 바꿀 수도 없습니다.
 
 > Note: Swift 예약어와 동일한 이름의 상수 또는 변수를 제공해야 한다면
-> 이름을 백틱(`` ` ``)으로 감싸야 합니다.
+> 이름을 백틱(\`)으로 감싸야 합니다.
 > 그러나 특별한 경우가 아니라면 예약어를 이름으로 사용하는 것은 피하는 것이 좋습니다.
 
 이미 선언된 변수에 동일한 타입의 다른 값으로 변경할 수 있습니다.
@@ -1494,7 +1494,7 @@ if let <#constantName#> = <#someOptional#> {
 ```
 
 강제 언래핑(forced unwrapping)보다 옵셔널 바인딩을 사용하여
-<doc:TheBasics#옵셔널-Optionals> 섹선에 있는
+<doc:TheBasics#옵셔널-Optionals> 섹션에 있는
 예시의 `possibleNumber`를 다시 작성할 수 있습니다:
 
 ```swift
@@ -1529,7 +1529,7 @@ if let actualNumber = Int(possibleNumber) {
 `if` 구문의 첫번째 중괄호 내에서 사용할 수 있습니다.
 옵셔널에서 포함된 값으로 초기화되었고,
 옵셔널이 아닌 타입입니다.
-이런 경우에 `possibleNumber`의 타입은 `Int?`이므로
+이 경우 `Int(possibleNumber)`의 타입은 `Int?`이므로
 `actualNumber`의 타입은 `Int`입니다.
 
 값에 접근한 후에
@@ -2090,9 +2090,9 @@ do {
 그러나 그것이 왜 유효하지 않거나
 다른 상태도 유효하지 않은지 알 수 없습니다.
 
-어설션과 전제조건을 사용하는 것은
-유효하지 않는 조건이 발생하지 않게
-코드를 디자인하기 위함입니다.
+어설션과 전제 조건의 사용이
+유효하지 않은 상태가 발생하기 어렵도록
+코드를 설계하는 일을 대신하지는 않습니다.
 그러나
 유효한 데이터 및 상태를 강제하는데 어설션과 전제 조건을 사용하면
 잘못된 상태가 발생할 경우
@@ -2125,7 +2125,7 @@ do {
 -->
 
 Swift 표준 라이브러리에
-[`assert(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1541112-assert) 함수로
+[`assert(_:_:file:line:)`](https://developer.apple.com/documentation/swift/assert(_:_:file:line:)) 함수로
 어설션을 작성할 수 있습니다.
 이 함수에 `true`나 `false`로 판단될 표현식과
 조건이 `false`일 경우 출력될 메세지를 전달합니다.
@@ -2182,7 +2182,7 @@ assert(age >= 0)
 -->
 
 이미 코드에서 조건을 검사하고 있는 경우,
-[`assertionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539616-assertionfailure) 함수를
+[`assertionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/assertionfailure(_:file:line:)) 함수를
 사용하여
 어설션이 실패했음을 나타낼 수 있습니다.
 예를 들어:
@@ -2220,7 +2220,7 @@ if age > 10 {
 예를 들어, 어떤 값들이 범위를 벗어나는지
 또는 함수에 유효한 값이 전달되는지 체크하기 위해 전제 조건을 사용합니다.
 
-[`precondition(_:_:file:line:)`](https://developer.apple.com/documentation/swift/1540960-precondition) 함수로
+[`precondition(_:_:file:line:)`](https://developer.apple.com/documentation/swift/precondition(_:_:file:line:)) 함수로
 전제 조건을 작성할 수 있습니다.
 이 함수에 `true`나 `false`로 판단될 표현식과
 조건이 `false`일 경우 출력될 메세지를 전달합니다.
@@ -2242,7 +2242,7 @@ precondition(index > 0, "Index must be greater than zero.")
   ```
 -->
 
-[`preconditionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/1539374-preconditionfailure) 함수를
+[`preconditionFailure(_:file:line:)`](https://developer.apple.com/documentation/swift/preconditionfailure(_:file:line:)) 함수를
 호출하여
 실패가 발생했음을 나타낼 수 있습니다 ---
 예를 들어, 스위치 문에서 기본 케이스가 선택되었지만,

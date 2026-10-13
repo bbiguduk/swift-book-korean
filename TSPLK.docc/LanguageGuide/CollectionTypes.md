@@ -33,7 +33,7 @@ Swift의 배열, 집합, 딕셔너리는
   TODO: discuss collection equality
 -->
 
-## 컬렉션의 가변성 (Mutablility of Collections)
+## 컬렉션의 가변성 (Mutability of Collections)
 
 배열, 집합, 딕셔너리를 생성하고 변수에 할당하면,
 생성된 컬렉션은 *변경 가능(mutable)*합니다.
@@ -155,7 +155,7 @@ var threeDoubles = Array(repeating: 0.0, count: 3)
   ```
 -->
 
-### 배열을 더해 생성 (Creating Array by Adding Two Arrays Together)
+### 배열을 더해 생성 (Creating an Array by Adding Two Arrays Together)
 
 동등한 타입의 두 배열을 덧셈 연산자(`+`)를 통해
 합쳐서 새로운 배열을 생성할 수 있습니다.
@@ -649,7 +649,7 @@ Swift 집합의 타입은 `Element`가 저장할 값의 타입을 나타내는
 `Set<Element>`로 작성합니다.
 배열과 다르게, 집합은 축약형 형식이 없습니다.
 
-### 빈 집합 생성과 초기화 (Creating Initializing an Empty Set)
+### 빈 집합 생성과 초기화 (Creating and Initializing an Empty Set)
 
 이니셜라이저를 사용하여
 타입을 포함한 빈 집합을 생성할 수 있습니다:
@@ -844,7 +844,7 @@ if let removedGenre = favoriteGenres.remove("Rock") {
   ```
 -->
 
-`contain(_:)` 메서드를 사용하여 집합에 특정 아이템이 포함되어 있는지 알 수 있습니다.
+`contains(_:)` 메서드를 사용하여 집합에 특정 아이템이 포함되어 있는지 알 수 있습니다.
 
 ```swift
 if favoriteGenres.contains("Funk") {

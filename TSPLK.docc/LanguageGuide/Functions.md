@@ -427,7 +427,7 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 > 전체 튜플이 옵셔널이라는 의미입니다.
 
 위에서 `minMax(array:)` 함수는 두 개의 `Int` 값을 포함하는 튜플을 반환합니다.
-그러나 이 함수는 전달된 배열에 대한 안정성 검사를 하지 않습니다.
+그러나 이 함수는 전달된 배열에 대한 안전성 검사를 하지 않습니다.
 `array` 인자가 빈 배열을 포함하면
 위에서 정의된 `minMax(array:)` 함수는
 `array[0]`을 접근할 때 런타임 오류가 발생합니다.
@@ -495,7 +495,7 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 
 ### 암시적 반환을 가진 함수 (Functions With an Implicit Return)
 
-함수의 전체 본문이 한 줄로 표현이 된다면,
+함수의 전체 본문이 하나의 표현식이면,
 함수는 해당 표현식을 암시적으로 반환합니다.
 예를 들어
 아래의 두 함수는 모두 같은 동작을 합니다:
@@ -535,7 +535,7 @@ print(anotherGreeting(for: "Dave"))
 `greeting(for:)` 함수의 전체 정의는
 인사말 메세지를 반환하므로,
 이것은 더 짧은 형태로 작성할 수 있습니다.
-`anotherGreeing(for:)` 함수는 같은 인사말 메세지를 반환하지만,
+`anotherGreeting(for:)` 함수는 같은 인사말 메세지를 반환하지만,
 `return` 키워드를 사용하여 더 긴 형식으로 작성합니다.
 `return` 한 줄로만 작성된 함수는 `return`을 생략할 수 있습니다.
 
